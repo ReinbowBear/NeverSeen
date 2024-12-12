@@ -8,7 +8,7 @@ public class ClickCharacter : MonoBehaviour
     public static Action onChoiceCharacter;
     private Camera cam;
 
-    public static LogicCharacter choseCharacter;
+    public static Character choseCharacter;
     [SerializeField] private LayerMask rayLayer;
 
     void Awake()
@@ -28,7 +28,7 @@ public class ClickCharacter : MonoBehaviour
             if (tile.isTaken != null && tile.isTaken.CompareTag("Player"))
             {
                 DropCharacter(context);
-                choseCharacter = tile.isTaken.GetComponent<LogicCharacter>();
+                choseCharacter = tile.isTaken.GetComponent<Character>();
                 choseCharacter.ChoseCharacter();
                 onChoiceCharacter.Invoke();
             }

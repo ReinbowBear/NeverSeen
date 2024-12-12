@@ -8,7 +8,7 @@ public class CharacterHP : Health
     protected override void Death()
     {
         onDead.Invoke(gameObject); //при смерти выпадают предметы если такие есть, это Instantiate, а потому нельзя пихать событие в OnDestroy
-        GetCharacter.characterList.Remove(gameObject); //раньше удаление из списка было подписано на событие onDead, но он удалялся раньше чем произойдут нужные операции
+        Debug.Log("ты ведь помнишь что у тебя абстрактный класс Health есть?");
         base.Death();
     }
 }

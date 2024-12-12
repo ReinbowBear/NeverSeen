@@ -2,7 +2,7 @@ using UnityEngine.SceneManagement;
 
 public static class Scene
 {
-    public static byte currentScene;
+    private static byte currentScene;
 
     static Scene()
     {
@@ -20,11 +20,6 @@ public static class Scene
     {
         currentScene = sceneIndex;
         SceneManager.LoadScene(sceneIndex);
-    }
-
-    public static void LoadMenu()
-    {
-        SceneManager.LoadScene(0);
     }
 
 

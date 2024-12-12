@@ -1,3 +1,3 @@
-# TurnBasedGame
+# NeverSeen
 
-This is an incredible game that combines the genres of turn-based strategy and roguelike! No random hits or dark meta, combine the abilities of characters, calculate actions in advance and adapt to reach the end and defeat everyone!
+A game in which you will combine various abilities on your character, defeat enemies by planning your actions in advance, and survive in a generated tile world.

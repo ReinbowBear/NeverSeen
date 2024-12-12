@@ -4,19 +4,27 @@ using UnityEngine.UI;
 
 public class CharacterButton : MonoBehaviour, IPointerEnterHandler
 {
-    [HideInInspector] public ViewCharacter viewCharacter;
+    [SerializeField] private ContentSO contentSO;
+    [SerializeField] private byte characterIndex;
+    [Space]
+    [SerializeField] private ChosenCharacter viewCharacter;
+    [SerializeField] private Image image;
 
-    public Image image;
-    [HideInInspector] public ItemSO character;
+    void Awake()
+    {
+        image.sprite = contentSO.data[characterIndex].UI.sprite;
+    }
 
     public void OnPointerEnter(PointerEventData pointerEventData) 
     {
-        viewCharacter.RenderCharacter(character);
-    } 
+        viewCharacter.RenderCharacter(characterIndex);
+    }
 
     public void NewGame()
     {
         SaveSystem.DeleteSave();
-        Scene.Load(1);
+        SaveSystem.onSave.Invoke();
+
+        Scene.Load(2);
     }
 }

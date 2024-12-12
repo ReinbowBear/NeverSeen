@@ -7,7 +7,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
     public void AddItem(Item newItem)
     {
-        newItem.transform.SetParent(transform, false); //false устанавливает объект относительно нового родителя, а не мировых координат
+        newItem.transform.SetParent(transform, false);
     }
 
     private void SwapItems(Item newItem)

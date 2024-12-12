@@ -4,13 +4,23 @@ using UnityEngine.EventSystems;
 public class AbilitySlot : MonoBehaviour, IDropHandler
 {    
     public Item item => GetComponentInChildren<Item>();
-
     [SerializeField] private ItemSO.ItemType myItemType;
+
+    public void AddItem(Item newItem)
+    {
+        if (newItem.itemSO.itemType == myItemType)
+        {
+            newItem.originalParent = transform;
+        }
+    }
 
     private void SwapItems(Item newItem)
     {
-        item.transform.SetParent(newItem.originalParent, false);
-        newItem.originalParent = transform; //дальше Item передвинет его собсвтенный OnEndDrag
+        if (newItem.itemSO.itemType == myItemType)
+        {
+            item.transform.SetParent(newItem.originalParent, false);
+            newItem.originalParent = transform;
+        }
     }
 
 
@@ -18,19 +28,11 @@ public class AbilitySlot : MonoBehaviour, IDropHandler
     {
         if (item == null)
         {
-            Item newItem = eventData.pointerDrag.GetComponent<Item>();
-            if (newItem.itemSO.itemType == myItemType)
-            {
-                newItem.originalParent = transform;
-            }
+            AddItem(eventData.pointerDrag.GetComponent<Item>());
         }
         else
         {
-            Item newItem = eventData.pointerDrag.GetComponent<Item>();
-            if (newItem.itemSO.itemType == myItemType)
-            {
-                SwapItems(newItem);
-            }
+            SwapItems(eventData.pointerDrag.GetComponent<Item>());
         }
     }
 }

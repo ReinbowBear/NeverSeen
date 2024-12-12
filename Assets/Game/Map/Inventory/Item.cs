@@ -1,4 +1,3 @@
-using System;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
@@ -6,11 +5,10 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
-{
-    public static Action onItemDrop;
-    
+{    
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI itemName;
+    [Space]
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private RectTransform rectTransform;
 
@@ -27,8 +25,8 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void RenderItem()
     {
-        image.sprite = itemSO.sprite;
-        itemName.text = itemSO.itemName;
+        //image.sprite = itemSO.sprite;
+        //itemName.text = itemSO.itemName;
     }
 
 
@@ -38,14 +36,12 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         
         originalParent = transform.parent;
         transform.SetParent(transform.root);
-
-        onItemDrop?.Invoke();
     }
 
     public void OnDrag(PointerEventData eventData) //https://www.youtube.com/watch?v=BGr-7GZJNXg&t=324s //можно переписать на рект трансформ, тем более что щас поломалось...
     {
-        transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
-        //eventData.pointerCurrentRaycast.screenPosition; сказал чел так надо двигать, а почему не знаю
+        //transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10));
+        transform.position = eventData.pointerCurrentRaycast.screenPosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -57,7 +53,5 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
         //transform.position = originalParent.position;
         transform.SetParent(originalParent);
-
-        onItemDrop?.Invoke(); //подписаные слоты обновляют наличие предмета у персонажей
     }
 }

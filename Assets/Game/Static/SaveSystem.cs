@@ -40,10 +40,11 @@ public static class SaveSystem //https://www.youtube.com/watch?v=1mf730eb5Wo&t=4
 [System.Serializable] //сериализация позволяет записывать данные в файл
 public struct GameData
 {
+    public SaveChosenCharacter saveChosenCharacter;
     public SaveScene saveScene;
 
     public SaveGlobalMap saveGlobalMap;
-    public SaveInventoryContent saveInventoryContent;
+    public SaveInventory saveInventory;
 
-    public SaveMapPanel saveMapPanel;
+    public SaveDangeonPanel saveDangeonPanel;
 }

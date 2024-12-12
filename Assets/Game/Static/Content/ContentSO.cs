@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[CreateAssetMenu(fileName = "ContentSO", menuName = "ScriptableObject/Content")]
+[CreateAssetMenu(fileName = "Content", menuName = "ScriptableObject/Content")]
 public class ContentSO : ScriptableObject
 {
-    public AssetReference[] maps;
-    public ItemSO[] enemys;
-    [Space]
-    public ItemSO[] characters;
-    public ItemSO[] items;
+    public Container[] data;
+}
+
+[System.Serializable]
+public struct Container
+{
+    public AssetReference prefab;
+    public ScriptableObject stats;
+    public InterfaceSO UI;
 }

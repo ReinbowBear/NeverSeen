@@ -3,31 +3,31 @@ using UnityEngine.InputSystem;
 
 public class MapKeyboard : MonoBehaviour
 {
-    private GameInput mapKeyboard;
+    public static GameInput gameInput;
 
     void Awake()
     {
-        mapKeyboard = new GameInput();
+        gameInput = new GameInput();
     }
 
 
     private void ExitToMenu(InputAction.CallbackContext context)
     {
-        Scene.LoadMenu();
+        Scene.Load(0);
     }
 
 
     void OnEnable()
     {
-        mapKeyboard.Enable();
+        gameInput.Enable();
 
-        mapKeyboard.Menu.Esc.started += ExitToMenu;
+        gameInput.Menu.Esc.started += ExitToMenu;
     }
 
     void OnDisable()
     {
-        mapKeyboard.Menu.Esc.started -= ExitToMenu;
+        gameInput.Menu.Esc.started -= ExitToMenu;
 
-        mapKeyboard.Disable();
+        gameInput.Disable();
     }
 }

@@ -37,6 +37,7 @@ public class Pause : MonoBehaviour
         
         SaveSystem.onSave.Invoke();
         SaveSystem.SaveFile();
-        Scene.LoadMenu();
+
+        Scene.Load(0);
     }
 }
