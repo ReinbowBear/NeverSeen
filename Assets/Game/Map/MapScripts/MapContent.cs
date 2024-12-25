@@ -8,7 +8,7 @@ public class MapContent : MonoBehaviour
 
     private System.Random random;
 
-    public void PrepareTiles()
+    public void PrepareTiles(MyEvent.OnEntryMap _)
     {
         //random = globalMap.random;
 //
@@ -52,6 +52,11 @@ public class MapContent : MonoBehaviour
     void OnEnable()
     {
         EventBus.Add<MyEvent.OnEntryMap>(PrepareTiles);
+    }
+
+    void OnDisable()
+    {
+        EventBus.Remove<MyEvent.OnEntryMap>(PrepareTiles);
     }
 }
 

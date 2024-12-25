@@ -8,11 +8,8 @@ public class EntryBattle : MonoBehaviour
         if (File.Exists(SaveSystem.GetFileName()))
         {
             SaveSystem.onLoad.Invoke();
-            EventBus.Invoke<MyEvent.OnEntryBattle>();
         }
-        else
-        {
-            Debug.Log("сохранения нету!");
-        }
+
+        EventBus.Invoke<MyEvent.OnEntryBattle>(null);
     }
 }

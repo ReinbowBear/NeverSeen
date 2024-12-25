@@ -1,64 +1,29 @@
-using System.Collections;
 using UnityEngine;
 
-public abstract class Health : MonoBehaviour
+public class Health : MonoBehaviour
 {
-    [SerializeField] public int maxHealth;
-    [HideInInspector] public float currentHealth;
-    [Space]
-    [SerializeField] protected HpBar hpBar;
-    [SerializeField] protected LayerMask rayLayer;
+    [SerializeField] private Character character;
+    [SerializeField] private BarChange hpBar;
 
-    protected virtual void Awake()
+    void Start()
     {
-        currentHealth = maxHealth;
-        hpBar.HpBarChange(maxHealth, currentHealth);
-
-        Ray ray = new Ray(transform.position + new Vector3(0, 0.5f, 0), Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1, rayLayer))
-        {
-            hit.transform.GetComponent<Tile>().isTaken = gameObject;
-        }
+        hpBar.ChangeBar(character.baseStats.health, character.stats.health);
     }
 
 
-    public virtual void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
-        hpBar.HpBarChange(maxHealth, currentHealth);
-        if (currentHealth <= 0)
+        character.stats.health -= damage * character.stats.takeDamageMultiplier;
+        hpBar.ChangeBar(character.stats.health, character.stats.health);
+
+        if (character.stats.health <= 0)
         {
             Death();
         }
     }
 
-    public virtual void TakeHeal(int heal)
+    private void Death()
     {
-        currentHealth += heal;
-        if (currentHealth > maxHealth)
-        {
-            currentHealth = maxHealth;
-        }
-        hpBar.HpBarChange(maxHealth, currentHealth);
-    }
-
-    protected virtual void Death()
-    {
-        Ray ray = new Ray(transform.position + new Vector3(0, 0.5f, 0), Vector3.down);
-        if (Physics.Raycast(ray, out RaycastHit hit, 1, rayLayer))
-        {
-            hit.transform.GetComponent<Tile>().isTaken = null;
-        }
-        Destroy(gameObject);
-    }
-
-    public IEnumerator PushAway(Vector3 targetPos) //старая функция с времён 0.2, решил что может пригодится
-    {
-        targetPos = transform.position + targetPos;
-        while (transform.position != targetPos)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, 10 * Time.deltaTime);
-            yield return null;
-        }
+        Content.DestroyAsset(gameObject);
     }
 }

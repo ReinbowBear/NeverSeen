@@ -16,7 +16,27 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 38b0a7a2d15c3fc46906aec44545b327
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 89e2f43580b84f0428b275325d78f1ea
+    m_Address: Assets/Game/Battle/Entity/Characters/Weapon/Prefabs/Sword/Sword.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0cac7d5ffdacc5c43a1e66e7acddba1d
+    m_Address: Assets/Game/Battle/Entity/Characters/Weapon/Prefabs/Axe/Axe.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f8c155d5577e1d4e9bada78a2165b1f
+    m_Address: Assets/Game/Battle/Entity/Characters/Prefubs/Warrior/Warrior.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b370a3d2eeffe944a3ab6be74923db9
+    m_Address: Assets/Game/Battle/Entity/Characters/Weapon/Prefabs/Bow/Bow.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5bb7f9651bed27546a446493c92fb3c6, type: 2}
   m_SchemaSet:

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ChosenCharacter : MonoBehaviour
 {
-    [SerializeField] private ContentSO contentSO;
+    [SerializeField] private CharacterDataBase characters;
     [Space]
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI nameBar;
@@ -18,21 +18,19 @@ public class ChosenCharacter : MonoBehaviour
     private byte chosenIndex;
 
 
-    public void RenderCharacter(byte characterIndex)
+    public void RenderCharacter(byte index)
     {
-        chosenIndex = characterIndex;
-        Container character = contentSO.data[chosenIndex];
+        chosenIndex = index;
+        CharacterContainer newCharacter = characters.containers[index] as CharacterContainer; //приведение к конкретному типу, в случаи ошибки возращает null
 
-        icon.sprite = character.UI.sprite;
-        nameBar.text = character.UI.itemName;
-        DescriptionBar.text = character.UI.description;
+        icon.sprite = newCharacter.UI.sprite;
+        nameBar.text = newCharacter.UI.itemName;
+        DescriptionBar.text = newCharacter.UI.description;
 
-        CharacterSO characterStats = character.stats as CharacterSO; //приведение к конкретному типу, в случаи ошибки возращает null
-
-        health.text = characterStats.health.ToString();
-        armor.text = characterStats.armor.ToString();
-        manna.text = characterStats.manna.ToString();
-        mannaMultiplier.text = characterStats.mannaMultiplier.ToString();
+        health.text = newCharacter.stats.health.ToString();
+        armor.text = newCharacter.stats.armor.ToString();
+        manna.text = newCharacter.stats.manna.ToString();
+        mannaMultiplier.text = newCharacter.stats.mannaMultiplier.ToString();
     }
 
 

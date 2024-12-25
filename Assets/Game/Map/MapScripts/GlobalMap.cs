@@ -21,7 +21,7 @@ public class GlobalMap : MonoBehaviour
     }
 
 
-    private void GenerateMap()
+    private void GenerateMap(MyEvent.OnEntryMap _)
     {
         map = new int[width, height];
 
@@ -92,7 +92,7 @@ public class GlobalMap : MonoBehaviour
         return wallCount;
     }
 
-    private void DisplayMap()
+    private void DisplayMap(MyEvent.OnEntryMap _)
     {
         for (int x = 0; x < width; x++)
         {
@@ -133,6 +133,9 @@ public class GlobalMap : MonoBehaviour
 
     void OnDisable()
     {
+        EventBus.Remove<MyEvent.OnEntryMap>(GenerateMap);
+        EventBus.Remove<MyEvent.OnEntryMap>(DisplayMap);
+
         SaveSystem.onSave -= Save;
         SaveSystem.onLoad -= Load;
     }

@@ -4,7 +4,7 @@ public class MapManager : MonoBehaviour
 {
     [SerializeField] private GlobalMap globalMap;
 
-    public void StartLayer()
+    public void StartLayer(MyEvent.OnEntryMap _)
     {
 
     }
@@ -19,5 +19,10 @@ public class MapManager : MonoBehaviour
     void OnEnable()
     {
         EventBus.Add<MyEvent.OnEntryMap>(StartLayer);
+    }
+
+    void OnDisable()
+    {
+        EventBus.Remove<MyEvent.OnEntryMap>(StartLayer);
     }
 }

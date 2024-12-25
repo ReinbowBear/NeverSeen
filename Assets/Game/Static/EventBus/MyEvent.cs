@@ -8,5 +8,25 @@ public static class MyEvent
 
     //Battle Scene
     public class OnEntryBattle : EventArgs { }
+    public class OnStartBattle : EventArgs { }
     public class OnEndLevel : EventArgs { }
+
+    //gamelay
+    public class OnCharacterInit : EventArgs 
+    {
+        public readonly Character character;
+        public OnCharacterInit(Character newCharacter)
+        {
+            character = newCharacter;
+        }
+    }
+
+    public class OnEnemyInit : EventArgs 
+    {
+        public readonly Enemy enemy;
+        public OnEnemyInit(Enemy newEnemy)
+        {
+            enemy = newEnemy;
+        }
+    }
 }
