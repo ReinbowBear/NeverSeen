@@ -12,21 +12,6 @@ public class Inventory : MonoBehaviour
     public ItemSlot[] abilitys;
 
 
-    public void AddItem(int index)
-    {
-        for (byte i = 0; i < abilitys.Length; i++)
-        {
-            if (abilitys[i].GetItem() == null)
-            {
-                Item newItem = Instantiate(itemPrefab, abilitys[i].transform).GetComponent<Item>();
-                newItem.Init(gameAbilitys.containers[index]);
-
-                break;
-            }
-        }
-    }
-
-
     private void Save()
     {
         SaveInventory saveInventory = new SaveInventory();
@@ -67,6 +52,7 @@ public class Inventory : MonoBehaviour
         CharacterInstantiate.character.inventory = this;
     }
 
+
     void OnEnable()
     {
         EventBus.Add<MyEvent.OnCharacterInit>(GetCharacter);
@@ -83,6 +69,7 @@ public class Inventory : MonoBehaviour
         SaveSystem.onLoad -= Load;
     }
 }
+
 
 [System.Serializable]
 public struct SaveInventory

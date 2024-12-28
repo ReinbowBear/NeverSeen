@@ -1,11 +1,12 @@
+using System.Collections;
 using UnityEngine;
 
 public class WeaponControl : MonoBehaviour
 {
     [SerializeField] private Character character;
-    [SerializeField] private BarChange wpBar;
-    [Space]
     [SerializeField] private Transform weaponPoint;
+    [Space]
+    public BarChange wpBar;
 
     private Coroutine myCoroutine;
     private Weapon[] weapons;
@@ -56,25 +57,30 @@ public class WeaponControl : MonoBehaviour
     {
         weapons[weaponID].gameObject.SetActive(true);
 
-        StartAttack(null);
+        if (myCoroutine != null)
+        {
+            StopCoroutine(myCoroutine);
+        }
+        myCoroutine = StartCoroutine(Attaking(weaponID));
     }
 
-    public void StartAttack(MyEvent.OnStartBattle _)
+    public IEnumerator Attaking(byte weaponID)
     {
-        Debug.Log("атаки ещё нету");
-        //myCoroutine = currentWeapon.Activate();
+        while (myCoroutine != null)
+        {
+            weapons[weaponID].Activate();
+            yield return StartCoroutine(weapons[weaponID].Reload());
+        }
     }
 
 
     void OnEnable()
     {
         EventBus.Add<MyEvent.OnEntryBattle>(GetWeapon);
-        EventBus.Add<MyEvent.OnStartBattle>(StartAttack);
     }
 
     void OnDisable()
     {
         EventBus.Remove<MyEvent.OnEntryBattle>(GetWeapon);
-        EventBus.Remove<MyEvent.OnStartBattle>(StartAttack);
     }
 }

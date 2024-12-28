@@ -17,11 +17,13 @@ public class Ability : Applicable
     }
 
 
-    protected override IEnumerator Reload()
+    public override IEnumerator Reload()
     {
         cooldown = 0;
         while (cooldown != stats.reloadTime)
         {
+            character.weaponControl.wpBar.ChangeBar(cooldown, stats.reloadTime);
+
             cooldown += Time.deltaTime;
             yield return null;
         }
@@ -38,13 +40,8 @@ public class Ability : Applicable
     }
 
     public override IEnumerator Attacking()
-    {
-        StartCoroutine(Reload());
-        
-        if (character.entityManager.enemys[0] != null)
-        {
-            character.entityManager.enemys[0].health.TakeDamage(5);
-            yield return null;
-        }
+    {        
+        //
+        yield return null;
     }
 }

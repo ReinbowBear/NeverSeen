@@ -9,5 +9,6 @@ public class ArmorDataBase : ScriptableObject
 [System.Serializable]
 public class ArmorContainer : ItemContainer
 {
+    public byte test;
     //public ArmorSO stats;
 }

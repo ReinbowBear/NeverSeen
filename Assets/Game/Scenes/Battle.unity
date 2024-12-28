@@ -1167,7 +1167,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 398068804}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2292581e1d725144bb342663c97887f, type: 3}
   m_Name: 
@@ -3419,6 +3419,7 @@ GameObject:
   - component: {fileID: 1603785507}
   - component: {fileID: 1603785506}
   - component: {fileID: 1603785505}
+  - component: {fileID: 1603785508}
   m_Layer: 5
   m_Name: CharacterPanel
   m_TagString: Untagged
@@ -3518,6 +3519,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603785503}
   m_CullTransparentMesh: 1
+--- !u!114 &1603785508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1603785503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a76c055e9dd81d418485915a038dae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 1603785505}
+  itemPrefab: {fileID: 8156746577517630107, guid: 6743c623411223844940846b917fb6e8, type: 3}
+  gameWeapons: {fileID: 11400000, guid: 7e40e1174f75afd428f637cc0c19e68a, type: 2}
+  gameAbilitys: {fileID: 11400000, guid: 0015637d73db1db48b331f1287c90fb9, type: 2}
+  gameEquipment: {fileID: 11400000, guid: 9f8f05003f3ae534199f4d8337b97249, type: 2}
+  gameArmors: {fileID: 11400000, guid: d42f59f88492a984faa26611168971fd, type: 2}
 --- !u!1001 &1607841330
 PrefabInstance:
   m_ObjectHideFlags: 0

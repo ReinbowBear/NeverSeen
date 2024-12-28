@@ -7,33 +7,16 @@ public class EntityManager : MonoBehaviour
     [Space]
     [SerializeField] private BattleMap battleMap;
 
-    [HideInInspector] public Character[] characters;
-    [HideInInspector] public Enemy[] enemys;
 
-    void Awake()
-    {
-        characters = new Character[battleMap.CharacterPoints.Length];
-        enemys = new Enemy[battleMap.CharacterPoints.Length];
-    }
-
-
-    private void LoadCharacter(MyEvent.OnEntryBattle _)
-    {
-        AddCharacter(SaveSystem.gameData.saveChosenCharacter.chosenIndex);
-    }
-
-    
     public async void AddCharacter(byte index)
     {
-        for (byte i = 0; i < characters.Length; i++)
+        for (byte i = 0; i < battleMap.CharacterPoints.Length; i++)
         {
-            if (characters[i] = null)
+            if (battleMap.CharacterPoints[i].childCount == 0)
             {
                 GameObject newObject = await Content.GetAsset(gameCharacters.containers[index].prefab, battleMap.CharacterPoints[i]);
-                characters[i] = newObject.GetComponent<Character>();
-                
-                characters[i].entityManager = this;
-                MyEvent.OnCharacterInit newCharacterEvent = new MyEvent.OnCharacterInit(characters[i]);
+
+                MyEvent.OnCharacterInit newCharacterEvent = new MyEvent.OnCharacterInit(newObject.GetComponent<Character>());
                 EventBus.Invoke<MyEvent.OnCharacterInit>(newCharacterEvent);
                 
                 break;
@@ -43,17 +26,21 @@ public class EntityManager : MonoBehaviour
 
     public async void AddEnemy(int index)
     {
-        for (byte i = 0; i < enemys.Length; i++)
+        for (byte i = 0; i < battleMap.enemyPoints.Length; i++)
         {
-            if (enemys[i] = null)
+            if (battleMap.enemyPoints[i].childCount == 0)
             {
                 GameObject newObject = await Content.GetAsset(gameEnemys.containers[index].prefab, battleMap.enemyPoints[i]);
-                enemys[i] = newObject.GetComponent<Enemy>();
 
-                enemys[i].entityManager = this;
                 break;
             }
         }
+    }
+
+
+    private void LoadCharacter(MyEvent.OnEntryBattle _)
+    {
+        AddCharacter(SaveSystem.gameData.saveChosenCharacter.chosenIndex);
     }
 
 

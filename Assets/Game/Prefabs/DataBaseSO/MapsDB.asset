@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containers:
   - prefab:
-      m_AssetGUID: 
+      m_AssetGUID: 5912855b3b90a784c989438807d28a99
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0

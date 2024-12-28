@@ -4,8 +4,6 @@ using UnityEngine;
 public class Weapon : Applicable
 {
     [HideInInspector] public Character character;
-
-    //[SerializeField] public Effect effect;
     [SerializeField] protected WeaponSO weaponSO;
     [HideInInspector] public WeaponSO stats;
     protected bool isColldown;
@@ -17,16 +15,17 @@ public class Weapon : Applicable
     }
 
 
-    protected override IEnumerator Reload()
+    public override IEnumerator Reload()
     {
         isColldown = true;
         cooldown = 0;
         while (cooldown != stats.reloadTime)
         {
+            character.weaponControl.wpBar.ChangeBar(cooldown, stats.reloadTime);
+
             cooldown += Time.deltaTime;
             yield return null;
         }
-
         isColldown = false;
     }
 
@@ -40,13 +39,11 @@ public class Weapon : Applicable
 
     public override IEnumerator Attacking()
     {
-        StartCoroutine(Reload());
-
-        for (byte i = 0; i < character.entityManager.enemys.Length; i++)
+        for (byte i = 0; i < character.battleMap.enemyPoints.Length; i++)
         {
-            if (character.entityManager.enemys[i] != null && stats.targets[i] == true)
+            if (character.battleMap.enemyPoints[i].childCount < 0 && stats.targets[i] == true)
             {
-                character.entityManager.enemys[i].health.TakeDamage(stats.damage);
+                character.battleMap.enemyPoints[i].GetComponent<Enemy>().health.TakeDamage(stats.damage);
                 yield return null;
             }
         }

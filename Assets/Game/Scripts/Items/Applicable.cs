@@ -3,7 +3,7 @@ using UnityEngine;
 
 public abstract class Applicable : MonoBehaviour //класс переходник, что бы можно было запускать способности и оружия в CombatManager
 {
-    protected virtual IEnumerator Reload()
+    public virtual IEnumerator Reload()
     {
         yield return null;
     }

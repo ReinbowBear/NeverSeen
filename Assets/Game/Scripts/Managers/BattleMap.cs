@@ -17,14 +17,21 @@ public class BattleMap : MonoBehaviour
         await Content.GetAsset(maps.containers[index].prefab, transform);
     }
 
+    private void GetCharacter(MyEvent.OnCharacterInit CharacterInstantiate)
+    {
+        CharacterInstantiate.character.battleMap = this;
+    }
+
 
     void OnEnable()
     {
         EventBus.Add<MyEvent.OnEntryBattle>(StartedMap);
+        EventBus.Add<MyEvent.OnCharacterInit>(GetCharacter);
     }
 
     void OnDisable()
     {
         EventBus.Remove<MyEvent.OnEntryBattle>(StartedMap);
+        EventBus.Remove<MyEvent.OnCharacterInit>(GetCharacter);
     }  
 }
