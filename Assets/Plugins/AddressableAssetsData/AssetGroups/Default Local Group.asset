@@ -17,23 +17,13 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 38b0a7a2d15c3fc46906aec44545b327
   m_SerializeEntries:
-  - m_GUID: 89e2f43580b84f0428b275325d78f1ea
-    m_Address: Assets/Game/Battle/Entity/Characters/Weapon/Prefabs/Sword/Sword.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0cac7d5ffdacc5c43a1e66e7acddba1d
-    m_Address: Assets/Game/Battle/Entity/Characters/Weapon/Prefabs/Axe/Axe.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9f8c155d5577e1d4e9bada78a2165b1f
     m_Address: Assets/Game/Battle/Entity/Characters/Prefubs/Warrior/Warrior.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 8b370a3d2eeffe944a3ab6be74923db9
-    m_Address: Assets/Game/Battle/Entity/Characters/Weapon/Prefabs/Bow/Bow.prefab
+  - m_GUID: 433db7931ae421c46ac204a111674366
+    m_Address: Assets/Game/Prefabs/Items/Ability/Crit/Crit.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

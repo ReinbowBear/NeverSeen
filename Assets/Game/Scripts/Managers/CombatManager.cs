@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    private List<Applicable> Actions = new List<Applicable>();
+    private List<Ability> Actions = new List<Ability>();
     private Coroutine myCoroutine;
 
 
-    public void AddAction(Applicable applicable)
+    public void AddAction(Ability ability)
     {
-        Actions.Add(applicable);
+        Actions.Add(ability);
 
         if (myCoroutine == null)
         {
@@ -22,12 +22,10 @@ public class CombatManager : MonoBehaviour
     {
         while (Actions.Count > 0)
         {
-            yield return StartCoroutine(Actions[0].Attacking());
-            Actions.RemoveAt(0);
-
-            yield return new WaitForSeconds(0.1f);
+            Actions[0].Activate();
+            yield return Actions[0].AttackCorutine;
             
-            Debug.Log("тест");
+            Actions.RemoveAt(0);
         }
         
         myCoroutine = null;

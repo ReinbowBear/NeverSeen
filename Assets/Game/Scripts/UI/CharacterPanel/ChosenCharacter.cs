@@ -30,7 +30,7 @@ public class ChosenCharacter : MonoBehaviour
         health.text = newCharacter.stats.health.ToString();
         armor.text = newCharacter.stats.armor.ToString();
         manna.text = newCharacter.stats.manna.ToString();
-        mannaMultiplier.text = newCharacter.stats.mannaMultiplier.ToString();
+        mannaMultiplier.text = newCharacter.stats.mannaScale.ToString();
     }
 
 

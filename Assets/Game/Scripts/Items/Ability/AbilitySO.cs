@@ -18,7 +18,6 @@ public class AbilitySO : ScriptableObject
     public AbilityType abilityType;
     
     public byte damage;
-    public byte damageMultiplier;
-    [Space]
     public byte reloadTime;
+    public byte mannaCost;   
 }

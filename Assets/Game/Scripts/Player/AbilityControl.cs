@@ -3,19 +3,20 @@ using UnityEngine;
 public class AbilityControl : MonoBehaviour
 {
     [SerializeField] private Character character;
-    [SerializeField] private BarChange mpBar;
-    [Space]
     [SerializeField] private Transform abilityPoint;
+    [Space]
+    public BarChange mpBar;
+
 
     private Ability[] abilitys;
 
-    void Awake()
+    void Start()
     {
         abilitys = new Ability[character.inventory.abilitys.Length];
     }
 
 
-    private async void GetWeapon(MyEvent.OnEntryBattle _)
+    private async void GetAbility(MyEvent.OnEntryBattle _)
     {
         for (byte i = 0; i < character.inventory.abilitys.Length; i++)
         {
@@ -42,11 +43,11 @@ public class AbilityControl : MonoBehaviour
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnEntryBattle>(GetWeapon);
+        EventBus.Add<MyEvent.OnEntryBattle>(GetAbility);
     }
 
     void OnDisable()
     {
-        EventBus.Remove<MyEvent.OnEntryBattle>(GetWeapon);
+        EventBus.Remove<MyEvent.OnEntryBattle>(GetAbility);
     }
 }

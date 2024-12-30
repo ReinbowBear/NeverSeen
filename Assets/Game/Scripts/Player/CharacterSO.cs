@@ -7,8 +7,8 @@ public class CharacterSO : ScriptableObject
     public byte armor;
     [Space]
     public byte manna;
-    public float mannaMultiplier;
+    public float mannaScale;
     [Space]
-    public float damageMultiplier;
-    public float takeDamageMultiplier;
+    public float damageScale;
+    public float takeDamageScale;
 }

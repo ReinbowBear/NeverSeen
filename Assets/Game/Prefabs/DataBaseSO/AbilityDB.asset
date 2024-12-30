@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containers:
   - prefab:
-      m_AssetGUID: 
+      m_AssetGUID: 433db7931ae421c46ac204a111674366
       m_SubObjectName: 
       m_SubObjectType: 
       m_EditorAssetChanged: 0
     id: 0
     itemType: 2
-    UI: {fileID: 0}
-    stats: {fileID: 0}
+    UI: {fileID: 11400000, guid: fbb8ae8b5212f96449b00ce1e9551179, type: 2}
+    stats: {fileID: 11400000, guid: 7903e0d46ebde8a498efdca1a9f1424c, type: 2}

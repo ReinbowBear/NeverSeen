@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1587d0538ed1604a845e84e8902c4d7, type: 3}
-  m_Name: Warrior
+  m_Script: {fileID: 11500000, guid: b1ac5338d7bc6d343a37dda297fcd629, type: 3}
+  m_Name: CritSO
   m_EditorClassIdentifier: 
-  health: 80
-  armor: 0
-  manna: 40
-  mannaMultiplier: 1
-  damageMultiplier: 1
-  takeDamageMultiplier: 1
+  abilityType: 0
+  damage: 20
+  reloadTime: 4
+  mannaCost: 15

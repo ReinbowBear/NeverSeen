@@ -12,7 +12,6 @@ public class Character : MonoBehaviour
     public Health health;
     public Move move;
 
-    public WeaponControl weaponControl;
     public AbilityControl abilityControl;
     
     public EquipmentControl equipmentControl;

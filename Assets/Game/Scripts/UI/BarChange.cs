@@ -16,9 +16,5 @@ public class BarChange : MonoBehaviour
 
         float barChange = currentValue / maxValue;
         image.fillAmount = barChange;
-
-        Color newColor = image.color;
-        newColor.a = currentValue / maxValue;
-        image.color = newColor;
     }
 }

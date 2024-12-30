@@ -1,15 +1,15 @@
 using System.Collections;
 using UnityEngine;
 
-public class Ability : Applicable
+public class Ability : MonoBehaviour
 {
     [HideInInspector] public Character character;
 
     [SerializeField] protected AbilitySO abilitySO;
     [HideInInspector] public AbilitySO stats;
 
-    protected bool isColldown;
     protected float cooldown;
+    [HideInInspector] public Coroutine AttackCorutine;
 
     protected virtual void Awake()
     {
@@ -17,31 +17,57 @@ public class Ability : Applicable
     }
 
 
-    public override IEnumerator Reload()
+    public virtual void Prepare()
     {
-        cooldown = 0;
-        while (cooldown != stats.reloadTime)
-        {
-            character.weaponControl.wpBar.ChangeBar(cooldown, stats.reloadTime);
-
-            cooldown += Time.deltaTime;
-            yield return null;
-        }
-
-        isColldown = false;
-    }
-
-    public override void Activate()
-    {
-        if (isColldown != true)
+        if (cooldown >= stats.reloadTime)
         {
             character.combatManager.AddAction(this);
         }
     }
 
-    public override IEnumerator Attacking()
-    {        
-        //
+    public virtual void Activate()
+    {
+        Enemy enemy = GetEnemy(0);
+        AttackCorutine = StartCoroutine(GetAttack(enemy));
+        StartCoroutine(GetReload());
+    }
+
+
+    protected virtual Enemy GetEnemy(int index)
+    {
+        if (character.battleMap.enemyPoints[index].childCount > 0)
+        {
+            Enemy enemy = character.battleMap.enemyPoints[index].GetComponentInChildren<Enemy>();
+            return enemy;
+        }
+        return null;
+    }
+
+    protected virtual IEnumerator GetAttack(Enemy enemy)
+    {
+        if (enemy != null)
+        {
+            enemy.health.TakeDamage(stats.damage);
+        }
         yield return null;
+        AttackCorutine = null;
+    }
+
+    protected virtual IEnumerator GetReload()
+    {
+        cooldown = 0;
+        while (cooldown !>= stats.reloadTime)
+        {
+            character.abilityControl.mpBar.ChangeBar(cooldown, stats.reloadTime);
+
+            cooldown += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+
+    public virtual void False()
+    {
+        StopAllCoroutines();
     }
 }

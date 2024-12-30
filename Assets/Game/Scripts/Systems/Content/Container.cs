@@ -13,7 +13,6 @@ public abstract class ItemContainer : Container
     public enum ItemType
     {
         none,
-        weapon,
         ability,
         equipment,
         armor,
