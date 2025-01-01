@@ -14,7 +14,7 @@ public class CombatManager : MonoBehaviour
 
         if (myCoroutine == null)
         {
-            StartCoroutine(DoAction());
+            myCoroutine = StartCoroutine(DoAction());
         }
     }
 
@@ -23,11 +23,10 @@ public class CombatManager : MonoBehaviour
         while (Actions.Count > 0)
         {
             Actions[0].Activate();
-            yield return Actions[0].AttackCorutine;
+            yield return StartCoroutine(Actions[0].Activate());
             
             Actions.RemoveAt(0);
         }
-        
         myCoroutine = null;
     }
 

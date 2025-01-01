@@ -22,8 +22,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 433db7931ae421c46ac204a111674366
-    m_Address: Assets/Game/Prefabs/Items/Ability/Crit/Crit.prefab
+  - m_GUID: 6743c623411223844940846b917fb6e8
+    m_Address: Assets/Game/Prefabs/UI/Inventory/Item.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c170f4b56936efc448cd0db5309ad56a
+    m_Address: Assets/Game/Prefabs/Items/Ability/ability.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -16,12 +16,12 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     [HideInInspector] public Transform originalParent;
     private Tween tween;
 
-    public void Init(Container newItem)
+    public void Init(ItemContainer newItem)
     {
-        container = newItem as ItemContainer;
+        container = newItem;
         
-        image.sprite = container.UI.sprite;
-        itemName.text = container.UI.itemName;
+        image.sprite = container.sprite;
+        itemName.text = container.name;
     }
 
 

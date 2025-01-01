@@ -6,9 +6,9 @@ public class EquipmentControl : MonoBehaviour
 
     public void ApplyEquipment(MyEvent.OnEntryBattle _)
     {
-        for (byte i = 0; i < character.inventory.rings.Length; i++)
+        for (byte i = 0; i < character.inventory.ringSlots.Length; i++)
         {
-            if (character.inventory.rings[i].GetItem() != null)
+            if (character.inventory.ringSlots[i].GetItem() != null)
             {
                 //character.inventory.rings[i].GetItem().
             }
@@ -17,9 +17,9 @@ public class EquipmentControl : MonoBehaviour
 
     public void FalseEquipment()
     {
-        for (byte i = 0; i < character.inventory.rings.Length; i++)
+        for (byte i = 0; i < character.inventory.ringSlots.Length; i++)
         {
-            if (character.inventory.rings[i].GetItem() != null)
+            if (character.inventory.ringSlots[i].GetItem() != null)
             {
                 //character.inventory.rings[i].GetItem().
             }

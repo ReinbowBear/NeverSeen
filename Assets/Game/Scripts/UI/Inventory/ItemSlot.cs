@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 public class ItemSlot : MonoBehaviour, IDropHandler
 {
-    [SerializeField] private ItemContainer.ItemType slotType;
+    [SerializeField] private ItemType slotType;
     private Item item;
 
     public Item GetItem()
@@ -32,7 +32,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     {
         Item newItem = eventData.pointerDrag.GetComponent<Item>();
 
-        if (slotType == ItemContainer.ItemType.none || slotType == newItem.container.itemType)
+        if (slotType == ItemType.none || slotType == newItem.container.itemType)
         {
             SwapItems(newItem);
         }

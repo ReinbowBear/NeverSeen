@@ -2,31 +2,49 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private AbilityDataBase gameAbilitys;
-    [SerializeField] private GameObject itemPrefab;
-    [Space]
-    public ItemSlot[] weapons;
-    public ItemSlot[] rings;
-    public ItemSlot armor;
-    [Space]
-    public ItemSlot[] abilitys;
+    public ItemSlot[] abilitySlots;
+    public ItemSlot[] ringSlots;
+    public ItemSlot armorSlot;
+    private SaveInventory saveInventory;
 
 
     private void Save()
     {
-        SaveInventory saveInventory = new SaveInventory();
-        saveInventory.AbilityID = new int[abilitys.Length];
+        saveInventory = new SaveInventory();
+        saveInventory.abilitysID = new int[abilitySlots.Length];
+        saveInventory.ringsID = new int[abilitySlots.Length];
         
-        for (byte i = 0; i < abilitys.Length; i++)
+        for (byte i = 0; i < abilitySlots.Length; i++)
         {
-            if (abilitys[i].GetItem() != null)
+            if (abilitySlots[i].GetItem() != null)
             {
-                //saveInventory.AbilityID[i] = abilitys[i].GetItem().container.id;
+                saveInventory.abilitysID[i] = abilitySlots[i].GetItem().container.containerID;
             }
             else
             {
-                saveInventory.AbilityID[i] = -1;
+                saveInventory.abilitysID[i] = -1;
             }
+        }
+
+        for (byte i = 0; i < ringSlots.Length; i++)
+        {
+            if (ringSlots[i].GetItem() != null)
+            {
+                saveInventory.ringsID[i] = abilitySlots[i].GetItem().container.containerID;
+            }
+            else
+            {
+                saveInventory.ringsID[i] = -1;
+            }
+        }
+
+        if (armorSlot.GetItem() != null)
+        {
+            saveInventory.armorID = armorSlot.GetItem().container.containerID;
+        }
+        else
+        {
+            saveInventory.armorID = -1;
         }
 
         SaveSystem.gameData.saveInventory = saveInventory; 
@@ -34,16 +52,7 @@ public class Inventory : MonoBehaviour
 
     private void Load()
     {
-        SaveInventory saveInventory = SaveSystem.gameData.saveInventory;
-
-        for (byte i = 0; i < saveInventory.AbilityID.Length; i++)
-        {
-            if (saveInventory.AbilityID[i] < 0)
-            {
-                Item newItem = Instantiate(itemPrefab, abilitys[i].transform).GetComponent<Item>();
-                newItem.Init(gameAbilitys.containers[saveInventory.AbilityID[i]]);
-            }
-        }
+        saveInventory = SaveSystem.gameData.saveInventory;
     }
 
 
@@ -51,7 +60,6 @@ public class Inventory : MonoBehaviour
     {
         CharacterInstantiate.character.inventory = this;
     }
-
 
     void OnEnable()
     {
@@ -74,8 +82,7 @@ public class Inventory : MonoBehaviour
 [System.Serializable]
 public struct SaveInventory
 {
-    public int[] weaponID;
-    public int[] AbilityID;
-    public int[] ringID;
+    public int[] abilitysID;
+    public int[] ringsID;
     public int armorID;
 }

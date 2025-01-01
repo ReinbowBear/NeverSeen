@@ -12,24 +12,24 @@ public class AbilityControl : MonoBehaviour
 
     void Start()
     {
-        abilitys = new Ability[character.inventory.abilitys.Length];
+        abilitys = new Ability[character.inventory.abilitySlots.Length];
     }
 
 
-    private async void GetAbility(MyEvent.OnEntryBattle _)
+    private async void InitAbility(MyEvent.OnStartBattle _)
     {
-        for (byte i = 0; i < character.inventory.abilitys.Length; i++)
+        for (byte i = 0; i < character.inventory.abilitySlots.Length; i++)
         {
-            if (character.inventory.abilitys[i] != null)
+            if (character.inventory.abilitySlots[i].GetItem() != null)
             {
-                GameObject newAbility = await Content.GetAsset(character.inventory.abilitys[i].GetItem().container.prefab, abilityPoint);
-                abilitys[i] = newAbility.GetComponent<Ability>();
-                abilitys[i].character = character;
+                AbilityContainer newAbility = character.inventory.abilitySlots[i].GetItem().container as AbilityContainer;
+                abilitys[i] = await character.abilityFactory.GetAbility(newAbility.stats);
             }
         }
 
         for (byte i = 0; i < abilitys.Length; i++)
         {
+            abilitys[i].transform.SetParent(abilityPoint, false);
             abilitys[i].gameObject.SetActive(false);
         }
     }
@@ -43,11 +43,11 @@ public class AbilityControl : MonoBehaviour
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnEntryBattle>(GetAbility);
+        EventBus.Add<MyEvent.OnStartBattle>(InitAbility);
     }
 
     void OnDisable()
     {
-        EventBus.Remove<MyEvent.OnEntryBattle>(GetAbility);
+        EventBus.Remove<MyEvent.OnStartBattle>(InitAbility);
     }
 }

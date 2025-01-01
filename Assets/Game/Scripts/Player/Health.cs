@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        character.stats.health -= damage * character.stats.takeDamageScale;
+        character.stats.health -= damage;
         hpBar.ChangeBar(character.stats.health, character.stats.health);
 
         if (character.stats.health <= 0)

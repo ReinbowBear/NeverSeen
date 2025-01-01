@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 80
   armor: 0
+  abilitys: []
   manna: 40
-  mannaMultiplier: 1
-  damageMultiplier: 1
-  takeDamageMultiplier: 1
+  mannaRegen: 0
+  model: {fileID: -7511558181221131132, guid: 76af0439e0fd80c46814ce739c8614c7, type: 3}

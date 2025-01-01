@@ -5,7 +5,7 @@ public class Enemy : MonoBehaviour
     public EnemySO baseStats;
     [HideInInspector] public EnemySO stats;
 
-    [HideInInspector] public EntityManager entityManager;
+    [HideInInspector] public EntityFactory entityManager;
     [HideInInspector] public CombatManager combatManager;
     [HideInInspector] public Inventory inventory;
     

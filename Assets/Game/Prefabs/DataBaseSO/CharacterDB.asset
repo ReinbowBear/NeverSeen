@@ -9,15 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2edd9f9710735de42a55349ef026c541, type: 3}
+  m_Script: {fileID: 11500000, guid: 47679dfa025808247a66bb12f330af89, type: 3}
   m_Name: CharacterDB
   m_EditorClassIdentifier: 
   containers:
-  - prefab:
-      m_AssetGUID: 9f8c155d5577e1d4e9bada78a2165b1f
-      m_SubObjectName: 
-      m_SubObjectType: 
-      m_EditorAssetChanged: 0
-    id: 0
-    stats: {fileID: 11400000, guid: c10e79fff3a46404bb6b299b26cc96c2, type: 2}
-    UI: {fileID: 11400000, guid: 358ac3fd8b8bfd6469687b3599bb2338, type: 2}
+  - stats: {fileID: 0}
+    sprite: {fileID: 0}
+    name: 
+    description: 

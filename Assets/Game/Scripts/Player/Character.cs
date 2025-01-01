@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public CharacterSO baseStats;
-    [HideInInspector] public CharacterSO stats;
+    public EntitySO baseStats;
+    [HideInInspector] public EntitySO stats;
 
     [HideInInspector] public BattleMap battleMap;
     [HideInInspector] public CombatManager combatManager;
     [HideInInspector] public Inventory inventory;
+    [HideInInspector] public AbilityFactory abilityFactory;
     
     public Health health;
     public Move move;

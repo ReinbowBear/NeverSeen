@@ -5,19 +5,22 @@ public class Ability : MonoBehaviour
 {
     [HideInInspector] public Character character;
 
-    [SerializeField] protected AbilitySO abilitySO;
+    [SerializeField] private AbilitySO abilitySO;
     [HideInInspector] public AbilitySO stats;
 
-    protected float cooldown;
-    [HideInInspector] public Coroutine AttackCorutine;
+    [HideInInspector] public Target target;
+    [HideInInspector] public Trigger trigger;
+    [HideInInspector] public Effect effect;
 
-    protected virtual void Awake()
+    private float cooldown;
+
+    void Awake()
     {
         stats = Instantiate(abilitySO);
     }
 
 
-    public virtual void Prepare()
+    public void Prepare()
     {
         if (cooldown >= stats.reloadTime)
         {
@@ -25,35 +28,31 @@ public class Ability : MonoBehaviour
         }
     }
 
-    public virtual void Activate()
+    public IEnumerator Activate()
     {
-        Enemy enemy = GetEnemy(0);
-        AttackCorutine = StartCoroutine(GetAttack(enemy));
-        StartCoroutine(GetReload());
-    }
+        StartCoroutine(Reload());
 
-
-    protected virtual Enemy GetEnemy(int index)
-    {
-        if (character.battleMap.enemyPoints[index].childCount > 0)
+        Enemy[] enemys = target.GetTarget(character.battleMap);
+        foreach (Enemy enemy in enemys)
         {
-            Enemy enemy = character.battleMap.enemyPoints[index].GetComponentInChildren<Enemy>();
-            return enemy;
-        }
-        return null;
-    }
+            if (enemy == null)
+            {
+                continue;
+            }
 
-    protected virtual IEnumerator GetAttack(Enemy enemy)
-    {
-        if (enemy != null)
-        {
+
+            if (trigger != null && trigger.CheckTrigger() && effect != null)
+            {
+                effect.GetEffect(enemy);
+            }
+            
             enemy.health.TakeDamage(stats.damage);
+
+            yield return new WaitForSeconds(0.2f);
         }
-        yield return null;
-        AttackCorutine = null;
     }
 
-    protected virtual IEnumerator GetReload()
+    private IEnumerator Reload()
     {
         cooldown = 0;
         while (cooldown !>= stats.reloadTime)
@@ -66,7 +65,7 @@ public class Ability : MonoBehaviour
     }
 
 
-    public virtual void False()
+    public void False()
     {
         StopAllCoroutines();
     }
