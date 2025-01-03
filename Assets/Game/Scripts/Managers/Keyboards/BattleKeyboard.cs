@@ -3,16 +3,16 @@ using UnityEngine;
 public class BattleKeyboard : MonoBehaviour
 {
     public static GameInput gameInput;
-    private Character character;
+    private Entity character;
 
     void Awake()
     {
         gameInput = new GameInput();
     }
 
-    private void GetCharacter(MyEvent.OnCharacterInit CharacterInstantiate)
+    private void GetCharacter(MyEvent.OnEntityInit CharacterInstantiate)
     {
-        character = CharacterInstantiate.character;
+        character = CharacterInstantiate.entity;
     }
 
     private void KeyboardAbility(byte index)
@@ -33,7 +33,7 @@ public class BattleKeyboard : MonoBehaviour
         gameInput.Player.Slot_5.started += context => KeyboardAbility(5);
         gameInput.Player.Slot_6.started += context => KeyboardAbility(6);
 
-        EventBus.Add<MyEvent.OnCharacterInit>(GetCharacter);
+        EventBus.Add<MyEvent.OnEntityInit>(GetCharacter);
     }
 
     void OnDisable()
@@ -46,7 +46,7 @@ public class BattleKeyboard : MonoBehaviour
         gameInput.Player.Slot_5.started -= context => KeyboardAbility(5);
         gameInput.Player.Slot_6.started -= context => KeyboardAbility(6);
 
-        EventBus.Remove<MyEvent.OnCharacterInit>(GetCharacter);
+        EventBus.Remove<MyEvent.OnEntityInit>(GetCharacter);
 
         gameInput.Disable();
     }

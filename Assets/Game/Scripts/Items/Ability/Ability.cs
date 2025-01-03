@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Ability : MonoBehaviour
 {
-    [HideInInspector] public Character character;
+    [HideInInspector] public Entity character;
 
     [SerializeField] private AbilitySO abilitySO;
     [HideInInspector] public AbilitySO stats;
@@ -25,17 +25,17 @@ public class Ability : MonoBehaviour
         if (cooldown >= stats.reloadTime)
         {
             character.combatManager.AddAction(this);
+            StartCoroutine(Reload());
         }
     }
 
     public IEnumerator Activate()
     {
-        StartCoroutine(Reload());
+        Entity[] enemys = target.GetTarget(character.battleMap.points[!character.baseStats.isPlayer]);
 
-        Enemy[] enemys = target.GetTarget(character.battleMap);
-        foreach (Enemy enemy in enemys)
+        foreach (Entity entity in enemys)
         {
-            if (enemy == null)
+            if (entity == null)
             {
                 continue;
             }
@@ -43,10 +43,10 @@ public class Ability : MonoBehaviour
 
             if (trigger != null && trigger.CheckTrigger() && effect != null)
             {
-                effect.GetEffect(enemy);
+                effect.GetEffect(entity);
             }
             
-            enemy.health.TakeDamage(stats.damage);
+            entity.health.TakeDamage(stats.damage);
 
             yield return new WaitForSeconds(0.2f);
         }

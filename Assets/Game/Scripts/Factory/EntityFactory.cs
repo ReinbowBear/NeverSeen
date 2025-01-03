@@ -6,54 +6,60 @@ public class EntityFactory : MonoBehaviour
     [SerializeField] private AssetReference characterPrefab;
     [SerializeField] private AssetReference enemyPrefab;
     [Space]
-    [SerializeField] private EntityDataBase characterDataBase;
-    [SerializeField] private EntityDataBase enemyDataBase;
+    [SerializeField] private EntityDataBase gameCharacters;
+    [SerializeField] private EntityDataBase gameEnemys;
     [Space]
     [SerializeField] private BattleMap battleMap;
+    [SerializeField] private AbilityFactory abilityFactory;
 
 
     public async void GetCharacter(int index)
     {
-        for (byte i = 0; i < battleMap.CharacterPoints.Length; i++)
-        {
-            if (battleMap.CharacterPoints[i].childCount == 0)
-            {
-                GameObject newObject = await Content.GetAsset(characterPrefab, battleMap.CharacterPoints[i]);
-                Character character = newObject.GetComponent<Character>();
-                InitCharacter(index, character);
 
-                MyEvent.OnCharacterInit newEvent = new MyEvent.OnCharacterInit(character);
-                EventBus.Invoke<MyEvent.OnCharacterInit>(newEvent);
-                break;
+        GameObject newObject = await Content.GetAsset(characterPrefab);
+        Entity character = newObject.GetComponent<Entity>();
+
+        if (character.baseStats.isPlayer)
+        {
+            for (byte i = 0; i < battleMap.points[true].Length; i++)
+            {
+                if (battleMap.points[true][i].childCount == 0)
+                {
+                    character.transform.SetParent(battleMap.points[true][i], false);
+                }
             }
         }
-    }
-
-    public async void GetEnemy(int index)
-    {
-        for (byte i = 0; i < battleMap.enemyPoints.Length; i++)
+        else
         {
-            if (battleMap.enemyPoints[i].childCount == 0)
+            for (byte i = 0; i < battleMap.points[false].Length; i++)
             {
-                GameObject newObject = await Content.GetAsset(enemyPrefab, battleMap.enemyPoints[i]);
-                Enemy enemy = newObject.GetComponent<Enemy>();
-                InitEnemy(index, enemy);
-
-                MyEvent.OnEnemyInit newEvent = new MyEvent.OnEnemyInit(enemy);
-                EventBus.Invoke<MyEvent.OnEnemyInit>(newEvent);
-                break;
+                if (battleMap.points[false][i].childCount == 0)
+                {
+                    character.transform.SetParent(battleMap.points[false][i], false);
+                }
             }
         }
+
+        InitCharacter(index, character);
+
+        MyEvent.OnEntityInit newEvent = new MyEvent.OnEntityInit(character);
+        EventBus.Invoke<MyEvent.OnEntityInit>(newEvent);
     }
 
-    private void InitCharacter(int index, Character character)
+    private async void InitCharacter(int index, Entity character)
     {
-        Debug.Log("типа инициализация должна бЫть");
-    }
+        EntitySO data = gameCharacters.containers[index].stats;
 
-    private void InitEnemy(int index, Enemy enemy)
-    {
-        Debug.Log("типа инициализация должна бЫть");
+        character.model = data.model;
+        
+        for (byte i = 0; i < data.abilitys.Length; i++)
+        {
+            AbilityContainer abilityContainer = abilityFactory.GetContainerByName(data.abilitys[i]);
+            character.inventory.abilitys[i] = abilityContainer;
+
+            Ability ability = await abilityFactory.GetAbility(abilityContainer);
+            character.abilityControl.AddAbility(ability, i);
+        }
     }
 
 

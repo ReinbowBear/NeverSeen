@@ -2,17 +2,18 @@ using UnityEngine;
 
 public class Target
 {
-    public virtual Enemy[] GetTarget(BattleMap map)
+    public virtual Entity[] GetTarget(Transform[] mapPoints)
     {
-        //for (byte i = 0; i < map.Length; i++)
-        //{
-        //    if (map[i].childCount != 0)
-        //    {
-        //        Enemy enemy = map[i].GetComponentInChildren<Enemy>();
-        //        return enemy;
-        //    }
-        //}
-        Enemy[] enemies = new Enemy[map.enemyPoints.Length];
-        return null;
+        Entity[] enemies = new Entity[mapPoints.Length];
+        for (byte i = 0; i < mapPoints.Length; i++)
+        {
+            if (mapPoints[i].childCount != 0)
+            {
+                Entity enemy = mapPoints[i].GetComponentInChildren<Entity>();
+                enemies[i] = enemy;
+                break;
+            }
+        }
+        return enemies;
     }
 }

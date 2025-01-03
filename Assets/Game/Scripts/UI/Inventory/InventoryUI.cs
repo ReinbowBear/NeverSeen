@@ -1,11 +1,26 @@
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class InventoryUI : MonoBehaviour
 {
     public ItemSlot[] abilitySlots;
     public ItemSlot[] ringSlots;
     public ItemSlot armorSlot;
     private SaveInventory saveInventory;
+
+    private ItemFactory itemFactory;
+    private Entity myCharacter;
+
+    private async void ShowItems()
+    {
+        for (byte i = 0; i < myCharacter.inventory.abilitys.Length; i++)
+        {
+            if (myCharacter.inventory.abilitys[i] != null)
+            {
+                Item newItem = await itemFactory.GetItem(myCharacter.inventory.abilitys[i]);
+                abilitySlots[i].transform.SetParent(newItem.transform, false);
+            }
+        }
+    }
 
 
     private void Save()
@@ -56,14 +71,15 @@ public class Inventory : MonoBehaviour
     }
 
 
-    private void GetCharacter(MyEvent.OnCharacterInit CharacterInstantiate)
+    private void GetCharacter(MyEvent.OnEntityInit CharacterInstantiate)
     {
-        CharacterInstantiate.character.inventory = this;
+        myCharacter = CharacterInstantiate.entity;
     }
+
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnCharacterInit>(GetCharacter);
+        EventBus.Add<MyEvent.OnEntityInit>(GetCharacter);
 
         SaveSystem.onSave += Save;
         SaveSystem.onLoad += Load;
@@ -71,7 +87,7 @@ public class Inventory : MonoBehaviour
 
     void OnDisable()
     {
-        EventBus.Remove<MyEvent.OnCharacterInit>(GetCharacter);
+        EventBus.Remove<MyEvent.OnEntityInit>(GetCharacter);
 
         SaveSystem.onSave -= Save;
         SaveSystem.onLoad -= Load;

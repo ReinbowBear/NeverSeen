@@ -1,16 +1,4 @@
-using System;
 using UnityEngine;
-
-[CreateAssetMenu(fileName = "itemDB", menuName = "ScriptableObject/itemDB")]
-public class ItemDatabase : ScriptableObject
-{
-    public ItemContainer[] containers;
-
-    public ItemContainer GetItemByName(string name)
-    {
-        return Array.Find(containers, item => item.name == name);
-    }
-}
 
 [System.Serializable]
 public class ItemContainer

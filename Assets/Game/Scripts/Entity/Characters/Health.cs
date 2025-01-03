@@ -2,21 +2,21 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private Character character;
+    [SerializeField] private Entity entity;
     [SerializeField] private BarChange hpBar;
 
     void Start()
     {
-        hpBar.ChangeBar(character.baseStats.health, character.stats.health);
+        hpBar.ChangeBar(entity.baseStats.health, entity.stats.health);
     }
 
 
     public void TakeDamage(int damage)
     {
-        character.stats.health -= damage;
-        hpBar.ChangeBar(character.stats.health, character.stats.health);
+        entity.stats.health -= damage;
+        hpBar.ChangeBar(entity.stats.health, entity.stats.health);
 
-        if (character.stats.health <= 0)
+        if (entity.stats.health <= 0)
         {
             Death();
         }

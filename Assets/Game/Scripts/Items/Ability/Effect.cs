@@ -1,9 +1,8 @@
-using UnityEngine;
 
 public class Effect
 {
-    public virtual void GetEffect(Enemy enemy)
+    public virtual void GetEffect(Entity entity)
     {
-        Debug.Log("нет реализации");
+
     }
 }

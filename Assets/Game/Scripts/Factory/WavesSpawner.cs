@@ -14,7 +14,7 @@ public class WavesSpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(waveStruct.enemyDelays[currentEnemyID]);
 
-            entityFactory.GetEnemy(waveStruct.enemys[currentEnemyID]);
+            //entityFactory.GetEnemy(waveStruct.enemys[currentEnemyID]);
             currentEnemyID++;
         }
     }

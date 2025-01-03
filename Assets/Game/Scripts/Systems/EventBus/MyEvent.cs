@@ -12,21 +12,12 @@ public static class MyEvent
     public class OnEndLevel : EventArgs { }
 
     //gamelay
-    public class OnCharacterInit : EventArgs 
+    public class OnEntityInit : EventArgs 
     {
-        public readonly Character character;
-        public OnCharacterInit(Character newCharacter)
+        public readonly Entity entity;
+        public OnEntityInit(Entity newEntity)
         {
-            character = newCharacter;
-        }
-    }
-
-    public class OnEnemyInit : EventArgs 
-    {
-        public readonly Enemy enemy;
-        public OnEnemyInit(Enemy newEnemy)
-        {
-            enemy = newEnemy;
+            entity = newEntity;
         }
     }
 }

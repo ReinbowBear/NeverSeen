@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ModifierControl : MonoBehaviour
 {
+    [SerializeField] private Entity myCharacter;
     private Modifier modifier;
 
     public void AddModifier(Modifier newModifier)
@@ -12,6 +13,6 @@ public class ModifierControl : MonoBehaviour
         }
 
         modifier = newModifier;
-        modifier.Active();
+        modifier.Active(myCharacter);
     }
 }

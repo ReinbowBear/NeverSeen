@@ -8,11 +8,17 @@ public class AbilityFactory : MonoBehaviour
     [SerializeField] private AbilityDataBase gameAbilitys;
     [SerializeField] private AssetReference abilityPrefab;
 
-    public async Task<Ability> GetAbility(AbilitySO ability)
+    public AbilityContainer GetContainerByName(string abilityName)
     {
-        Type targetType = Type.GetType(ability.targetType.ToString());
-        Type triggerType = Type.GetType(ability.triggerType.ToString());
-        Type effectType = Type.GetType(ability.effectType.ToString());
+        return gameAbilitys.GetItemByName(abilityName);
+
+    }
+
+    public async Task<Ability> GetAbility(AbilityContainer ability)
+    {
+        Type targetType = Type.GetType(ability.stats.targetType.ToString());
+        Type triggerType = Type.GetType(ability.stats.triggerType.ToString());
+        Type effectType = Type.GetType(ability.stats.effectType.ToString());
 
         Target targetClass = (Target)Activator.CreateInstance(targetType);
         Trigger triggerClass = (Trigger)Activator.CreateInstance(triggerType);
@@ -27,22 +33,5 @@ public class AbilityFactory : MonoBehaviour
         newAbility.effect = effectClass;
         
         return newAbility;
-    }
-
-
-    private void GetCharacter(MyEvent.OnCharacterInit CharacterInstantiate)
-    {
-        CharacterInstantiate.character.abilityFactory = this;
-    }
-
-
-    void OnEnable()
-    {
-        EventBus.Add<MyEvent.OnCharacterInit>(GetCharacter);
-    }
-
-    void OnDisable()
-    {
-        EventBus.Remove<MyEvent.OnCharacterInit>(GetCharacter);
     }
 }

@@ -31,19 +31,19 @@ public class CombatManager : MonoBehaviour
     }
 
 
-    private void GetCharacter(MyEvent.OnCharacterInit CharacterInstantiate)
+    private void GetCharacter(MyEvent.OnEntityInit CharacterInstantiate)
     {
-        CharacterInstantiate.character.combatManager = this;
+        CharacterInstantiate.entity.combatManager = this;
     }
 
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnCharacterInit>(GetCharacter);
+        EventBus.Add<MyEvent.OnEntityInit>(GetCharacter);
     }
 
     void OnDisable()
     {
-        EventBus.Remove<MyEvent.OnCharacterInit>(GetCharacter);
+        EventBus.Remove<MyEvent.OnEntityInit>(GetCharacter);
     }
 }

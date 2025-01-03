@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Entity : MonoBehaviour
 {
     public EntitySO baseStats;
     [HideInInspector] public EntitySO stats;
+    [Space]
+    public MeshRenderer model;
 
     [HideInInspector] public BattleMap battleMap;
     [HideInInspector] public CombatManager combatManager;
-    [HideInInspector] public Inventory inventory;
-    [HideInInspector] public AbilityFactory abilityFactory;
-    
+    [HideInInspector] public Inventory inventory = new Inventory();
+
     public Health health;
     public Move move;
 
     public AbilityControl abilityControl;
-    
     public EquipmentControl equipmentControl;
     public ModifierControl modifierControl;
 
