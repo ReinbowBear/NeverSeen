@@ -1,6 +1,5 @@
-using UnityEngine;
 
-public class Trigger
+public class BaseTrigger
 {
    public virtual bool CheckTrigger()
    {

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "ability", menuName = "ScriptableObject/ability")]
@@ -9,6 +8,7 @@ public class AbilitySO : ScriptableObject
     public TargetType targetType;
     public TriggerType triggerType;
     public EffectType effectType;
+    public EffectContainer effectContainer; //данные для эффектов
     [Space]
     public byte damage;
     public byte push;
@@ -19,23 +19,23 @@ public class AbilitySO : ScriptableObject
     public AudioClip sound;
 }
 
-[Flags]
+//[System.Flags]
 public enum AbilityType
 {
-    melee, range, magic, support, defense, heavy, splash
+    melee, range, magic, support, defense, summons,
 }
 
 public enum TargetType
 {
-    yourself, first, second, last, all, previous, maxHp, lowHp,
+    BaseTarget, SecondTarget, LastTarget, AllTarget, _PreviousTarget, _MaxHpTarget, _LowHpTarget, _YourselfTarget
 }
 
 public enum TriggerType
 {
-    none, newTarget, previousTarget, secondAttack,
+    BaseTrigger, _NewTargetTrigger, _PreviousTargetTrigger, _SecondAttackTrigger,
 }
 
 public enum EffectType
 {
-    fire, poison, freeze, stun, heal, shield, pierce, weakness,
+    BaseEffect, _FireEffect, _PoisonEffect, _FreezeEffect, _StunEffect, _HealEffect, _ShieldEffect, _CritEffect
 }

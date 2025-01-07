@@ -10,10 +10,5 @@ public class EntityDataBase : ScriptableObject
 public class EntityContainer
 {
     public EntitySO stats;
-    [Space]
-    public Sprite sprite;
-    public string name;
-    [Space]
-    [TextArea(5, 0)]
-    public string description;
+    public InterfaceContainer UI;
 }

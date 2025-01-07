@@ -24,6 +24,6 @@ public class Health : MonoBehaviour
 
     private void Death()
     {
-        Content.DestroyAsset(gameObject);
+        Address.DestroyAsset(gameObject);
     }
 }

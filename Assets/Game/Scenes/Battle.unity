@@ -1540,6 +1540,7 @@ GameObject:
   - component: {fileID: 586321504}
   - component: {fileID: 586321507}
   - component: {fileID: 586321503}
+  - component: {fileID: 586321508}
   m_Layer: 0
   m_Name: Factory
   m_TagString: Untagged
@@ -1578,17 +1579,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterPrefab:
-    m_AssetGUID: 
+    m_AssetGUID: 9f8c155d5577e1d4e9bada78a2165b1f
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   enemyPrefab:
-    m_AssetGUID: 
+    m_AssetGUID: 984889377369f404fa3f48925633c730
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  gameCharacters: {fileID: 0}
-  gameEnemys: {fileID: 0}
+  gameCharacters: {fileID: 11400000, guid: b587fab258e52f546ab31467da7d80a2, type: 2}
+  gameEnemys: {fileID: 11400000, guid: df32249f536c03f41b6af30ab4ad70eb, type: 2}
   battleMap: {fileID: 398068808}
   abilityFactory: {fileID: 586321503}
 --- !u!114 &586321505
@@ -1633,6 +1634,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab:
     m_AssetGUID: 6743c623411223844940846b917fb6e8
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+--- !u!114 &586321508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586321502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3036b1a635a61cf41822e9daa2bda424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectPref:
+    m_AssetGUID: 
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

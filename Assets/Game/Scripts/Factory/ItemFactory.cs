@@ -8,7 +8,7 @@ public class ItemFactory : MonoBehaviour
 
     public async Task<Item> GetItem(ItemContainer itemContainer)
     {
-        var itemObject = await Content.GetAsset(itemPrefab);
+        var itemObject = await Address.GetAsset(itemPrefab);
         Item newItem = itemObject.GetComponent<Item>();
 
         newItem.Init(itemContainer);

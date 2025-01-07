@@ -3,15 +3,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class AbilityFactory : MonoBehaviour
+public class EffectFactory : MonoBehaviour
 {
-    [SerializeField] private AbilityDataBase gameAbilitys;
-    [SerializeField] private AssetReference abilityPrefab;
-
-    public AbilityContainer GetContainerByName(string abilityName)
-    {
-        return gameAbilitys.GetItemByName(abilityName);
-    }
+    //[SerializeField] private EffectDataBase gameEffects;
+    [SerializeField] private AssetReference effectPref;
 
     public async Task<Ability> GetAbility(AbilityContainer ability)
     {
@@ -24,7 +19,7 @@ public class AbilityFactory : MonoBehaviour
         BaseEffect effectClass = (BaseEffect)Activator.CreateInstance(effectType);
 
 
-        var AbilityObject = await Address.GetAsset(abilityPrefab);
+        var AbilityObject = await Address.GetAsset(effectPref);
         Ability newAbility = AbilityObject.GetComponent<Ability>();
 
         newAbility.target = targetClass;

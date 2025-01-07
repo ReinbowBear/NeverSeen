@@ -8,7 +8,7 @@ public class AbilityDataBase : ScriptableObject
 
     public AbilityContainer GetItemByName(string name)
     {
-        return Array.Find(containers, item => item.name == name);
+        return Array.Find(containers, item => item.UI.itemName == name);
     }
 }
 

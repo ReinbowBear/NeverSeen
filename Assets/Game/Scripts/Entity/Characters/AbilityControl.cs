@@ -26,7 +26,7 @@ public class AbilityControl : MonoBehaviour
 
     public void RemoveAbility(byte index)
     {
-        Content.DestroyAsset(abilitys[index].gameObject);
+        Address.DestroyAsset(abilitys[index].gameObject);
         abilitys[index] = null;
     }
 

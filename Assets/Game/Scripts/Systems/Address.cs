@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public static class Content
+public static class Address
 {
     public static async Task<GameObject> GetAsset(AssetReference address, Transform parent = null, bool worldSpace = false)
     {

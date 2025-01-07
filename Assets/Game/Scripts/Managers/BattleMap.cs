@@ -19,7 +19,7 @@ public class BattleMap : MonoBehaviour
 
     public async void LoadMap(byte index)
     {
-        await Content.GetAsset(maps.containers[index].prefab, transform);
+        await Address.GetAsset(maps.containers[index].prefab, transform);
     }
 
     private void GetCharacter(MyEvent.OnEntityInit CharacterInstantiate)

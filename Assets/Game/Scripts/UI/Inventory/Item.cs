@@ -20,8 +20,8 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         container = newItem;
         
-        image.sprite = container.sprite;
-        itemName.text = container.name;
+        image.sprite = container.UI.sprite;
+        itemName.text = container.UI.itemName;
     }
 
 

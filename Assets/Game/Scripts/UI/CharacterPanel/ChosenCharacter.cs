@@ -23,9 +23,9 @@ public class ChosenCharacter : MonoBehaviour
         chosenIndex = index;
         EntityContainer newCharacter = characters.containers[index]; //приведение к конкретному типу, в случаи ошибки возращает null
 
-        icon.sprite = newCharacter.sprite;
-        nameBar.text = newCharacter.name;
-        DescriptionBar.text = newCharacter.description;
+        icon.sprite = newCharacter.UI.sprite;
+        nameBar.text = newCharacter.UI.itemName;
+        DescriptionBar.text = newCharacter.UI.description;
 
         health.text = newCharacter.stats.health.ToString();
         armor.text = newCharacter.stats.armor.ToString();

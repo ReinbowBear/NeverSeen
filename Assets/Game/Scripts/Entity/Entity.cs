@@ -16,7 +16,7 @@ public class Entity : MonoBehaviour
 
     public AbilityControl abilityControl;
     public EquipmentControl equipmentControl;
-    public ModifierControl modifierControl;
+    public EffectControl modifierControl;
 
     void Awake()
     {

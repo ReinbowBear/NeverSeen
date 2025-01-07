@@ -16,27 +16,15 @@ public class EntityFactory : MonoBehaviour
     public async void GetCharacter(int index)
     {
 
-        GameObject newObject = await Content.GetAsset(characterPrefab);
+        GameObject newObject = await Address.GetAsset(characterPrefab);
         Entity character = newObject.GetComponent<Entity>();
 
-        if (character.baseStats.isPlayer)
+        bool side = character.baseStats.isPlayer;
+        for (byte i = 0; i < battleMap.points[side].Length; i++)
         {
-            for (byte i = 0; i < battleMap.points[true].Length; i++)
+            if (battleMap.points[side][i].childCount == 0)
             {
-                if (battleMap.points[true][i].childCount == 0)
-                {
-                    character.transform.SetParent(battleMap.points[true][i], false);
-                }
-            }
-        }
-        else
-        {
-            for (byte i = 0; i < battleMap.points[false].Length; i++)
-            {
-                if (battleMap.points[false][i].childCount == 0)
-                {
-                    character.transform.SetParent(battleMap.points[false][i], false);
-                }
+                character.transform.SetParent(battleMap.points[side][i], false);
             }
         }
 

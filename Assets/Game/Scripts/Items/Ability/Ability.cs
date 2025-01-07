@@ -8,9 +8,9 @@ public class Ability : MonoBehaviour
     [SerializeField] private AbilitySO abilitySO;
     [HideInInspector] public AbilitySO stats;
 
-    [HideInInspector] public Target target;
-    [HideInInspector] public Trigger trigger;
-    [HideInInspector] public Effect effect;
+    [HideInInspector] public BaseTarget target;
+    [HideInInspector] public BaseTrigger trigger;
+    [HideInInspector] public BaseEffect effect;
 
     private float cooldown;
 
@@ -31,23 +31,28 @@ public class Ability : MonoBehaviour
 
     public IEnumerator Activate()
     {
-        Entity[] enemys = target.GetTarget(character.battleMap.points[!character.baseStats.isPlayer]);
+        Transform[] targets = target.GetTarget(character.battleMap, character.baseStats.isPlayer);
 
-        foreach (Entity entity in enemys)
+        for (byte i = 0; i < targets.Length; i++)
         {
-            if (entity == null)
+            if (targets[i] == null)
             {
                 continue;
             }
 
 
-            if (trigger != null && trigger.CheckTrigger() && effect != null)
+            Entity enemy = targets[i].GetComponentInChildren<Entity>();
+
+            if (enemy != null && stats.damage != 0)
             {
-                effect.GetEffect(entity);
+                enemy.health.TakeDamage(stats.damage);
+            }
+
+            if (trigger.CheckTrigger())
+            {
+                effect.GetEffect(targets[i]);
             }
             
-            entity.health.TakeDamage(stats.damage);
-
             yield return new WaitForSeconds(0.2f);
         }
     }
