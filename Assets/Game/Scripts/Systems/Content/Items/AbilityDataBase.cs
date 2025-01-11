@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "abilityDB", menuName = "ScriptableObject/abilityDB")]
+[CreateAssetMenu(fileName = "AbilityDB", menuName = "ScriptableObject/DBability")]
 public class AbilityDataBase : ScriptableObject
 {
     public AbilityContainer[] containers;

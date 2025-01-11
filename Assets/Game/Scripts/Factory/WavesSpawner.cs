@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class WavesSpawner : MonoBehaviour
 {
-    [SerializeField] private EntityFactory entityFactory;
+    [SerializeField] private EntityManager entityManager;
     private byte currentEnemyID;
-
 
     public IEnumerator StartWave(WaveStruct waveStruct)
     {
@@ -14,7 +13,8 @@ public class WavesSpawner : MonoBehaviour
         {
             yield return new WaitForSeconds(waveStruct.enemyDelays[currentEnemyID]);
 
-            //entityFactory.GetEnemy(waveStruct.enemys[currentEnemyID]);
+            int index = waveStruct.enemys[currentEnemyID];
+            entityManager.AddEntity(Content.data.enemys.containers[index]);
             currentEnemyID++;
         }
     }

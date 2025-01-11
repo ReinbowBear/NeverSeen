@@ -18,22 +18,27 @@ MonoBehaviour:
   m_GUID: 38b0a7a2d15c3fc46906aec44545b327
   m_SerializeEntries:
   - m_GUID: 9f8c155d5577e1d4e9bada78a2165b1f
-    m_Address: Assets/Game/Battle/Entity/Characters/Prefubs/Warrior/Warrior.prefab
+    m_Address: CharacterPrefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6743c623411223844940846b917fb6e8
-    m_Address: Assets/Game/Prefabs/UI/Inventory/Item.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c170f4b56936efc448cd0db5309ad56a
-    m_Address: Assets/Game/Prefabs/Items/Ability/ability.prefab
+    m_Address: ItemPrefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 984889377369f404fa3f48925633c730
-    m_Address: Assets/Game/Prefabs/Enemys/Enemy.prefab
+    m_Address: EnemyPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9cfae189cf5f35e4ca579eea26c6f1a4
+    m_Address: EffectPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c170f4b56936efc448cd0db5309ad56a
+    m_Address: AbilityPrefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

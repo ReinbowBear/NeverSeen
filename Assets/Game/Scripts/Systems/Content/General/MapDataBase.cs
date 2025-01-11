@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[CreateAssetMenu(fileName = "mapsDB", menuName = "ScriptableObject/mapsDB")]
+[CreateAssetMenu(fileName = "MapsDB", menuName = "ScriptableObject/DBmaps")]
 public class MapDataBase : ScriptableObject
 {
     public MapContainer[] containers;

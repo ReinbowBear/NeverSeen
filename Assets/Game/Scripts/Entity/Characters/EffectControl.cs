@@ -1,16 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EffectControl : MonoBehaviour
 {
-    [SerializeField] private Entity myCharacter;
-    private Coroutine effect;
+    [HideInInspector] public Entity entity;
+    [HideInInspector] public List<Effect> effects = new List<Effect>();
 
-    public void AddEffect(BaseEffect newEffect)
+    public void AddEffect(Effect newEffect)
     {
-        if (effect != null)
-        {
-            StopCoroutine(effect);
-        }
-        effect = StartCoroutine(newEffect.EffectCoroutine(myCharacter));
+        effects.Add(newEffect);
+        StartCoroutine(newEffect.DoEffect(entity));
     }
 }

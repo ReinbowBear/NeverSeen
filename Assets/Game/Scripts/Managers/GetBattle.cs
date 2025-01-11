@@ -16,9 +16,14 @@ public class GetBattle : MonoBehaviour
 
         for (byte i = 0; i < waveStruct.enemys.Length; i++)
         {
-            waveStruct.enemyDelays[i] = random.Next(0, 10);
+            waveStruct.enemys[i] = random.Next(0, Content.data.enemys.containers.Length);
         }
 
+        for (byte i = 0; i < waveStruct.enemyDelays.Length; i++)
+        {
+            waveStruct.enemyDelays[i] = random.Next(0, 10);
+        }
+        
         StartCoroutine(wavesSpawner.StartWave(waveStruct));
     }
 }

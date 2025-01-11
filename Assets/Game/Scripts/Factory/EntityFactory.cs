@@ -1,69 +1,23 @@
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
-public class EntityFactory : MonoBehaviour
+public static class EntityFactory
 {
-    [SerializeField] private AssetReference characterPrefab;
-    [SerializeField] private AssetReference enemyPrefab;
-    [Space]
-    [SerializeField] private EntityDataBase gameCharacters;
-    [SerializeField] private EntityDataBase gameEnemys;
-    [Space]
-    [SerializeField] private BattleMap battleMap;
-    [SerializeField] private AbilityFactory abilityFactory;
-
-
-    public async void GetCharacter(int index)
+    public static async Task<Entity> GetEntity(EntityContainer container)
     {
-
-        GameObject newObject = await Address.GetAsset(characterPrefab);
-        Entity character = newObject.GetComponent<Entity>();
-
-        bool side = character.baseStats.isPlayer;
-        for (byte i = 0; i < battleMap.points[side].Length; i++)
-        {
-            if (battleMap.points[side][i].childCount == 0)
-            {
-                character.transform.SetParent(battleMap.points[side][i], false);
-            }
-        }
-
-        InitCharacter(index, character);
-
-        MyEvent.OnEntityInit newEvent = new MyEvent.OnEntityInit(character);
-        EventBus.Invoke<MyEvent.OnEntityInit>(newEvent);
-    }
-
-    private async void InitCharacter(int index, Entity character)
-    {
-        EntitySO data = gameCharacters.containers[index].stats;
-
-        character.model = data.model;
+        var characterObject = await Address.GetAssetByName("CharacterPrefab");
+        Entity character = characterObject.GetComponent<Entity>();
         
-        for (byte i = 0; i < data.abilitys.Length; i++)
+        for (byte i = 0; i < container.stats.abilitys.Length; i++)
         {
-            AbilityContainer abilityContainer = abilityFactory.GetContainerByName(data.abilitys[i]);
+            AbilityContainer abilityContainer = Content.data.abilitys.GetItemByName(container.stats.abilitys[i]);
             character.inventory.abilitys[i] = abilityContainer;
 
-            Ability ability = await abilityFactory.GetAbility(abilityContainer);
+            Ability ability = await AbilityFactory.GetAbility(abilityContainer);
             character.abilityControl.AddAbility(ability, i);
         }
+
+        character.Init();
+        return character;
     }
-
-
-    private void LoadCharacter(MyEvent.OnEntryBattle _)
-    {
-        GetCharacter(SaveSystem.gameData.saveChosenCharacter.chosenIndex);
-    }
-
-
-    void OnEnable()
-    {
-        EventBus.Add<MyEvent.OnEntryBattle>(LoadCharacter);
-    }
-
-    void OnDisable()
-    {
-        EventBus.Remove<MyEvent.OnEntryBattle>(LoadCharacter);
-    }  
 }

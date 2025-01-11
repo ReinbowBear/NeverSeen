@@ -52,7 +52,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void MoveToSlot()
     {
-        tween = rectTransform.DOAnchorPos(originalParent.position, 0.2f).OnComplete(() => { transform.SetParent(originalParent); tween = null; });
+        tween = rectTransform.DOAnchorPos(originalParent.position, 0.4f).OnComplete(() => { transform.SetParent(originalParent); tween = null; });
     }
 
 

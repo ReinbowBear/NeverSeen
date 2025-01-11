@@ -7,17 +7,17 @@ public class InventoryUI : MonoBehaviour
     public ItemSlot armorSlot;
     private SaveInventory saveInventory;
 
-    private ItemFactory itemFactory;
     private Entity myCharacter;
 
     private async void ShowItems()
     {
         for (byte i = 0; i < myCharacter.inventory.abilitys.Length; i++)
         {
-            if (myCharacter.inventory.abilitys[i] != null)
+            if (myCharacter.inventory.abilitys[i].stats != null) // инвентарь хранит екзмепляры классов контейнеров, так что прийдётся проверять наличие статов в них
             {
-                Item newItem = await itemFactory.GetItem(myCharacter.inventory.abilitys[i]);
-                abilitySlots[i].transform.SetParent(newItem.transform, false);
+                Item newItem = await ItemFactory.GetItem(myCharacter.inventory.abilitys[i]);
+                newItem.transform.SetParent(abilitySlots[i].transform, false);
+                newItem.Init(myCharacter.inventory.abilitys[i]);
             }
         }
     }
@@ -74,6 +74,7 @@ public class InventoryUI : MonoBehaviour
     private void GetCharacter(MyEvent.OnEntityInit CharacterInstantiate)
     {
         myCharacter = CharacterInstantiate.entity;
+        ShowItems();
     }
 
 

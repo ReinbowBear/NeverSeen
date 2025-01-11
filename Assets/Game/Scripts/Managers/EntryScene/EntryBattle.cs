@@ -10,6 +10,6 @@ public class EntryBattle : MonoBehaviour
             SaveSystem.onLoad.Invoke();
         }
 
-        EventBus.Invoke<MyEvent.OnEntryBattle>(null);
+        EventBus.Invoke<MyEvent.OnEntryBattle>();
     }
 }

@@ -4,19 +4,19 @@ using UnityEngine;
 public class Ability : MonoBehaviour
 {
     [HideInInspector] public Entity character;
-
-    [SerializeField] private AbilitySO abilitySO;
     [HideInInspector] public AbilitySO stats;
 
     [HideInInspector] public BaseTarget target;
     [HideInInspector] public BaseTrigger trigger;
-    [HideInInspector] public BaseEffect effect;
+    [HideInInspector] public Effect effect;
 
     private float cooldown;
+    [HideInInspector] public Transform[] targets;
 
-    void Awake()
+    public void Init(AbilitySO newStats)
     {
-        stats = Instantiate(abilitySO);
+        stats = Instantiate(newStats);
+        effect.data = newStats.effectStats;
     }
 
 
@@ -31,7 +31,7 @@ public class Ability : MonoBehaviour
 
     public IEnumerator Activate()
     {
-        Transform[] targets = target.GetTarget(character.battleMap, character.baseStats.isPlayer);
+        targets = target.GetTarget(character.battleMap, character);
 
         for (byte i = 0; i < targets.Length; i++)
         {
@@ -46,11 +46,11 @@ public class Ability : MonoBehaviour
             if (enemy != null && stats.damage != 0)
             {
                 enemy.health.TakeDamage(stats.damage);
-            }
 
-            if (trigger.CheckTrigger())
-            {
-                effect.GetEffect(targets[i]);
+                if (trigger.CheckTrigger())
+                {
+                    effect.GetEffect(targets[i]);
+                }
             }
             
             yield return new WaitForSeconds(0.2f);

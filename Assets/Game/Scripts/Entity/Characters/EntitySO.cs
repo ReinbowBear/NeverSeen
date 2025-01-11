@@ -13,5 +13,5 @@ public class EntitySO : ScriptableObject
     public byte manna;
     public float mannaRegen;
     [Space]
-    public MeshRenderer model;
+    public Mesh model;
 }

@@ -44,7 +44,7 @@ public static class EventBus
         }
     }
 
-    public static void Invoke<T>(T eventArgs) where T : EventArgs
+    public static void Invoke<T>(T eventArguments = null) where T : EventArgs
     {
         Type eventType = typeof(T);
         if (events.ContainsKey(eventType))
@@ -53,7 +53,7 @@ public static class EventBus
             {
                 if (listener.action is Action<T> typedAction)
                 {
-                    typedAction.Invoke(eventArgs); 
+                    typedAction.Invoke(eventArguments); 
                 }
             }
         }

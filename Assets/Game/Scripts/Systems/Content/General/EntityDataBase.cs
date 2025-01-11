@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "entityDB", menuName = "ScriptableObject/entityDB")]
+[CreateAssetMenu(fileName = "EntityDB", menuName = "ScriptableObject/DBentity")]
 public class EntityDataBase : ScriptableObject
 {
     public EntityContainer[] containers;
