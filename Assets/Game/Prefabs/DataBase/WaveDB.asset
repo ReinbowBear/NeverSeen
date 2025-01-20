@@ -9,15 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1587d0538ed1604a845e84e8902c4d7, type: 3}
-  m_Name: Warrior
+  m_Script: {fileID: 11500000, guid: 8600251b7d97813498a0e054c4578620, type: 3}
+  m_Name: WaveDB
   m_EditorClassIdentifier: 
-  isPlayer: 1
-  health: 160
-  armor: 10
-  abilitys:
-  - Fire
-  - Poison
-  manna: 40
-  mannaRegen: 2
-  model: {fileID: -8031619785718356097, guid: 76af0439e0fd80c46814ce739c8614c7, type: 3}
+  containers:
+  - enemys:
+    - Goblin
+    - Goblin

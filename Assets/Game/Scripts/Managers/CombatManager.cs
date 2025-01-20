@@ -22,9 +22,8 @@ public class CombatManager : MonoBehaviour
     {
         while (Actions.Count > 0)
         {
-            Actions[0].Activate();
             yield return StartCoroutine(Actions[0].Activate());
-            
+            yield return new WaitForSeconds(0.5f);
             Actions.RemoveAt(0);
         }
         myCoroutine = null;

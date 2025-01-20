@@ -10,14 +10,17 @@ public class BattleKeyboard : MonoBehaviour
         gameInput = new GameInput();
     }
 
-    private void GetCharacter(MyEvent.OnEntityInit CharacterInstantiate)
+    private void GetCharacter(MyEvent.OnEntityInit newEvent)
     {
-        character = CharacterInstantiate.entity;
+        if (newEvent.entity.baseStats.isPlayer == true)
+        {
+            character = newEvent.entity;
+        }
     }
 
     private void KeyboardAbility(byte index)
     {
-        character.abilityControl.ChoseAbility(index);
+        character.ChoseAbility(index);
     }
 
 

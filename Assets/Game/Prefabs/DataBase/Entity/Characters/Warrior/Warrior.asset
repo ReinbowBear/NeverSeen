@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47679dfa025808247a66bb12f330af89, type: 3}
-  m_Name: EnemyDB
+  m_Script: {fileID: 11500000, guid: f1587d0538ed1604a845e84e8902c4d7, type: 3}
+  m_Name: Warrior
   m_EditorClassIdentifier: 
-  containers:
-  - stats: {fileID: 11400000, guid: ef31e09c369f3154297500d09b43264b, type: 2}
-    UI:
-      sprite: {fileID: 0}
-      itemName: Goblin
-      description: 
+  isPlayer: 1
+  health: 180
+  armor: 10
+  abilitys:
+  - Fire
+  - Poison
+  manna: 40
+  mannaRegen: 2
+  model: {fileID: -8031619785718356097, guid: 76af0439e0fd80c46814ce739c8614c7, type: 3}

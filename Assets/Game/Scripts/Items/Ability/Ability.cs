@@ -10,23 +10,19 @@ public class Ability : MonoBehaviour
     [HideInInspector] public BaseTrigger trigger;
     [HideInInspector] public Effect effect;
 
-    private float cooldown;
+    public Coroutine cooldown;
     [HideInInspector] public Transform[] targets;
 
     public void Init(AbilitySO newStats)
     {
         stats = Instantiate(newStats);
-        effect.data = newStats.effectStats;
+        effect.stats = newStats.effectStats;
     }
 
 
     public void Prepare()
     {
-        if (cooldown >= stats.reloadTime)
-        {
-            character.combatManager.AddAction(this);
-            StartCoroutine(Reload());
-        }
+        character.combatManager.AddAction(this);
     }
 
     public IEnumerator Activate()
@@ -35,43 +31,28 @@ public class Ability : MonoBehaviour
 
         for (byte i = 0; i < targets.Length; i++)
         {
-            if (targets[i] == null)
-            {
-                continue;
-            }
-
-
             Entity enemy = targets[i].GetComponentInChildren<Entity>();
-
-            if (enemy != null && stats.damage != 0)
+            if (enemy != null)
             {
-                enemy.health.TakeDamage(stats.damage);
+                enemy.health.TakeDamage(stats.damage, stats.damageType);
 
                 if (trigger.CheckTrigger())
                 {
-                    effect.GetEffect(targets[i]);
+                    yield return effect.GetEffect(targets[i]);
                 }
-            }
-            
+            }            
             yield return new WaitForSeconds(0.2f);
         }
     }
 
-    private IEnumerator Reload()
+    public IEnumerator Reload()
     {
-        cooldown = 0;
-        while (cooldown !>= stats.reloadTime)
+        float timeLeft = 0;
+        while (timeLeft < stats.reloadTime)
         {
-            character.abilityControl.mpBar.ChangeBar(cooldown, stats.reloadTime);
-
-            cooldown += Time.deltaTime;
+            timeLeft += Time.deltaTime;
             yield return null;
         }
-    }
-
-
-    public void False()
-    {
-        StopAllCoroutines();
+        cooldown = null;
     }
 }

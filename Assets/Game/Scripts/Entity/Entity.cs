@@ -2,27 +2,80 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
-    public EntitySO baseStats;
-    [HideInInspector] public EntitySO stats;
+    [HideInInspector] public EntitySO baseStats;
+    [HideInInspector] public EntitySO currentStats;
     [Space]
-    public MeshFilter meshFilter;
-
+    public MeshFilter characterModel;
+    public MeshFilter weaponModel;
+    [Space]
+    public BarChange hpBar;
+    public BarChange mpBar;
+    [Space]
     [HideInInspector] public BattleMap battleMap;
     [HideInInspector] public CombatManager combatManager;
     [HideInInspector] public Inventory inventory = new Inventory();
 
 
     public Health health;
+    public Manna manna;
     public Move move;
 
-    public AbilityControl abilityControl;
-    public EquipmentControl equipmentControl;
+    public WeaponPoint weaponPoint = new WeaponPoint();
+    public AbilityControl abilityControl = new AbilityControl();
+    public EquipmentControl equipmentControl = new EquipmentControl();
     public EffectControl effectControl;
 
-    public void Init()
+
+    public void Init(EntitySO newStats)
     {
-        stats = Instantiate(baseStats); //копия данных не затрагивающая оригинал
-        meshFilter.mesh = stats.model;
-        effectControl.entity = this;
+        baseStats = Instantiate(newStats);
+        currentStats = Instantiate(newStats);
+
+        characterModel.mesh = currentStats.model;
+        health.hpBar.ChangeBar(baseStats.health, currentStats.health);
+        manna.mpBar.ChangeBar(baseStats.manna, currentStats.manna);
+
+        health.character = this;
+        manna.character = this;
+        move.character = this;
+
+        weaponPoint.character = this;
+        abilityControl.character = this;
+        equipmentControl.character = this;
+    }
+
+
+    public void CanAttack()
+    {
+        if (!baseStats.isPlayer)
+        {
+            EnemyLogic enemyLogic = GetComponent<EnemyLogic>();
+            enemyLogic.character = this;
+            enemyLogic.Init();
+        }
+    }
+
+    public void ChoseAbility(byte index)
+    {
+        Ability ability = abilityControl.abilitys[index];
+
+        if (ability == null)
+        {
+            return;
+        }
+
+        if (currentStats.manna < ability.stats.mannaCost)
+        {
+            return;
+        }
+
+        if (ability.cooldown == null)
+        {
+            ability.gameObject.SetActive(true);
+
+            ability.Prepare();
+            manna.TakeManna(ability.stats.mannaCost);
+            ability.cooldown = StartCoroutine(ability.Reload());
+        }
     }
 }

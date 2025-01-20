@@ -13,7 +13,7 @@ public class InventoryUI : MonoBehaviour
     {
         for (byte i = 0; i < myCharacter.inventory.abilitys.Length; i++)
         {
-            if (myCharacter.inventory.abilitys[i].stats != null) // инвентарь хранит екзмепляры классов контейнеров, так что прийдётся проверять наличие статов в них
+            if (myCharacter.inventory.abilitys[i] != null)
             {
                 Item newItem = await ItemFactory.GetItem(myCharacter.inventory.abilitys[i]);
                 newItem.transform.SetParent(abilitySlots[i].transform, false);
@@ -73,8 +73,11 @@ public class InventoryUI : MonoBehaviour
 
     private void GetCharacter(MyEvent.OnEntityInit CharacterInstantiate)
     {
-        myCharacter = CharacterInstantiate.entity;
-        ShowItems();
+        if (CharacterInstantiate.entity.currentStats.isPlayer == true)
+        {
+            myCharacter = CharacterInstantiate.entity;
+            ShowItems();
+        }
     }
 
 

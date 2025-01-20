@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ac5338d7bc6d343a37dda297fcd629, type: 3}
   m_Name: Poison
   m_EditorClassIdentifier: 
-  abilityType: 0
+  damageType: 0
   targetType: 0
   triggerType: 0
-  effectType: 0
-  effectStats:
-    summon: 
-    value: 0
-    duration: 0
-    image: {fileID: 0}
-    sound: {fileID: 0}
+  effectType: 2
   damage: 0
   push: 0
-  reloadTime: 0
-  mannaCost: 0
+  reloadTime: 5
+  mannaCost: 10
   model: {fileID: 0}
   sound: {fileID: 0}
+  effectStats:
+    summon: 
+    value: 5
+    duration: 5
+    isUpdate: 1
+    image: {fileID: 21300000, guid: 972fd17a34b6cc34fae7585d01d44505, type: 3}
+    sound: {fileID: 0}

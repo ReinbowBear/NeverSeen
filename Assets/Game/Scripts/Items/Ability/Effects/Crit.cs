@@ -1,18 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class Crit : MonoBehaviour
+public class Crit : Effect
 {
-    // Start is called before the first frame update
-    void Start()
+    public override void DoEffect(Entity character)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        character.health.TakeDamage((int)stats.value, DamageType.melee);
     }
 }

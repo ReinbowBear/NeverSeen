@@ -1,9 +1,10 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Move : MonoBehaviour
 {
-    [SerializeField] private Entity character;
-    private int myPos;
+    [HideInInspector] public Entity character;
+    [HideInInspector] public int myPos;
 
     public void MoveForward()
     {
@@ -15,7 +16,7 @@ public class Move : MonoBehaviour
         if (character.battleMap.points[character.baseStats.isPlayer][myPos-1].childCount == 0)
         {
             myPos--;
-            MoveAction(myPos);
+            DoMove(myPos);
         }
     }
 
@@ -29,14 +30,17 @@ public class Move : MonoBehaviour
         if (character.battleMap.points[character.baseStats.isPlayer][myPos+1].childCount == 0)
         {
             myPos++;
-            MoveAction(myPos);
+            DoMove(myPos);
         }
     }
 
 
-    private void MoveAction(int pos)
+    private void DoMove(int pos)
     {
-        character.transform.position = character.battleMap.points[character.baseStats.isPlayer][myPos].position;
         character.transform.SetParent(character.battleMap.points[character.baseStats.isPlayer][myPos]);
+
+        DOTween.Sequence()
+            .SetLink(gameObject)
+            .Append(transform.DOMove(character.battleMap.points[character.baseStats.isPlayer][myPos].position, 0.75f));
     }
 }

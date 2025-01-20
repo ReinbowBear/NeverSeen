@@ -13,18 +13,19 @@ MonoBehaviour:
   m_Name: Shield
   m_EditorClassIdentifier: 
   abilityType: 0
-  targetType: 0
+  targetType: 7
   triggerType: 0
-  effectType: 0
+  effectType: 6
   effectStats:
     summon: 
-    value: 0
-    duration: 0
+    value: 15
+    duration: 5
+    isUpdate: 0
     image: {fileID: 0}
     sound: {fileID: 0}
   damage: 0
   push: 0
   reloadTime: 0
-  mannaCost: 0
+  mannaCost: 10
   model: {fileID: 0}
   sound: {fileID: 0}

@@ -1,26 +1,15 @@
-using UnityEngine;
 
-public class AbilityControl : MonoBehaviour
+public class AbilityControl
 {
-    [SerializeField] private Entity entity;
-    [SerializeField] private Transform abilityPoint;
-    [Space]
-    public BarChange mpBar;
-
-    [HideInInspector] public Ability[] abilitys;
-
-    void Awake()
-    {
-        abilitys = new Ability[entity.inventory.abilitys.Length];
-    }
-
+    public Entity character;
+    public Ability[] abilitys = new Ability[8];
 
     public void AddAbility(Ability newAbility, byte index)
     {
         abilitys[index] = newAbility;
-        abilitys[index].character = entity;
+        abilitys[index].character = character;
 
-        abilitys[index].transform.SetParent(abilityPoint);
+        abilitys[index].transform.SetParent(character.weaponModel.transform);
         abilitys[index].gameObject.SetActive(false);
     }
 
@@ -28,11 +17,5 @@ public class AbilityControl : MonoBehaviour
     {
         Address.DestroyAsset(abilitys[index].gameObject);
         abilitys[index] = null;
-    }
-
-
-    public void ChoseAbility(byte index)
-    {
-        abilitys[index].Prepare();
     }
 }

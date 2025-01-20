@@ -1,22 +1,27 @@
-using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Effect
 {
-    public EffectSO data;
+    public EffectSO stats;
 
-    public virtual void GetEffect(Transform target)
+    public virtual async Task GetEffect(Transform target)
     {
         Entity enemy = target.GetComponentInChildren<Entity>();
 
         if (enemy != null)
         {
-            enemy.effectControl.AddEffect(this);
+            await enemy.effectControl.AddEffect(this);
         }
     }
 
-    public virtual IEnumerator DoEffect(Entity character)
+    public virtual void DoEffect(Entity character)
     {
-        yield return new WaitForSeconds(1);
+
+    }
+
+    public virtual void FalseEffect(Entity character)
+    {
+
     }
 }

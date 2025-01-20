@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class EquipmentControl : MonoBehaviour
+public class EquipmentControl
 {
-    [SerializeField] private Entity character;
+    public Entity character;
 
     public void ApplyEquipment(MyEvent.OnEntryBattle _)
     {
@@ -24,16 +24,5 @@ public class EquipmentControl : MonoBehaviour
         //        //character.inventory.rings[i].GetItem().
         //    }
         //}
-    }
-
-
-    void OnEnable()
-    {
-        EventBus.Add<MyEvent.OnEntryBattle>(ApplyEquipment);
-    }
-
-    void OnDisable()
-    {
-        EventBus.Remove<MyEvent.OnEntryBattle>(ApplyEquipment);
     }
 }

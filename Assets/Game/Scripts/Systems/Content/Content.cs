@@ -5,6 +5,8 @@ public class Content : MonoBehaviour
     public static Content data;
 
     public MapDataBase maps;
+    public WavesDataBase waves;
+    [Space]
     public EntityDataBase characters;
     public EntityDataBase enemys;
     [Space]

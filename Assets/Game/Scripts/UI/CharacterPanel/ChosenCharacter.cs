@@ -28,7 +28,7 @@ public class ChosenCharacter : MonoBehaviour
         DescriptionBar.text = newCharacter.UI.description;
 
         health.text = newCharacter.stats.health.ToString();
-        armor.text = newCharacter.stats.armor.ToString();
+        armor.text = newCharacter.stats.magicArmor.ToString();
         manna.text = newCharacter.stats.manna.ToString();
         mannaMultiplier.text = newCharacter.stats.mannaRegen.ToString();
     }

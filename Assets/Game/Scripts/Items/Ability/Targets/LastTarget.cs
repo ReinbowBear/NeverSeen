@@ -6,11 +6,11 @@ public class LastTarget : BaseTarget
     {
         Transform[] targets = new Transform[1];
 
-        for (int i = batleMap.points[!character.stats.isPlayer].Length; i > 0; i--)
+        for (int i = batleMap.points[!character.currentStats.isPlayer].Length; i > 0; i--)
         {
-            if (batleMap.points[!character.stats.isPlayer][i].childCount != 0)
+            if (batleMap.points[!character.currentStats.isPlayer][i].childCount != 0)
             {
-                targets[0] = batleMap.points[!character.stats.isPlayer][i];
+                targets[0] = batleMap.points[!character.currentStats.isPlayer][i];
             }
         }
         

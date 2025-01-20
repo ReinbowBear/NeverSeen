@@ -201,7 +201,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -223,8 +223,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 981902894743926390}
-  ImageText: {fileID: 8304818454012811374}
+  icon: {fileID: 0}
+  barImage: {fileID: 981902894743926390}
+  barText: {fileID: 8304818454012811374}
 --- !u!1 &6551395472126898871
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +389,7 @@ RectTransform:
   m_GameObject: {fileID: 7238336709868042820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.010000001, z: 0.010000001}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8815856106674710218}
@@ -421,7 +422,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!222 &1394496665632129215
 CanvasRenderer:
@@ -518,11 +519,11 @@ RectTransform:
   - {fileID: 1039811989511010429}
   m_Father: {fileID: 5027334874937708790}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 2.5}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -15}
   m_SizeDelta: {x: 80, y: 10}
-  m_Pivot: {x: 0.5, y: 0}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1354802363328400590
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -551,7 +552,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -573,5 +574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 4751487908020152008}
-  ImageText: {fileID: 109226283415532868}
+  icon: {fileID: 0}
+  barImage: {fileID: 4751487908020152008}
+  barText: {fileID: 109226283415532868}

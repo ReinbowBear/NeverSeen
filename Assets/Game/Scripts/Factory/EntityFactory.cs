@@ -1,5 +1,4 @@
 using System.Threading.Tasks;
-using UnityEngine;
 
 public static class EntityFactory
 {
@@ -7,7 +6,9 @@ public static class EntityFactory
     {
         var characterObject = await Address.GetAssetByName("CharacterPrefab");
         Entity character = characterObject.GetComponent<Entity>();
-        
+
+        character.Init(container.stats);
+
         for (byte i = 0; i < container.stats.abilitys.Length; i++)
         {
             AbilityContainer abilityContainer = Content.data.abilitys.GetItemByName(container.stats.abilitys[i]);
@@ -17,7 +18,11 @@ public static class EntityFactory
             character.abilityControl.AddAbility(ability, i);
         }
 
-        character.Init();
+        if (container.stats.isPlayer == false)
+        {
+            characterObject.AddComponent<EnemyLogic>();
+        }
+
         return character;
     }
 }

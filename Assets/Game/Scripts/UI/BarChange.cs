@@ -4,17 +4,15 @@ using UnityEngine.UI;
 
 public class BarChange : MonoBehaviour
 {
-    [SerializeField] private Image image;
-    [SerializeField] private TextMeshProUGUI ImageText;
+    public Image icon;
+    [SerializeField] private Image barImage;
+    [SerializeField] private TextMeshProUGUI barText;
     
     public void ChangeBar(float maxValue, float currentValue)
     {
-        if (ImageText != null)
-        {
-            ImageText.text = currentValue.ToString();
-        }
+        barText.text = currentValue.ToString();
 
         float barChange = currentValue / maxValue;
-        image.fillAmount = barChange;
+        barImage.fillAmount = barChange;
     }
 }

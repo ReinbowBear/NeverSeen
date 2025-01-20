@@ -20,4 +20,6 @@ public static class MyEvent
             entity = newEntity;
         }
     }
+
+    public class OnEnemyDeath : EventArgs { }
 }

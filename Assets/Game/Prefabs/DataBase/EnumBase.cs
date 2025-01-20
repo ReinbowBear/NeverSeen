@@ -1,8 +1,8 @@
 
 //[System.Flags]
-public enum AbilityType
+public enum DamageType
 {
-    melee, range, magic, support, defense, summons,
+    melee, range, magic
 }
 
 public enum TargetType

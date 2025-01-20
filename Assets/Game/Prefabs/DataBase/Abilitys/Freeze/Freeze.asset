@@ -15,16 +15,17 @@ MonoBehaviour:
   abilityType: 0
   targetType: 0
   triggerType: 0
-  effectType: 0
+  effectType: 3
   effectStats:
     summon: 
-    value: 0
-    duration: 0
+    value: 30
+    duration: 10
+    isUpdate: 0
     image: {fileID: 0}
     sound: {fileID: 0}
-  damage: 0
+  damage: 5
   push: 0
-  reloadTime: 0
-  mannaCost: 0
+  reloadTime: 5
+  mannaCost: 5
   model: {fileID: 0}
   sound: {fileID: 0}

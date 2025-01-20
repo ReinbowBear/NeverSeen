@@ -1,42 +1,81 @@
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class EntityManager : MonoBehaviour
 {
     [SerializeField] private BattleMap battleMap;
-    
-    public async void AddEntity(EntityContainer container)
-    {
-        Entity newEntity = await EntityFactory.GetEntity(container);
-        bool side = newEntity.baseStats.isPlayer;
+    private List<EntityContainer> toDoEntities = new List<EntityContainer>();
 
+    public void AddEntity(EntityContainer container)
+    {
+        if (container != null)
+        {
+            toDoEntities.Add(container);
+        }
+        else if (toDoEntities.Count == 0)
+        {
+            return;
+        }
+
+        bool side = toDoEntities[0].stats.isPlayer;
         for (byte i = 0; i < battleMap.points[side].Length; i++)
         {
             if (battleMap.points[side][i].childCount == 0)
             {
-                newEntity.transform.SetParent(battleMap.points[side][i], false);
+                MakeEntity(toDoEntities[0], side, i);
+                toDoEntities.RemoveAt(0);
                 break;
             }
         }
+    }
+    
+    private async void MakeEntity(EntityContainer container, bool side ,byte pos)
+    {
+        Entity newCharacter = await EntityFactory.GetEntity(container);
 
-        MyEvent.OnEntityInit newEvent = new MyEvent.OnEntityInit(newEntity);
+        MyEvent.OnEntityInit newEvent = new MyEvent.OnEntityInit(newCharacter);
         EventBus.Invoke<MyEvent.OnEntityInit>(newEvent);
+
+        newCharacter.transform.SetParent(battleMap.points[side][pos], false);
+        newCharacter.move.myPos = pos;
+        MoveToPos(newCharacter);
+    }
+
+    public void MoveToPos(Entity newCharacter)
+    {
+        newCharacter.transform.localScale = new Vector3(0.8f, 1.4f, 0.8f);
+        DOTween.Sequence()
+            .SetLink(newCharacter.gameObject)
+            .Append(newCharacter.transform.DOMove(new Vector3(newCharacter.transform.position.x, 8, newCharacter.transform.position.z), 0.75f).From()).SetEase(Ease.Linear)
+            .Append(newCharacter.transform.DOScale(new Vector3(1.2f, 0.8f, 1.2f), 0.15f)).SetEase(Ease.Linear)
+            .Append(newCharacter.transform.DOScale(new Vector3(1, 1, 1), 0.25f))
+            .OnComplete(() => { newCharacter.CanAttack(); });
     }
 
 
-    public void LoadCharacter(MyEvent.OnEntryBattle _)
+    private void LoadCharacter(MyEvent.OnEntryBattle _)
     {
         byte index = SaveSystem.gameData.saveChosenCharacter.chosenIndex;
         EntityContainer container = Content.data.characters.containers[index];
         AddEntity(container);
     }
 
+    private void OnDeathAddEntity(MyEvent.OnEnemyDeath _)
+    {
+        AddEntity(null);
+    }
+
+
     void OnEnable()
     {
         EventBus.Add<MyEvent.OnEntryBattle>(LoadCharacter);
+        EventBus.Add<MyEvent.OnEnemyDeath>(OnDeathAddEntity);
     }
 
     void OnDisable()
     {
         EventBus.Remove<MyEvent.OnEntryBattle>(LoadCharacter);
+        EventBus.Remove<MyEvent.OnEnemyDeath>(OnDeathAddEntity);
     }
 }
