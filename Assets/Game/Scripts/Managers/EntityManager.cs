@@ -5,20 +5,20 @@ using UnityEngine;
 public class EntityManager : MonoBehaviour
 {
     [SerializeField] private BattleMap battleMap;
-    private List<EntityContainer> toDoEntities = new List<EntityContainer>();
+    private List<EntitySO> toDoEntities = new List<EntitySO>();
 
-    public void AddEntity(EntityContainer container)
+    public void AddEntity(EntitySO newEntity)
     {
-        if (container != null)
+        if (newEntity != null)
         {
-            toDoEntities.Add(container);
+            toDoEntities.Add(newEntity);
         }
         else if (toDoEntities.Count == 0)
         {
             return;
         }
 
-        bool side = toDoEntities[0].stats.isPlayer;
+        bool side = toDoEntities[0].isPlayer;
         for (byte i = 0; i < battleMap.points[side].Length; i++)
         {
             if (battleMap.points[side][i].childCount == 0)
@@ -30,9 +30,9 @@ public class EntityManager : MonoBehaviour
         }
     }
     
-    private async void MakeEntity(EntityContainer container, bool side ,byte pos)
+    private async void MakeEntity(EntitySO newEntity, bool side ,byte pos)
     {
-        Entity newCharacter = await EntityFactory.GetEntity(container.stats);
+        Entity newCharacter = await EntityFactory.GetEntity(newEntity);
 
         MyEvent.OnEntityInit newEvent = new MyEvent.OnEntityInit(newCharacter);
         EventBus.Invoke<MyEvent.OnEntityInit>(newEvent);
@@ -57,8 +57,8 @@ public class EntityManager : MonoBehaviour
     private void LoadCharacter(MyEvent.OnEntryBattle _)
     {
         byte index = SaveSystem.gameData.saveChosenCharacter.chosenIndex;
-        EntityContainer container = Content.data.characters.containers[index];
-        AddEntity(container);
+        EntitySO entity = Content.data.characters.containers[index];
+        AddEntity(entity);
     }
 
     private void OnDeathAddEntity(MyEvent.OnEnemyDeath _)

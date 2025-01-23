@@ -12,7 +12,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler
 
     void Awake()
     {
-        EntityContainer character = characters.containers[characterIndex];
+        EntitySO character = characters.containers[characterIndex];
         image.sprite = character.UI.sprite;
     }
 

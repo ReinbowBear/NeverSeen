@@ -21,16 +21,16 @@ public class ChosenCharacter : MonoBehaviour
     public void RenderCharacter(byte index)
     {
         chosenIndex = index;
-        EntityContainer newCharacter = characters.containers[index]; //приведение к конкретному типу, в случаи ошибки возращает null
+        EntitySO newCharacter = characters.containers[index];
 
         icon.sprite = newCharacter.UI.sprite;
         nameBar.text = newCharacter.UI.itemName;
         DescriptionBar.text = newCharacter.UI.description;
 
-        health.text = newCharacter.stats.health.ToString();
-        armor.text = newCharacter.stats.magicArmor.ToString();
-        manna.text = newCharacter.stats.manna.ToString();
-        mannaMultiplier.text = newCharacter.stats.mannaRegen.ToString();
+        health.text = newCharacter.health.ToString();
+        armor.text = newCharacter.magicArmor.ToString();
+        manna.text = newCharacter.manna.ToString();
+        mannaMultiplier.text = newCharacter.mannaRegen.ToString();
     }
 
 

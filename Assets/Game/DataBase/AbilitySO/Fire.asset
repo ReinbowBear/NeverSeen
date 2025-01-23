@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ac5338d7bc6d343a37dda297fcd629, type: 3}
   m_Name: Fire
   m_EditorClassIdentifier: 
-  damageType: 0
+  UI:
+    sprite: {fileID: 0}
+    itemName: 
+    description: 
   targetType: 0
   triggerType: 0
   effectType: 1
-  damage: 5
-  push: 0
-  reloadTime: 4
-  mannaCost: 10
-  model: {fileID: 0}
-  sound: {fileID: 0}
   effectStats:
     summon: 
     value: 5
@@ -29,3 +26,10 @@ MonoBehaviour:
     isUpdate: 0
     image: {fileID: 21300000, guid: c5adc2a46fdda0c41bffc3963a13dd30, type: 3}
     sound: {fileID: 0}
+  damageType: 0
+  damage: 5
+  push: 0
+  reloadTime: 4
+  mannaCost: 10
+  model: {fileID: 0}
+  sound: {fileID: 0}
