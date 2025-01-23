@@ -1,19 +1,13 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AbilityDB", menuName = "ScriptableObject/DBability")]
+[CreateAssetMenu(fileName = "AbilityDB", menuName = "ScriptableObject/DataBase/AbilityDB")]
 public class AbilityDataBase : ScriptableObject
 {
-    public AbilityContainer[] containers;
+    public AbilitySO[] containers;
 
-    public AbilityContainer GetItemByName(string name)
+    public AbilitySO GetItemByName(string name)
     {
         return Array.Find(containers, item => item.UI.itemName == name);
     }
-}
-
-[System.Serializable]
-public class AbilityContainer : ItemContainer
-{
-    public AbilitySO stats;
 }

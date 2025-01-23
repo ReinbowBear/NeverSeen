@@ -1,24 +1,25 @@
 using System.Threading.Tasks;
+using UnityEngine;
 
 public static class EntityFactory
 {
-    public static async Task<Entity> GetEntity(EntityContainer container)
+    public static async Task<Entity> GetEntity(EntitySO entitySO)
     {
         var characterObject = await Address.GetAssetByName("CharacterPrefab");
         Entity character = characterObject.GetComponent<Entity>();
 
-        character.Init(container.stats);
+        character.Init(entitySO);
 
-        for (byte i = 0; i < container.stats.abilitys.Length; i++)
+        for (byte i = 0; i < entitySO.abilitys.Length; i++)
         {
-            AbilityContainer abilityContainer = Content.data.abilitys.GetItemByName(container.stats.abilitys[i]);
-            character.inventory.abilitys[i] = abilityContainer;
+            AbilitySO abilitySO = Content.data.abilityDataBase.GetItemByName(entitySO.abilitys[i]);
+            character.inventory.abilitys[i] = abilitySO;
 
-            Ability ability = await AbilityFactory.GetAbility(abilityContainer);
+            Ability ability = await AbilityFactory.GetAbility(abilitySO);
             character.abilityControl.AddAbility(ability, i);
         }
 
-        if (container.stats.isPlayer == false)
+        if (entitySO.isPlayer == false)
         {
             characterObject.AddComponent<EnemyLogic>();
         }

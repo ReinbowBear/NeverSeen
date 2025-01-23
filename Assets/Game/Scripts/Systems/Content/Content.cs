@@ -10,9 +10,9 @@ public class Content : MonoBehaviour
     public EntityDataBase characters;
     public EntityDataBase enemys;
     [Space]
-    public AbilityDataBase abilitys;
-    public AbilityDataBase rings;
-    public AbilityDataBase armors;
+    public AbilityDataBase abilityDataBase;
+    public AbilityDataBase ringDataBase;
+    public AbilityDataBase armorDataBase;
 
     Content()
     {
@@ -24,14 +24,14 @@ public class Content : MonoBehaviour
     {
         switch (type)
         {
-            case ItemType.ability:
-                return abilitys;
+            case ItemType.AbilitySO:
+                return abilityDataBase;
 
-            case ItemType.equipment:
-                return rings;
+            case ItemType.RingSO:
+                return ringDataBase;
                 
-            case ItemType.armor:
-                return armors;
+            case ItemType.ArmorSO:
+                return armorDataBase;
         }
         return null;
     }

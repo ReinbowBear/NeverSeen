@@ -7,7 +7,7 @@ public enum DamageType
 
 public enum TargetType
 {
-    BaseTarget, SecondTarget, LastTarget, AllTarget, _PreviousTarget, _MaxHpTarget, _LowHpTarget, _YourselfTarget
+    BaseTarget, SecondTarget, LastTarget, AllTarget, _PreviousTarget, _MaxHpTarget, _LowHpTarget, YourselfTarget
 }
 
 public enum TriggerType

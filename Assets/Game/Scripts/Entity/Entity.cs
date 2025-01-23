@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -10,6 +11,9 @@ public class Entity : MonoBehaviour
     [Space]
     public BarChange hpBar;
     public BarChange mpBar;
+    public BarChange meleeArmorBar;
+    public BarChange magicArmorBar;
+    public BarChange rangeArmorBar;
     [Space]
     [HideInInspector] public BattleMap battleMap;
     [HideInInspector] public CombatManager combatManager;
@@ -34,6 +38,10 @@ public class Entity : MonoBehaviour
         characterModel.mesh = currentStats.model;
         health.hpBar.ChangeBar(baseStats.health, currentStats.health);
         manna.mpBar.ChangeBar(baseStats.manna, currentStats.manna);
+
+        meleeArmorBar.ChangeBar(baseStats.meleeArmor, currentStats.meleeArmor);
+        magicArmorBar.ChangeBar(baseStats.magicArmor, currentStats.magicArmor);
+        rangeArmorBar.ChangeBar(baseStats.rangeArmor, currentStats.rangeArmor);
 
         health.character = this;
         manna.character = this;
@@ -76,6 +84,11 @@ public class Entity : MonoBehaviour
             ability.Prepare();
             manna.TakeManna(ability.stats.mannaCost);
             ability.cooldown = StartCoroutine(ability.Reload());
+
+            DOTween.Sequence()
+                .SetLink(gameObject)
+                .Append(transform.DOScale(new Vector3(1.1f, 0.8f, 1.1f), 0.25f))
+                .Append(transform.DOScale(new Vector3(1, 1, 1), 0.25f));
         }
     }
 }

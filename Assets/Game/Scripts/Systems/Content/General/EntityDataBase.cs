@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EntityDB", menuName = "ScriptableObject/DBentity")]
+[CreateAssetMenu(fileName = "EntityDB", menuName = "ScriptableObject/DataBase/EntityDB")]
 public class EntityDataBase : ScriptableObject
 {
     public EntityContainer[] containers;
@@ -16,5 +16,5 @@ public class EntityDataBase : ScriptableObject
 public class EntityContainer
 {
     public EntitySO stats;
-    public InterfaceContainer UI;
+    public InterfaceSO UI;
 }

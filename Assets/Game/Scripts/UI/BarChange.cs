@@ -12,7 +12,10 @@ public class BarChange : MonoBehaviour
     {
         barText.text = currentValue.ToString();
 
-        float barChange = currentValue / maxValue;
-        barImage.fillAmount = barChange;
+        if (barImage != null)
+        {
+            float barChange = currentValue / maxValue;
+            barImage.fillAmount = barChange;
+        }
     }
 }

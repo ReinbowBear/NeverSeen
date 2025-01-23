@@ -1,17 +1,24 @@
 using UnityEngine;
 
-[System.Serializable]
-public class ItemContainer
+public class ItemSO : ScriptableObject
 {
-    [HideInInspector] public byte containerID;
-    public ItemType itemType;
-    public InterfaceContainer UI;
+    public InterfaceSO UI;
+}
+
+[System.Serializable]
+public class InterfaceSO //вывел в отдельный класс, что бы можно было скрывать данные в инспекторе, удобно
+{
+    public Sprite sprite;
+    public string itemName;
+    [Space]
+    [TextArea(5, 0)]
+    public string description;
 }
 
 public enum ItemType
 {
-    none,
-    ability,
-    equipment,
-    armor,
+    None,
+    AbilitySO,
+    RingSO,
+    ArmorSO
 }

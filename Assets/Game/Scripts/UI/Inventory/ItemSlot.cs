@@ -32,7 +32,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     {
         Item newItem = eventData.pointerDrag.GetComponent<Item>();
 
-        if (slotType == ItemType.none || slotType == newItem.container.itemType)
+        if (slotType == ItemType.None || slotType.ToString() == newItem.itemSO.GetType().Name)
         {
             SwapItems(newItem);
         }

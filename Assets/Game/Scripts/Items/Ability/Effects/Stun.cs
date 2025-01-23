@@ -3,11 +3,11 @@ public class Stun : Effect
 {
     public override void DoEffect(Entity character)
     {
-        character.currentStats.mannaRegen -= stats.value;
+        character.manna.StopCoroutine(character.manna.coroutine);
     }
 
     public override void FalseEffect(Entity character)
     {
-        character.currentStats.mannaRegen += stats.value;
+        character.manna.TakeManna(0);
     }
 }

@@ -1,16 +1,18 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LastTarget : BaseTarget
 {
-    public override Transform[] GetTarget(BattleMap batleMap, Entity character)
+    public override List<Transform> GetTarget(BattleMap batleMap, Entity myCharacter)
     {
-        Transform[] targets = new Transform[1];
+        List<Transform> targets = new List<Transform>();
 
-        for (int i = batleMap.points[!character.currentStats.isPlayer].Length; i > 0; i--)
+        for (int i = batleMap.points[!myCharacter.currentStats.isPlayer].Length; i > 0; i--)
         {
-            if (batleMap.points[!character.currentStats.isPlayer][i].childCount != 0)
+            if (batleMap.points[!myCharacter.currentStats.isPlayer][i].childCount != 0)
             {
-                targets[0] = batleMap.points[!character.currentStats.isPlayer][i];
+                targets.Add(batleMap.points[!myCharacter.currentStats.isPlayer][i]);
+                break;
             }
         }
         

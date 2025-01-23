@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 
 public class EnemyLogic : MonoBehaviour
@@ -7,10 +8,7 @@ public class EnemyLogic : MonoBehaviour
 
     public void Init()
     {
-        character.currentStats.manna = 0;
-        character.manna.mpBar.ChangeBar(character.baseStats.manna ,character.currentStats.manna); //не хочу запускать анимацию так что не брал манну на прямую
-        character.manna.coroutine = character.manna.StartCoroutine(character.manna.MannaRegen());
-
+        character.manna.TakeManna((byte)character.currentStats.manna);
         StartCoroutine(Attack());
     }
     
@@ -18,7 +16,7 @@ public class EnemyLogic : MonoBehaviour
     public IEnumerator Attack()
     {
         yield return character.manna.coroutine;
-        while(true)
+        //while(true)
         {
             for (byte i = 0; i < character.abilityControl.abilitys.Length; i++)
             {
@@ -42,6 +40,11 @@ public class EnemyLogic : MonoBehaviour
         ability.gameObject.SetActive(true);
         ability.Prepare();
         character.manna.TakeManna((byte)character.currentStats.manna);
+
+        DOTween.Sequence()
+                .SetLink(gameObject)
+                .Append(transform.DOScale(new Vector3(1.1f, 0.8f, 1.1f), 0.25f))
+                .Append(transform.DOScale(new Vector3(1, 1, 1), 0.25f));
     }
 
 
@@ -57,7 +60,7 @@ public class EnemyLogic : MonoBehaviour
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnEnemyDeath>(OtherDeath);
+        EventBus.Add<MyEvent.OnEnemyDeath>(OtherDeath, 1);
         EventBus.Add<MyEvent.OnEndLevel>(EndBattle);
     }
 

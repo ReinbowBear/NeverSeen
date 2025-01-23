@@ -12,19 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ac5338d7bc6d343a37dda297fcd629, type: 3}
   m_Name: Bow
   m_EditorClassIdentifier: 
-  abilityType: 1
+  damageType: 0
   targetType: 1
   triggerType: 0
-  effectType: 0
-  effectStats:
-    summon: 
-    value: 0
-    duration: 0
-    image: {fileID: 0}
-    sound: {fileID: 0}
-  damage: 20
+  effectType: 7
+  damage: 10
   push: 0
   reloadTime: 4
   mannaCost: 20
   model: {fileID: 0}
   sound: {fileID: 0}
+  effectStats:
+    summon: 
+    value: 10
+    duration: 0
+    isUpdate: 0
+    image: {fileID: 0}
+    sound: {fileID: 0}

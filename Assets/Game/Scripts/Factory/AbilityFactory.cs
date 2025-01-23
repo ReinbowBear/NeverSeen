@@ -4,14 +4,14 @@ using UnityEngine;
 
 public static class AbilityFactory
 {    
-    public static async Task<Ability> GetAbility(AbilityContainer container)
+    public static async Task<Ability> GetAbility(AbilitySO abilitySO)
     {
         var abilityObject = await Address.GetAssetByName("AbilityPrefab");
         Ability ability = abilityObject.GetComponent<Ability>();
 
-        Type targetType = Type.GetType(container.stats.targetType.ToString());
-        Type triggerType = Type.GetType(container.stats.triggerType.ToString());
-        Type effectType = Type.GetType(container.stats.effectType.ToString());
+        Type targetType = Type.GetType(abilitySO.targetType.ToString());
+        Type triggerType = Type.GetType(abilitySO.triggerType.ToString());
+        Type effectType = Type.GetType(abilitySO.effectType.ToString());
 
         BaseTarget targetClass = (BaseTarget)Activator.CreateInstance(targetType);
         BaseTrigger triggerClass = (BaseTrigger)Activator.CreateInstance(triggerType);
@@ -21,7 +21,7 @@ public static class AbilityFactory
         ability.trigger = triggerClass;
         ability.effect = effectClass;
 
-        ability.Init(container.stats);
+        ability.Init(abilitySO);
         
         return ability;
     }

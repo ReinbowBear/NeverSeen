@@ -35,6 +35,7 @@ public class BattleKeyboard : MonoBehaviour
         gameInput.Player.Slot_4.started += context => KeyboardAbility(4);
         gameInput.Player.Slot_5.started += context => KeyboardAbility(5);
         gameInput.Player.Slot_6.started += context => KeyboardAbility(6);
+        gameInput.Player.Slot_7.started += context => KeyboardAbility(7);
 
         EventBus.Add<MyEvent.OnEntityInit>(GetCharacter);
     }
@@ -48,6 +49,7 @@ public class BattleKeyboard : MonoBehaviour
         gameInput.Player.Slot_4.started -= context => KeyboardAbility(4);
         gameInput.Player.Slot_5.started -= context => KeyboardAbility(5);
         gameInput.Player.Slot_6.started -= context => KeyboardAbility(6);
+        gameInput.Player.Slot_7.started -= context => KeyboardAbility(7);
 
         EventBus.Remove<MyEvent.OnEntityInit>(GetCharacter);
 

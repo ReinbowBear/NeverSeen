@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class BaseTarget
 {
-    public virtual Transform[] GetTarget(BattleMap batleMap, Entity character)
+    public virtual List<Transform> GetTarget(BattleMap batleMap, Entity myCharacter)
     {
         List<Transform> targets = new List<Transform>();
 
-        if (batleMap.points[!character.currentStats.isPlayer][0].childCount != 0)
+        if (batleMap.points[!myCharacter.currentStats.isPlayer][0].childCount != 0)
         {
-            targets.Add(batleMap.points[!character.currentStats.isPlayer][0]);
+            targets.Add(batleMap.points[!myCharacter.currentStats.isPlayer][0]);
         }
         
-        return targets.ToArray();
+        return targets;
     }
 }

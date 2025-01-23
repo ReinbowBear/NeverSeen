@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Ability : MonoBehaviour
@@ -11,7 +12,7 @@ public class Ability : MonoBehaviour
     [HideInInspector] public Effect effect;
 
     public Coroutine cooldown;
-    [HideInInspector] public Transform[] targets;
+    [HideInInspector] public List<Transform> targets = new List<Transform>();
 
     public void Init(AbilitySO newStats)
     {
@@ -29,7 +30,7 @@ public class Ability : MonoBehaviour
     {
         targets = target.GetTarget(character.battleMap, character);
 
-        for (byte i = 0; i < targets.Length; i++)
+        for (byte i = 0; i < targets.Count; i++)
         {
             Entity enemy = targets[i].GetComponentInChildren<Entity>();
             if (enemy != null)

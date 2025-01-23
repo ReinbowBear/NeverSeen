@@ -1,14 +1,15 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObject/Ability")]
-public class AbilitySO : ScriptableObject
+[CreateAssetMenu(fileName = "Ability", menuName = "ScriptableObject/Other/Ability")]
+public class AbilitySO : ItemSO
 {
-    public DamageType damageType;
     [Space]
     public TargetType targetType;
     public TriggerType triggerType;
     public EffectType effectType;
+    public EffectSO effectStats;
     [Space]
+    public DamageType damageType;
     public byte damage;
     public int push;
     public byte reloadTime;
@@ -16,6 +17,4 @@ public class AbilitySO : ScriptableObject
     [Space]
     public Mesh model;
     public AudioClip sound;
-    [Space]
-    public EffectSO effectStats;
 }

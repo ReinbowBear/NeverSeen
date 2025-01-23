@@ -1,15 +1,8 @@
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-[CreateAssetMenu(fileName = "MapsDB", menuName = "ScriptableObject/DBmaps")]
+[CreateAssetMenu(fileName = "MapsDB", menuName = "ScriptableObject/DataBase/MapsDB")]
 public class MapDataBase : ScriptableObject
 {
-    public MapContainer[] containers;
-}
-
-
-[System.Serializable]
-public class MapContainer
-{
-    public AssetReference prefab;
+    public AssetReference[] containers;
 }

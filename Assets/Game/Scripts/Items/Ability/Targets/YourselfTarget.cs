@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PreviousTarget : BaseTarget
+public class YourselfTarget : BaseTarget
 {
     public override List<Transform> GetTarget(BattleMap batleMap, Entity myCharacter)
     {
         List<Transform> targets = new List<Transform>();
-
-        Debug.Log("PreviousTarget ещё не работает!");
-
+        targets.Add(myCharacter.transform);
+        
         return targets;
     }
 }

@@ -26,18 +26,14 @@ public class InventoryUI : MonoBehaviour
     private void Save()
     {
         saveInventory = new SaveInventory();
-        saveInventory.abilitysID = new int[abilitySlots.Length];
-        saveInventory.ringsID = new int[abilitySlots.Length];
+        saveInventory.abilitys = new string[abilitySlots.Length];
+        saveInventory.rings = new string[abilitySlots.Length];
         
         for (byte i = 0; i < abilitySlots.Length; i++)
         {
             if (abilitySlots[i].GetItem() != null)
             {
-                saveInventory.abilitysID[i] = abilitySlots[i].GetItem().container.containerID;
-            }
-            else
-            {
-                saveInventory.abilitysID[i] = -1;
+                saveInventory.abilitys[i] = abilitySlots[i].GetItem().itemSO.UI.itemName;
             }
         }
 
@@ -45,21 +41,13 @@ public class InventoryUI : MonoBehaviour
         {
             if (ringSlots[i].GetItem() != null)
             {
-                saveInventory.ringsID[i] = abilitySlots[i].GetItem().container.containerID;
-            }
-            else
-            {
-                saveInventory.ringsID[i] = -1;
+                saveInventory.rings[i] = abilitySlots[i].GetItem().itemSO.UI.itemName;
             }
         }
 
         if (armorSlot.GetItem() != null)
         {
-            saveInventory.armorID = armorSlot.GetItem().container.containerID;
-        }
-        else
-        {
-            saveInventory.armorID = -1;
+            saveInventory.armor = armorSlot.GetItem().itemSO.UI.itemName;
         }
 
         SaveSystem.gameData.saveInventory = saveInventory; 
@@ -102,7 +90,7 @@ public class InventoryUI : MonoBehaviour
 [System.Serializable]
 public struct SaveInventory
 {
-    public int[] abilitysID;
-    public int[] ringsID;
-    public int armorID;
+    public string[] abilitys;
+    public string[] rings;
+    public string armor;
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using DG.Tweening;
 using UnityEngine;
 
 public class Manna : MonoBehaviour
@@ -13,18 +12,13 @@ public class Manna : MonoBehaviour
         character.currentStats.manna -= mannaCost;
         mpBar.ChangeBar(character.baseStats.manna, character.currentStats.manna);
 
-        DOTween.Sequence()
-                .SetLink(gameObject)
-                .Append(transform.DOScale(new Vector3(1.1f, 0.8f, 1.1f), 0.25f))
-                .Append(transform.DOScale(new Vector3(1, 1, 1), 0.25f));
-
         if (coroutine == null)
         {
             coroutine = StartCoroutine(MannaRegen());
         }
     }
 
-    public IEnumerator MannaRegen()
+    private IEnumerator MannaRegen()
     {
         while (character.currentStats.manna < character.baseStats.manna)
         {

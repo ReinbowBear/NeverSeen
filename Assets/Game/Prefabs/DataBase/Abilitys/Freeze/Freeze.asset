@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ac5338d7bc6d343a37dda297fcd629, type: 3}
   m_Name: Freeze
   m_EditorClassIdentifier: 
-  abilityType: 0
+  damageType: 0
   targetType: 0
   triggerType: 0
   effectType: 3
-  effectStats:
-    summon: 
-    value: 30
-    duration: 10
-    isUpdate: 0
-    image: {fileID: 0}
-    sound: {fileID: 0}
   damage: 5
   push: 0
   reloadTime: 5
   mannaCost: 5
   model: {fileID: 0}
   sound: {fileID: 0}
+  effectStats:
+    summon: 
+    value: 0.5
+    duration: 10
+    isUpdate: 0
+    image: {fileID: 21300000, guid: 73221b7923208f1499ee51412ef293c2, type: 3}
+    sound: {fileID: 0}

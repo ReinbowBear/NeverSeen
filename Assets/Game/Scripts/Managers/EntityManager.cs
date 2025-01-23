@@ -32,7 +32,7 @@ public class EntityManager : MonoBehaviour
     
     private async void MakeEntity(EntityContainer container, bool side ,byte pos)
     {
-        Entity newCharacter = await EntityFactory.GetEntity(container);
+        Entity newCharacter = await EntityFactory.GetEntity(container.stats);
 
         MyEvent.OnEntityInit newEvent = new MyEvent.OnEntityInit(newCharacter);
         EventBus.Invoke<MyEvent.OnEntityInit>(newEvent);

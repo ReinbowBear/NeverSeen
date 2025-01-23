@@ -14,9 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   health: 40
-  armor: 0
+  meleeArmor: 0
+  rangeArmor: 0
+  magicArmor: 10
+  manna: 10
+  mannaRegen: 2
   abilitys:
   - Poison
-  manna: 20
-  mannaRegen: 2
+  - Poison
+  - Fire
   model: {fileID: -8031619785718356097, guid: 76af0439e0fd80c46814ce739c8614c7, type: 3}

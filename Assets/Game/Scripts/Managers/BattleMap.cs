@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class BattleMap : MonoBehaviour
 {
@@ -16,9 +17,9 @@ public class BattleMap : MonoBehaviour
     }
 
 
-    public async void LoadMap(MapContainer container)
+    public async void LoadMap(AssetReference asset)
     {
-        map = await Address.GetAsset(container.prefab, transform);
+        map = await Address.GetAsset(asset, transform);
     }
 
 

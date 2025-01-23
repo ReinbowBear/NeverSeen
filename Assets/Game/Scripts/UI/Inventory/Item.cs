@@ -7,21 +7,18 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {    
     [SerializeField] private Image image;
-    [SerializeField] private TextMeshProUGUI itemName;
     [Space]
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private RectTransform rectTransform;
 
-    [HideInInspector] public ItemContainer container;
+    [HideInInspector] public ItemSO itemSO;
     [HideInInspector] public Transform originalParent;
     private Tween tween;
 
-    public void Init(ItemContainer newItem)
+    public void Init(ItemSO newItem)
     {
-        container = newItem;
-        
-        image.sprite = container.UI.sprite;
-        itemName.text = container.UI.itemName;
+        itemSO = newItem;
+        image.sprite = itemSO.UI.sprite;
     }
 
 
