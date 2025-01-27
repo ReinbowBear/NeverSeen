@@ -4,43 +4,46 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     [HideInInspector] public Entity character;
-    [HideInInspector] public int myPos;
+    [HideInInspector] public int pos;
 
-    public void MoveForward()
+    public void MoveTo(int moveValue)
     {
-        if (myPos == 0)
+        Transform[] mySide = character.battleMap.points[character.baseStats.isPlayer];
+
+        if (pos + moveValue < 0 || pos + moveValue > mySide.Length)
         {
             return;
         }
 
-        if (character.battleMap.points[character.baseStats.isPlayer][myPos-1].childCount == 0)
+        if (mySide[pos + moveValue].childCount != 0)
         {
-            myPos--;
-            DoMove(myPos);
+            Entity otherCharacter = mySide[pos + moveValue].GetComponentInChildren<Entity>();
+            int otherCharacterPos;
+
+            if (pos > otherCharacter.move.pos)
+            {
+                otherCharacterPos = 1;
+            }
+            else
+            {
+                otherCharacterPos = -1;
+            }
+
+            character.transform.parent = null;
+            otherCharacter.move.MoveTo(otherCharacterPos);
         }
+
+        pos += moveValue;
+        AnimToPos(mySide);
     }
 
-    public void MoveBack()
+
+    private void AnimToPos(Transform[] mySide)
     {
-        if (myPos == character.battleMap.points[character.baseStats.isPlayer].Length)
-        {
-            return;
-        }
-
-        if (character.battleMap.points[character.baseStats.isPlayer][myPos+1].childCount == 0)
-        {
-            myPos++;
-            DoMove(myPos);
-        }
-    }
-
-
-    private void DoMove(int pos)
-    {
-        character.transform.SetParent(character.battleMap.points[character.baseStats.isPlayer][myPos]);
+        character.transform.SetParent(mySide[pos]);
 
         DOTween.Sequence()
             .SetLink(gameObject)
-            .Append(transform.DOMove(character.battleMap.points[character.baseStats.isPlayer][myPos].position, 0.75f));
+            .Append(transform.DOMove(mySide[pos].position, 0.75f));
     }
 }

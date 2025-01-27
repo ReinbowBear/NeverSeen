@@ -4,9 +4,7 @@ using UnityEngine;
 public class AbilitySO : ItemSO
 {
     [Space]
-    public TargetType targetType;
-    public TriggerType triggerType;
-    public EffectType effectType;
+    public TargetSO targetStats;
     public EffectSO effectStats;
     [Space]
     public DamageType damageType;
@@ -17,4 +15,10 @@ public class AbilitySO : ItemSO
     [Space]
     public Mesh model;
     public AudioClip sound;
+}
+
+//[System.Flags]
+public enum DamageType
+{
+    physics, magic
 }

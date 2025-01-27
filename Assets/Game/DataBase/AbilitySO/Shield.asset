@@ -12,20 +12,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1ac5338d7bc6d343a37dda297fcd629, type: 3}
   m_Name: Shield
   m_EditorClassIdentifier: 
-  damageType: 0
-  targetType: 7
-  triggerType: 0
-  effectType: 6
-  damage: 0
-  push: 0
-  reloadTime: 10
-  mannaCost: 10
-  model: {fileID: 0}
-  sound: {fileID: 0}
+  UI:
+    sprite: {fileID: 0}
+    itemName: Shield
+    description: 
+  targetStats:
+    targetType: 0
+    isEntitySide: 0
+    midDist: 0
+    maxDist: 0
   effectStats:
+    effectType: 0
     summon: 
     value: 10
-    duration: 5
+    duration: 10
     isUpdate: 0
     image: {fileID: 21300000, guid: a6d3f91955a8b354bb0745c2697d560b, type: 3}
     sound: {fileID: 0}
+  damageType: 0
+  damage: 0
+  push: 0
+  reloadTime: 20
+  mannaCost: 10
+  model: {fileID: 0}
+  sound: {fileID: 0}

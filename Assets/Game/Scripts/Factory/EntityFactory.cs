@@ -12,10 +12,8 @@ public static class EntityFactory
 
         for (byte i = 0; i < entitySO.abilitys.Length; i++)
         {
-            AbilitySO abilitySO = Content.data.abilityDataBase.GetItemByName(entitySO.abilitys[i]);
-            character.inventory.abilitys[i] = abilitySO;
-
-            Ability ability = await AbilityFactory.GetAbility(abilitySO);
+            Ability ability = await AbilityFactory.GetAbility(entitySO.abilitys[i]);
+            
             character.abilityControl.AddAbility(ability, i);
         }
 

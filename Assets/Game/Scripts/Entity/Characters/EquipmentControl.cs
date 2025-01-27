@@ -4,7 +4,7 @@ public class EquipmentControl
 {
     public Entity character;
 
-    public void ApplyEquipment(MyEvent.OnEntryBattle _)
+    public void ApplyEquipment()
     {
         //for (byte i = 0; i < character.inventory.rings.Length; i++)
         //{

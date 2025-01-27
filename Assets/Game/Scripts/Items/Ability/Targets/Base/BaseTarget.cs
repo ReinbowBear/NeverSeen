@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AllTarget : BaseTarget
+public class BaseTarget
 {
-    public override List<Transform> GetTarget(BattleMap batleMap, Entity myCharacter)
+    public TargetSO stats;
+
+    public virtual List<Transform> GetTarget(BattleMap batleMap, Entity myCharacter)
     {
         List<Transform> targets = new List<Transform>();
 
@@ -12,9 +14,11 @@ public class AllTarget : BaseTarget
             if (batleMap.points[!myCharacter.currentStats.isPlayer][i].childCount != 0)
             {
                 targets.Add(batleMap.points[!myCharacter.currentStats.isPlayer][i]);
+
+                break;
             }
         }
-        
+
         return targets;
     }
 }

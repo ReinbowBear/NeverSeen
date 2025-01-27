@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Sound : MonoBehaviour
 {
-    public static Sound data;
+    public static Sound instance;
     private System.Random random;
     [SerializeField] private AudioSource audioSource;
     [Space]
@@ -11,9 +11,13 @@ public class Sound : MonoBehaviour
     public AudioClip[] buttonSounds;
     public AudioClip[] sceneSounds;
 
-    Sound()
+    //private Dictionary<string, float> lastPlayTime = new Dictionary<string, float>();
+    //private List<AudioSource> audioSourcePool = new List<AudioSource>();
+    //private int initialPoolSize = 10;
+
+    void Awake()
     {
-        data = this;
+        instance = this;
         random = new System.Random(DateTime.Now.Millisecond);
     }
 
@@ -36,4 +40,11 @@ public class Sound : MonoBehaviour
         audioSource.PlayOneShot(systemSounds[randomID]);
         Debug.Log("звуки ещё не готовы");
     }
+}
+
+public enum AudioType
+{
+    sfx,
+    music,
+    ambient
 }

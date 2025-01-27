@@ -36,7 +36,7 @@ public static class EventBus
         Type eventType = typeof(T);
         if (events.ContainsKey(eventType))
         {
-            var listener = events[eventType].FirstOrDefault(l => Delegate.Equals(l.action, action)); //Delegate.Equals проверяет, совпадают ли делегаты по типу и содержимому, правильное сравнение
+            var listener = events[eventType].FirstOrDefault(l => Delegate.Equals(l.action, action)); //Delegate.Equals проверяет, совпадают ли делегаты по типу и содержимому
             if (listener != null)
             {
                 events[eventType].Remove(listener);

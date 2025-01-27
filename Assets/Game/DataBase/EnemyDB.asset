@@ -13,8 +13,4 @@ MonoBehaviour:
   m_Name: EnemyDB
   m_EditorClassIdentifier: 
   containers:
-  - stats: {fileID: 11400000, guid: ef31e09c369f3154297500d09b43264b, type: 2}
-    UI:
-      sprite: {fileID: 0}
-      itemName: Goblin
-      description: 
+  - {fileID: 11400000, guid: ef31e09c369f3154297500d09b43264b, type: 2}

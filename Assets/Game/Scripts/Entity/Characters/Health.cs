@@ -8,37 +8,30 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int damage, DamageType type)
     {
-        int fullDamage = 100;
-        switch (type)
+        if (type == DamageType.physics)
         {
-            case DamageType.melee:
-                fullDamage = damage - character.currentStats.meleeArmor;
-                break;
-            case DamageType.range:
-                fullDamage = damage - character.currentStats.rangeArmor;
-                break;
-            case DamageType.magic:
-                fullDamage = damage - character.currentStats.magicArmor;
-                break;
+            damage -= character.currentStats.armor;
         }
 
-        if (fullDamage < 0)
+        if (damage < 0)
         {
-            fullDamage = 0;
+            damage = 0;
         }
 
-        character.currentStats.health -= fullDamage;
+        character.currentStats.health -= damage;
         hpBar.ChangeBar(character.baseStats.health, character.currentStats.health);
 
         if (character.currentStats.health <= 0)
         {
             Death();
         }
-
-        DOTween.Sequence()
-            .SetLink(gameObject)
-            .Append(transform.DOScale(new Vector3(0.95f, 1.1f, 0.95f), 0.25f))
-            .Append(transform.DOScale(new Vector3(1, 1, 1), 0.25f));
+        else
+        {
+            DOTween.Sequence()
+                .SetLink(gameObject)
+                .Append(transform.DOScale(new Vector3(0.95f, 1.1f, 0.95f), 0.25f))
+                .Append(transform.DOScale(new Vector3(1, 1, 1), 0.25f));
+        }
     }
 
     public void TakeHeal(int heal)
@@ -60,16 +53,7 @@ public class Health : MonoBehaviour
 
     private void Death()
     {
+        transform.parent = null;
         Address.DestroyAsset(gameObject);
-        transform.parent = null; // отвязываемся от позиции на карте, что бы та считалась свободной
-
-        if (!character.baseStats.isPlayer)
-        {
-            EventBus.Invoke<MyEvent.OnEnemyDeath>();
-        }
-        else
-        {
-            EventBus.Invoke<MyEvent.OnEndLevel>();
-        }
     }
 }

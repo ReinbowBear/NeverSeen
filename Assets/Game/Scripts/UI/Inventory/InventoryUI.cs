@@ -15,9 +15,9 @@ public class InventoryUI : MonoBehaviour
         {
             if (myCharacter.inventory.abilitys[i] != null)
             {
-                Item newItem = await ItemFactory.GetItem(myCharacter.inventory.abilitys[i]);
+                Item newItem = await ItemFactory.GetItem(myCharacter.inventory.abilitys[i].stats);
                 newItem.transform.SetParent(abilitySlots[i].transform, false);
-                newItem.Init(myCharacter.inventory.abilitys[i]);
+                newItem.Init(myCharacter.inventory.abilitys[i].stats);
             }
         }
     }

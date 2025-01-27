@@ -38,7 +38,7 @@ public class EntityManager : MonoBehaviour
         EventBus.Invoke<MyEvent.OnEntityInit>(newEvent);
 
         newCharacter.transform.SetParent(battleMap.points[side][pos], false);
-        newCharacter.move.myPos = pos;
+        newCharacter.move.pos = pos;
         MoveToPos(newCharacter);
     }
 

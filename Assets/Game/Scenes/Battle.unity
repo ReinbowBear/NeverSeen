@@ -1525,9 +1525,9 @@ MonoBehaviour:
   waves: {fileID: 11400000, guid: fd650309a989c8c44b5b5c4bb35d5478, type: 2}
   characters: {fileID: 11400000, guid: b587fab258e52f546ab31467da7d80a2, type: 2}
   enemys: {fileID: 11400000, guid: df32249f536c03f41b6af30ab4ad70eb, type: 2}
-  abilitys: {fileID: 11400000, guid: 0015637d73db1db48b331f1287c90fb9, type: 2}
-  rings: {fileID: 0}
-  armors: {fileID: 0}
+  abilityDataBase: {fileID: 11400000, guid: 0015637d73db1db48b331f1287c90fb9, type: 2}
+  ringDataBase: {fileID: 0}
+  armorDataBase: {fileID: 0}
 --- !u!114 &586321508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1742,7 +1742,6 @@ GameObject:
   - component: {fileID: 939108656}
   - component: {fileID: 939108658}
   - component: {fileID: 939108657}
-  - component: {fileID: 939108655}
   m_Layer: 0
   m_Name: BattleGeneral
   m_TagString: Untagged
@@ -1787,18 +1786,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e51fc50dec2f1134887b88e82dd994cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &939108655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939108645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67cdcf0819c8f8346978bef1eaffdaef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &939108656

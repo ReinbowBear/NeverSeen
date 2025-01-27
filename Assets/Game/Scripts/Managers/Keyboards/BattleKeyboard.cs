@@ -20,7 +20,7 @@ public class BattleKeyboard : MonoBehaviour
 
     private void KeyboardAbility(byte index)
     {
-        character.ChoseAbility(index);
+        character.abilityControl.ChoseAbility(index);
     }
 
 

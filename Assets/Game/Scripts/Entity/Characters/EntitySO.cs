@@ -7,14 +7,12 @@ public class EntitySO : ScriptableObject
     public bool isPlayer;
     [Space]
     public int health;
-    public int meleeArmor;
-    public int rangeArmor;
-    public int magicArmor;
+    public int armor;
     [Space]
     public float manna;
     public float mannaRegen;
     [Space]
-    public string[] abilitys;
+    public AbilitySO[] abilitys;
     [Space]
     public Mesh model;
 }

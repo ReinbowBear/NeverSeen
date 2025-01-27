@@ -8,7 +8,6 @@ public class Ability : MonoBehaviour
     [HideInInspector] public AbilitySO stats;
 
     [HideInInspector] public BaseTarget target;
-    [HideInInspector] public BaseTrigger trigger;
     [HideInInspector] public Effect effect;
 
     public Coroutine cooldown;
@@ -18,13 +17,9 @@ public class Ability : MonoBehaviour
     {
         stats = Instantiate(newStats);
         effect.stats = newStats.effectStats;
+        target.stats = newStats.targetStats;
     }
 
-
-    public void Prepare()
-    {
-        character.combatManager.AddAction(this);
-    }
 
     public IEnumerator Activate()
     {
@@ -33,15 +28,13 @@ public class Ability : MonoBehaviour
         for (byte i = 0; i < targets.Count; i++)
         {
             Entity enemy = targets[i].GetComponentInChildren<Entity>();
+            
             if (enemy != null)
             {
                 enemy.health.TakeDamage(stats.damage, stats.damageType);
+                yield return effect.GetEffect(targets[i]);
+            }
 
-                if (trigger.CheckTrigger())
-                {
-                    yield return effect.GetEffect(targets[i]);
-                }
-            }            
             yield return new WaitForSeconds(0.2f);
         }
     }

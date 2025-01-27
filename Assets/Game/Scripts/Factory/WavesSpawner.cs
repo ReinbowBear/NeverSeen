@@ -24,9 +24,9 @@ public class WavesSpawner : MonoBehaviour
 
     private void CheckEndBattle(MyEvent.OnEnemyDeath _)
     {
-        //if (currentWaveID == 0)
+        if (currentWaveID == 0)
         {
-
+            Debug.Log("бой закончен");
         }
     }
 

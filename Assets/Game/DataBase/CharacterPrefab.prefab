@@ -141,62 +141,17 @@ MonoBehaviour:
   weaponModel: {fileID: 3374882369596830793}
   hpBar: {fileID: 4001007490806005689}
   mpBar: {fileID: 1080774763305844375}
-  meleeArmorBar: {fileID: 663649157556818105}
-  magicArmorBar: {fileID: 1602285207853916002}
-  rangeArmorBar: {fileID: 8371630526390311419}
+  armorBar: {fileID: 663649157556818105}
   battleMap: {fileID: 0}
-  combatManager: {fileID: 0}
   inventory:
     abilitys:
-    - containerID: 0
-      itemType: 0
-      UI:
-        sprite: {fileID: 0}
-        itemName: 
-        description: 
-      stats: {fileID: 0}
-    - containerID: 0
-      itemType: 0
-      UI:
-        sprite: {fileID: 0}
-        itemName: 
-        description: 
-      stats: {fileID: 0}
-    - containerID: 0
-      itemType: 0
-      UI:
-        sprite: {fileID: 0}
-        itemName: 
-        description: 
-      stats: {fileID: 0}
-    - containerID: 0
-      itemType: 0
-      UI:
-        sprite: {fileID: 0}
-        itemName: 
-        description: 
-      stats: {fileID: 0}
-    - containerID: 0
-      itemType: 0
-      UI:
-        sprite: {fileID: 0}
-        itemName: 
-        description: 
-      stats: {fileID: 0}
-    - containerID: 0
-      itemType: 0
-      UI:
-        sprite: {fileID: 0}
-        itemName: 
-        description: 
-      stats: {fileID: 0}
-    - containerID: 0
-      itemType: 0
-      UI:
-        sprite: {fileID: 0}
-        itemName: 
-        description: 
-      stats: {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   health: {fileID: 7578127784161136332}
   manna: {fileID: 4264776945876313649}
   move: {fileID: 8334488932969709447}
@@ -242,7 +197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 6221940656738755023}
-  myPos: 0
+  pos: 0
 --- !u!114 &9118545038507707249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -473,31 +428,9 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5027334874937708790, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
   m_PrefabInstance: {fileID: 6157719780600509871}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1602285207853916002 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4848380548208929485, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
-  m_PrefabInstance: {fileID: 6157719780600509871}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4001007490806005689 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7130027923389401622, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
-  m_PrefabInstance: {fileID: 6157719780600509871}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8371630526390311419 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2403404978339802196, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
   m_PrefabInstance: {fileID: 6157719780600509871}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
