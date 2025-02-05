@@ -18,7 +18,7 @@ public class BattleKeyboard : MonoBehaviour
         }
     }
 
-    private void KeyboardAbility(byte index)
+    public void KeyboardAbility(int index)
     {
         character.abilityControl.ChoseAbility(index);
     }

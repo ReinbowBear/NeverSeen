@@ -5,25 +5,25 @@ using UnityEngine;
 public class EnemyLogic : MonoBehaviour
 {
     [HideInInspector] public Entity character;
-    [HideInInspector] public EnemySO enemySO;
 
+    private Ability[] abilities; // просто для удобства что бы не писать длинные ссылки
     private Ability chosenMove;
     private Coroutine myCoroutine;
 
     public void Init()
     {
-        character.manna.TakeManna((byte)character.currentStats.manna);
-        CheckMoves();
+        abilities = character.inventory.abilities;
+        //CheckMoves();
     }
 
     
     private void CheckMoves()
     {
-        for (byte i = 0; i < character.inventory.abilitys.Length; i++)
+        for (byte i = 0; i < abilities.Length; i++)
         {
-            if (enemySO.trigers[i].CheckTriger(character))
+            if (abilities[i].target.GetTarget(character)[0] != null )
             {
-                enemySO.trigers[i].DoAction(character);
+                character.abilityControl.ChoseAbility(i);
 
                 if (myCoroutine == null)
                 {
@@ -38,18 +38,19 @@ public class EnemyLogic : MonoBehaviour
 
     private void ChoseAbility(byte index)
     {
-        chosenMove = character.inventory.abilitys[index];
+        chosenMove = character.inventory.abilities[index];
     }
 
     private IEnumerator WaitForAttack()
     {
-        if (character.manna.coroutine == null) // после остановки врага если ему нечего делать, он так же останавливает реген манны...
-        {
-            character.manna.TakeManna(0);
-        }
-
-        yield return character.manna.coroutine;
-        AttackAbility(chosenMove);
+        //if (character.manna.coroutine == null) // после остановки врага если ему нечего делать, он так же останавливает реген манны...
+        //{
+        //    character.manna.TakeManna(0);
+        //}
+//
+        //yield return character.manna.coroutine;
+        //AttackAbility(chosenMove);
+        yield return null;
     }
 
     private void AttackAbility(Ability ability)
@@ -57,7 +58,7 @@ public class EnemyLogic : MonoBehaviour
         character.weaponPoint.SetHandWeapon(ability.stats);
 
         StartCoroutine(ability.Activate());
-        character.manna.TakeManna((byte)character.currentStats.manna);
+        //character.manna.TakeManna((byte)character.currentStats.manna);
         StartCoroutine(WaitForAttack());
 
         DOTween.Sequence()
@@ -71,9 +72,6 @@ public class EnemyLogic : MonoBehaviour
     {
         StopCoroutine(myCoroutine);
         myCoroutine = null;
-        
-        StopCoroutine(character.manna.coroutine);
-        character.manna.coroutine = null;
     }
 
     void OnEnable()

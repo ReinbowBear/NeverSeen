@@ -4,9 +4,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EntityDB", menuName = "ScriptableObject/DataBase/EntityDB")]
 public class EntityDataBase : ScriptableObject
 {
-    public EntitySO[] containers;
+    public CharacterSO[] containers;
 
-    public EntitySO GetItemByName(string name)
+    public CharacterSO GetItemByName(string name)
     {
         return Array.Find(containers, item => item.UI.itemName == name);
     }

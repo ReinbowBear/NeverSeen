@@ -20,8 +20,8 @@ public class GetBattle : MonoBehaviour
         byte indexContainer = 0;
         while (currentEnemys < enemysCount)
         {
-            int containerID = random.Next(0, Content.data.waves.containers.Length);
-            containers.Add(Content.data.waves.containers[containerID]);
+            int containerID = random.Next(0, Content.instance.waves.containers.Length);
+            containers.Add(Content.instance.waves.containers[containerID]);
 
             currentEnemys += containers[indexContainer].enemys.Length+1;
             indexContainer++;

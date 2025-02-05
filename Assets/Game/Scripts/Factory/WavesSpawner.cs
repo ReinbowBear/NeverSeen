@@ -13,7 +13,7 @@ public class WavesSpawner : MonoBehaviour
         {
             for (byte i = 0; i < waveStruct.waveContainers[currentWaveID].enemys.Length; i++)
             {
-                entityManager.AddEntity(Content.data.enemys.GetItemByName(waveStruct.waveContainers[currentWaveID].enemys[i]));
+                entityManager.AddEntity(Content.instance.enemys.GetItemByName(waveStruct.waveContainers[currentWaveID].enemys[i]));
                 yield return new WaitForSeconds(0.25f);
             }
 

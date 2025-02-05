@@ -12,7 +12,6 @@ public class ChosenCharacter : MonoBehaviour
     [Space]
     [SerializeField] private TextMeshProUGUI health;
     [SerializeField] private TextMeshProUGUI armor;
-    [SerializeField] private TextMeshProUGUI manna;
     [SerializeField] private TextMeshProUGUI mannaMultiplier;
 
     private byte chosenIndex;
@@ -21,7 +20,7 @@ public class ChosenCharacter : MonoBehaviour
     public void RenderCharacter(byte index)
     {
         chosenIndex = index;
-        EntitySO newCharacter = characters.containers[index];
+        CharacterSO newCharacter = characters.containers[index];
 
         icon.sprite = newCharacter.UI.sprite;
         nameBar.text = newCharacter.UI.itemName;
@@ -29,28 +28,24 @@ public class ChosenCharacter : MonoBehaviour
 
         health.text = newCharacter.health.ToString();
         armor.text = newCharacter.armor.ToString();
-        manna.text = newCharacter.manna.ToString();
-        mannaMultiplier.text = newCharacter.mannaRegen.ToString();
+        mannaMultiplier.text = newCharacter.reloadMultiplier.ToString();
     }
 
 
-    private void Save()
+    private void Save(MyEvent.OnSave _)
     {
-        SaveChosenCharacter saveChosenCharacter = new SaveChosenCharacter();
-        saveChosenCharacter.chosenIndex = chosenIndex;
-
-        SaveSystem.gameData.saveChosenCharacter = saveChosenCharacter;
+        SaveSystem.gameData.generalData.characteIndex = chosenIndex;
     }
 
 
     void OnEnable()
     {
-        SaveSystem.onSave += Save;
+        EventBus.Add<MyEvent.OnSave>(Save);
     }
 
     void OnDisable()
     {
-        SaveSystem.onSave -= Save;
+         EventBus.Remove<MyEvent.OnSave>(Save);
     }
 }
 

@@ -1,5 +1,4 @@
 using DG.Tweening;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -13,6 +12,7 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     [HideInInspector] public ItemSO itemSO;
     [HideInInspector] public Transform originalParent;
+    private Vector3 originalpos;
     private Tween tween;
 
     public void Init(ItemSO newItem)
@@ -28,7 +28,6 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             tween.Kill();
         }
-        
         canvasGroup.blocksRaycasts = false; //отключаем захват рейкастов, предмет ловит рейкасты на себя, не пропуская проверки на OnDrop
         
         originalParent = transform.parent;
@@ -37,19 +36,20 @@ public class Item : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.pointerCurrentRaycast.screenPosition;
+        Vector3 targetPosition = Input.mousePosition;
+        rectTransform.position = targetPosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         canvasGroup.blocksRaycasts = true;
-
+        transform.SetParent(originalParent); // во время движения объект уже прикреплён к своему слоту, от чего другие слоты по иерархии объектов в сцене, отображаются выше него!
         MoveToSlot();
     }
 
     public void MoveToSlot()
     {
-        tween = rectTransform.DOAnchorPos(originalParent.position, 0.4f).OnComplete(() => { transform.SetParent(originalParent); tween = null; });
+        tween = rectTransform.DOAnchorPos(originalpos, 0.4f).OnComplete(() => { tween = null; });
     }
 
 

@@ -1,4 +1,3 @@
-
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -12,19 +11,19 @@ public class AbilityControl
     private Coroutine myCoroutine;
 
 
-    public void ChoseAbility(byte index)
+    public void ChoseAbility(int index)
     {
-        Ability ability = character.inventory.abilitys[index];
+        Ability ability = character.inventory.abilities[index];
 
-        if (ability == null || character.currentStats.manna < ability.stats.mannaCost || ability.cooldown == null)
+        if (ability == null || ability.cooldown != null)
         {
             return;
         }
 
         character.weaponPoint.SetHandWeapon(ability.stats);
+
         AddAction(ability);
-        character.manna.TakeManna(ability.stats.mannaCost);
-        ability.cooldown = character.StartCoroutine(ability.Reload());
+        ability.cooldown = character.StartCoroutine(ability.Reload(character.inventoryUI.abilitySlots[index]));
 
         DOTween.Sequence()
             .SetLink(character.gameObject)
@@ -48,7 +47,6 @@ public class AbilityControl
         while (Actions.Count > 0)
         {
             yield return character.StartCoroutine(Actions[0].Activate());
-            yield return new WaitForSeconds(1);
             Actions.RemoveAt(0);
         }
         
@@ -58,7 +56,7 @@ public class AbilityControl
 
     public void AddAbility(Ability newAbility, byte index)
     {
-        character.inventory.abilitys[index] = newAbility;
+        character.inventory.abilities[index] = newAbility;
         newAbility.character = character;
 
         newAbility.transform.SetParent(character.weaponModel.transform);
@@ -67,7 +65,7 @@ public class AbilityControl
 
     public void RemoveAbility(byte index)
     {
-        Address.DestroyAsset(character.inventory.abilitys[index].gameObject);
-        character.inventory.abilitys[index] = null;
+        Address.DestroyAsset(character.inventory.abilities[index].gameObject);
+        character.inventory.abilities[index] = null;
     }
 }

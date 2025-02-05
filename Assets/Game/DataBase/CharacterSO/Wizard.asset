@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1587d0538ed1604a845e84e8902c4d7, type: 3}
   m_Name: Wizard
   m_EditorClassIdentifier: 
+  UI:
+    sprite: {fileID: 0}
+    itemName: 
+    description: 
+  isPlayer: 0
   health: 170
-  manna: 26
-  moveSpeed: 8.5
-  startWeaponID: 0
+  armor: 0
+  reloadMultiplier: 1.2
+  abilitys: []
+  model: {fileID: 0}

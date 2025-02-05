@@ -7,7 +7,7 @@ public class Ability : MonoBehaviour
     [HideInInspector] public Entity character;
     [HideInInspector] public AbilitySO stats;
 
-    [HideInInspector] public BaseTarget target;
+    [HideInInspector] public TargetSO target;
     [HideInInspector] public Effect effect;
 
     public Coroutine cooldown;
@@ -16,14 +16,14 @@ public class Ability : MonoBehaviour
     public void Init(AbilitySO newStats)
     {
         stats = Instantiate(newStats);
-        effect.stats = newStats.effectStats;
-        target.stats = newStats.targetStats;
+        effect.stats = newStats.effect;
+        target = Instantiate(newStats.target);
     }
 
 
     public IEnumerator Activate()
     {
-        targets = target.GetTarget(character.battleMap, character);
+        targets = target.GetTarget(character);
 
         for (byte i = 0; i < targets.Count; i++)
         {
@@ -39,14 +39,17 @@ public class Ability : MonoBehaviour
         }
     }
 
-    public IEnumerator Reload()
+    public IEnumerator Reload(BarChange abilityBar)
     {
-        float timeLeft = 0;
-        while (timeLeft < stats.reloadTime)
+        float maxTime = stats.reloadTime / character.currentStats.reloadMultiplier;
+        float timeLeft = maxTime;
+        while (timeLeft > 0)
         {
-            timeLeft += Time.deltaTime;
+            abilityBar.ChangeBar(maxTime, timeLeft);
+            timeLeft -= Time.deltaTime;
             yield return null;
         }
+
         cooldown = null;
     }
 }

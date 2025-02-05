@@ -5,9 +5,9 @@ using UnityEngine;
 public class EntityManager : MonoBehaviour
 {
     [SerializeField] private BattleMap battleMap;
-    private List<EntitySO> toDoEntities = new List<EntitySO>();
+    private List<CharacterSO> toDoEntities = new List<CharacterSO>();
 
-    public void AddEntity(EntitySO newEntity)
+    public void AddEntity(CharacterSO newEntity)
     {
         if (newEntity != null)
         {
@@ -30,7 +30,7 @@ public class EntityManager : MonoBehaviour
         }
     }
     
-    private async void MakeEntity(EntitySO newEntity, bool side ,byte pos)
+    private async void MakeEntity(CharacterSO newEntity, bool side ,byte pos)
     {
         Entity newCharacter = await EntityFactory.GetEntity(newEntity);
 
@@ -56,8 +56,8 @@ public class EntityManager : MonoBehaviour
 
     private void LoadCharacter(MyEvent.OnEntryBattle _)
     {
-        byte index = SaveSystem.gameData.saveChosenCharacter.chosenIndex;
-        EntitySO entity = Content.data.characters.containers[index];
+        byte index = SaveSystem.gameData.generalData.characteIndex;
+        CharacterSO entity = Content.instance.characters.containers[index];
         AddEntity(entity);
     }
 

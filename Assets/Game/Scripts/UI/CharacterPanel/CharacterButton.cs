@@ -12,7 +12,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler
 
     void Awake()
     {
-        EntitySO character = characters.containers[characterIndex];
+        CharacterSO character = characters.containers[characterIndex];
         image.sprite = character.UI.sprite;
     }
 
@@ -24,8 +24,8 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler
     public void NewGame()
     {
         SaveSystem.DeleteSave();
-        SaveSystem.onSave.Invoke();
+        EventBus.Invoke<MyEvent.OnSave>();
 
-        Scene.Load(2);
+        Scene.Load(1);
     }
 }

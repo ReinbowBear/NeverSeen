@@ -6,13 +6,13 @@ public static class Scene
 
     static Scene()
     {
-        SaveSystem.onSave += Save;
+        EventBus.Add<MyEvent.OnSave>(Save);
     }
 
 
     public static void Continue()
     {
-        currentScene = SaveSystem.gameData.saveScene.currentScene;
+        currentScene = SaveSystem.gameData.generalData.sceneIndex;
         SceneManager.LoadScene(currentScene);
     }
 
@@ -23,17 +23,8 @@ public static class Scene
     }
 
 
-    private static void Save()
+    private static void Save(MyEvent.OnSave _)
     {
-        SaveScene saveScene = new SaveScene();
-        saveScene.currentScene = currentScene;
-
-        SaveSystem.gameData.saveScene = saveScene;
+        SaveSystem.gameData.generalData.sceneIndex = currentScene;
     }
-}
-
-[System.Serializable]
-public struct SaveScene
-{
-    public byte currentScene;
 }

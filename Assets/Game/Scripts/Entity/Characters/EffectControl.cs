@@ -7,25 +7,29 @@ public class EffectControl : MonoBehaviour
 {
     [SerializeField] private Entity character;
     [SerializeField] private Transform effectPoint;
+
     private Dictionary<Effect, BarChange> effectsBar = new Dictionary<Effect, BarChange>();
 
     public async Task AddEffect(Effect newEffect)
     {
-        if (!effectsBar.ContainsKey(newEffect))
+        if (effectsBar.ContainsKey(newEffect) == false)
         {
             GameObject effectBar = await Address.GetAssetByName("EffectBar");
+            BarChange barScript = effectBar.GetComponent<BarChange>();
+
+            barScript.image.sprite = newEffect.stats.image;
+
             effectBar.transform.SetParent(effectPoint, false);
             effectBar.transform.localPosition = new Vector3(0, effectsBar.Count * 20, 0);
 
-            effectsBar[newEffect] = effectBar.GetComponent<BarChange>();
-            effectsBar[newEffect].icon.sprite = newEffect.stats.image;
+            effectsBar[newEffect] = barScript;
         }
         else
         {
             effectsBar[newEffect].StopAllCoroutines();
         }
 
-        if (!newEffect.stats.isUpdate)
+        if (newEffect.stats.isUpdate == false)
         {
             effectsBar[newEffect].StartCoroutine(OneTime(newEffect));
         }
@@ -41,6 +45,19 @@ public class EffectControl : MonoBehaviour
 
         Address.DestroyAsset(effectsBar[oldEffect].gameObject);
         effectsBar.Remove(oldEffect);
+        
+        UpdateEffectsUI();
+    }
+
+
+    private void UpdateEffectsUI()
+    {
+        byte pos = 0;
+        foreach (BarChange bar in effectsBar.Values)
+        {
+            bar.transform.localPosition = new Vector3(0, pos * 20, 0);
+            pos++;
+        }
     }
 
 

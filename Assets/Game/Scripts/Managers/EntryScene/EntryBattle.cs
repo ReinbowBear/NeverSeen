@@ -7,7 +7,7 @@ public class EntryBattle : MonoBehaviour
     {
         if (File.Exists(SaveSystem.GetFileName()))
         {
-            SaveSystem.onLoad.Invoke();
+            EventBus.Invoke<MyEvent.OnLoad>();
         }
 
         EventBus.Invoke<MyEvent.OnEntryBattle>();

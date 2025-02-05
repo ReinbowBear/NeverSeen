@@ -3,10 +3,7 @@ using System.IO;
 using UnityEngine;
 
 public static class SaveSystem //https://www.youtube.com/watch?v=1mf730eb5Wo&t=417s&ab_channel=SasquatchBStudios
-{
-    public static Action onSave;
-    public static Action onLoad;
-    
+{    
     public static GameData gameData = new GameData();
 
     public static void SaveFile()
@@ -38,13 +35,18 @@ public static class SaveSystem //https://www.youtube.com/watch?v=1mf730eb5Wo&t=4
 
 
 [System.Serializable] //сериализация позволяет записывать данные в файл
-public struct GameData
+public class GameData
 {
-    public SaveChosenCharacter saveChosenCharacter;
-    public SaveScene saveScene;
+    public GeneralData generalData = new GeneralData();
 
-    public SaveGlobalMap saveGlobalMap;
-    public SaveInventory saveInventory;
+    public SaveDangeonMap saveDangeonMap;
+    public SaveLoot saveLoot;
+}
 
-    public SaveDangeonPanel saveDangeonPanel;
+[System.Serializable]
+public struct GeneralData
+{
+    public byte characteIndex;
+    public byte sceneIndex;
+    public int seed;
 }

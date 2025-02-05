@@ -3,7 +3,7 @@ using UnityEngine;
 
 public static class EntityFactory
 {
-    public static async Task<Entity> GetEntity(EntitySO entitySO)
+    public static async Task<Entity> GetEntity(CharacterSO entitySO)
     {
         var characterObject = await Address.GetAssetByName("CharacterPrefab");
         Entity character = characterObject.GetComponent<Entity>();

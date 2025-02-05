@@ -6,7 +6,7 @@ public class EnemyTriger
 {
     public virtual bool CheckTriger(Entity character)
     {
-        if (character.inventory.abilitys[0].target.GetTarget(character.battleMap, character)[0] != null)
+        if (character.inventory.abilities[0].target.GetTarget(character)[0] != null)
         {
             return true;
         }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Content : MonoBehaviour
 {
-    public static Content data;
+    public static Content instance;
 
     public MapDataBase maps;
     public WavesDataBase waves;
@@ -10,13 +10,13 @@ public class Content : MonoBehaviour
     public EntityDataBase characters;
     public EntityDataBase enemys;
     [Space]
-    public AbilityDataBase abilityDataBase;
-    public AbilityDataBase ringDataBase;
-    public AbilityDataBase armorDataBase;
+    public ItemDataBase abilityDataBase;
+    public ItemDataBase ringDataBase;
+    public ItemDataBase armorDataBase;
 
     Content()
     {
-        data = this;
+        instance = this;
     }
 
 

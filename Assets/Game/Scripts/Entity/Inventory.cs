@@ -2,7 +2,7 @@
 [System.Serializable]
 public class Inventory
 {
-    public Ability[] abilitys = new Ability[8];
+    public Ability[] abilities = new Ability[8];
     //public ItemSlot[] rings;
     //public ItemSlot armor;
 }

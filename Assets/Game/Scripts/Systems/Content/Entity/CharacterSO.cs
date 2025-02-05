@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Entity", menuName = "ScriptableObject/Other/Entity")]
-public class EntitySO : ScriptableObject
+[CreateAssetMenu(fileName = "Entity", menuName = "ScriptableObject/Entity/Entity")]
+public class CharacterSO : ScriptableObject
 {
     public InterfaceSO UI;
     public bool isPlayer;
@@ -9,8 +9,7 @@ public class EntitySO : ScriptableObject
     public int health;
     public int armor;
     [Space]
-    public float manna;
-    public float mannaRegen;
+    public float reloadMultiplier;
     [Space]
     public AbilitySO[] abilitys;
     [Space]

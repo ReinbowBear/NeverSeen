@@ -8,10 +8,12 @@ public class BattleMap : MonoBehaviour
     [SerializeField] private Transform[] CharacterPoints;
     [SerializeField] private Transform[] enemyPoints;
 
+    public static BattleMap instance;
     private GameObject map;
 
     void Awake()
     {
+        instance = this;
         points[true] = CharacterPoints;
         points[false] = enemyPoints;
     }
@@ -25,8 +27,8 @@ public class BattleMap : MonoBehaviour
 
     private void StartedMap(MyEvent.OnEntryBattle _)
     {
-        byte index = SaveSystem.gameData.saveChosenCharacter.chosenIndex;
-        LoadMap(Content.data.maps.containers[index]);
+        byte index = SaveSystem.gameData.generalData.characteIndex;
+        LoadMap(Content.instance.maps.containers[index]);
     }
 
     void OnEnable()

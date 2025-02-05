@@ -9,13 +9,13 @@ public static class AbilityFactory
         var abilityObject = await Address.GetAssetByName("AbilityPrefab");
         Ability ability = abilityObject.GetComponent<Ability>();
 
-        Type targetType = Type.GetType(abilitySO.targetStats.targetType.ToString());
-        Type effectType = Type.GetType(abilitySO.effectStats.effectType.ToString());
+        //Type targetType = Type.GetType(abilitySO.target.targetType.ToString());
+        Type effectType = Type.GetType(abilitySO.effect.effectType.ToString());
 
-        BaseTarget targetClass = (BaseTarget)Activator.CreateInstance(targetType);
+        //BaseTarget targetClass = (BaseTarget)Activator.CreateInstance(targetType);
         Effect effectClass = (Effect)Activator.CreateInstance(effectType);
 
-        ability.target = targetClass;
+        //ability.target = targetClass;
         ability.effect = effectClass;
 
         ability.Init(abilitySO);

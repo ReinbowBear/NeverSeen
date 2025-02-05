@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 6009869040511288899}
   - component: {fileID: 6221940656738755023}
   - component: {fileID: 7578127784161136332}
-  - component: {fileID: 4264776945876313649}
   - component: {fileID: 8334488932969709447}
   - component: {fileID: 9118545038507707249}
   m_Layer: 0
@@ -140,7 +139,6 @@ MonoBehaviour:
   characterModel: {fileID: 7773440566672696938}
   weaponModel: {fileID: 3374882369596830793}
   hpBar: {fileID: 4001007490806005689}
-  mpBar: {fileID: 1080774763305844375}
   armorBar: {fileID: 663649157556818105}
   battleMap: {fileID: 0}
   inventory:
@@ -153,7 +151,6 @@ MonoBehaviour:
     - {fileID: 0}
     - {fileID: 0}
   health: {fileID: 7578127784161136332}
-  manna: {fileID: 4264776945876313649}
   move: {fileID: 8334488932969709447}
   effectControl: {fileID: 9118545038507707249}
 --- !u!114 &7578127784161136332
@@ -170,20 +167,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 6221940656738755023}
   hpBar: {fileID: 4001007490806005689}
---- !u!114 &4264776945876313649
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7587332316048365933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c6e2976cda68b54ca5770170af1667e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 6221940656738755023}
-  mpBar: {fileID: 1080774763305844375}
 --- !u!114 &8334488932969709447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,7 +325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5027334874937708790, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 27.5
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5027334874937708790, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
       propertyPath: m_LocalPosition.x
@@ -396,25 +379,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: StatsBar
       objectReference: {fileID: 0}
+    - target: {fileID: 8815856106674710218, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815856106674710218, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815856106674710218, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8815856106674710218, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 9035380621808780859, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
 --- !u!114 &663649157556818105 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6647696674175034646, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
-  m_PrefabInstance: {fileID: 6157719780600509871}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1080774763305844375 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6596422601992293176, guid: 02ba55af6bbbc67478d6a1b0aa919093, type: 3}
   m_PrefabInstance: {fileID: 6157719780600509871}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
