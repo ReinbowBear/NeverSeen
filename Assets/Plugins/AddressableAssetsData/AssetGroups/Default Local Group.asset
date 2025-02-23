@@ -27,26 +27,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9cfae189cf5f35e4ca579eea26c6f1a4
-    m_Address: EffectPrefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c170f4b56936efc448cd0db5309ad56a
-    m_Address: AbilityPrefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 2db75971770e20645a20a313beef5359
-    m_Address: "\u043A\u043E\u043C\u043D\u0430\u0442\u0430"
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c6ec4a434a34d12419ccf4d58c14155d
-    m_Address: EffectBar
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5bb7f9651bed27546a446493c92fb3c6, type: 2}
   m_SchemaSet:

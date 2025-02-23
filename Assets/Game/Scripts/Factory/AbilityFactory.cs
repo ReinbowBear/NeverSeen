@@ -4,10 +4,10 @@ using UnityEngine;
 
 public static class AbilityFactory
 {    
-    public static async Task<Ability> GetAbility(AbilitySO abilitySO)
+    public static async Task<Weapon> GetAbility(AbilitySO abilitySO)
     {
         var abilityObject = await Address.GetAssetByName("AbilityPrefab");
-        Ability ability = abilityObject.GetComponent<Ability>();
+        Weapon ability = abilityObject.GetComponent<Weapon>();
 
         //Type targetType = Type.GetType(abilitySO.target.targetType.ToString());
         Type effectType = Type.GetType(abilitySO.effect.effectType.ToString());

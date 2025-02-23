@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class BarChange : MonoBehaviour
 {
-    public Image image;
+    public Image icone;
     [SerializeField] private Image barImage;
     [SerializeField] private TextMeshProUGUI barText;
     

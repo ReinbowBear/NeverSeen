@@ -28,7 +28,7 @@ public class BattleMap : MonoBehaviour
     private void StartedMap(MyEvent.OnEntryBattle _)
     {
         byte index = SaveSystem.gameData.generalData.characteIndex;
-        LoadMap(Content.instance.maps.containers[index]);
+        //LoadMap(Content.instance.maps.containers[index]);
     }
 
     void OnEnable()

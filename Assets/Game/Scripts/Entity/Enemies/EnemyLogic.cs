@@ -6,8 +6,8 @@ public class EnemyLogic : MonoBehaviour
 {
     [HideInInspector] public Entity character;
 
-    private Ability[] abilities; // просто для удобства что бы не писать длинные ссылки
-    private Ability chosenMove;
+    private Weapon[] abilities; // просто для удобства что бы не писать длинные ссылки
+    private Weapon chosenMove;
     private Coroutine myCoroutine;
 
     public void Init()
@@ -21,7 +21,8 @@ public class EnemyLogic : MonoBehaviour
     {
         for (byte i = 0; i < abilities.Length; i++)
         {
-            if (abilities[i].target.GetTarget(character)[0] != null )
+            //if (abilities[i].target.GetTarget(character)[0] != null )
+            if (abilities[i] != null )
             {
                 character.abilityControl.ChoseAbility(i);
 
@@ -53,7 +54,7 @@ public class EnemyLogic : MonoBehaviour
         yield return null;
     }
 
-    private void AttackAbility(Ability ability)
+    private void AttackAbility(Weapon ability)
     {
         character.weaponPoint.SetHandWeapon(ability.stats);
 

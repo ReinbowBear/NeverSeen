@@ -18,21 +18,4 @@ public class Content : MonoBehaviour
     {
         instance = this;
     }
-
-
-    public ScriptableObject GetItemDB(ItemType type)
-    {
-        switch (type)
-        {
-            case ItemType.AbilitySO:
-                return abilityDataBase;
-
-            case ItemType.RingSO:
-                return ringDataBase;
-                
-            case ItemType.ArmorSO:
-                return armorDataBase;
-        }
-        return null;
-    }
 }

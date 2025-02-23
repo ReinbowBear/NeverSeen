@@ -17,7 +17,7 @@ public class EffectControl : MonoBehaviour
             GameObject effectBar = await Address.GetAssetByName("EffectBar");
             BarChange barScript = effectBar.GetComponent<BarChange>();
 
-            barScript.image.sprite = newEffect.stats.image;
+            barScript.icone.sprite = newEffect.stats.image;
 
             effectBar.transform.SetParent(effectPoint, false);
             effectBar.transform.localPosition = new Vector3(0, effectsBar.Count * 20, 0);

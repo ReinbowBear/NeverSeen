@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using UnityEngine;
 
@@ -13,9 +12,10 @@ public static class SaveSystem //https://www.youtube.com/watch?v=1mf730eb5Wo&t=4
 
     public static void LoadFile()
     {
-        string saveContent = File.ReadAllText(GetFileName());
-        gameData = JsonUtility.FromJson<GameData>(saveContent);
+        string saveFile = File.ReadAllText(GetFileName());
+        gameData = JsonUtility.FromJson<GameData>(saveFile);
     }
+
 
     public static void DeleteSave()
     {        
@@ -28,19 +28,19 @@ public static class SaveSystem //https://www.youtube.com/watch?v=1mf730eb5Wo&t=4
 
     public static string GetFileName()
     {
-        string saveFile = Application.persistentDataPath + "/save" + ".save";
+        string saveFile = Application.persistentDataPath + "/gameData" + ".save";
         return saveFile;
     }
 }
 
 
-[System.Serializable] //сериализация позволяет записывать данные в файл
+[System.Serializable]
 public class GameData
 {
     public GeneralData generalData = new GeneralData();
 
-    public SaveDangeonMap saveDangeonMap;
-    public SaveLoot saveLoot;
+    //public SaveDangeonMap saveDangeonMap = new SaveDangeonMap();
+    public SaveLoot saveLoot = new SaveLoot();
 }
 
 [System.Serializable]

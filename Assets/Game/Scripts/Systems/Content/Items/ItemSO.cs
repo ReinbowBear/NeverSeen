@@ -18,7 +18,7 @@ public class InterfaceSO //вывел в отдельный класс, что �
 public enum ItemType
 {
     None,
-    AbilitySO,
-    RingSO,
-    ArmorSO
+    Weapon,
+    Ability,
+    Armor
 }

@@ -57,8 +57,8 @@ public class EntityManager : MonoBehaviour
     private void LoadCharacter(MyEvent.OnEntryBattle _)
     {
         byte index = SaveSystem.gameData.generalData.characteIndex;
-        CharacterSO entity = Content.instance.characters.containers[index];
-        AddEntity(entity);
+        //CharacterSO entity = Content.instance.characters.containers[index];
+        //AddEntity(entity);
     }
 
     private void OnDeathAddEntity(MyEvent.OnEnemyDeath _)

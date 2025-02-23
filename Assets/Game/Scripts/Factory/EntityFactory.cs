@@ -12,7 +12,7 @@ public static class EntityFactory
 
         for (byte i = 0; i < entitySO.abilitys.Length; i++)
         {
-            Ability ability = await AbilityFactory.GetAbility(entitySO.abilitys[i]);
+            Weapon ability = await AbilityFactory.GetAbility(entitySO.abilitys[i]);
             
             character.abilityControl.AddAbility(ability, i);
         }

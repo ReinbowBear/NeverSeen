@@ -4,7 +4,6 @@ using UnityEngine;
 public class AbilitySO : ItemSO
 {
     [Space]
-    public TargetSO target;
     public EffectSO effect;
     [Space]
     public DamageType damageType;

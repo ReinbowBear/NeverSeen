@@ -6,12 +6,7 @@ public class EnemyTriger
 {
     public virtual bool CheckTriger(Entity character)
     {
-        if (character.inventory.abilities[0].target.GetTarget(character)[0] != null)
-        {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     public virtual void DoAction(Entity character)

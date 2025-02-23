@@ -13,14 +13,14 @@ public class Entity : MonoBehaviour
     [Space]
     [HideInInspector] public BattleMap battleMap;
     [HideInInspector] public Inventory inventory = new Inventory();
-    [HideInInspector] public InventoryUI inventoryUI;
+    [HideInInspector] public ShowInventory inventoryUI;
 
 
     public Health health;
     public Move move;
 
     public WeaponPoint weaponPoint = new WeaponPoint();
-    public AbilityControl abilityControl = new AbilityControl();
+    public WeaponControl abilityControl = new WeaponControl();
     public EquipmentControl equipmentControl = new EquipmentControl();
     public EffectControl effectControl;
 
