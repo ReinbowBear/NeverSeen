@@ -4,19 +4,19 @@ using UnityEngine.EventSystems;
 public class ItemSlot : MonoBehaviour, IDropHandler
 {
     [SerializeField] private ItemType slotType;
-    private Item item;
+    private ItemUI item;
 
-    public Item GetItem()
+    public ItemUI GetItem()
     {
         if (item == null)
         {
-            item = GetComponentInChildren<Item>();
+            item = GetComponentInChildren<ItemUI>();
         }
         return item;
     }
 
 
-    private void SwapItems(Item newItem)
+    private void SwapItems(ItemUI newItem)
     {
         if (GetItem() != null)
         {
@@ -30,7 +30,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        Item newItem = eventData.pointerDrag.GetComponent<Item>();
+        ItemUI newItem = eventData.pointerDrag.GetComponent<ItemUI>();
 
         if (slotType == ItemType.None || slotType.ToString() == newItem.itemSO.GetType().Name)
         {

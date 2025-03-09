@@ -16,6 +16,17 @@ public class Pause : MonoBehaviour
         }
     }
 
+
+    void OnEnable()
+    {
+        SetPause(true);
+    }
+
+    void OnDisable()
+    {
+        SetPause(false);
+    }
+
     //функции для кнопок в меню
     public void ExitToMenu()
     {

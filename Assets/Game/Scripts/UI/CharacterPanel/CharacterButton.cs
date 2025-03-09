@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class CharacterButton : MonoBehaviour, IPointerEnterHandler
 {
-    [SerializeField] private EntityDataBase characters;
     [SerializeField] private byte characterIndex;
     [Space]
     [SerializeField] private ChosenCharacter viewCharacter;
@@ -12,8 +11,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler
 
     void Awake()
     {
-        CharacterSO character = characters.containers[characterIndex];
-        image.sprite = character.UI.sprite;
+        //image.sprite = character.UI.sprite;
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData) 

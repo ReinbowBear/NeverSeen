@@ -38,13 +38,12 @@ public static class SaveSystem //https://www.youtube.com/watch?v=1mf730eb5Wo&t=4
 public class GameData
 {
     public GeneralData generalData = new GeneralData();
-    public SaveRandom saveRandom = new SaveRandom();
 }
 
 [System.Serializable]
 public struct GeneralData
 {
-    public byte characteIndex;
+    public string character;
     public byte sceneIndex;
     public int seed;
 }

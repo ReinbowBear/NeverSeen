@@ -18,8 +18,8 @@ public class EntryMap : MonoBehaviour
         else
         {
             EventBus.Invoke<MyEvent.OnEntryMap>(null);
+
             EventBus.Invoke<MyEvent.OnSave>();
-            
             SaveSystem.SaveFile();
         }
     }

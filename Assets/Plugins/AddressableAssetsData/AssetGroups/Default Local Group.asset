@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Default Local Group
   m_EditorClassIdentifier: 
   m_GroupName: Default Local Group
-  m_Data:
-    m_SerializedData: []
   m_GUID: 38b0a7a2d15c3fc46906aec44545b327
   m_SerializeEntries:
-  - m_GUID: 9f8c155d5577e1d4e9bada78a2165b1f
-    m_Address: CharacterPrefab
+  - m_GUID: 58b71dc546110fb4e91d7b219340ddec
+    m_Address: Assets/Game/Prefabs/Items/TestWeapon.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -27,9 +25,14 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9f8c155d5577e1d4e9bada78a2165b1f
+    m_Address: CharacterPrefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5bb7f9651bed27546a446493c92fb3c6, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: c63df3f83be456c4b9ecdd3cfe34382f, type: 2}
     - {fileID: 11400000, guid: 233921f9be939ea49acee0c246da3697, type: 2}
+    - {fileID: 11400000, guid: c63df3f83be456c4b9ecdd3cfe34382f, type: 2}
