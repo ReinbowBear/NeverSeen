@@ -1,0 +1,64 @@
+{
+    "groups": [
+        "Default Local Group",
+        "Localization-Locales",
+        "Items",
+        "Enemys",
+        "Maps",
+        "Localization-String-Tables-English (en)",
+        "Built In Data",
+        "Characters",
+        "Localization-String-Tables-Russian (ru)",
+        "Localization-Assets-Shared"
+    ],
+    "keysList": [
+        {
+            "keys": []
+        },
+        {
+            "keys": [
+                "Russian (ru)",
+                "English (en)"
+            ]
+        },
+        {
+            "keys": [
+                "TestWeapon",
+                "ItemPrefab"
+            ]
+        },
+        {
+            "keys": [
+                "Assets/Game/Prefabs/Cube.prefab"
+            ]
+        },
+        {
+            "keys": [
+                "Assets/Game/Prefabs/Plane.prefab"
+            ]
+        },
+        {
+            "keys": [
+                "LanguageTable_en"
+            ]
+        },
+        {
+            "keys": []
+        },
+        {
+            "keys": [
+                "CharacterPrefab"
+            ]
+        },
+        {
+            "keys": [
+                "LanguageTable_ru"
+            ]
+        },
+        {
+            "keys": [
+                "Assets/Interface/UIScripts/LocalizationTable/LocalizationTable Shared Data.asset"
+            ]
+        }
+    ]
+}

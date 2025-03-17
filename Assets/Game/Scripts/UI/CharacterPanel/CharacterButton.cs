@@ -22,7 +22,7 @@ public class CharacterButton : MonoBehaviour, IPointerEnterHandler
     public void NewGame()
     {
         SaveSystem.DeleteSave();
-        EventBus.Invoke<MyEvent.OnSave>();
+        EventBus.Invoke<OnSave>();
 
         Scene.Load(1);
     }

@@ -12,9 +12,9 @@ public class EntryBattle : MonoBehaviour
     {
         if (File.Exists(SaveSystem.GetFileName()))
         {
-            EventBus.Invoke<MyEvent.OnLoad>();
+            EventBus.Invoke<OnLoad>();
         }
 
-        EventBus.Invoke<MyEvent.OnEntryBattle>();
+        EventBus.Invoke<OnEntryBattle>();
     }
 }

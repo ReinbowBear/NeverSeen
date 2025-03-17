@@ -28,7 +28,7 @@ public class ChosenCharacter : MonoBehaviour
     }
 
 
-    private void Save(MyEvent.OnSave _)
+    private void Save(OnSave _)
     {
         SaveSystem.gameData.generalData.character = chosenIndex;
     }
@@ -36,12 +36,12 @@ public class ChosenCharacter : MonoBehaviour
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnSave>(Save);
+        EventBus.Add<OnSave>(Save);
     }
 
     void OnDisable()
     {
-         EventBus.Remove<MyEvent.OnSave>(Save);
+         EventBus.Remove<OnSave>(Save);
     }
 }
 

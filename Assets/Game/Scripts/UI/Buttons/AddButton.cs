@@ -7,7 +7,7 @@ public class AddButton : MonoBehaviour
     [SerializeField] private MyButton button;
 
 
-    private void Load(MyEvent.OnLoad _)
+    private void Load(OnLoad _)
     {
         panel.buttons.Add(button);
         button.gameObject.SetActive(true);
@@ -18,11 +18,11 @@ public class AddButton : MonoBehaviour
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnLoad>(Load);
+        EventBus.Add<OnLoad>(Load);
     }
 
     void OnDisable()
     {
-        EventBus.Remove<MyEvent.OnLoad>(Load);
+        EventBus.Remove<OnLoad>(Load);
     }
 }

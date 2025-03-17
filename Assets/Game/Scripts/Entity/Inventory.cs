@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
         }
 
         weapons[slot] = newWeapon;
+        newWeapon.transform.SetParent(transform, false);
 
         InventoryUI.instance.ShowItems(this);
     }

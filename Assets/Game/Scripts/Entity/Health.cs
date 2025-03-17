@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private Character character;
+    [SerializeField] private CharacterData character;
     public BarChange hpBar;
 
     public void TakeDamage(short damage)

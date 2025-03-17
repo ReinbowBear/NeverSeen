@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public abstract class Weapon : ItemData
+public abstract class Weapon : Item
 {
     [SerializeField] protected float prepare;
     [SerializeField] protected float attack;

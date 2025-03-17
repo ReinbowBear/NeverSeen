@@ -32,7 +32,7 @@ public class Pause : MonoBehaviour
     {
         Time.timeScale = 1;
         
-        EventBus.Invoke<MyEvent.OnSave>();
+        EventBus.Invoke<OnSave>();
         SaveSystem.SaveFile();
 
         Scene.Load(0);

@@ -12,18 +12,18 @@ public class GameMap : MonoBehaviour
     }
 
 
-    private void StartedMap(MyEvent.OnEntryBattle _)
+    private void StartedMap(OnEntryBattle _)
     {
         //LoadMap(Content.instance.maps.containers[index]);
     }
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnEntryBattle>(StartedMap);
+        EventBus.Add<OnEntryBattle>(StartedMap);
     }
 
     void OnDisable()
     {
-        EventBus.Remove<MyEvent.OnEntryBattle>(StartedMap);
+        EventBus.Remove<OnEntryBattle>(StartedMap);
     }  
 }

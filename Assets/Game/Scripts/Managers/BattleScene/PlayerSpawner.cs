@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
-    private void LoadCharacter(MyEvent.OnLoad _)
+    private void LoadCharacter(OnLoad _)
     {
         string characterName = SaveSystem.gameData.generalData.character;
         StartCoroutine(CreatePlayer(characterName));
@@ -21,11 +21,11 @@ public class PlayerSpawner : MonoBehaviour
 
     void OnEnable()
     {
-        EventBus.Add<MyEvent.OnLoad>(LoadCharacter);
+        EventBus.Add<OnLoad>(LoadCharacter);
     }
 
     void OnDisable()
     {
-        EventBus.Remove<MyEvent.OnLoad>(LoadCharacter);
+        EventBus.Remove<OnLoad>(LoadCharacter);
     }
 }

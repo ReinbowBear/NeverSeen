@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 public class BattleKeyboard : MonoBehaviour
 {
     public static GameInput gameInput;
-    [SerializeField] private Character character;
+    [SerializeField] private WeaponControl weaponControl;
+    [SerializeField] private Move move;
 
     private InputAction moveInput;
     private Vector2 direction;
@@ -21,7 +22,7 @@ public class BattleKeyboard : MonoBehaviour
 
         if (direction != Vector2.zero)
         {
-            character.move.MoveTo(direction);
+            move.MoveTo(direction);
         }
 
     }
@@ -29,7 +30,7 @@ public class BattleKeyboard : MonoBehaviour
 
     public void KeyboardAbility(int index)
     {
-        character.DoAttack(index);
+        weaponControl.DoAttack(index);
     }
 
 

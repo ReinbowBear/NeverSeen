@@ -13,13 +13,13 @@ public class EntryMap : MonoBehaviour
     {
         if (File.Exists(SaveSystem.GetFileName()))
         {
-            EventBus.Invoke<MyEvent.OnLoad>();
+            EventBus.Invoke<OnLoad>();
         }
         else
         {
-            EventBus.Invoke<MyEvent.OnEntryMap>(null);
+            EventBus.Invoke<OnEntryMap>(null);
 
-            EventBus.Invoke<MyEvent.OnSave>();
+            EventBus.Invoke<OnSave>();
             SaveSystem.SaveFile();
         }
     }

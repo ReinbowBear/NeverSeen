@@ -7,6 +7,12 @@ public class InventoryUI : MonoBehaviour
 
     public Image[] abilitySlots;
 
+    void Awake()
+    {
+        instance = this;
+    }
+
+
     public void ShowItems(Inventory inventory)
     {
         for (byte i = 0; i < inventory.weapons.Length; i++)

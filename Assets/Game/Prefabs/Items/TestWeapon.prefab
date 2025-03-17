@@ -99,11 +99,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be5e018dc3b96ec4fa7cd4ddba43bd22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI:
+    sprite: {fileID: 21300000, guid: d4c997a8650be194886709343b8cb2ea, type: 3}
+    itemName: 
+    description: 
+  itemType: 1
   prepare: 0.2
   attack: 0.1
   ending: 0.2
-  hitBox: {fileID: 5078013802090659561}
   damage: 15
+  hitBox: {fileID: 5078013802090659561}
 --- !u!1 &4988458200952472407
 GameObject:
   m_ObjectHideFlags: 0
