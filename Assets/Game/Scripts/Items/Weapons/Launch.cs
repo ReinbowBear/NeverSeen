@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class Launch : Weapon
 {
-    protected override IEnumerator Attacking()
+    public override IEnumerator Attack()
     {
+        isInAttack = true;
         yield return new WaitForSeconds(prepare);
 
         yield return new WaitForSeconds(attack);
 
         yield return new WaitForSeconds(ending);
-        corutine = null;
+        isInAttack = false;
     }
 }

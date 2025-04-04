@@ -7,8 +7,13 @@ public class GameMap : MonoBehaviour
 
     public async void LoadMap(AssetReference asset)
     {
-        map = await Address.GetAsset(asset);
-        map.transform.SetParent(transform);
+        var handle = Addressables.InstantiateAsync(asset, transform);
+        await handle.Task;
+
+        var release = handle.Result.AddComponent<ReleaseOnDestroy>();
+        release.handle = handle;
+
+        map = handle.Result;
     }
 
 

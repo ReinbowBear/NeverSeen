@@ -1,0 +1,71 @@
+{
+    "groups": [
+        "Default Local Group",
+        "Localization-Locales",
+        "Items",
+        "Enemys",
+        "Maps",
+        "Localization-String-Tables-English (en)",
+        "Built In Data",
+        "Characters",
+        "Localization-String-Tables-Russian (ru)",
+        "Projectiles",
+        "Localization-Assets-Shared"
+    ],
+    "keysList": [
+        {
+            "keys": []
+        },
+        {
+            "keys": [
+                "Russian (ru)",
+                "English (en)"
+            ]
+        },
+        {
+            "keys": [
+                "Range",
+                "TestWeapon",
+                "ItemPrefab"
+            ]
+        },
+        {
+            "keys": [
+                "Cube"
+            ]
+        },
+        {
+            "keys": [
+                "Plane"
+            ]
+        },
+        {
+            "keys": [
+                "LanguageTable_en"
+            ]
+        },
+        {
+            "keys": []
+        },
+        {
+            "keys": [
+                "CharacterPrefab"
+            ]
+        },
+        {
+            "keys": [
+                "LanguageTable_ru"
+            ]
+        },
+        {
+            "keys": [
+                "Bullet"
+            ]
+        },
+        {
+            "keys": [
+                "Assets/Interface/UIScripts/LocalizationTable/LocalizationTable Shared Data.asset"
+            ]
+        }
+    ]
+}

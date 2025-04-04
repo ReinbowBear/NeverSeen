@@ -28,7 +28,7 @@ public static class SaveSystem //https://www.youtube.com/watch?v=1mf730eb5Wo&t=4
 
     public static string GetFileName()
     {
-        string saveFile = Application.persistentDataPath + "/gameData" + ".save";
+        string saveFile = "Assets/Game/Save/gameData.save";
         return saveFile;
     }
 }

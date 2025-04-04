@@ -6,20 +6,21 @@ public class Melee : Weapon
     [Space]
     [SerializeField] protected Collider hitBox;
 
-    protected override IEnumerator Attacking()
+    public override IEnumerator Attack()
     {
+        isInAttack = true;
         yield return new WaitForSeconds(prepare);
         hitBox.enabled = true;
         yield return new WaitForSeconds(attack);
         hitBox.enabled = false;
         yield return new WaitForSeconds(ending);
-        corutine = null;
+        isInAttack = false;
     }
 
     public override void FalseAttack()
     {
-        hitBox.enabled = false;
         base.FalseAttack();
+        hitBox.enabled = false;
     }
 
 

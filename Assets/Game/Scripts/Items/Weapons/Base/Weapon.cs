@@ -3,34 +3,29 @@ using System.Collections;
 
 public abstract class Weapon : Item
 {
-    [SerializeField] protected float prepare;
-    [SerializeField] protected float attack;
-    [SerializeField] protected float ending;
+    public float prepare;
+    public float attack;
+    public float ending;
     [Space]
     [SerializeField] protected byte damage;
 
-    [HideInInspector] public Coroutine corutine;
+    [HideInInspector] public bool isInAttack;
 
 
-    public virtual void Attack()
+    public virtual IEnumerator Attack()
     {
-        corutine = StartCoroutine(Attacking());
-    }
-
-
-    protected virtual IEnumerator Attacking()
-    {
+        isInAttack = true;
         yield return new WaitForSeconds(prepare);
 
         yield return new WaitForSeconds(attack);
 
         yield return new WaitForSeconds(ending);
-        corutine = null;
+        isInAttack = false;
     }
 
     public virtual void FalseAttack()
     {
-        corutine = null;
         StopAllCoroutines();
+        isInAttack = false;
     }
 }

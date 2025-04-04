@@ -6,9 +6,10 @@ public static class AddressImporter
 {
     public static Dictionary<string, List<string>> addressStorage = new Dictionary<string, List<string>>();
 
+
     public static void ImportAddressable()
     {
-        string filePath = "Assets/AddressableAssets.json";
+        string filePath = "Assets/Game/Save/AddressableAssets.json";
 
         if (File.Exists(filePath))
         {
@@ -19,8 +20,6 @@ public static class AddressImporter
             {
                 addressStorage[groupList.groups[i]] = groupList.keysList[i].keys;
             }
-
-            Debug.Log("Addressable assets loaded successfully.");
         }
         else
         {
@@ -31,7 +30,7 @@ public static class AddressImporter
 
     public static string GetRandomKey(string groupName)
     {
-        if (addressStorage.ContainsKey(groupName) != true)
+        if (addressStorage.ContainsKey(groupName) == false)
         {
             return null;
         }
@@ -41,6 +40,7 @@ public static class AddressImporter
         return assetKeys[randomIndex];
     }
 }
+
 
 [System.Serializable]
 public class AddressGroupList

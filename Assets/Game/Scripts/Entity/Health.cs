@@ -1,17 +1,29 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private CharacterData character;
+    public Action onDamageTake;
+
     public BarChange hpBar;
+    [Space]
+    public short maxHp;
+    private short hp;
+
+    void Start()
+    {
+        hp = maxHp;
+        hpBar.ChangeBar(maxHp, hp);
+    }
 
     public void TakeDamage(short damage)
     {
-        character.hp -= damage;
-        hpBar.ChangeBar(character.maxHp, character.hp);
+        hp -= damage;
+        hpBar.ChangeBar(maxHp, hp);
+        onDamageTake?.Invoke();
 
-        if (character.hp <= 0)
+        if (hp <= 0)
         {
             Death();
         }
@@ -26,14 +38,14 @@ public class Health : MonoBehaviour
 
     public void TakeHeal(short heal)
     {
-        character.hp += heal;
+        hp += heal;
 
-        if (character.hp > character.maxHp)
+        if (hp > maxHp)
         {
-            character.hp = character.maxHp;
+            hp = maxHp;
         }
 
-        hpBar.ChangeBar(character.maxHp, character.hp);
+        hpBar.ChangeBar(maxHp, hp);
 
         DOTween.Sequence()
             .SetLink(gameObject)
@@ -43,6 +55,6 @@ public class Health : MonoBehaviour
 
     private void Death()
     {
-        Address.DestroyAsset(gameObject);
+        Destroy(gameObject);
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class PlayerSpawner : MonoBehaviour
 {
@@ -11,11 +12,11 @@ public class PlayerSpawner : MonoBehaviour
 
     private IEnumerator CreatePlayer(string newCharacter)
     {
-        var handle = Address.GetAssetByName(newCharacter);
-        yield return new WaitUntil(() => handle.IsCompleted);
-        //GameObject player = handle.Result;
-//
-        //yield return new WaitForSeconds(0);
+        var handle = Addressables.InstantiateAsync(newCharacter);
+        yield return handle;
+
+        var release = handle.Result.AddComponent<ReleaseOnDestroy>();
+        release.handle = handle;
     }
 
 

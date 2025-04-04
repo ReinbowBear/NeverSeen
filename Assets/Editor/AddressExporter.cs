@@ -28,7 +28,7 @@ public static class AddressExporter
         }
 
         string json = JsonUtility.ToJson(new AddressGroupList(groupNames, keys), true);
-        string filePath = "Assets/AddressableAssets.json";
+        string filePath = "Assets/Game/Save/AddressableAssets.json";
         File.WriteAllText(filePath, json);
 
         Debug.Log("Addressable assets exported to: " + filePath);

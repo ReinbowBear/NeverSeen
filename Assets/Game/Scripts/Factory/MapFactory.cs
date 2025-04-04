@@ -12,17 +12,18 @@ public static class MapFactory
     public static void GenerateMap()
     {
         MapData newMap = new MapData();
-        AddressImporter.ImportAddressable();
         List<string> maps = AddressImporter.addressStorage["Maps"];
         List<string> enemys = AddressImporter.addressStorage["Enemys"];
 
         int mapIndex = MyRandom.random.Next(0, maps.Count);
         newMap.mapModel = maps[mapIndex];
         newMap.wavesCount = wavesCount;
+        newMap.enemys = new string[wavesCount][];
 
         for (int i = 0; i < wavesCount; i++)
         {
             int enemysCount = MyRandom.random.Next(minEnemy, maxEnemy);
+            newMap.enemys[i] = new string[enemysCount];
             for (byte ii = 0; ii < enemysCount; ii++)
             {
                 int enemyIndex = MyRandom.random.Next(0, enemys.Count);

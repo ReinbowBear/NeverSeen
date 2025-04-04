@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class WaveControl : MonoBehaviour
 {
@@ -16,11 +17,14 @@ public class WaveControl : MonoBehaviour
         {
             for (byte i = 0; i < mapData.enemys[waveLeft].Length; i++)
             {
-                var handle = Address.GetAssetByName(mapData.enemys[waveLeft][i]);
-                yield return new WaitUntil(() => handle.IsCompleted);
+                var handle = Addressables.LoadAssetAsync<GameObject>(mapData.enemys[waveLeft][i]);
+                yield return handle;
 
-                GameObject enemy = handle.Result;
-                enemy.transform.position = new Vector3(MyRandom.random.Next(-5, 5), 0, MyRandom.random.Next(-5, 5));
+                Vector3 randomPos = new Vector3(MyRandom.random.Next(-8, 8), 0, MyRandom.random.Next(-8, 8));
+                Instantiate(handle.Result, randomPos, Quaternion.identity);
+
+                var release = handle.Result.AddComponent<ReleaseOnDestroy>();
+                release.handle = handle;
             }
 
             waveLeft++;

@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 5af9cd332ebd4a3499e373f54481c6c7
   m_SerializeEntries:
   - m_GUID: 14833f1002eda0e45914b2ffd74a3e9c
-    m_Address: Assets/Game/Prefabs/Plane.prefab
+    m_Address: Plane
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

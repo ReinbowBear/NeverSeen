@@ -7,6 +7,7 @@ public class BattleKeyboard : MonoBehaviour
     [SerializeField] private WeaponControl weaponControl;
     [SerializeField] private Move move;
 
+    private Camera cam;
     private InputAction moveInput;
     private Vector2 direction;
 
@@ -14,6 +15,7 @@ public class BattleKeyboard : MonoBehaviour
     {
         gameInput = new GameInput();
         moveInput = gameInput.Player.WASD;
+        cam = Camera.main;
     }
 
     void FixedUpdate()
@@ -30,7 +32,13 @@ public class BattleKeyboard : MonoBehaviour
 
     public void KeyboardAbility(int index)
     {
-        weaponControl.DoAttack(index);
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, 20, LayerMask.GetMask("Ground")))
+        {
+            weaponControl.CheckAttack(index, hit.point);
+        }
     }
 
 
