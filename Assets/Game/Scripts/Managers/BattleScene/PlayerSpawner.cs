@@ -10,7 +10,7 @@ public class PlayerSpawner : MonoBehaviour
         StartCoroutine(CreatePlayer(characterName));
     }
 
-    private IEnumerator CreatePlayer(string newCharacter)
+    public IEnumerator CreatePlayer(string newCharacter)
     {
         var handle = Addressables.InstantiateAsync(newCharacter);
         yield return handle;

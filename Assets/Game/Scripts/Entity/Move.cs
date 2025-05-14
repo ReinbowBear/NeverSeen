@@ -12,7 +12,7 @@ public class Move : MonoBehaviour
 
     public void MoveTo(Vector2 direction)
     {
-        if (character.state == CharacterState.attack)
+        if (character.state == State.attack)
         {
             return;
         }

@@ -10,15 +10,15 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private RectTransform rectTransform;
 
-    [HideInInspector] public Item itemSO;
+    [HideInInspector] public Item item;
     [HideInInspector] public Transform originalParent;
     private Vector3 originalpos;
     private Tween tween;
 
     public void Init(Item newItem)
     {
-        itemSO = newItem;
-        image.sprite = itemSO.UI.sprite;
+        item = newItem;
+        image.sprite = item.UI.sprite;
     }
 
 

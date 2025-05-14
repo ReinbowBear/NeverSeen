@@ -6,7 +6,7 @@ public static class EventBus
 {
     private static Dictionary<Type, List<Listener>> events = new Dictionary<Type, List<Listener>>();
 
-    private class Listener //структуры хранятся в стеке, что думаю тут не подходит
+    private class Listener
     {
         public Delegate action;
         public int priority;

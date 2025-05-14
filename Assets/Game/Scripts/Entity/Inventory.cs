@@ -7,7 +7,8 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private Transform weaponPoint;
     [SerializeField] private AssetReference[] startedItems;
-    [HideInInspector] public Weapon[] weapons = new Weapon[4];
+
+    [HideInInspector] public Ability[] weapons = new Ability[3];
 
     void Start()
     {
@@ -31,7 +32,7 @@ public class Inventory : MonoBehaviour
             Destroy(weapons[slot].gameObject);
         }
 
-        weapons[slot] = handle.Result.GetComponent<Weapon>();
+        weapons[slot] = handle.Result.GetComponent<Ability>();
 
         InventoryUI.instance.ShowItems(this);
     }

@@ -11,14 +11,14 @@ GameObject:
   - component: {fileID: 8928328474092675079}
   - component: {fileID: 8461774968691798831}
   - component: {fileID: 2873626264760070065}
+  - component: {fileID: 6900495906541817678}
+  - component: {fileID: 4999077753241146173}
   - component: {fileID: 4817066228433934473}
-  - component: {fileID: 4151379962268095673}
   - component: {fileID: 7777990329648829618}
-  - component: {fileID: 8767760261029620257}
   - component: {fileID: 1051633986994880885}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -88,6 +88,43 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &6900495906541817678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5559499260584473961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45a22f308a71b5c4abc97f26c31e6549, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  attackDelay: 0
+  stunnTime: 0
+  stunnDelay: 0
+--- !u!114 &4999077753241146173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5559499260584473961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a2d00f1cdbbd1c4e90a422b16c3e6ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 4817066228433934473}
+  move: {fileID: 0}
+  inventory: {fileID: 0}
+  actionShow: {fileID: 0}
+  stats:
+    maxHp: 0
+    speed: 0
+    rotate: 0
+  state: 0
 --- !u!114 &4817066228433934473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,25 +139,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBar: {fileID: 5620984516912400916}
   maxHp: 100
---- !u!114 &4151379962268095673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5559499260584473961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50824f054c043834c9f541b53d85641d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  actionShow: {fileID: 1051633986994880885}
-  enMove: {fileID: 7777990329648829618}
-  weapons:
-  - weapon: {fileID: 3911328516518026441}
-    atttackDist: 6
-    attackDelay: 0
-  trigerCollider: {fileID: 0}
 --- !u!114 &7777990329648829618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -136,26 +154,11 @@ MonoBehaviour:
   rb: {fileID: 8461774968691798831}
   model: {fileID: 5979584496728739486}
   target: {fileID: 0}
-  keepDist: 6
+  keepDistToPlayer: 2
+  keepDistToEnemy: 2
   speed: 2.5
   rotate: 10
---- !u!114 &8767760261029620257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5559499260584473961}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786cab3c93245ac4dbb4e2e766bd75c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: {fileID: 4817066228433934473}
-  enCombat: {fileID: 4151379962268095673}
-  enMove: {fileID: 7777990329648829618}
-  stunnTime: 2
-  stunnDelay: 5
+  trigerCollider: {fileID: 0}
 --- !u!114 &1051633986994880885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,17 +362,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6212072507323450041, guid: 20b8faf794f686040a4577a7de44ed54, type: 3}
   m_PrefabInstance: {fileID: 6474759384391261605}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3911328516518026441 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8042623864106975596, guid: 20b8faf794f686040a4577a7de44ed54, type: 3}
-  m_PrefabInstance: {fileID: 6474759384391261605}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce11bcd6ac1f72047b215dcb80a3d14e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &7823153424120943180
 PrefabInstance:
   m_ObjectHideFlags: 0

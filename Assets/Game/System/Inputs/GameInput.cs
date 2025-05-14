@@ -126,15 +126,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Space"",
-                    ""type"": ""Button"",
-                    ""id"": ""156f7551-d618-471c-8a48-7386e7043aa2"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -157,17 +148,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Shift"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b4fc215c-410f-4090-a1ef-04163c6bc1b4"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Space"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -399,7 +379,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Player_Mouse_0 = m_Player.FindAction("Mouse_0", throwIfNotFound: true);
         m_Player_Mouse_1 = m_Player.FindAction("Mouse_1", throwIfNotFound: true);
         m_Player_Shift = m_Player.FindAction("Shift", throwIfNotFound: true);
-        m_Player_Space = m_Player.FindAction("Space", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Navigate = m_Menu.FindAction("Navigate", throwIfNotFound: true);
@@ -490,7 +469,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Mouse_0;
     private readonly InputAction m_Player_Mouse_1;
     private readonly InputAction m_Player_Shift;
-    private readonly InputAction m_Player_Space;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -518,10 +496,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Shift".
         /// </summary>
         public InputAction @Shift => m_Wrapper.m_Player_Shift;
-        /// <summary>
-        /// Provides access to the underlying input action "Player/Space".
-        /// </summary>
-        public InputAction @Space => m_Wrapper.m_Player_Space;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -560,9 +534,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Shift.started += instance.OnShift;
             @Shift.performed += instance.OnShift;
             @Shift.canceled += instance.OnShift;
-            @Space.started += instance.OnSpace;
-            @Space.performed += instance.OnSpace;
-            @Space.canceled += instance.OnSpace;
         }
 
         /// <summary>
@@ -586,9 +557,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Shift.started -= instance.OnShift;
             @Shift.performed -= instance.OnShift;
             @Shift.canceled -= instance.OnShift;
-            @Space.started -= instance.OnSpace;
-            @Space.performed -= instance.OnSpace;
-            @Space.canceled -= instance.OnSpace;
         }
 
         /// <summary>
@@ -840,13 +808,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnShift(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Space" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSpace(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menu" which allows adding and removing callbacks.

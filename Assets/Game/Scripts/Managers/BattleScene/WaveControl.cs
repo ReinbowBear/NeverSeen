@@ -17,14 +17,7 @@ public class WaveControl : MonoBehaviour
         {
             for (byte i = 0; i < mapData.enemys[waveLeft].Length; i++)
             {
-                var handle = Addressables.LoadAssetAsync<GameObject>(mapData.enemys[waveLeft][i]);
-                yield return handle;
-
-                Vector3 randomPos = new Vector3(MyRandom.random.Next(-8, 8), 0, MyRandom.random.Next(-8, 8));
-                Instantiate(handle.Result, randomPos, Quaternion.identity);
-
-                var release = handle.Result.AddComponent<ReleaseOnDestroy>();
-                release.handle = handle;
+                StartCoroutine(CreateEnemy(mapData.enemys[waveLeft][i]));
             }
 
             waveLeft++;
@@ -32,5 +25,17 @@ public class WaveControl : MonoBehaviour
         }
 
         EventBus.Invoke<OnEndLevel>();
+    }
+
+    public IEnumerator CreateEnemy(string enemyName)
+    {
+        var handle = Addressables.LoadAssetAsync<GameObject>(enemyName);
+        yield return handle;
+
+        Vector3 randomPos = new Vector3(MyRandom.random.Next(-8, 8), 0, MyRandom.random.Next(-8, 8));
+        Instantiate(handle.Result, randomPos, Quaternion.identity);
+
+        var release = handle.Result.AddComponent<ReleaseOnDestroy>();
+        release.handle = handle;
     }
 }

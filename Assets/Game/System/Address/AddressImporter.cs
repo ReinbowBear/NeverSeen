@@ -5,12 +5,11 @@ using System.IO;
 public static class AddressImporter
 {
     public static Dictionary<string, List<string>> addressStorage = new Dictionary<string, List<string>>();
+    public static readonly string filePath = "Assets/Game/Save/AddressableAssets.json";
 
 
     public static void ImportAddressable()
     {
-        string filePath = "Assets/Game/Save/AddressableAssets.json";
-
         if (File.Exists(filePath))
         {
             string json = File.ReadAllText(filePath);

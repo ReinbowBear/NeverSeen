@@ -98,7 +98,6 @@ GameObject:
   - component: {fileID: 8796957446796828379}
   - component: {fileID: 7206098054193899057}
   - component: {fileID: 2034289452325687368}
-  - component: {fileID: 6221940656738755023}
   - component: {fileID: 7578127784161136332}
   - component: {fileID: 8334488932969709447}
   - component: {fileID: 94394883545823419}
@@ -189,23 +188,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a2d00f1cdbbd1c4e90a422b16c3e6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  state: 0
---- !u!114 &6221940656738755023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7587332316048365933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d15516bd8486924286cca7768009f9a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 2034289452325687368}
+  health: {fileID: 0}
+  move: {fileID: 8334488932969709447}
   inventory: {fileID: 94394883545823419}
   actionShow: {fileID: 7172470052621496066}
-  move: {fileID: 8334488932969709447}
+  stats:
+    maxHp: 0
+    speed: 0
+    rotate: 0
+  state: 0
 --- !u!114 &7578127784161136332
 MonoBehaviour:
   m_ObjectHideFlags: 0

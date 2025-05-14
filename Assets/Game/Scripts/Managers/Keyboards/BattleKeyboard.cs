@@ -4,8 +4,7 @@ using UnityEngine.InputSystem;
 public class BattleKeyboard : MonoBehaviour
 {
     public static GameInput gameInput;
-    [SerializeField] private WeaponControl weaponControl;
-    [SerializeField] private Move move;
+    private Move move;
 
     private Camera cam;
     private InputAction moveInput;
@@ -16,6 +15,8 @@ public class BattleKeyboard : MonoBehaviour
         gameInput = new GameInput();
         moveInput = gameInput.Player.WASD;
         cam = Camera.main;
+
+        move = Character.instance.gameObject.GetComponent<Move>();
     }
 
     void FixedUpdate()
@@ -37,7 +38,7 @@ public class BattleKeyboard : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, 20, LayerMask.GetMask("Ground")))
         {
-            weaponControl.CheckAttack(index, hit.point);
+            Character.instance.TryAttack(index, hit.point);
         }
     }
 
@@ -49,7 +50,6 @@ public class BattleKeyboard : MonoBehaviour
         gameInput.Player.Mouse_0.started += context => KeyboardAbility(0);
         gameInput.Player.Mouse_1.started += context => KeyboardAbility(1);
         gameInput.Player.Shift.started += context => KeyboardAbility(2);
-        gameInput.Player.Space.started += context => KeyboardAbility(3);
     }
 
     void OnDisable()
@@ -57,7 +57,6 @@ public class BattleKeyboard : MonoBehaviour
         gameInput.Player.Mouse_0.started -= context => KeyboardAbility(0);
         gameInput.Player.Mouse_1.started -= context => KeyboardAbility(1);
         gameInput.Player.Shift.started -= context => KeyboardAbility(2);
-        gameInput.Player.Space.started -= context => KeyboardAbility(3);
 
         gameInput.Disable();
     }

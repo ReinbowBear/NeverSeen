@@ -11,7 +11,7 @@ public class EntryMenu : MonoBehaviour
 
     private void CheckSave()
     {
-        if (File.Exists(SaveSystem.GetFileName()))
+        if (File.Exists(SaveSystem.filePath))
         {
             SaveSystem.LoadFile();
             EventBus.Invoke<OnLoad>();

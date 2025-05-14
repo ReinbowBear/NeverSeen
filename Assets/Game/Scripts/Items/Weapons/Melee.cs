@@ -1,25 +1,27 @@
 using System.Collections;
 using UnityEngine;
 
-public class Melee : Weapon
+public class Melee : Ability
 {
+    [SerializeField] protected byte damage;
+
     [Space]
     [SerializeField] protected Collider hitBox;
 
-    public override IEnumerator Attack()
+    public override IEnumerator Use(Character owner)
     {
-        isInAttack = true;
+        owner.state = State.attack;
         yield return new WaitForSeconds(prepare);
         hitBox.enabled = true;
         yield return new WaitForSeconds(attack);
         hitBox.enabled = false;
         yield return new WaitForSeconds(ending);
-        isInAttack = false;
+        owner.state = State.None;
     }
 
-    public override void FalseAttack()
+    public override void Cancel(Character owner)
     {
-        base.FalseAttack();
+        base.Cancel(owner);
         hitBox.enabled = false;
     }
 

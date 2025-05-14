@@ -2,17 +2,16 @@ using UnityEngine;
 
 public abstract class Item : MonoBehaviour
 {
-    public InterfaceData UI;
-    [Space]
     public ItemType itemType;
+    public InterfaceData UI;
 }
 
-
-public enum ItemType
+[System.Serializable]
+public class InterfaceData
 {
-    None,
-    Weapon,
-    Ability,
-    Armor,
-    Movement
+    public Sprite sprite;
+    public string itemName;
+    [Space]
+    [TextArea(5, 0)]
+    public string description;
 }

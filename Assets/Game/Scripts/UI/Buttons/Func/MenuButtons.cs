@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class MenuButtons : MonoBehaviour
-{    
+{
     public void ContinueGame()
     {
         Scene.Continue();

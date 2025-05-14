@@ -32,9 +32,17 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     {
         ItemUI newItem = eventData.pointerDrag.GetComponent<ItemUI>();
 
-        if (slotType == ItemType.None || slotType.ToString() == newItem.itemSO.GetType().Name)
+        if (slotType == ItemType.None || slotType.ToString() == newItem.item.GetType().Name)
         {
             SwapItems(newItem);
         }
     }
+}
+
+public enum ItemType
+{
+    None,
+    Weapon,
+    Defense,
+    Movement
 }

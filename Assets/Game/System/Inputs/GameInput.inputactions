@@ -40,15 +40,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Space",
-                    "type": "Button",
-                    "id": "156f7551-d618-471c-8a48-7386e7043aa2",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -71,17 +62,6 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Shift",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b4fc215c-410f-4090-a1ef-04163c6bc1b4",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Space",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

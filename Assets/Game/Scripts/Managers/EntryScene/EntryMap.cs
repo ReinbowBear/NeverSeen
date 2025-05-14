@@ -11,7 +11,7 @@ public class EntryMap : MonoBehaviour
 
     private void CheckSave()
     {
-        if (File.Exists(SaveSystem.GetFileName()))
+        if (File.Exists(SaveSystem.filePath))
         {
             EventBus.Invoke<OnLoad>();
         }

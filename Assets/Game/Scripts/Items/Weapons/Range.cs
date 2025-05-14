@@ -2,16 +2,17 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class Range : Weapon
+public class Range : Ability
 {
+    [SerializeField] protected byte damage;
     [Space]
     [SerializeField] private Transform shootPoint;
     [SerializeField] private AssetReference projectile;
     [SerializeField] private float projectileSpeed;
 
-    public override IEnumerator Attack()
+    public override IEnumerator Use(Character owner)
     {
-        isInAttack = true;
+        owner.state = State.attack;
         var handle = Addressables.LoadAssetAsync<GameObject>(projectile);
 
         yield return new WaitForSeconds(prepare);
@@ -21,14 +22,14 @@ public class Range : Weapon
         var release = newObject.AddComponent<ReleaseOnDestroy>();
         release.handle = handle;
 
+        Projectile newProjectile = newObject.GetComponent<Projectile>();
+        newProjectile.ownerTag = transform.root.gameObject.tag;
+        newProjectile.direction = shootPoint.forward;
 
-        Projectile newProjectile = handle.Result.GetComponent<Projectile>();
         newProjectile.damage = damage;
         newProjectile.speed = projectileSpeed;
-        newProjectile.shootingEntity = transform.root.gameObject;
-
 
         yield return new WaitForSeconds(ending);
-        isInAttack = false;
+        owner.state = State.None;
     }
 }

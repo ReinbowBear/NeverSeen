@@ -1,50 +1,48 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Sound : MonoBehaviour
 {
     public static Sound instance;
-    private System.Random random;
+
     [SerializeField] private AudioSource audioSource;
-    [Space]
-    public AudioClip[] systemSounds;
-    public AudioClip[] buttonSounds;
-    public AudioClip[] sceneSounds;
+    [SerializeField] private AudioClip[] musics;
 
-    //private Dictionary<string, float> lastPlayTime = new Dictionary<string, float>();
-    //private List<AudioSource> audioSourcePool = new List<AudioSource>();
-    //private int initialPoolSize = 10;
+    private List<AudioClip> sceneSounds = new List<AudioClip>();
 
-    void Awake()
+    void Start()
     {
         instance = this;
-        random = new System.Random(DateTime.Now.Millisecond);
+        StartCoroutine(PlayMusic());
     }
 
 
-    public void PlaySound(byte index, AudioSource soundPoint = null)
+    private IEnumerator PlayMusic()
     {
-        if (soundPoint == null)
+        while (this.enabled)
         {
-            soundPoint = audioSource;
+            yield return new WaitForSeconds(1);
+
+            int randomID = Random.Range(0, musics.Length);
+            audioSource.PlayOneShot(musics[randomID]);
+
+            yield return new WaitForSeconds (musics[randomID].length);
         }
-
-        audioSource.PlayOneShot(systemSounds[index]);
-        Debug.Log("звуки ещё не готовы");
     }
 
-    public void PlayRandom()
+
+    public void PlayRandom(AudioClip[] sounds, AudioSource soundPoint = null)
     {
-        int randomID = random.Next(0, systemSounds.Length);
-
-        audioSource.PlayOneShot(systemSounds[randomID]);
-        Debug.Log("звуки ещё не готовы");
+        int randomID = Random.Range(0, sounds.Length);
+        Play(sounds[randomID], soundPoint);
     }
-}
 
-public enum AudioType
-{
-    sfx,
-    music,
-    ambient
+    public void Play(AudioClip sound, AudioSource soundPoint = null)
+    {
+        if (soundPoint = null) {soundPoint = audioSource; }
+
+        soundPoint.pitch = Random.Range(0.9f, 1.1f);
+        soundPoint.PlayOneShot(sound);
+    }
 }

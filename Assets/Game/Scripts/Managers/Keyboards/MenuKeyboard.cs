@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,13 +7,10 @@ public class MenuKeyboard : MonoBehaviour
     public static MenuKeyboard instance;
     public GameInput menuInput;
 
-    [SerializeField] private float navigateTime;
-    [Space]
     [SerializeField] private Panel basePanel;
     [SerializeField] private Panel pausePanel;
     [HideInInspector] public List<Panel> panels = new List<Panel>();
     private Panel currentPanel;
-    private Coroutine myCoroutine;
 
     void Awake()
     {
@@ -30,67 +26,21 @@ public class MenuKeyboard : MonoBehaviour
         float input = menuInput.Menu.Navigate.ReadValue<float>();
 
         int direction = (input == 1) ? -1 : 1; // смотрим направление ввода
-        int newButtonIndex = (currentPanel.chosenButton + direction + currentPanel.buttons.Count) % currentPanel.buttons.Count; // если вышли за край, возращаемся с другой стороны
+        int newButtonIndex = (currentPanel.currentButton + direction + currentPanel.buttons.Count) % currentPanel.buttons.Count; // если вышли за край, возращаемся с другой стороны
 
         ChoseNewButton(newButtonIndex);
     }
 
-
     public void ChoseNewButton(int index)
     {
-        FalseСurrentButton();
-
-        currentPanel.chosenButton = index;
-
-        if (myCoroutine != null)
-        {
-            StopCoroutine(myCoroutine);
-        }
-
-        myCoroutine = StartCoroutine(MoveToButton(currentPanel.buttons[index].transform));
-        currentPanel.buttons[index].Triggered(0.9f);
-    }
-
-    private void FalseСurrentButton()
-    {
-        MyButton button = currentPanel.buttons[currentPanel.chosenButton];
-        button.Triggered(0.5f);
-    }
-
-
-    private IEnumerator MoveToButton(Transform target)
-    {
-        GameObject moveTarget = currentPanel.navigateObject;
-        Vector3 startPos = moveTarget.transform.position;
-        Vector3 endPos = new Vector3 (0, target.position.y, 0);
-
-        float timeElapsed = 0f;
-        while (timeElapsed < navigateTime)
-        {
-            moveTarget.transform.position = Vector3.Lerp(startPos, endPos, timeElapsed / navigateTime);
-            timeElapsed += Time.unscaledDeltaTime;
-            yield return null;
-        }
-        moveTarget.transform.position = endPos;
-        myCoroutine = null;
+        currentPanel.ChoseNewButton(index);
     }
 
 
     private void InvokeButton(InputAction.CallbackContext context)
     {
-        currentPanel.buttons[currentPanel.chosenButton].Invoke();
-    }
-
-    private void ExitPanel(InputAction.CallbackContext context)
-    {
-        if (panels.Count != 0)
-        {
-            panels[panels.Count-1].ClosePanel(); // вызывает так же CheckPanel
-        }
-        else if (pausePanel != null)
-        {
-            pausePanel.OpenPanel();
-        }
+        int index = currentPanel.currentButton;
+        currentPanel.buttons[index].button.onClick.Invoke();
     }
 
 
@@ -107,6 +57,18 @@ public class MenuKeyboard : MonoBehaviour
         else
         {
             currentPanel = null;
+        }
+    }
+
+    private void ExitPanel(InputAction.CallbackContext context)
+    {
+        if (panels.Count != 0)
+        {
+            panels[panels.Count-1].ClosePanel(); // вызывает так же CheckPanel
+        }
+        else if (pausePanel != null)
+        {
+            pausePanel.OpenPanel();
         }
     }
 

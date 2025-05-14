@@ -5,7 +5,7 @@ public static class MapFactory
 {
     public static MapData mapData;
 
-    private static byte wavesCount = 5;
+    private static byte wavesCount = 3;
     private static byte minEnemy = 3;
     private static byte maxEnemy = 6;
 
@@ -17,13 +17,15 @@ public static class MapFactory
 
         int mapIndex = MyRandom.random.Next(0, maps.Count);
         newMap.mapModel = maps[mapIndex];
+
         newMap.wavesCount = wavesCount;
         newMap.enemys = new string[wavesCount][];
 
-        for (int i = 0; i < wavesCount; i++)
+        for (int i = 0; i < newMap.enemys.Length; i++)
         {
             int enemysCount = MyRandom.random.Next(minEnemy, maxEnemy);
             newMap.enemys[i] = new string[enemysCount];
+
             for (byte ii = 0; ii < enemysCount; ii++)
             {
                 int enemyIndex = MyRandom.random.Next(0, enemys.Count);
