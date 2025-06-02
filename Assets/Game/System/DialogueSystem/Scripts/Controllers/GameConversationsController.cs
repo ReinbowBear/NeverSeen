@@ -3,39 +3,38 @@
     using System.Collections.Generic;
     using System.Linq;
     using DialogueManager.Models;
+    using UnityEngine;
 
-    /// <summary>
-    /// Controller for the GameConversations Component
-    /// </summary>
-    public class GameConversationsController
+    public class GameConversationsController : MonoBehaviour // Controller for the GameConversations Component
     {
-        private GameConversations model;
+        public static GameConversationsController Instance;
+        public GameConversations Model;
 
-        public GameConversationsController( GameConversations gameConversations )
+        void Awake()
         {
-            gameConversations.pendingConversations = new Dictionary<string, List<PendingStatus>>();
-            gameConversations.ConversationsToAdd = new List<PendingStatus>();
-            model = gameConversations;
+            Instance = this;
+
+            Model = new GameConversations();
+            Model.PendingConversations = new Dictionary<string, List<PendingStatus>>();
+            Model.ConversationsToAdd = new List<PendingStatus>();
         }
 
-        // Creates a Key on the PendingConversations with the name of the Conversation if it doesn't exists already.
-        // Adds the first element in ConversationsToAdd to the Value PendingConversations with the correct key and sorts the list.
-        public void AddConversation()
+        public void AddConversation() // if (Model.ConversationsToAdd.Count > 0)
         {
-            PendingStatus unlockedStatus = model.ConversationsToAdd[0];
-            model.ConversationsToAdd.RemoveAt( 0 );
-            Dictionary<string, List<PendingStatus>> conversations = model.pendingConversations;
-            if (!conversations.ContainsKey( unlockedStatus.conversationName ))
+            PendingStatus unlockedStatus = Model.ConversationsToAdd[0];
+            Model.ConversationsToAdd.RemoveAt(0);
+
+            if (Model.PendingConversations.ContainsKey(unlockedStatus.conversationName) == false)
             {
-                conversations[unlockedStatus.conversationName] = new List<PendingStatus>();
+                Model.PendingConversations[unlockedStatus.conversationName] = new List<PendingStatus>();
             }
 
-            List<PendingStatus> pending = conversations[unlockedStatus.conversationName];
-            PendingStatus match = pending.Where( status => status.conversationName == unlockedStatus.statusName ).FirstOrDefault();
+            List<PendingStatus> pending = Model.PendingConversations[unlockedStatus.conversationName];
+            PendingStatus match = pending.Where(status => status.conversationName == unlockedStatus.statusName).FirstOrDefault();
             if (match == null)
             {
-                pending.Add( unlockedStatus );
-                pending.OrderBy( status => status.importance );
+                pending.Add(unlockedStatus);
+                pending.OrderBy(status => status.importance);
             }
         }
     }

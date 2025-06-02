@@ -1,6 +1,5 @@
 ﻿namespace DialogueManager.Models
 {
-    using System;
     using UnityEngine;
     using UnityEngine.UI;
 

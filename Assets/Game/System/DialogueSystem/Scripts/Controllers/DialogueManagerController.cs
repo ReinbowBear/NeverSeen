@@ -13,8 +13,6 @@
         private Queue<AudioClip> voices;
         private AudioClip audioQueue;
 
-        private bool parsing;
-        private string timeString;
         private string sentence;
         private Expression expression;
 
@@ -29,7 +27,7 @@
         private float currentSpeed = 0.01f;
         private ITextEffectBuilder currentEffect = null;
 
-        public DialogueData model;
+        private DialogueData model;
         
         public DialogueManagerController(DialogueData newModel)
         {
@@ -42,10 +40,7 @@
             effects = new List<ITextEffectBuilder>();
         }
 
-        /// <summary>
-        /// Start new dialogue, and reset all data from previous dialogues
-        /// </summary>
-        /// <param name="dialogue">Dialogue that will be displayed</param>
+
         public void StartDialogue()
         {
             Dialogue dialogue = model.DialogueToShow;
@@ -59,15 +54,11 @@
             {
                 expression = sentence.Character.Expressions[sentence.ExpressionIndex];
                 sprites.Enqueue(expression.Image);
-                sentences.Enqueue(sentence.Paragraph);
+                sentences.Enqueue(sentence.SentenceText);
                 voices.Enqueue(sentence.Character.Voice);
             }
         }
 
-        /// <summary>
-        /// Display next sentence in dialogue
-        /// </summary>
-        /// <returns>If there was a Sentence to be displayed or not</returns>
         public bool DisplayNextSentence()
         {
             foreach (LetterComponent letter in letters)
@@ -206,31 +197,21 @@
             return i;
         }
 
-        /// <summary>
-        /// Method that will be typing and displaying the sentence and checking for [time] indicators
-        /// </summary>
-        /// <returns>Necessary for the WaitForSeconds function</returns>
         public IEnumerator TypeSentence()
         {
-            timeString = "";
-            parsing = false;
             foreach (LetterComponent letter in letters)
             {
                 if (letter == null)
                 {
                     break;
                 }
-                Text text = letter.GetComponent<Text>();
-                text.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+
                 model.Source.PlayOneShot(audioQueue, model.VoiceVolume);
                 yield return new WaitForSeconds(letter.Model.Speed);
             }
             model.Finished = true;
         }
 
-        /// <summary>
-        /// Hides dialogue box
-        /// </summary>
         public void EndDialogue()
         {
             model.Animator.SetBool("IsOpen", false);

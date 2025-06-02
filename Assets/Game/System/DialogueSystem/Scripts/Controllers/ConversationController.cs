@@ -14,9 +14,9 @@
             model = newConversation;
         }
         
-        public void Trigger(DialogueData dialogueData)
+        public void Trigger(DialogueData dialogueData) // этот класс что то добавляет в список разговоров..
         {
-            Dictionary<string, List<PendingStatus>> conversations = model.GameConversations.pendingConversations;
+            Dictionary<string, List<PendingStatus>> conversations = model.GameConversations.PendingConversations;
             if (conversations.ContainsKey(model.Name) && conversations[model.Name].Count > 0)
             {
                 List<PendingStatus> statusList = conversations[model.Name];

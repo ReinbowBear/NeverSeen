@@ -4,7 +4,7 @@
 
     public class GameConversations
     {
-        public Dictionary<string, List<PendingStatus>> pendingConversations { get; set; }
+        public Dictionary<string, List<PendingStatus>> PendingConversations { get; set; }
         public List<PendingStatus> ConversationsToAdd { get; set; }
     }
 

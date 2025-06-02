@@ -9,6 +9,6 @@
         public int ExpressionIndex;
 
         [TextArea( 3, 10 )]
-        public string Paragraph;
+        public string SentenceText;
     }
 }
