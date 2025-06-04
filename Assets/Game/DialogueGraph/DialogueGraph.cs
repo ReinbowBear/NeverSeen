@@ -9,8 +9,8 @@ public class DialogueGraph : GraphView
 {
     public string Name = "DialogueFileName";
 
-    private SerializableDictionary<string, NodeErrorData> ungroupedNodes = new SerializableDictionary<string, NodeErrorData>(); // кастомный класс SerializableDictionary, может быть заменён на обычный Dictionary
-    private SerializableDictionary<Group, SerializableDictionary<string, NodeErrorData>> groupedNodes = new SerializableDictionary<Group, SerializableDictionary<string, NodeErrorData>>(); // отдельный список для груп нодов, с ним связанно много кода а всё что он делает, позволяет групирировать ноды в отдельные контейнеры, надо ли
+    public SerializableDictionary<string, NodeErrorData> UngroupedNodes = new SerializableDictionary<string, NodeErrorData>(); // кастомный класс SerializableDictionary, может быть заменён на обычный Dictionary
+    public SerializableDictionary<Group, SerializableDictionary<string, NodeErrorData>> GroupedNodes = new SerializableDictionary<Group, SerializableDictionary<string, NodeErrorData>>(); // отдельный список для груп нодов, с ним связанно много кода а всё что он делает, позволяет групирировать ноды в отдельные контейнеры, надо ли
     private SerializableDictionary<string, GroupErrorData> groups = new SerializableDictionary<string, GroupErrorData>();
 
     public DialogueGraph()
@@ -155,8 +155,8 @@ public class DialogueGraph : GraphView
                     continue;
                 }
 
-                NodeGroup nodeGroup = (NodeGroup)group;
-                DialogueNode node = (DialogueNode)element;
+                NodeGroup nodeGroup = (NodeGroup) group;
+                DialogueNode node = (DialogueNode) element;
 
                 RemoveNode(node);
                 AddGoupedNode(node, nodeGroup);
@@ -216,23 +216,23 @@ public class DialogueGraph : GraphView
     {
         string nodeName = node.NodeName;
 
-        if (ungroupedNodes.ContainsKey(nodeName) == false)
+        if (UngroupedNodes.ContainsKey(nodeName) == false)
         {
             NodeErrorData nodeError = new NodeErrorData();
             nodeError.Nodes.Add(node);
 
-            ungroupedNodes.Add(nodeName, nodeError);
+            UngroupedNodes.Add(nodeName, nodeError);
             return;
         }
 
-        ungroupedNodes[nodeName].Nodes.Add(node);
+        UngroupedNodes[nodeName].Nodes.Add(node);
 
-        Color errorColor = ungroupedNodes[nodeName].Color;
+        Color errorColor = UngroupedNodes[nodeName].Color;
         node.SetErrorColor(errorColor);
 
-        if (ungroupedNodes[nodeName].Nodes.Count == 2) // решает баг с тем что не подсвечивается первая нода
+        if (UngroupedNodes[nodeName].Nodes.Count == 2) // решает баг с тем что не подсвечивается первая нода
         {
-            ungroupedNodes[nodeName].Nodes[0].SetErrorColor(errorColor);
+            UngroupedNodes[nodeName].Nodes[0].SetErrorColor(errorColor);
         }
     }
 
@@ -241,28 +241,28 @@ public class DialogueGraph : GraphView
         node.Group = group;
         string nodeName = node.NodeName;
 
-        if (groupedNodes.ContainsKey(group) == false)
+        if (GroupedNodes.ContainsKey(group) == false)
         {
-            groupedNodes.Add(group, new SerializableDictionary<string, NodeErrorData>());
+            GroupedNodes.Add(group, new SerializableDictionary<string, NodeErrorData>());
         }
 
-        if (groupedNodes[group].ContainsKey(nodeName) == false)
+        if (GroupedNodes[group].ContainsKey(nodeName) == false)
         {
             NodeErrorData nodeError = new NodeErrorData();
             nodeError.Nodes.Add(node);
 
-            groupedNodes[group].Add(nodeName, nodeError);
+            GroupedNodes[group].Add(nodeName, nodeError);
             return;
         }
 
-        groupedNodes[group][nodeName].Nodes.Add(node);
+        GroupedNodes[group][nodeName].Nodes.Add(node);
 
-        Color errorColor = groupedNodes[group][nodeName].Color;
+        Color errorColor = GroupedNodes[group][nodeName].Color;
         node.SetErrorColor(errorColor);
 
-        if (groupedNodes[group][nodeName].Nodes.Count == 2)
+        if (GroupedNodes[group][nodeName].Nodes.Count == 2)
         {
-            groupedNodes[group][nodeName].Nodes[0].SetErrorColor(errorColor);
+            GroupedNodes[group][nodeName].Nodes[0].SetErrorColor(errorColor);
         }
     }
 
@@ -293,7 +293,7 @@ public class DialogueGraph : GraphView
 
     public void RemoveNode(DialogueNode node)
     {
-        List<DialogueNode> nodes = ungroupedNodes[node.NodeName].Nodes;
+        List<DialogueNode> nodes = UngroupedNodes[node.NodeName].Nodes;
 
         nodes.Remove(node);
         node.SetDefaultColor();
@@ -306,14 +306,14 @@ public class DialogueGraph : GraphView
 
         if (nodes.Count == 0)
         {
-            ungroupedNodes.Remove(node.NodeName);
+            UngroupedNodes.Remove(node.NodeName);
         }
     }
 
     public void RemoveGroupedNode(DialogueNode node, Group group)
     {
         node.Group = null;
-        List<DialogueNode> nodes = groupedNodes[group][node.NodeName].Nodes;
+        List<DialogueNode> nodes = GroupedNodes[group][node.NodeName].Nodes;
 
         nodes.Remove(node);
         node.SetDefaultColor();
@@ -326,11 +326,11 @@ public class DialogueGraph : GraphView
 
         if (nodes.Count == 0)
         {
-            groupedNodes[group].Remove(node.NodeName);
+            GroupedNodes[group].Remove(node.NodeName);
 
-            if (groupedNodes[group].Count == 0)
+            if (GroupedNodes[group].Count == 0)
             {
-                groupedNodes.Remove(group);
+                GroupedNodes.Remove(group);
             }
         }
     }
@@ -350,7 +350,7 @@ public class DialogueGraph : GraphView
 
         if (groupsList.Count == 0)
         {
-            ungroupedNodes.Remove(group.oldTitle);
+            UngroupedNodes.Remove(group.oldTitle);
         }
     }
     #endregion
@@ -378,7 +378,7 @@ public class DialogueGraph : GraphView
         return contextualMenu;
     }
 
-    public DialogueNode CreateNode(NodeType type, Vector2 position, bool willDraw = true)
+    public DialogueNode CreateNode(NodeType type, Vector2 position, bool willDraw = true, string nodeName = "переданное имя")
     {
         Type nodeType = Type.GetType(type.ToString());
         DialogueNode node = (DialogueNode) Activator.CreateInstance(nodeType);
@@ -388,6 +388,10 @@ public class DialogueGraph : GraphView
         if (willDraw) // нужно в скрипте загрузки графа
         {
             node.Draw();
+        }
+        else // в AddNode сохраняется имя которое ещё не установленное скриптом загрузки графа
+        {
+            node.NodeName = nodeName;
         }
 
         AddNode(node);
@@ -436,8 +440,8 @@ public class DialogueGraph : GraphView
     {
         graphElements.ForEach(element => RemoveElement(element));
 
-        ungroupedNodes.Clear();
-        groupedNodes.Clear();
+        UngroupedNodes.Clear();
+        GroupedNodes.Clear();
         groups.Clear();
     }
     #endregion

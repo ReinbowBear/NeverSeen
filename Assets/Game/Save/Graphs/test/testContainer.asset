@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3c727701a84b294f9ca481b8f2c8092, type: 3}
   m_Name: testContainer
   m_EditorClassIdentifier: 
-  FileName: 
+  FileName: test
   DialogueGroups:
     list:
     - Key: {fileID: 11400000, guid: 5304f5f244885634c811f645c759bd2e, type: 2}

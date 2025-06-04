@@ -368,10 +368,10 @@ public class DialogueGraphSave
         {
             List<ChoiceSave> choices = CloneNodeChoices(nodeData.Choices);
 
-            DialogueNode node = dialogueGraph.CreateNode(nodeData.NodeType, nodeData.Position, false);
+            DialogueNode node = dialogueGraph.CreateNode(nodeData.NodeType, nodeData.Position, false, nodeData.Name);
 
-            node.ID = nodeData.ID;
-            //node.NodeName = nodeData.Name; // какой то баг с колекцией
+            node.ID = nodeData.ID;            
+            //node.NodeName = nodeData.Name;
             node.Choices = choices;
             node.NodeText = nodeData.Text;
             node.Draw();

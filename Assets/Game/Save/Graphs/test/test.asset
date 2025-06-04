@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77f518b3ce8795c4ca430970b5d7f2fa, type: 3}
   m_Name: test
   m_EditorClassIdentifier: 
-  FileName: 
+  FileName: test
   Nodes:
   - ID: e1ee4688-253a-48f7-9ec3-1e68429b88d7
     Name: "\u043D\u043E\u0434\u0430 2"
