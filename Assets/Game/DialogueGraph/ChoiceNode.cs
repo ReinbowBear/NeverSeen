@@ -9,7 +9,7 @@ public class ChoiceNode : DialogueNode
     {
         NodeType = NodeType.ChoiceNode;
 
-        ChoiceSave choiceData = new ChoiceSave()
+        ChoiceData choiceData = new ChoiceData()
         {
             Text = $"Choice: {Choices.Count}"
         };
@@ -40,7 +40,7 @@ public class ChoiceNode : DialogueNode
         choicePort.portName = "";
 
         choicePort.userData = userData;
-        ChoiceSave choiceData = (ChoiceSave)userData;
+        ChoiceData choiceData = (ChoiceData)userData;
 
         Button deleteChoiceButton = new Button(() => DeleteChoise(choicePort, choiceData))
         {
@@ -49,7 +49,11 @@ public class ChoiceNode : DialogueNode
 
         deleteChoiceButton.AddToClassList("ds-node__button");
 
-        TextField choiceTextField = CreateTextField(choiceData.Text, callback =>
+        TextField choiceTextField = new TextField()
+        {
+            value = choiceData.Text
+        };
+        choiceTextField.RegisterValueChangedCallback(callback =>
         {
             choiceData.Text = callback.newValue;
         });
@@ -66,7 +70,7 @@ public class ChoiceNode : DialogueNode
 
     private void AddChoice()
     {
-        ChoiceSave choiceData = new ChoiceSave()
+        ChoiceData choiceData = new ChoiceData()
         {
             Text = "New Choice"
         };
@@ -78,7 +82,7 @@ public class ChoiceNode : DialogueNode
         outputContainer.Add(choicePort);
     }
 
-    private void DeleteChoise(Port port, ChoiceSave choiceData)
+    private void DeleteChoise(Port port, ChoiceData choiceData)
     {
         if (Choices.Count == 1) { return; }
 

@@ -51,7 +51,7 @@ public class DialogueGraph : GraphView
                 foreach (Edge edge in changes.edgesToCreate)
                 {
                     DialogueNode nextNode = (DialogueNode) edge.input.node;
-                    ChoiceSave choiceData = (ChoiceSave) edge.output.userData;
+                    ChoiceData choiceData = (ChoiceData) edge.output.userData;
 
                     choiceData.ID = nextNode.ID;
                 }
@@ -69,7 +69,7 @@ public class DialogueGraph : GraphView
                     }
 
                     Edge edge = (Edge) element;
-                    ChoiceSave choiceData = (ChoiceSave) edge.output.userData;
+                    ChoiceData choiceData = (ChoiceData) edge.output.userData;
                     choiceData.ID = "";
                 }
             }

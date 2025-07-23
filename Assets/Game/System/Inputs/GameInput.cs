@@ -101,7 +101,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Mouse_0"",
+                    ""name"": ""MouseLeft"",
                     ""type"": ""Button"",
                     ""id"": ""32ddf092-c814-449b-a598-faa6f357bfdf"",
                     ""expectedControlType"": """",
@@ -110,7 +110,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Mouse_1"",
+                    ""name"": ""MouseRight"",
                     ""type"": ""Button"",
                     ""id"": ""713377ac-6c6b-4f0a-8753-6bdcda097265"",
                     ""expectedControlType"": """",
@@ -119,9 +119,36 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""7950dabe-b39c-43e8-a8a1-5eca858724e9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""Shift"",
                     ""type"": ""Button"",
                     ""id"": ""0eb0df65-7fec-4145-ad9c-1bad7b314952"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Q"",
+                    ""type"": ""Button"",
+                    ""id"": ""0128e14e-f070-4d3a-81d6-8c10cb3ba506"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""E"",
+                    ""type"": ""Button"",
+                    ""id"": ""b14ad342-7043-4582-8be5-9b47eb22cca0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -136,7 +163,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Mouse_0"",
+                    ""action"": ""MouseLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -158,7 +185,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Mouse_1"",
+                    ""action"": ""MouseRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -216,6 +243,39 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""WASD"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d9dad25-86ec-4af4-8773-72202a2f7daa"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""734f4851-f398-4379-9fb8-b0db7fc48b1b"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Q"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f8a13c3e-f56e-44fc-a743-2c2cb36939aa"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""E"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -376,9 +436,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_WASD = m_Player.FindAction("WASD", throwIfNotFound: true);
-        m_Player_Mouse_0 = m_Player.FindAction("Mouse_0", throwIfNotFound: true);
-        m_Player_Mouse_1 = m_Player.FindAction("Mouse_1", throwIfNotFound: true);
+        m_Player_MouseLeft = m_Player.FindAction("MouseLeft", throwIfNotFound: true);
+        m_Player_MouseRight = m_Player.FindAction("MouseRight", throwIfNotFound: true);
+        m_Player_Scroll = m_Player.FindAction("Scroll", throwIfNotFound: true);
         m_Player_Shift = m_Player.FindAction("Shift", throwIfNotFound: true);
+        m_Player_Q = m_Player.FindAction("Q", throwIfNotFound: true);
+        m_Player_E = m_Player.FindAction("E", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Navigate = m_Menu.FindAction("Navigate", throwIfNotFound: true);
@@ -466,9 +529,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_WASD;
-    private readonly InputAction m_Player_Mouse_0;
-    private readonly InputAction m_Player_Mouse_1;
+    private readonly InputAction m_Player_MouseLeft;
+    private readonly InputAction m_Player_MouseRight;
+    private readonly InputAction m_Player_Scroll;
     private readonly InputAction m_Player_Shift;
+    private readonly InputAction m_Player_Q;
+    private readonly InputAction m_Player_E;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -485,17 +551,29 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @WASD => m_Wrapper.m_Player_WASD;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Mouse_0".
+        /// Provides access to the underlying input action "Player/MouseLeft".
         /// </summary>
-        public InputAction @Mouse_0 => m_Wrapper.m_Player_Mouse_0;
+        public InputAction @MouseLeft => m_Wrapper.m_Player_MouseLeft;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Mouse_1".
+        /// Provides access to the underlying input action "Player/MouseRight".
         /// </summary>
-        public InputAction @Mouse_1 => m_Wrapper.m_Player_Mouse_1;
+        public InputAction @MouseRight => m_Wrapper.m_Player_MouseRight;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Scroll".
+        /// </summary>
+        public InputAction @Scroll => m_Wrapper.m_Player_Scroll;
         /// <summary>
         /// Provides access to the underlying input action "Player/Shift".
         /// </summary>
         public InputAction @Shift => m_Wrapper.m_Player_Shift;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Q".
+        /// </summary>
+        public InputAction @Q => m_Wrapper.m_Player_Q;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/E".
+        /// </summary>
+        public InputAction @E => m_Wrapper.m_Player_E;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -525,15 +603,24 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @WASD.started += instance.OnWASD;
             @WASD.performed += instance.OnWASD;
             @WASD.canceled += instance.OnWASD;
-            @Mouse_0.started += instance.OnMouse_0;
-            @Mouse_0.performed += instance.OnMouse_0;
-            @Mouse_0.canceled += instance.OnMouse_0;
-            @Mouse_1.started += instance.OnMouse_1;
-            @Mouse_1.performed += instance.OnMouse_1;
-            @Mouse_1.canceled += instance.OnMouse_1;
+            @MouseLeft.started += instance.OnMouseLeft;
+            @MouseLeft.performed += instance.OnMouseLeft;
+            @MouseLeft.canceled += instance.OnMouseLeft;
+            @MouseRight.started += instance.OnMouseRight;
+            @MouseRight.performed += instance.OnMouseRight;
+            @MouseRight.canceled += instance.OnMouseRight;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
             @Shift.started += instance.OnShift;
             @Shift.performed += instance.OnShift;
             @Shift.canceled += instance.OnShift;
+            @Q.started += instance.OnQ;
+            @Q.performed += instance.OnQ;
+            @Q.canceled += instance.OnQ;
+            @E.started += instance.OnE;
+            @E.performed += instance.OnE;
+            @E.canceled += instance.OnE;
         }
 
         /// <summary>
@@ -548,15 +635,24 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @WASD.started -= instance.OnWASD;
             @WASD.performed -= instance.OnWASD;
             @WASD.canceled -= instance.OnWASD;
-            @Mouse_0.started -= instance.OnMouse_0;
-            @Mouse_0.performed -= instance.OnMouse_0;
-            @Mouse_0.canceled -= instance.OnMouse_0;
-            @Mouse_1.started -= instance.OnMouse_1;
-            @Mouse_1.performed -= instance.OnMouse_1;
-            @Mouse_1.canceled -= instance.OnMouse_1;
+            @MouseLeft.started -= instance.OnMouseLeft;
+            @MouseLeft.performed -= instance.OnMouseLeft;
+            @MouseLeft.canceled -= instance.OnMouseLeft;
+            @MouseRight.started -= instance.OnMouseRight;
+            @MouseRight.performed -= instance.OnMouseRight;
+            @MouseRight.canceled -= instance.OnMouseRight;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
             @Shift.started -= instance.OnShift;
             @Shift.performed -= instance.OnShift;
             @Shift.canceled -= instance.OnShift;
+            @Q.started -= instance.OnQ;
+            @Q.performed -= instance.OnQ;
+            @Q.canceled -= instance.OnQ;
+            @E.started -= instance.OnE;
+            @E.performed -= instance.OnE;
+            @E.canceled -= instance.OnE;
         }
 
         /// <summary>
@@ -788,19 +884,26 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnWASD(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Mouse_0" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "MouseLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMouse_0(InputAction.CallbackContext context);
+        void OnMouseLeft(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Mouse_1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "MouseRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnMouse_1(InputAction.CallbackContext context);
+        void OnMouseRight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Scroll" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnScroll(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Shift" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -808,6 +911,20 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnShift(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Q" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnQ(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "E" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnE(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Menu" which allows adding and removing callbacks.

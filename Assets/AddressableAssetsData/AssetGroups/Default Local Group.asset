@@ -15,8 +15,13 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 38b0a7a2d15c3fc46906aec44545b327
   m_SerializeEntries:
-  - m_GUID: 55ccc66f4ee6ae643816de77ef591175
-    m_Address: Assets/Game/Prefabs/Items/Dash.prefab
+  - m_GUID: 10551a8b968b3d944913084e74376aa1
+    m_Address: Test
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6a29064b364f314a8c4f6d4458d1647
+    m_Address: Tile_0
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

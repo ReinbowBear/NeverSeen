@@ -4,23 +4,15 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueNodeSO : ScriptableObject
 {
-    public string DialogueName;
+    public string Name;
     [field: TextArea()] public string Text;
     public List<DialogueNodeChoiceData> Choices;
     public NodeType NodeType;
     public bool IsStartNode;
-    public void Init(string dialogueName, string text, List<DialogueNodeChoiceData> choices, NodeType nodeType, bool isStartingDialogue)
-    {
-        DialogueName = dialogueName;
-        Text = text;
-        Choices = choices;
-        NodeType = nodeType;
-        IsStartNode = isStartingDialogue;
-    }
 }
 
 [System.Serializable]
-public class DialogueNodeChoiceData
+public class DialogueNodeChoiceData // весь этот дибильный класс существует ради одной функции!
 {
     public string Text;
     public DialogueNodeSO NextDialogue;

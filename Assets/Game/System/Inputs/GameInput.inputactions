@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Mouse_0",
+                    "name": "MouseLeft",
                     "type": "Button",
                     "id": "32ddf092-c814-449b-a598-faa6f357bfdf",
                     "expectedControlType": "",
@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Mouse_1",
+                    "name": "MouseRight",
                     "type": "Button",
                     "id": "713377ac-6c6b-4f0a-8753-6bdcda097265",
                     "expectedControlType": "",
@@ -33,9 +33,36 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "7950dabe-b39c-43e8-a8a1-5eca858724e9",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Shift",
                     "type": "Button",
                     "id": "0eb0df65-7fec-4145-ad9c-1bad7b314952",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Q",
+                    "type": "Button",
+                    "id": "0128e14e-f070-4d3a-81d6-8c10cb3ba506",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "E",
+                    "type": "Button",
+                    "id": "b14ad342-7043-4582-8be5-9b47eb22cca0",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -50,7 +77,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
-                    "action": "Mouse_0",
+                    "action": "MouseLeft",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -72,7 +99,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Mouse_1",
+                    "action": "MouseRight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -130,6 +157,39 @@
                     "action": "WASD",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8d9dad25-86ec-4af4-8773-72202a2f7daa",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "734f4851-f398-4379-9fb8-b0db7fc48b1b",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Q",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f8a13c3e-f56e-44fc-a743-2c2cb36939aa",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "E",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

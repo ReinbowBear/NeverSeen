@@ -11,9 +11,9 @@ public class DialogueNode : Node
     public string NodeName = "Dialogue Node";
     public string NodeText = "your text";
 
-    public List<ChoiceSave> Choices = new List<ChoiceSave>();
+    public List<ChoiceData> Choices = new List<ChoiceData>();
     public NodeType NodeType;
-    private Color defaultColor = new Color(29f / 255f, 29f / 255f, 30f / 255f); // деление на 255 связано с какой то конвертацией и Color32
+    protected Color defaultColor = new Color(29f/255f, 29f/255f, 30f/255f); // деление на 255 связано с какой то конвертацией и Color32
     protected DialogueGraph dialogueGraph;
     public NodeGroup Group;
 
@@ -40,12 +40,16 @@ public class DialogueNode : Node
 
     protected virtual void SetTitle()
     {
-        TextField nodeName = CreateTextField(NodeName, callBack =>
+        TextField nodeName = new TextField()
+        {
+            value = NodeName
+        };
+        nodeName.RegisterValueChangedCallback(callback => 
         {
             if (Group == null) // дефолтный перерасчёт если у нода нет групы 
             {
                 dialogueGraph.RemoveNode(this);
-                NodeName = callBack.newValue;
+                NodeName = callback.newValue;
                 dialogueGraph.AddNode(this);
                 return;
             }
@@ -53,7 +57,7 @@ public class DialogueNode : Node
             NodeGroup currentGroup = Group;
 
             dialogueGraph.RemoveGroupedNode(this, Group);
-            NodeName = callBack.newValue;
+            NodeName = callback.newValue;
             dialogueGraph.AddGoupedNode(this, currentGroup);
         });
 
@@ -101,7 +105,11 @@ public class DialogueNode : Node
             text = "Dialogue text"
         };
 
-        TextField textField = CreateTextField(NodeText, callback => { NodeText = callback.newValue; }); // нужно через callback менять значение переменной для сохранений
+        TextField textField = new TextField() 
+        { 
+            value = NodeText 
+        };
+        textField.RegisterValueChangedCallback(callback => NodeText = callback.newValue); // нужно через callback менять значение переменной для сохранений
         textField.multiline = true;
 
         textField.AddToClassList("ds-node__textfield");
@@ -114,21 +122,6 @@ public class DialogueNode : Node
         RefreshExpandedState();
     }
 
-
-    protected TextField CreateTextField(string newValue = null, EventCallback<ChangeEvent<string>> onValueChanged = null) // эта функция существует только для колбеков, что бы перерасчитывать ноду при изменении имени
-    {
-        TextField textField = new TextField()
-        {
-            value = newValue
-        };
-
-        if (onValueChanged != null)
-        {
-            textField.RegisterValueChangedCallback(onValueChanged);
-        }
-
-        return textField;
-    }
 
     public bool IsStartingNode()
     {

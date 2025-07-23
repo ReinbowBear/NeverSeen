@@ -7,7 +7,7 @@ public class TextNode : DialogueNode
     {
         NodeType = NodeType.TextNode;
 
-        ChoiceSave choiceData = new ChoiceSave()
+        ChoiceData choiceData = new ChoiceData()
         {
             Text = $"Choice: {Choices.Count}"
         };

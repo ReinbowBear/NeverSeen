@@ -12,7 +12,7 @@ public class EntryGame : MonoBehaviour
 
     private void InitGame()
     {
-        if (isInitGame == false)
+        if (!isInitGame)
         {
             AddressImporter.ImportAddressable();
             MyRandom.SetSeed();

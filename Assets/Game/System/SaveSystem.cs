@@ -5,7 +5,7 @@ using UnityEngine;
 public static class SaveSystem // https://www.youtube.com/watch?v=1mf730eb5Wo&t=417s&ab_channel=SasquatchBStudios
 {    
     public static GameData gameData = new GameData();
-    public static readonly string filePath = "Assets/Game/Save/GameData.save";
+    public static readonly string filePath = MyPaths.SAVE + "/GameData.save";
 
     public static void SaveFile()
     {

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DialogueContainerSO : ScriptableObject
 {
     public string FileName;
-    public SerializableDictionary<DialogueGroupSO, List<DialogueNodeSO>> DialogueGroups = new SerializableDictionary<DialogueGroupSO, List<DialogueNodeSO>>();
+    public SerializableDictionary<NodeGroupSO, List<DialogueNodeSO>> DialogueGroups = new SerializableDictionary<NodeGroupSO, List<DialogueNodeSO>>();
     public List<DialogueNodeSO> UngroupedDialogues = new List<DialogueNodeSO>();
 
 
@@ -13,7 +13,7 @@ public class DialogueContainerSO : ScriptableObject
     {
         List<string> dialogueGroupNames = new List<string>();
 
-        foreach (DialogueGroupSO dialogueGroup in DialogueGroups.Keys)
+        foreach (NodeGroupSO dialogueGroup in DialogueGroups.Keys)
         {
             dialogueGroupNames.Add(dialogueGroup.GroupName);
         }
@@ -21,7 +21,7 @@ public class DialogueContainerSO : ScriptableObject
         return dialogueGroupNames;
     }
 
-    public List<string> GetGroupedDialogueNames(DialogueGroupSO dialogueGroup, bool startingDialoguesOnly)
+    public List<string> GetGroupedDialogueNames(NodeGroupSO dialogueGroup, bool startingDialoguesOnly)
     {
         List<DialogueNodeSO > groupedDialogues = DialogueGroups[dialogueGroup];
         List<string> groupedDialogueNames = new List<string>();
@@ -33,7 +33,7 @@ public class DialogueContainerSO : ScriptableObject
                 continue;
             }
 
-            groupedDialogueNames.Add(groupedDialogue.DialogueName);
+            groupedDialogueNames.Add(groupedDialogue.Name);
         }
 
         return groupedDialogueNames;
@@ -50,7 +50,7 @@ public class DialogueContainerSO : ScriptableObject
                 continue;
             }
 
-            ungroupedDialogueNames.Add(ungroupedDialogue.DialogueName);
+            ungroupedDialogueNames.Add(ungroupedDialogue.Name);
         }
 
         return ungroupedDialogueNames;

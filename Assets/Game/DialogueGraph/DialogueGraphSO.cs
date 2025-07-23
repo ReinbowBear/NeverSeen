@@ -5,8 +5,8 @@ using UnityEngine;
 public class DialogueGraphSO : ScriptableObject
 {
     public string FileName;
-    public List<DialogueNodeSave> Nodes = new List<DialogueNodeSave>();
-    public List<NodeGroupSave> Groups = new List<NodeGroupSave>();
+    public List<DialogueNodeData> Nodes = new List<DialogueNodeData>();
+    public List<NodeGroupData> Groups = new List<NodeGroupData>();
 
     public List<string> OldNodes;
     public List<string> OldGroups;
@@ -15,19 +15,19 @@ public class DialogueGraphSO : ScriptableObject
 
 
 [System.Serializable]
-public class DialogueNodeSave
+public class DialogueNodeData
 {
     public string ID;
     public string Name;
     public string Text;
-    public List<ChoiceSave> Choices;
+    public List<ChoiceData> Choices;
     public string GroupID;
     public NodeType NodeType;
     public Vector2 Position;
 }
 
 [System.Serializable]
-public class ChoiceSave
+public class ChoiceData
 {
     public string ID;
     public string Text;
@@ -35,7 +35,7 @@ public class ChoiceSave
 
 
 [System.Serializable]
-public class NodeGroupSave
+public class NodeGroupData
 {
     public string ID;
     public string Name;

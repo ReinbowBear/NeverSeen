@@ -3,33 +3,21 @@ using UnityEngine.SceneManagement;
 
 public class Scene : MonoBehaviour
 {
-    private static byte sceneIndex;
-
     public static void Continue()
     {
-        sceneIndex = SaveSystem.gameData.generalData.sceneIndex;
-        SceneManager.LoadScene(sceneIndex);
+        SceneManager.LoadScene(SaveSystem.gameData.generalData.sceneIndex);
     }
 
     public static void Load(byte index)
     {
-        sceneIndex = index;
+        SaveSystem.gameData.generalData.sceneIndex = index;
         SceneManager.LoadScene(index);
     }
 
-    private void Save(OnSave _)
-    {
-        SaveSystem.gameData.generalData.sceneIndex = sceneIndex;
-    }
 
-
-    void OnEnable()
+    void OnDestroy()
     {
-        EventBus.Add<OnSave>(Save);
-    }
-
-    void OnDisable()
-    {
-        EventBus.Remove<OnSave>(Save);
+        Loader.ReleaseAllAssets();
+        Debug.Log("Все ассеты выгружены");
     }
 }

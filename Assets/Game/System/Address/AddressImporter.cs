@@ -5,14 +5,12 @@ using System.IO;
 public static class AddressImporter
 {
     public static Dictionary<string, List<string>> addressStorage = new Dictionary<string, List<string>>();
-    public static readonly string filePath = "Assets/Game/Save/AddressableAssets.json";
-
 
     public static void ImportAddressable()
     {
-        if (File.Exists(filePath))
+        if (File.Exists(MyPaths.ADRESS + "/AddressableAssets.json"))
         {
-            string json = File.ReadAllText(filePath);
+            string json = File.ReadAllText(MyPaths.ADRESS + "/AddressableAssets.json");
             AddressGroupList groupList = JsonUtility.FromJson<AddressGroupList>(json);
 
             for (int i = 0; i < groupList.groups.Count; i++)
@@ -55,7 +53,7 @@ public class AddressGroupList
 }
 
 [System.Serializable]
-public class AddressAssetsList
+public class AddressAssetsList // словари не сереализуются, пришлось делать костыль
 {
     public List<string> keys = new List<string>();
 

@@ -13,14 +13,14 @@ public class DialogueGraphSave
     private string graphFileName;
     private string folderPath;
 
-    private List<DialogueNode> nodes = new List<DialogueNode>();
-    private List<NodeGroup> groups = new List<NodeGroup>();
+    private List<DialogueNode> graphNodes = new List<DialogueNode>();
+    private List<NodeGroup> graphGroups = new List<NodeGroup>();
 
-    private Dictionary<string, DialogueGroupSO> createdDialogueGroups = new Dictionary<string, DialogueGroupSO>();
-    private Dictionary<string, DialogueNodeSO> createdDialogues = new Dictionary<string, DialogueNodeSO>();
+    private Dictionary<string, NodeGroupSO> createdGroupsSO = new Dictionary<string, NodeGroupSO>();
+    private Dictionary<string, DialogueNodeSO> createdNodesSO = new Dictionary<string, DialogueNodeSO>();
 
-    private Dictionary<string, NodeGroup> loadedGroups = new Dictionary<string, NodeGroup>();
     private Dictionary<string, DialogueNode> loadedNodes = new Dictionary<string, DialogueNode>();
+    private Dictionary<string, NodeGroup> loadedGroups = new Dictionary<string, NodeGroup>();
 
     public DialogueGraphSave(DialogueGraph graph, string graphName)
     {
@@ -60,14 +60,14 @@ public class DialogueGraphSave
         {
             if (graphElement is DialogueNode node)
             {
-                nodes.Add(node);
+                graphNodes.Add(node);
                 return;
             }
 
             if (graphElement.GetType() == groupType)
             {
                 NodeGroup group = (NodeGroup)graphElement;
-                groups.Add(group);
+                graphGroups.Add(group);
                 return;
             }
         });
@@ -117,7 +117,7 @@ public class DialogueGraphSave
     {
         List<string> toUpdateGroups = new List<string>();
 
-        foreach (NodeGroup group in groups)
+        foreach (NodeGroup group in graphGroups)
         {
             SaveGroupToGraph(graphData, group);
             GroupToScriptableObject(dialogueContainer, group);
@@ -130,7 +130,7 @@ public class DialogueGraphSave
 
     private void SaveGroupToGraph(DialogueGraphSO graphData, NodeGroup group)
     {
-        NodeGroupSave groupData = new NodeGroupSave()
+        NodeGroupData groupData = new NodeGroupData()
         {
             ID = group.ID,
             Name = group.title,
@@ -146,10 +146,10 @@ public class DialogueGraphSave
 
         CreateFolder($"{folderPath}/Groups", groupName);
 
-        DialogueGroupSO dialogueGroup = CreateAsset<DialogueGroupSO>($"{folderPath}/Groups/{groupName}", groupName);
+        NodeGroupSO dialogueGroup = CreateAsset<NodeGroupSO>($"{folderPath}/Groups/{groupName}", groupName);
         dialogueGroup.GroupName = groupName;
 
-        createdDialogueGroups.Add(group.ID, dialogueGroup);
+        createdGroupsSO.Add(group.ID, dialogueGroup);
 
         dialogueContainer.DialogueGroups.Add(dialogueGroup, new List<DialogueNodeSO>());
         SaveAsset(dialogueGroup);
@@ -162,7 +162,7 @@ public class DialogueGraphSave
         SerializableDictionary<string, List<string>> groupedNodes = new SerializableDictionary<string, List<string>>();
         List<string> ungroupedNodes = new List<string>();
 
-        foreach (DialogueNode node in nodes)
+        foreach (DialogueNode node in graphNodes)
         {
             SaveNodeToGraph(graphData, node);
             NodeToScriptableObject(dialogueContainer, node);
@@ -184,9 +184,9 @@ public class DialogueGraphSave
 
     private void SaveNodeToGraph(DialogueGraphSO graphData, DialogueNode node)
     {
-        List<ChoiceSave> choices = CloneNodeChoices(node.Choices); // благодаря клону листа, заполняем значения не ссылаясь на другие ноды, во избежание багов
+        List<ChoiceData> choices = CloneNodeChoices(node.Choices); // благодаря клону листа, заполняем значения не ссылаясь на другие ноды, во избежание багов
 
-        DialogueNodeSave nodeData = new DialogueNodeSave()
+        DialogueNodeData nodeData = new DialogueNodeData()
         {
             ID = node.ID,
             Name = node.NodeName,
@@ -208,7 +208,7 @@ public class DialogueGraphSave
         {
             dialogue = CreateAsset<DialogueNodeSO>($"{folderPath}/Groups/{node.Group.title}", node.NodeName);
 
-            dialogueContainer.DialogueGroups.AddItem(createdDialogueGroups[node.Group.ID], dialogue);
+            dialogueContainer.DialogueGroups.AddItem(createdGroupsSO[node.Group.ID], dialogue);
         }
         else
         {
@@ -217,25 +217,22 @@ public class DialogueGraphSave
             dialogueContainer.UngroupedDialogues.Add(dialogue);
         }
 
-        dialogue.Init
-        (
-            node.NodeName,
-            node.NodeText,
-            ConverToDialogueChoices(node.Choices),
-            node.NodeType,
-            node.IsStartingNode()
-        );
-
-        createdDialogues.Add(node.ID, dialogue);
+        dialogue.Name = node.NodeName;
+        dialogue.Text = node.NodeText;
+        dialogue.Choices = ConverToDialogueChoices(node.Choices);
+        dialogue.NodeType = node.NodeType;
+        dialogue.IsStartNode = node.IsStartingNode();
+        
+        createdNodesSO.Add(node.ID, dialogue);
 
         SaveAsset(dialogue);
     }
 
-    private List<DialogueNodeChoiceData> ConverToDialogueChoices(List<ChoiceSave> nodeChoices) // какой то костыль связанный с классами как я понял
+    private List<DialogueNodeChoiceData> ConverToDialogueChoices(List<ChoiceData> nodeChoices) // какой то костыль связанный с классами как я понял
     {
         List<DialogueNodeChoiceData> dialogueChoices = new List<DialogueNodeChoiceData>();
 
-        foreach (ChoiceSave nodeChoice in nodeChoices)
+        foreach (ChoiceData nodeChoice in nodeChoices)
         {
             DialogueNodeChoiceData choiceData = new DialogueNodeChoiceData()
             {
@@ -305,20 +302,20 @@ public class DialogueGraphSave
 
     private void UpdateDialoguesChoicesConnections()
     {
-        foreach (DialogueNode node in nodes)
+        foreach (DialogueNode node in graphNodes)
         {
-            DialogueNodeSO dialogue = createdDialogues[node.ID];
+            DialogueNodeSO dialogue = createdNodesSO[node.ID];
 
             for (int choiceIndex = 0; choiceIndex < node.Choices.Count; choiceIndex++)
             {
-                ChoiceSave nodeChoice = node.Choices[choiceIndex];
+                ChoiceData nodeChoice = node.Choices[choiceIndex];
 
                 if (string.IsNullOrEmpty(nodeChoice.ID))
                 {
                     continue;
                 }
 
-                dialogue.Choices[choiceIndex].NextDialogue = createdDialogues[nodeChoice.ID];
+                dialogue.Choices[choiceIndex].NextDialogue = createdNodesSO[nodeChoice.ID];
                 SaveAsset(dialogue);
             }
         }
@@ -351,9 +348,9 @@ public class DialogueGraphSave
         LoadNodesConnections();
     }
 
-    private void LoadGroups(List<NodeGroupSave> groups)
+    private void LoadGroups(List<NodeGroupData> groups)
     {
-        foreach (NodeGroupSave groupData in groups)
+        foreach (NodeGroupData groupData in groups)
         {
             NodeGroup group = dialogueGraph.CreateGroup(groupData.Name, groupData.Position);
             group.ID = groupData.ID;
@@ -362,11 +359,11 @@ public class DialogueGraphSave
         }
     }
 
-    private void LoadNodes(List<DialogueNodeSave> nodes)
+    private void LoadNodes(List<DialogueNodeData> nodes)
     {
-        foreach (DialogueNodeSave nodeData in nodes)
+        foreach (DialogueNodeData nodeData in nodes)
         {
-            List<ChoiceSave> choices = CloneNodeChoices(nodeData.Choices);
+            List<ChoiceData> choices = CloneNodeChoices(nodeData.Choices);
 
             DialogueNode node = dialogueGraph.CreateNode(nodeData.NodeType, nodeData.Position, false, nodeData.Name);
 
@@ -398,7 +395,7 @@ public class DialogueGraphSave
         {
             foreach (Port choicePort in loadedNode.Value.outputContainer.Children())
             {
-                ChoiceSave choiceData = (ChoiceSave) choicePort.userData;
+                ChoiceData choiceData = (ChoiceData) choicePort.userData;
 
                 if (string.IsNullOrEmpty(choiceData.ID))
                 {
@@ -420,13 +417,13 @@ public class DialogueGraphSave
     #endregion
 
     #region Utility
-    private List<ChoiceSave> CloneNodeChoices(List<ChoiceSave> nodeChoices)
+    private List<ChoiceData> CloneNodeChoices(List<ChoiceData> nodeChoices)
     {
-        List<ChoiceSave> choices = new List<ChoiceSave>();
+        List<ChoiceData> choices = new List<ChoiceData>();
 
-        foreach (ChoiceSave choice in nodeChoices)
+        foreach (ChoiceData choice in nodeChoices)
         {
-            ChoiceSave choiceData = new ChoiceSave()
+            ChoiceData choiceData = new ChoiceData()
             {
                 Text = choice.Text,
                 ID = choice.ID
