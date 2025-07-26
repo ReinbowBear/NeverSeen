@@ -1,6 +1,11 @@
 
-public interface ITest
+public interface IActive
 {
-    public void DogsLoveYou();
+    public void Active();
+}
+
+public interface IDeactive
+{
+    public void Deactive();
 }
 

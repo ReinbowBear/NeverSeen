@@ -20,7 +20,5 @@ public class BuildButton : MonoBehaviour
 
         ClickController.Instance.NewBuilding = building;
         building.StartCoroutine(building.OnSpawn());
-
-
     }
 }

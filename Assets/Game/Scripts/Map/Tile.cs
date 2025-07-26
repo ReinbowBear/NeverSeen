@@ -48,7 +48,7 @@ public class Tile : MonoBehaviour
 public class TileData
 {
     public Vector3Int cubeCoord;
-    public GameObject isTaken;
+    public Entity isTaken;
 
     public TileType tileType = TileType.ground;
     public List<TileData> neighbors = new();

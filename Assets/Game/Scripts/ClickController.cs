@@ -11,7 +11,7 @@ public class ClickController : MonoBehaviour
     [SerializeField] private LayerMask rayLayer;
     private ModeState modeState;
 
-    [HideInInspector] public Building SelectedBuilding;
+    [HideInInspector] public Entity SelectedEntity;
     [HideInInspector] public Building NewBuilding;
 
     void Awake()
@@ -42,10 +42,10 @@ public class ClickController : MonoBehaviour
         {
             Tile tile = hit.transform.GetComponent<Tile>();
 
-            if (SelectedBuilding != null) // если здание выделено, либо сбрасывает при промахе либо выделяет новое
+            if (SelectedEntity != null) // если здание выделено, либо сбрасывает при промахе либо выделяет новое
             {
-                SelectedBuilding.Unselected();
-                SelectedBuilding = null;
+                SelectedEntity.Unselected();
+                SelectedEntity = null;
             }
 
             if (NewBuilding != null) // если в руках есть здание, ставит здание, ничего не выделяет ни в коем случаи
@@ -61,9 +61,10 @@ public class ClickController : MonoBehaviour
                 yield break;
             }
 
-            if (tile.tileData.isTaken != null && tile.tileData.isTaken.TryGetComponent<Building>(out Building building)) // если пустота и кликаешь по зданию, выделение
+            if (tile.tileData.isTaken != null) // если пустота и кликаешь по зданию, выделение
             {
-                building.OnSelected();
+                SelectedEntity = tile.tileData.isTaken;
+                SelectedEntity.OnSelected();
             }
         }
     }

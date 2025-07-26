@@ -7,12 +7,12 @@ public class PlayerResource : MonoBehaviour
 {
     public static PlayerResource Instance;
 
-    private List<Building> buildings;
-    private Dictionary<ResourceType, int> resources;
-    private Dictionary<ResourceType, int> resourcesStack;
+    public Dictionary<ResourceType, int> resources;
+    private List<Miner> miners = new();
     [SerializeField] private float TickRate;
+    [Space]
+    [SerializeField] private SerializableDictionary<ResourceType, MyBar> bars;
 
-    [SerializeField] private SerializableDictionary<ResourceType, TextMeshProUGUI> UI_texts;
     private Coroutine coroutine;
 
     void Awake()
@@ -21,43 +21,38 @@ public class PlayerResource : MonoBehaviour
     }
 
 
-    public void AddBuilding(Building newBuilding)
+    public void AddBuilding(Miner newMiner)
     {
-        buildings.Add(newBuilding);
-        if (buildings.Count > 0 && coroutine == null)
+        miners.Add(newMiner);
+        if (coroutine == null)
         {
             coroutine = StartCoroutine(CollectResources());
         }
     }
 
-    public void RemoveBuilding(Building newBuilding)
+    public void RemoveBuilding(Miner miner)
     {
-        buildings.Remove(newBuilding);
-        if (buildings.Count == 0)
+        miners.Remove(miner);
+        if (miners.Count == 0)
         {
             StopCoroutine(coroutine);
             coroutine = null;
         }
     }
 
+
     private IEnumerator CollectResources()
     {
-        while (buildings.Count != 0)
+        while (miners.Count != 0)
         {
-            foreach (var Building in buildings) // собираем ресурсы
+            foreach (var miner in miners)
             {
-                Building.Work(resourcesStack);
+                miner.Work();
             }
 
-            foreach (var key in resourcesStack.Keys) // сохраняем ресурсы и обновляем UI
+            foreach (var key in bars.Keys)
             {
-                resources[key] += resourcesStack[key];
-                UI_texts[key].text = resources[key].ToString();
-            }
-
-            foreach (var key in resourcesStack.Keys) // очищаем список собранных ресурсов (для дальнейших сборов)
-            {
-                resourcesStack[key] = 0;
+                bars[key].SetBarValue(resources[key], 500);
             }
 
             yield return new WaitForSeconds(TickRate);

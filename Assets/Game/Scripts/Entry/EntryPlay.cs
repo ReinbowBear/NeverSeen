@@ -1,13 +1,12 @@
 using System.IO;
 using UnityEngine;
 
-public class EntryMap : MonoBehaviour
+public class EntryPlay : MonoBehaviour
 {
     void Start()
     {
         CheckSave();
     }
-
 
     private void CheckSave()
     {
@@ -15,12 +14,7 @@ public class EntryMap : MonoBehaviour
         {
             EventBus.Invoke<OnLoad>();
         }
-        else
-        {
-            EventBus.Invoke<OnEntryMap>(null);
 
-            EventBus.Invoke<OnSave>();
-            SaveSystem.SaveFile();
-        }
+        EventBus.Invoke<OnEntryScene>();
     }
 }

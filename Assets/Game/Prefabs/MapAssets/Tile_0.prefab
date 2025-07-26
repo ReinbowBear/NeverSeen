@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 1794160440598886164}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000021855694, y: 4.5632292e-17, z: -8.972234e-17, w: 1}
-  m_LocalPosition: {x: 0, y: 0.02, z: 0}
-  m_LocalScale: {x: 0.75, y: 0.05, z: 0.75}
+  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalScale: {x: 0.8, y: 0.05, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 598420181059677324}
@@ -40,7 +40,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794160440598886164}
-  m_Mesh: {fileID: -9111446733670104075, guid: af0dbe4138f3f614dbfef3e9fad2bdcb, type: 3}
+  m_Mesh: {fileID: 8662151665732778433, guid: 881bf9795c91d604f80643517376ece3, type: 3}
 --- !u!23 &3101682334315255114
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 881bf9795c91d604f80643517376ece3, type: 3}
       propertyPath: m_Layer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -208,7 +208,6 @@ MonoBehaviour:
   toStartCost: 0
   toTargetCost: 0
   parent: {fileID: 0}
-  isTaken: {fileID: 0}
 --- !u!4 &598420181059677324 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 881bf9795c91d604f80643517376ece3, type: 3}

@@ -1,12 +1,13 @@
 using System.IO;
 using UnityEngine;
 
-public class EntryBattle : MonoBehaviour
+public class EntryMeta : MonoBehaviour
 {
     void Start()
     {
         CheckSave();
     }
+
 
     private void CheckSave()
     {
@@ -14,7 +15,12 @@ public class EntryBattle : MonoBehaviour
         {
             EventBus.Invoke<OnLoad>();
         }
+        else
+        {
+            EventBus.Invoke<OnEntryScene>();
 
-        EventBus.Invoke<OnEntryBattle>();
+            EventBus.Invoke<OnSave>();
+            SaveSystem.SaveFile();
+        }
     }
 }
