@@ -17,7 +17,7 @@ public class Pause : MonoBehaviour
     }
 
 
-    void OnEnable()
+    void OnEnable() // просто подписать отдельно паузу на ту же кнопку открытия паузы не вариант?
     {
         SetPause(true);
     }

@@ -20,13 +20,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6499785dc0a41604c903d72294421a39
-    m_Address: Assets/Game/Prefabs/Buildings/Tower.prefab
+  - m_GUID: 13e801cbfc6d72a458d27048afacccbd
+    m_Address: TileOre
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: b6a29064b364f314a8c4f6d4458d1647
-    m_Address: Tile_0
+  - m_GUID: 4b7b9ac51ceeb1048978d27b0cd0965a
+    m_Address: Tile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50ea18cf098444840be6abc3ee3301c9
+    m_Address: Repeater
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6499785dc0a41604c903d72294421a39
+    m_Address: Tower
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -36,7 +46,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e45bcc9d3bf5b2e4790d25f518769c3b
-    m_Address: Assets/Game/Prefabs/Buildings/Generator.prefab
+    m_Address: Generator
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

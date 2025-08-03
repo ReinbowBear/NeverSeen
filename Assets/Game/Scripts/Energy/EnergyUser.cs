@@ -1,15 +1,44 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyUser : EnergyCarrier
+public class EnergyUser : EnergyCarrier, IBuildingCondition
 {
-    public override void TransferEnergy(HashSet<EnergyCarrier> visited, int depth, int maxDepth)
+    [SerializeField] private byte UsedEnergy;
+    private Generator generator;
+
+    public override void Deactive()
     {
-        if (depth > maxDepth || visited.Contains(this)) return;
+        base.Deactive();
+        if (generator != null)
+        {
+            generator.ReleaseEnergy(this, UsedEnergy);
+        }
+    }
 
-        visited.Add(this);
-        isPowered = true;
+    public override void Delete()
+    {
+        if (generator != null)
+        {
+            generator.ReleaseEnergy(this, UsedEnergy);
+        }
+        base.Delete();
+    }
 
-        // жрёт энергию
+    public bool IsConditionMet()
+    {
+        return EnergyPoint.activeSelf;
+    }
+
+    public override void TransferEnergy(EnergyData energyData)
+    {        
+        if (energyData.Visited.Contains(this)) return;
+        if (energyData.Depth > energyData.MaxDepth) { EnergyPoint.SetActive(false); return; }
+
+        energyData.Visited.Add(this);
+        EnergyPoint.SetActive(true);
+
+        generator = energyData.Generator;
+        EnergyPoint.SetActive(generator.GetEnergy(this, UsedEnergy));
+
+        Owner.Active();
     }
 }

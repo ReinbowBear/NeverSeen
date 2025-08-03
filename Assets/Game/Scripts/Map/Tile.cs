@@ -13,10 +13,9 @@ public class Tile : MonoBehaviour
 
     [HideInInspector] public TileData tileData;
 
-
     void Awake()
     {
-        float tintRange = 0.05f;
+        float tintRange = 0.1f;
         renderMat.material.color += new Color(Random.Range(-tintRange, tintRange), Random.Range(-tintRange, tintRange), Random.Range(-tintRange, tintRange));
     }
 
@@ -45,21 +44,30 @@ public class Tile : MonoBehaviour
     }
 }
 
+
 public class TileData
 {
-    public Vector3Int cubeCoord;
-    public Entity isTaken;
+    public Vector3Int CubeCoord;
+    public Entity IsTaken;
 
-    public TileType tileType = TileType.ground;
-    public List<TileData> neighbors = new();
+    public TileType TileType = TileType.empty;
+    public TileHeightType TileHeightType = TileHeightType.ground;
 
-    public TileData(Vector3Int coord)
+    public List<TileData> Neighbors = new();
+
+    public TileData(Vector3Int cord)
     {
-        cubeCoord = coord;
+        CubeCoord = cord;
     }
 }
 
+
 public enum TileType
+{
+    empty, ore,
+}
+
+public enum TileHeightType
 {
     bottom, ground, hill, mount
 }

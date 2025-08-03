@@ -3,9 +3,21 @@ using UnityEngine;
 
 public class Storage : Building
 {
+    public override void Active()
+    {
+        base.Active();
+        //PlayerResource.Instance.MaxResource нужно там добавить функцию для обновления
+    }
+
+    public override void Deactive()
+    {
+        base.Deactive();
+    }
+
+
     public void AddResources(ResourceType type, int value)
     {
-        PlayerResource.Instance.resources[type] += value;
+        //PlayerResource.Instance.resources[type] += value;
 
         DOTween.Sequence()
             .SetLink(gameObject)

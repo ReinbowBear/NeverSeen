@@ -1,3 +1,3 @@
 # NeverSeen
 
-A game in which you will combine various abilities on your character, defeat enemies by planning your actions in advance, and survive in a generated tile world.
+Frostpunk and Factorio inspired city builder. The game focuses on greater building synergy and variety of threats and runs.

@@ -8,106 +8,117 @@ public class MyBar : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Image barImage;
     [SerializeField] private TextMeshProUGUI barText;
+    [SerializeField] private CanvasGroup canvasGroup;
 
     [Header("Animation Settings")]
     [SerializeField] private float fillSpeed;
-    //[SerializeField] private float fadeTimeOut;
-    //[SerializeField] private float fadeSpeed;
+    [SerializeField] private float fadeTimeOut;
+    [SerializeField] private float fadeSpeed;
 
     [Header("Color Gradient")]
     [SerializeField] private Gradient barGradient;
 
-    private CanvasGroup canvasGroup;
     private Coroutine fillCoroutine;
     private Coroutine valueCoroutine;
-    private Coroutine fadeCoroutine;
+    public Coroutine fadeCoroutine;
 
-    private void Awake()
+    public void StartedValue(float value)
     {
-        canvasGroup = GetComponent<CanvasGroup>();
+        barText.text = Mathf.CeilToInt(value).ToString();
     }
 
 
-    public void SetBarValue(float current, float max, bool instant = false)
+    public void SetValue(float current, float max)
     {
-        if (fillCoroutine != null)
-        {
-            StopCoroutine(fillCoroutine);
-        }
-        fillCoroutine = StartCoroutine(AnimateBar(current, max, instant));
+        canvasGroup.alpha = 1;
 
-        if (valueCoroutine != null)
-        {
-            StopCoroutine(valueCoroutine);
-        }
-        valueCoroutine = StartCoroutine(AnimateNumber(current, instant));
+        if (fillCoroutine != null) { StopCoroutine(fillCoroutine); }
 
-        //FadeBar(1);
+        if (barImage != null)
+        {
+            fillCoroutine = StartCoroutine(AnimateBar(current, max));
+        }
+
+        if (valueCoroutine != null) { StopCoroutine(valueCoroutine); }
+
+        if (barText != null)
+        {
+            valueCoroutine = StartCoroutine(AnimateNumber(current));
+        }
     }
 
-    private IEnumerator AnimateBar(float current, float max, bool instant)
+    private IEnumerator AnimateBar(float current, float max)
     {
+        float startFill = barImage.fillAmount;
         float targetFill = Mathf.Clamp01(current / max);
-        if (barImage == null) yield break;
+        float elapsed = 0f;
 
-        if (instant)
+        while (elapsed < fillSpeed)
         {
-            barImage.fillAmount = targetFill;
-            barImage.color = barGradient.Evaluate(targetFill);
+            elapsed += Time.deltaTime;
+            float time = Mathf.Clamp01(elapsed / fillSpeed);
+
+            barImage.fillAmount = Mathf.Lerp(startFill, targetFill, time);
+            barImage.color = barGradient.Evaluate(barImage.fillAmount);
+            yield return null;
         }
-        else
-        {
-            while (!Mathf.Approximately(barImage.fillAmount, targetFill))
-            {
-                barImage.fillAmount = Mathf.MoveTowards(barImage.fillAmount, targetFill, fillSpeed * Time.deltaTime);
-                barImage.color = barGradient.Evaluate(barImage.fillAmount);
-                yield return null;
-            }
-        }
+
+        barImage.fillAmount = targetFill;
+        barImage.color = barGradient.Evaluate(barImage.fillAmount);
+        fillCoroutine = null;
     }
 
-    private IEnumerator AnimateNumber(float targetValue, bool instant)
+    private IEnumerator AnimateNumber(float targetValue)
     {
-        if (barText == null) yield break;
-
-        float currentValue = 0f;
+        float currentValue;
         float.TryParse(barText.text, out currentValue);
 
-        if (instant)
+        float startValue = currentValue;
+        float elapsed = 0f;
+
+        while (elapsed < fillSpeed)
         {
-            barText.text = Mathf.CeilToInt(targetValue).ToString();
-        }
-        else
-        {
-            while (!Mathf.Approximately(currentValue, targetValue))
-            {
-                currentValue = Mathf.MoveTowards(currentValue, targetValue, fillSpeed * Time.deltaTime);
-                barText.text = Mathf.CeilToInt(currentValue).ToString();
-                yield return null;
-            }
+            elapsed += Time.deltaTime;
+            float time = Mathf.Clamp01(elapsed / fillSpeed);
+
+            currentValue = Mathf.Lerp(startValue, targetValue, time);
+            barText.text = Mathf.CeilToInt(currentValue).ToString();
+            yield return null;
         }
 
-        //yield return new WaitForSeconds(fadeTimeOut);
-        //FadeBar(0);
+        barText.text = Mathf.CeilToInt(targetValue).ToString();
+        valueCoroutine = null;
     }
 
 
-    //public void FadeBar(float targetAlpha)
-    //{
-    //    if (fadeCoroutine != null)
-    //    {
-    //        StopCoroutine(fadeCoroutine);
-    //    }
-    //    fadeCoroutine = StartCoroutine(FadeCanvasGroup(targetAlpha));
-    //}
-//
-    //private IEnumerator FadeCanvasGroup(float targetAlpha)
-    //{
-    //    while (!Mathf.Approximately(canvasGroup.alpha, targetAlpha))
-    //    {
-    //        canvasGroup.alpha = Mathf.MoveTowards(canvasGroup.alpha, targetAlpha, fadeSpeed * Time.deltaTime);
-    //        canvasGroup.interactable = canvasGroup.blocksRaycasts = targetAlpha > 0.9f;
-    //        yield return null;
-    //    }
-    //}
+    public void FadeBar(float targetAlpha)
+    {
+        if (fadeCoroutine != null) { StopCoroutine(fadeCoroutine); }
+        fadeCoroutine = StartCoroutine(FadeCanvasGroup(targetAlpha));
+    }
+
+    private IEnumerator FadeCanvasGroup(float targetAlpha)
+    {
+        yield return fillCoroutine;
+        yield return valueCoroutine;
+
+        yield return new WaitForSeconds(fadeTimeOut);
+
+        float startAlpha = canvasGroup.alpha;
+        float elapsed = 0f;
+
+        while (elapsed < fadeSpeed)
+        {
+            elapsed += Time.deltaTime;
+            float time = Mathf.Clamp01(elapsed / fadeSpeed);
+
+            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time);
+            canvasGroup.interactable = canvasGroup.blocksRaycasts = targetAlpha > 0.9f;
+            yield return null;
+        }
+
+        canvasGroup.alpha = targetAlpha;
+        canvasGroup.interactable = canvasGroup.blocksRaycasts = targetAlpha > 0.9f;
+        fadeCoroutine = null;
+    }
 }

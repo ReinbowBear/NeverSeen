@@ -1,23 +1,30 @@
 using System.Collections;
+using System.Linq;
 using DG.Tweening;
 using UnityEngine;
 
 public class Building : Entity
 {
     [Space]
-    public BuildingComponent[] components;
+    private IBuildingCondition[] Conditions;
+    public BuildingAction[] Actions;
+    public BuildingAction[] PassiveActions;
 
     public virtual void Init()
     {
-        tilesInRadius = GetTilesInRadius(tile.tileData.cubeCoord, radius);
-    }
+        //TilesInRadius = GetTilesInRadius(Tile.tileData.CubeCoord, radius); // заполняется ещё когда таскаешь здание
+        Conditions = GetComponents<IBuildingCondition>();
 
-
-    public virtual void Active()
-    {
-        foreach (var component in components)
+        foreach (var component in Actions)
         {
-            component.owner = this;
+            component.Owner = this;
+            component.Init();
+        }
+
+        foreach (var component in PassiveActions)
+        {
+            component.Owner = this;
+            component.Init();
             component.Active();
         }
 
@@ -27,8 +34,39 @@ public class Building : Entity
             .Append(transform.DOScale(new Vector3(1, 1, 1), 0.25f));
     }
 
+    public virtual void Active()
+    {
+        foreach (var condition in Conditions)
+        {
+            if (!condition.IsConditionMet()) return;
+        }
+
+        foreach (var action in Actions)
+        {
+            action.Active();
+        }
+    }
+
+    public virtual void Deactive()
+    {
+        foreach (var component in Actions)
+        {
+            component.Deactive();
+        }
+    }
+
     public virtual void Delete()
     {
+        base.Unselected();
+        foreach (var component in Actions)
+        {
+            component.Delete();
+        }
+        foreach (var component in PassiveActions)
+        {
+            component.Delete();
+        }
+
         Destroy(gameObject);
     }
 
@@ -36,13 +74,32 @@ public class Building : Entity
     public IEnumerator OnSpawn()
     {
         Camera cam = Camera.main;
-        LayerMask rayLayer = LayerMask.GetMask("Ground");
+        LayerMask rayLayer = LayerMask.GetMask("Tile");
+        Tile hitTile = null;
+        Tile newHitTile;
         while (true)
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit, 30, rayLayer))
             {
                 transform.position = hit.transform.position;
+                newHitTile = hit.transform.gameObject.GetComponent<Tile>();
+
+                if (newHitTile != hitTile)
+                {
+                    foreach (var tile in TilesInRadius)
+                    {
+                        tile.DeactivateTile();
+                    }
+
+                    TilesInRadius = GetTilesInRadius(newHitTile.tileData.CubeCoord, radius);
+
+                    foreach (var tile in TilesInRadius)
+                    {
+                        tile.ActiveTile();
+                    }
+                    hitTile = newHitTile;
+                }
             }
 
             yield return null;
@@ -53,31 +110,27 @@ public class Building : Entity
     {
         foreach (var offset in shape)
         {
-            Vector3Int tilePos = newTile.tileData.cubeCoord + offset;
-            if (MapGenerator.Instance.TileMap.TryGetValue(tilePos, out Tile tileOnMap) == false)
-            {
-                return false;
-            }
+            Vector3Int tilePos = newTile.tileData.CubeCoord + offset;
 
-            if (tileOnMap.tileData.isTaken != null)
-            {
-                return false;
-            }
+            if (MapGenerator.Instance.TileMap.TryGetValue(tilePos, out Tile tileOnMap) == false) return false;
 
-            if (tileOnMap.tileData.tileType != newTile.tileData.tileType)
-            {
-                return false;
-            }
+            if (tileOnMap.tileData.IsTaken != null) return false;
+
+            if (tileOnMap.tileData.TileHeightType != newTile.tileData.TileHeightType) return false;
         }
 
-        tile = newTile;
+        Tile = newTile;
         foreach (var offset in shape)
         {
-            Vector3Int tilePos = newTile.tileData.cubeCoord + offset;
-            MapGenerator.Instance.TileMap[tilePos].tileData.isTaken = this;
+            Vector3Int tilePos = newTile.tileData.CubeCoord + offset;
+            MapGenerator.Instance.TileMap[tilePos].tileData.IsTaken = this;
         }
 
         StopAllCoroutines();
+        foreach (var tile in TilesInRadius) // гасим подсветку радиуса когда таскал здание на карту
+        {
+            tile.DeactivateTile();
+        }
         Init();
         Active();
         return true;

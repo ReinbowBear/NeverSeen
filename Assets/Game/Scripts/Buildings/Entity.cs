@@ -1,14 +1,15 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public abstract class Entity : MonoBehaviour
 {
     [SerializeField] protected ShapeType shapeType;
     protected Vector3Int[] shape;
-    protected Tile tile;
 
     [SerializeField] protected byte radius;
-    [HideInInspector] public List<Tile> tilesInRadius;
+    [HideInInspector] public List<Tile> TilesInRadius;
+    [HideInInspector] public Tile Tile;
 
     void Awake()
     {
@@ -16,17 +17,22 @@ public abstract class Entity : MonoBehaviour
     }
 
 
-    public virtual void OnSelected()
+    public virtual void Selected()
     {
-        foreach (var tile in tilesInRadius)
+        foreach (var tile in TilesInRadius)
         {
             tile.ActiveTile();
         }
+
+        DOTween.Sequence()
+            .SetLink(gameObject)
+            .Append(transform.DOScale(new Vector3(0.95f, 1.1f, 0.95f), 0.25f))
+            .Append(transform.DOScale(new Vector3(1, 1, 1), 0.25f));
     }
 
     public virtual void Unselected()
     {
-        foreach (var tile in tilesInRadius)
+        foreach (var tile in TilesInRadius)
         {
             tile.DeactivateTile();
         }
@@ -35,20 +41,22 @@ public abstract class Entity : MonoBehaviour
 
     public List<Tile> GetTilesInRadius(Vector3Int center, int radius)
     {
-        List<Tile> result = new();
+        var result = new List<Tile>(3 * radius * (radius + 1));
+        var tileMap = MapGenerator.Instance.TileMap;
 
-        for (int dx = -radius; dx <= radius; dx++)
+        for (int cubeX = -radius; cubeX <= radius; cubeX++)
         {
-            for (int dy = Mathf.Max(-radius, -dx - radius); dy <= Mathf.Min(radius, -dx + radius); dy++)
+            for (int cubeY = Mathf.Max(-radius, -cubeX - radius); cubeY <= Mathf.Min(radius, -cubeX + radius); cubeY++)
             {
-                int dz = -dx - dy;
+                if (cubeX == 0 && cubeY == 0) continue; // Пропустить центр
 
-                Vector3Int offset = new Vector3Int(dx, dy, dz);
+                int cubeZ = -cubeX - cubeY;
+                Vector3Int offset = new Vector3Int(cubeX, cubeY, cubeZ);
                 Vector3Int neighborCoord = center + offset;
 
-                if (MapGenerator.Instance.TileMap.TryGetValue(neighborCoord, out Tile tile) && tile.tileData.tileType == this.tile.tileData.tileType)
+                if (tileMap.TryGetValue(neighborCoord, out Tile newTile))
                 {
-                    result.Add(tile);
+                    result.Add(newTile);
                 }
             }
         }
@@ -159,12 +167,5 @@ public static class Shape
 
 public enum ShapeType
 {
-    Base,
-    Hex,
-    BigHex,
-    Parallelogram,
-    Triangle,
-    Spider,
-    Line,
-    HalfHex
+    Base, Hex, BigHex, Parallelogram, Triangle, Spider, Line, HalfHex
 }

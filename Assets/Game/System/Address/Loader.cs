@@ -23,7 +23,6 @@ public static class Loader
 
         if (loadingTasks.TryGetValue(key, out var existingTask)) // решение необычной проблемы, двойной загрузки в 1 момент, когда первая провека не проходит
         {
-            Debug.Log("не зря делал эту проверку"); // пока что зря
             var pastHandle = await existingTask;
             refCounts[key]++;
             return (T)pastHandle.Result;
@@ -34,7 +33,7 @@ public static class Loader
 
 
         var handle = Addressables.LoadAssetAsync<T>(key);
-        await handle.Task; // yield return new WaitUntil(() => task.IsCompleted);
+        await handle.Task;
 
         if (handle.Status != AsyncOperationStatus.Succeeded)
         {
@@ -46,6 +45,7 @@ public static class Loader
 
         return handle.Result;
     }
+
 
     public static void Release(string key)
     {

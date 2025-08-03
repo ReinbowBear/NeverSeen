@@ -1,27 +1,45 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Miner : BuildingComponent
+public class Miner : BuildingAction
 {
     [SerializeField] protected short miningValue;
     [SerializeField] protected short storageSize;
 
-    [HideInInspector] public short storage;
+    [HideInInspector] public int storage;
+
+    private Ore ore;
+
+    public override void Init()
+    {
+        if (Owner.Tile.gameObject.TryGetComponent<Ore>(out Ore newOre))
+        {
+            ore = newOre;
+        }
+    }
 
     public override void Active()
     {
+        if (ore == null) return;
         PlayerResource.Instance.AddBuilding(this);
     }
 
-    public virtual void Delete()
+    public override void Deactive()
     {
         PlayerResource.Instance.RemoveBuilding(this);
     }
 
 
-    public virtual void Work()
+    public void Work() // БАГ работает даже без генератора
     {
-        if (storage < storageSize)
+        if (miningValue > ore.OreCapasity)
+        {
+            Debug.Log("недостаточно ресурсов"); // в руде может остатся чуть ресурсов но мы их не докопаем пока что
+            Deactive();
+            return;
+        }
+
+        if (storage + miningValue <= storageSize)
         {
             storage += miningValue;
         }
@@ -30,11 +48,5 @@ public class Miner : BuildingComponent
             .SetLink(gameObject)
             .Append(transform.DOScale(new Vector3(0.95f, 1.1f, 0.95f), 0.25f))
             .Append(transform.DOScale(new Vector3(1, 1, 1), 0.25f));
-    }
-
-
-    protected void OnDestroy()
-    {
-        Delete();
     }
 }

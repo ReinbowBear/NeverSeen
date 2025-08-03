@@ -14,7 +14,7 @@ public class EntryGame : MonoBehaviour
     {
         if (!isInitGame)
         {
-            AddressImporter.ImportAddressable();
+            //AddressImporter.ImportAddressable();
             MyRandom.SetSeed();
 
             isInitGame = true;

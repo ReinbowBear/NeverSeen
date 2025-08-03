@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class PlayerResource : MonoBehaviour
 {
     public static PlayerResource Instance;
 
-    public Dictionary<ResourceType, int> resources;
+    [SerializeField] private int MaxResource;
+    private Dictionary<ResourceType, int> resources = new();
     private List<Miner> miners = new();
     [SerializeField] private float TickRate;
     [Space]
@@ -23,7 +23,10 @@ public class PlayerResource : MonoBehaviour
 
     public void AddBuilding(Miner newMiner)
     {
+        if (miners.Contains(newMiner)) return;
+
         miners.Add(newMiner);
+
         if (coroutine == null)
         {
             coroutine = StartCoroutine(CollectResources());
@@ -32,7 +35,10 @@ public class PlayerResource : MonoBehaviour
 
     public void RemoveBuilding(Miner miner)
     {
+        if (!miners.Contains(miner)) return;
+
         miners.Remove(miner);
+
         if (miners.Count == 0)
         {
             StopCoroutine(coroutine);
@@ -43,16 +49,11 @@ public class PlayerResource : MonoBehaviour
 
     private IEnumerator CollectResources()
     {
-        while (miners.Count != 0)
+        while (true)
         {
             foreach (var miner in miners)
             {
                 miner.Work();
-            }
-
-            foreach (var key in bars.Keys)
-            {
-                bars[key].SetBarValue(resources[key], 500);
             }
 
             yield return new WaitForSeconds(TickRate);
@@ -87,5 +88,5 @@ public class PlayerResource : MonoBehaviour
 
 public enum ResourceType
 {
-    money,
+    ore, technology
 }

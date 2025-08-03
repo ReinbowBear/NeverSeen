@@ -9,15 +9,16 @@ public class ClickController : MonoBehaviour
 
     [SerializeField] private Camera cam;
     [SerializeField] private LayerMask rayLayer;
-    private ModeState modeState;
 
-    [HideInInspector] public Entity SelectedEntity;
+    private ModeState modeState;
+    private Entity SelectedEntity;
     [HideInInspector] public Building NewBuilding;
 
     void Awake()
     {
         Instance = this;
     }
+
 
     public void SetMode(ModeState newState) // сюда как будь то вписывается стейт машина но код пока слишком маленький что бы она реально была нужна
     {
@@ -30,45 +31,61 @@ public class ClickController : MonoBehaviour
         }
     }
 
-    private void LeftClick(InputAction.CallbackContext _) // костыль что бы не получать предупреждение от IsPointerOverGameObject
+    #region LeftClick
+    private void LeftClick(InputAction.CallbackContext _)
     {
-        StartCoroutine(LeftClick2(_));
+        StartCoroutine(DoLeftClick(_));
     }
-    private IEnumerator LeftClick2(InputAction.CallbackContext _)
+
+    private IEnumerator DoLeftClick(InputAction.CallbackContext _)
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
         yield return null;
-        if (Physics.Raycast(ray, out RaycastHit hit, 30, rayLayer) && EventSystem.current.IsPointerOverGameObject() != true)
+
+        if (!Physics.Raycast(ray, out RaycastHit hit, 30, rayLayer)) { yield break; }
+        if (EventSystem.current.IsPointerOverGameObject()) { yield break; }
+
+        Tile tile = hit.transform.GetComponent<Tile>();
+
+        UnselectEntity();
+        if (PlaceBuilding(tile) == true) { yield break; }
+        SelectEntity(tile);
+    }
+
+
+    private void SelectEntity(Tile tile)
+    {
+        if (tile.tileData.IsTaken != null)
         {
-            Tile tile = hit.transform.GetComponent<Tile>();
-
-            if (SelectedEntity != null) // если здание выделено, либо сбрасывает при промахе либо выделяет новое
-            {
-                SelectedEntity.Unselected();
-                SelectedEntity = null;
-            }
-
-            if (NewBuilding != null) // если в руках есть здание, ставит здание, ничего не выделяет ни в коем случаи
-            {
-                if (NewBuilding.TryPlace(tile))
-                {
-                    NewBuilding = null;
-                }
-                else
-                {
-                    // подрагивание или прочий импакт
-                }
-                yield break;
-            }
-
-            if (tile.tileData.isTaken != null) // если пустота и кликаешь по зданию, выделение
-            {
-                SelectedEntity = tile.tileData.isTaken;
-                SelectedEntity.OnSelected();
-            }
+            SelectedEntity = tile.tileData.IsTaken;
+            SelectedEntity.Selected();
+            EntityMenu.Instance.ShowPanel(SelectedEntity);
         }
     }
 
+    private void UnselectEntity()
+    {
+        if (SelectedEntity != null)
+        {
+            SelectedEntity.Unselected();
+            EntityMenu.Instance.HidePanel();
+            SelectedEntity = null;
+        }
+    }
+
+    private bool PlaceBuilding(Tile tile)
+    {
+        if (NewBuilding.TryPlace(tile))
+        {
+            NewBuilding = null;
+            return true;
+        }
+        // else подрагивание, визуальный фидбек
+        return false;
+    }
+    #endregion
+
+    #region RightClick
     private void RightClick(InputAction.CallbackContext _)
     {
         if (NewBuilding != null)
@@ -76,7 +93,6 @@ public class ClickController : MonoBehaviour
             StartCoroutine(TryDropBuilding());
         }
     }
-
 
     private IEnumerator TryDropBuilding()
     {
@@ -89,10 +105,13 @@ public class ClickController : MonoBehaviour
 
         if (mousePos == Input.mousePosition)
         {
+            NewBuilding.Unselected();
+            EntityMenu.Instance.HidePanel();
             Destroy(NewBuilding.gameObject);
             NewBuilding = null;
         }
     }
+    #endregion
 
 
     void Start()

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -7,13 +8,17 @@ public class MapGenerator : MonoBehaviour
 {
     public static MapGenerator Instance;
 
-    [SerializeField] private AssetReference tilePrefabs;
+    [SerializeField] private AssetReference[] tilePrefabs;
+    private List<Task<GameObject>> tileHandles = new();
     [SerializeField] private float hexWidth; // диамтр от плоской стороны к плоской, при диаметре 1m это будет 0.866
     [SerializeField] private float hexY;
 
     [Space]
     [SerializeField] private Transform mapPoint;
     public int mapRadius;
+
+    [Header("Ores")]
+    [SerializeField] private byte oresTiles;
 
     [Header("Hills")]
     [SerializeField] private byte hillCount;
@@ -24,13 +29,20 @@ public class MapGenerator : MonoBehaviour
     [SerializeField] private byte mountTiles;
 
     public Dictionary<Vector3Int, Tile> TileMap;
-    private Dictionary<Vector3Int, TileData> tilesData;
+    private Dictionary<Vector3Int, TileData> tilesData; // Vector3Int нужен для установки соседей, да и в целом весь список для генерации данных карты
     private List<TileData> freeTiles;
 
-
-    void Awake()
+    async void Awake()
     {
         Instance = this;
+
+        foreach (var tile in tilePrefabs)
+        {
+            var newHandle = Loader.LoadAssetAsync<GameObject>(tile.RuntimeKey.ToString());
+            await newHandle;
+
+            tileHandles.Add(newHandle);
+        }
         GenerateMap();
     }
 
@@ -41,24 +53,24 @@ public class MapGenerator : MonoBehaviour
         tilesData = new();
         freeTiles = new();
 
-        List<TileData> tileDatas = new();
-
         CreateTiles();
         SetNeighbors();
 
         var hillCuts = GetMountTilesCount(hillCount, hillTiles);
         var mountCuts = GetMountTilesCount(mountCount, mountTiles);
 
+        SetTileType(freeTiles, oresTiles, TileType.ore);
+
         foreach (var count in hillCuts)
         {
             int randomTile = MyRandom.random.Next(0, freeTiles.Count);
-            SetTileType(freeTiles[randomTile], count, TileType.hill);
+            SetTileHeightType(freeTiles[randomTile], count, TileHeightType.hill);
         }
 
         foreach (var count in mountCuts)
         {
             int randomTile = MyRandom.random.Next(0, freeTiles.Count);
-            SetTileType(freeTiles[randomTile], count, TileType.mount);
+            SetTileHeightType(freeTiles[randomTile], count, TileHeightType.mount);
         }
 
         StartCoroutine(DisplayMap());
@@ -67,19 +79,17 @@ public class MapGenerator : MonoBehaviour
     #region DisplayMap
     private IEnumerator DisplayMap()
     {
-        var tile = Loader.LoadAssetAsync<GameObject>(tilePrefabs.RuntimeKey.ToString());
-        yield return new WaitUntil(() => tile.IsCompleted);
-
         foreach (var tileData in tilesData.Values)
         {
-            Vector3 pos = CubeToWorld(tileData.cubeCoord, hexWidth);
-            pos.y = (int)tileData.tileType * hexY;
+            Vector3 pos = CubeToWorld(tileData.CubeCoord, hexWidth);
+            pos.y = (int)tileData.TileHeightType * hexY;
 
-            GameObject obj = Instantiate(tile.Result, pos, Quaternion.identity, mapPoint);
+            GameObject obj = Instantiate(tileHandles[(int)tileData.TileType].Result, pos, Quaternion.identity, mapPoint);
             Tile component = obj.GetComponent<Tile>();
             component.tileData = tileData;
 
-            TileMap.Add(tileData.cubeCoord, component);
+            TileMap.Add(tileData.CubeCoord, component);
+            yield return null;
         }
         tilesData = null;
         freeTiles = null;
@@ -103,7 +113,7 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    private void CreateCubeTiles(int width, int height)
+    private void CreateCubeTiles(int width, int height) // функция для квадратной карты
     {
         for (int row = 0; row < height; row++)
         {
@@ -121,7 +131,9 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region SetTilesData
     private void SetNeighbors()
     {
         Vector3Int[] cubeCords = new Vector3Int[]
@@ -139,11 +151,11 @@ public class MapGenerator : MonoBehaviour
         {
             foreach (var dir in cubeCords)
             {
-                Vector3Int neighborCoord = tile.cubeCoord + dir;
+                Vector3Int neighborCoord = tile.CubeCoord + dir;
                 if (tilesData.TryGetValue(neighborCoord, out var neighbor))
                 {
-                    if (neighbor.tileType != tile.tileType) continue;
-                    tile.neighbors.Add(neighbor);
+                    if (neighbor.TileHeightType != tile.TileHeightType) continue;
+                    tile.Neighbors.Add(neighbor);
                 }
             }
         }
@@ -174,27 +186,47 @@ public class MapGenerator : MonoBehaviour
         return result;
     }
 
-    private void SetTileType(TileData startTile, int size, TileType type)
+
+    private void SetTileType(List<TileData> tiles, int size, TileType type)
     {
-        Queue<TileData> queue = new();
         HashSet<TileData> visited = new();
 
-        queue.Enqueue(startTile);
+        int count = 0;
+        while (count < size && visited.Count < tiles.Count)
+        {
+            int randomIndex = MyRandom.random.Next(0, tiles.Count);
+            TileData tileData = tiles[randomIndex];
+
+            if (visited.Contains(tileData)) continue;
+
+            tileData.TileType = type;
+            visited.Add(tileData);
+            count++;
+        }
+    }
+
+    private void SetTileHeightType(TileData startTile, int size, TileHeightType type)
+    {
+        Queue<TileData> stack = new();
+        HashSet<TileData> visited = new();
+
+        stack.Enqueue(startTile);
         visited.Add(startTile);
-        startTile.tileType = type;
+
+        startTile.TileHeightType = type;
         freeTiles.Remove(startTile);
 
         int count = 1;
-        while (queue.Count > 0 && count < size)
+        while (stack.Count > 0 && count < size)
         {
-            var current = queue.Dequeue();
-            foreach (var neighbor in current.neighbors)
+            var current = stack.Dequeue();
+            foreach (var neighbor in current.Neighbors)
             {
-                if (!visited.Contains(neighbor) && neighbor.tileType == TileType.ground)
+                if (!visited.Contains(neighbor) && neighbor.TileHeightType == TileHeightType.ground)
                 {
-                    neighbor.tileType = type;
+                    neighbor.TileHeightType = type;
 
-                    queue.Enqueue(neighbor);
+                    stack.Enqueue(neighbor);
                     visited.Add(neighbor);
                     freeTiles.Remove(neighbor);
 
@@ -204,7 +236,9 @@ public class MapGenerator : MonoBehaviour
             }
         }
     }
+    #endregion
 
+    #region Other
     private Vector3 CubeToWorld(Vector3Int cube, float width)
     {
         float x = width * (cube.x + cube.z / 2f); // без f в цифрах всё округляется вниз и позиционирование тайлов ломается
@@ -212,9 +246,8 @@ public class MapGenerator : MonoBehaviour
 
         return new Vector3(x, 0, z);
     }
-    #endregion
 
-    #region Other
+
     private void Save(OnSave _)
     {
 

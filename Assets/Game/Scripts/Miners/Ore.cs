@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Ore : Entity
+public class Ore : MonoBehaviour
 {
-
+    public short OreCapasity;
 }

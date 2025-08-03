@@ -1,21 +1,20 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Repeater : EnergyCarrier
 {
     [SerializeField] private byte EnergyBuff;
 
-
-    public override void TransferEnergy(HashSet<EnergyCarrier> visited, int depth, int maxDepth)
+    public override void TransferEnergy(EnergyData energyData)
     {
-        if (depth > maxDepth || visited.Contains(this)) return;
+        if (energyData.Visited.Contains(this) || energyData.Depth > energyData.MaxDepth) return;
 
-        visited.Add(this);
-        isPowered = true;
+        energyData.Visited.Add(this);
+        EnergyPoint.SetActive(true);
 
-        foreach (var neighbor in connections)
+        energyData.Depth = -EnergyBuff;
+        foreach (var neighborKey in ConnectionsList.Keys)
         {
-            neighbor.TransferEnergy(visited, -EnergyBuff, maxDepth);
+            neighborKey.TransferEnergy(energyData);
         }
     }
 }

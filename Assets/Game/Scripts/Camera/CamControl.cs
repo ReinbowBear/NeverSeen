@@ -16,8 +16,8 @@ public class CamControl : MonoBehaviour
     [Space]
     [SerializeField] private float zoomSensitivity;
     [SerializeField] private float zoomVelocity;
-    [SerializeField] private byte minZoom;
-    [SerializeField] private byte maxZoom;
+    [SerializeField] private float minZoom;
+    [SerializeField] private float maxZoom;
 
     private Vector3 currentDragVelocity;
 

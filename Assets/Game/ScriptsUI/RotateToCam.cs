@@ -2,17 +2,17 @@ using UnityEngine;
 
 public class RotateToCam : MonoBehaviour
 {
-    private Vector3 direction;
-    
+    private Camera cam;
+
     void Awake()
     {
-        direction = Camera.main.transform.forward;
-        LookToCam();
+        cam = Camera.main;
     }
 
-    private void LookToCam()
+
+    private void LateUpdate()
     {
-        Quaternion newRotation = Quaternion.LookRotation(direction);
-        transform.rotation = newRotation;
+        Vector3 direction = transform.position - cam.transform.position;
+        transform.rotation = Quaternion.LookRotation(direction);
     }
 }

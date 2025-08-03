@@ -1,11 +1,16 @@
 
-public interface IActive
+public interface IInspectable
 {
-    public void Active();
+    string GetDisplayData();
 }
 
-public interface IDeactive
+public interface IBuildingCondition
 {
-    public void Deactive();
+    bool IsConditionMet();
 }
 
+public interface IBuildingEffect
+{
+    void OnActivate();
+    void OnDeactivate();
+}

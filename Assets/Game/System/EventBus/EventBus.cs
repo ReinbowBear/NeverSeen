@@ -53,7 +53,7 @@ public static class EventBus
             {
                 if (listener.action is Action<T> typedAction)
                 {
-                    typedAction.Invoke(eventArguments); 
+                    typedAction.Invoke(eventArguments);
                 }
             }
         }
