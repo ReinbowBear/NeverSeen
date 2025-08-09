@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -27,6 +28,7 @@ public class CamControl : MonoBehaviour
 
     private float targetZoom;
 
+    private GameInput.GameplayActions inputs;
 
     void Awake()
     {
@@ -47,11 +49,11 @@ public class CamControl : MonoBehaviour
 
     private IEnumerator DoDragging()
     {
-        Vector3 lastPosition = Input.mousePosition;
-        while (BattleKeyboard.gameInput.Player.MouseRight.IsPressed())
+        Vector3 lastPosition = UnityEngine.Input.mousePosition;
+        while (Input.Instance.GameInput.Gameplay.MouseRight.IsPressed())
         {
-            Vector3 delta = Input.mousePosition - lastPosition;
-            lastPosition = Input.mousePosition;
+            Vector3 delta = UnityEngine.Input.mousePosition - lastPosition;
+            lastPosition = UnityEngine.Input.mousePosition;
 
             delta.x /= Screen.width; // нормализируем значение в заивисимости от ширины экрана, а то приходится выставлять скорость 0.002 и она переменчива от разрешения
             delta.y /= Screen.height;
@@ -103,13 +105,13 @@ public class CamControl : MonoBehaviour
         float currentRotateVelocity = 0;
         float targetAngle;
 
-        while (BattleKeyboard.gameInput.Player.Q.IsPressed() || BattleKeyboard.gameInput.Player.E.IsPressed() || Mathf.Abs(currentRotateVelocity) > 0.01f)
+        while (inputs.Q.IsPressed() || inputs.E.IsPressed() || Mathf.Abs(currentRotateVelocity) > 0.01f)
         {
-            if (BattleKeyboard.gameInput.Player.Q.IsPressed())
+            if (inputs.Q.IsPressed())
             {
                 targetAngle = rotateSensitivity;
             }
-            else if (BattleKeyboard.gameInput.Player.E.IsPressed())
+            else if (inputs.E.IsPressed())
             {
                 targetAngle = -rotateSensitivity;
             }
@@ -129,7 +131,7 @@ public class CamControl : MonoBehaviour
 
     private void ZoomCam(InputAction.CallbackContext _)
     {
-        Vector2 scrollValue = BattleKeyboard.gameInput.Player.Scroll.ReadValue<Vector2>();
+        Vector2 scrollValue = inputs.Scroll.ReadValue<Vector2>();
 
         targetZoom -= scrollValue.y * zoomSensitivity;
         targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
@@ -160,23 +162,33 @@ public class CamControl : MonoBehaviour
 
     void Start()
     {
-        BattleKeyboard.gameInput.Player.MouseRight.started += DragCam;
-        BattleKeyboard.gameInput.Player.MouseRight.canceled += DragCam; // функция проверит что клавиша отжата и отпустит камеру
+        inputs = Input.Instance.GameInput.Gameplay;
 
-        BattleKeyboard.gameInput.Player.Q.started += RotateCamera;
-        BattleKeyboard.gameInput.Player.E.started += RotateCamera;
+        inputs.MouseRight.started += DragCam;
+        inputs.MouseRight.canceled += DragCam;
 
-        BattleKeyboard.gameInput.Player.Scroll.started += ZoomCam;
+        inputs.Q.started += RotateCamera;
+        inputs.E.started += RotateCamera;
+
+        inputs.Scroll.started += ZoomCam;
     }
 
     void OnDestroy()
     {
-        BattleKeyboard.gameInput.Player.MouseRight.started -= DragCam;
-        BattleKeyboard.gameInput.Player.MouseRight.canceled -= DragCam;
+        inputs.MouseRight.started -= DragCam;
+        inputs.MouseRight.canceled -= DragCam;
 
-        BattleKeyboard.gameInput.Player.Q.started -= RotateCamera;
-        BattleKeyboard.gameInput.Player.E.started -= RotateCamera;
+        inputs.Q.started -= RotateCamera;
+        inputs.E.started -= RotateCamera;
 
-        BattleKeyboard.gameInput.Player.Scroll.started -= ZoomCam;
+        inputs.Scroll.started -= ZoomCam;
+    }
+
+
+
+    // ооо функция твинера? надо посмотреть как нибудь будет
+    public void Shake(float strength, float time) // Shake(0.025f, 0.4f);
+    {
+        Camera.main.DOShakePosition(time, strength, 10, 45f);
     }
 }

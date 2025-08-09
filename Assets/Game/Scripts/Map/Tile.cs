@@ -20,16 +20,10 @@ public class Tile : MonoBehaviour
     }
 
 
-    public void ActiveTile()
+    public void ActiveTile(bool isActive)
     {
-        highlight.enabled = true;
+        highlight.enabled = isActive;
     }
-
-    public void DeactivateTile()
-    {
-        highlight.enabled = false;
-    }
-
 
     public int GetDistance(Tile target) 
     {

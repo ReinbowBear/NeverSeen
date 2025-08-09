@@ -19,7 +19,7 @@ public static class InputsExporter
         string json = inputAsset.SaveBindingOverridesAsJson();
         string filePath = MyPaths.INPUTS + "/DefaultInputs.json";
 
-        Directory.CreateDirectory(Path.GetDirectoryName(filePath)); // проверяет есть ли папка и создает если нету
+        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
 
         File.WriteAllText(filePath, json);
         Debug.Log("Inputs Map exported to: " + filePath);
