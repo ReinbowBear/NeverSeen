@@ -5,12 +5,12 @@ using UnityEngine;
 public class DialogueGraphSO : ScriptableObject
 {
     public string FileName;
-    public List<DialogueNodeData> Nodes = new List<DialogueNodeData>();
-    public List<NodeGroupData> Groups = new List<NodeGroupData>();
+    public List<DialogueNodeData> Nodes = new ();
+    public List<NodeGroupData> Groups = new ();
 
     public List<string> OldNodes;
     public List<string> OldGroups;
-    public SerializableDictionary<string, List<string>> OldGroupedNodes;
+    public Dictionary<string, List<string>> OldGroupedNodes;
 }
 
 

@@ -3,7 +3,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CamControl : MonoBehaviour
+public class CamControl : MonoBehaviour // Cinemachine плагин для настройки и управления камерой (кажется есть в пакет менеджере даже)
 {
     [SerializeField] private Camera cam;
     [Space]

@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class Input : MonoBehaviour
 {
+    private string filePath = Path.Combine(MyPaths.INPUTS, "SaveInputs.json");
+    private string filePathDefault = Path.Combine(MyPaths.INPUTS, "DefaultInputs.json");
     public static Input Instance;
 
     public GameInput GameInput;
@@ -105,20 +107,20 @@ public class Input : MonoBehaviour
     public void SaveBindings()
     {
         string json = GameInput.asset.SaveBindingOverridesAsJson();
-        File.WriteAllText(MyPaths.INPUTS + "/SaveInputs.json", json);
+
+        Directory.CreateDirectory(MyPaths.INPUTS);
+        File.WriteAllText(filePath, json);
     }
 
     public void ResetToDefaultBindings()
     {
-        string filePath = MyPaths.INPUTS + "/DefaultInputs.json";
-
-        if (File.Exists(filePath) == false)
+        if (File.Exists(filePathDefault) == false)
         {
-            Debug.LogError("Файл с дефолтными биндами не найден по пути: " + filePath);
+            Debug.LogError("Файл с дефолтными биндами не найден по пути: " + filePathDefault);
             return;
         }
 
-        string json = File.ReadAllText(filePath);
+        string json = File.ReadAllText(filePathDefault);
         GameInput.asset.LoadBindingOverridesFromJson(json);
     }
     #endregion

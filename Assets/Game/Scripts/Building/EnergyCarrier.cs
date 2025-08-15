@@ -29,7 +29,8 @@ public abstract class EnergyCarrier : BuildingAction
                 }
             }
         }
-        ElectoNetwork.Instance.UpdateNetwork();
+        //ElectoNetwork.Instance.AddEnergyCarrier(this);
+        EventBus.Invoke<OnUpdateNetwork>();
     }
 
 
@@ -45,8 +46,8 @@ public abstract class EnergyCarrier : BuildingAction
             Destroy(ConnectionsList[key].gameObject);
             key.ConnectionsList.Remove(this);
         }
-        ElectoNetwork.Instance.RemoveEnergyCarrier(this);
-        ElectoNetwork.Instance.UpdateNetwork();
+        //ElectoNetwork.Instance.RemoveEnergyCarrier(this);
+        EventBus.Invoke<OnUpdateNetwork>();
     }
 
     public virtual void TransferEnergy(EnergyData energyData)

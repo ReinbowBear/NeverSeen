@@ -76,10 +76,7 @@ public class DialogueGraphSave
 
     private void CreateFolder(string parentFolderPath, string newFolderName)
     {
-        if (Directory.Exists($"{parentFolderPath}/{newFolderName}") == false)
-        {
-            Directory.CreateDirectory($"{parentFolderPath}/{newFolderName}");
-        }
+        Directory.CreateDirectory($"{parentFolderPath}/{newFolderName}");
     }
 
     private void RemoveFolder(string path)
@@ -106,7 +103,7 @@ public class DialogueGraphSave
 
     private void SaveAsset(UnityEngine.Object asset)
     {
-        EditorUtility.SetDirty(asset); // помечает юнити ассеты как изменённые что бы тот их сохранил
+        EditorUtility.SetDirty(asset);
 
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
@@ -159,8 +156,8 @@ public class DialogueGraphSave
     #region SaveNodes
     private void SaveNodes(DialogueGraphSO graphData, DialogueContainerSO dialogueContainer)
     {
-        SerializableDictionary<string, List<string>> groupedNodes = new SerializableDictionary<string, List<string>>();
-        List<string> ungroupedNodes = new List<string>();
+        Dictionary<string, List<string>> groupedNodes = new();
+        List<string> ungroupedNodes = new ();
 
         foreach (DialogueNode node in graphNodes)
         {
@@ -277,7 +274,7 @@ public class DialogueGraphSave
         graphData.OldNodes = new List<string>(currentUngroupedNodes);
     }
 
-    private void UpdateOldGroupedNodes(DialogueGraphSO graphData, SerializableDictionary<string, List<string>> currentGroupedNodes)
+    private void UpdateOldGroupedNodes(DialogueGraphSO graphData, Dictionary<string, List<string>> currentGroupedNodes)
     {
         if (graphData.OldGroupedNodes != null && graphData.OldGroupedNodes.Count != 0)
         {
@@ -297,7 +294,7 @@ public class DialogueGraphSave
             }
         }
 
-        graphData.OldGroupedNodes = new SerializableDictionary<string, List<string>>(currentGroupedNodes);
+        graphData.OldGroupedNodes = new Dictionary<string, List<string>>(currentGroupedNodes);
     }
 
     private void UpdateDialoguesChoicesConnections()
@@ -438,7 +435,7 @@ public class DialogueGraphSave
 
 public static class CollectionUtility
 {
-    public static void AddItem<K, V>(this SerializableDictionary<K, List<V>> serializableDictionary, K key, V value) // не уверен зачем и что делает этот метод, но он решал какуе то проблему
+    public static void AddItem<K, V>(this Dictionary<K, List<V>> serializableDictionary, K key, V value) // не уверен зачем и что делает этот метод, но он решал какуе то проблему
     {
         if (serializableDictionary.ContainsKey(key))
         {

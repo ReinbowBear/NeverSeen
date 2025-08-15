@@ -9,9 +9,9 @@ public class DialogueGraph : GraphView
 {
     public string Name = "DialogueFileName";
 
-    public SerializableDictionary<string, NodeErrorData> UngroupedNodes = new SerializableDictionary<string, NodeErrorData>(); // кастомный класс SerializableDictionary, может быть заменён на обычный Dictionary
-    public SerializableDictionary<Group, SerializableDictionary<string, NodeErrorData>> GroupedNodes = new SerializableDictionary<Group, SerializableDictionary<string, NodeErrorData>>(); // отдельный список для груп нодов, с ним связанно много кода а всё что он делает, позволяет групирировать ноды в отдельные контейнеры, надо ли
-    private SerializableDictionary<string, GroupErrorData> groups = new SerializableDictionary<string, GroupErrorData>();
+    public Dictionary<string, NodeErrorData> UngroupedNodes = new ();
+    public Dictionary<Group, Dictionary<string, NodeErrorData>> GroupedNodes = new ();
+    private Dictionary<string, GroupErrorData> groups = new ();
 
     public DialogueGraph()
     {
@@ -63,10 +63,7 @@ public class DialogueGraph : GraphView
 
                 foreach (GraphElement element in changes.elementsToRemove)
                 {
-                    if (element.GetType() != edgeType)
-                    {
-                        continue;
-                    }
+                    if (element.GetType() != edgeType) continue;
 
                     Edge edge = (Edge) element;
                     ChoiceData choiceData = (ChoiceData) edge.output.userData;
@@ -116,10 +113,7 @@ public class DialogueGraph : GraphView
                 List<DialogueNode> groupNodes = new List<DialogueNode>(); // очищаем ноды с групы (переводим в лист несгрупирированных)
                 foreach (GraphElement graphElement in group.containedElements)
                 {
-                    if ((graphElement is DialogueNode) == false)
-                    {
-                        continue;
-                    }
+                    if ((graphElement is DialogueNode) == false) continue;
 
                     groupNodes.Add((DialogueNode)graphElement);
                 }
@@ -150,10 +144,7 @@ public class DialogueGraph : GraphView
         {
             foreach (GraphElement element in elements)
             {
-                if ((element is DialogueNode) == false)
-                {
-                    continue;
-                }
+                if (!(element is DialogueNode)) continue;
 
                 NodeGroup nodeGroup = (NodeGroup) group;
                 DialogueNode node = (DialogueNode) element;
@@ -170,10 +161,7 @@ public class DialogueGraph : GraphView
         {
             foreach (GraphElement element in elements)
             {
-                if ((element is DialogueNode) == false)
-                {
-                    continue;
-                }
+                if (!(element is DialogueNode)) continue;
 
                 DialogueNode node = (DialogueNode)element;
                 RemoveGroupedNode(node, group);
@@ -199,10 +187,7 @@ public class DialogueGraph : GraphView
 
         ports.ForEach(port =>
         {
-            if (startPort == port || startPort.node == port.node || startPort.direction == port.direction)
-            {
-                return;
-            }
+            if (startPort == port || startPort.node == port.node || startPort.direction == port.direction) return;
 
             compatiblePorts.Add(port);
         });
@@ -243,7 +228,7 @@ public class DialogueGraph : GraphView
 
         if (GroupedNodes.ContainsKey(group) == false)
         {
-            GroupedNodes.Add(group, new SerializableDictionary<string, NodeErrorData>());
+            GroupedNodes.Add(group, new Dictionary<string, NodeErrorData>());
         }
 
         if (GroupedNodes[group].ContainsKey(nodeName) == false)
@@ -417,10 +402,7 @@ public class DialogueGraph : GraphView
 
         foreach (GraphElement selectedElement in selection)
         {
-            if ((selectedElement is NodeGroup) == false)
-            {
-                continue;
-            }
+            if (!(selectedElement is NodeGroup)) continue;
 
             group.AddElement((DialogueNode) selectedElement);
         }

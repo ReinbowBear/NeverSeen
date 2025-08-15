@@ -18,11 +18,11 @@ public class AddButton : MonoBehaviour
 
     void OnEnable()
     {
-        EventBus.Add<OnLoad>(Load);
+        EventBus.Subscribe<OnLoad>(Load);
     }
 
     void OnDisable()
     {
-        EventBus.Remove<OnLoad>(Load);
+        EventBus.Unsubscribe<OnLoad>(Load);
     }
 }

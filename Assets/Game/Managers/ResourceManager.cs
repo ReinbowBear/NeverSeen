@@ -11,7 +11,7 @@ public class ResourceManager : MonoBehaviour
     private List<Miner> miners = new();
     [SerializeField] private float TickRate;
     [Space]
-    [SerializeField] private SerializableDictionary<ResourceType, MyBar> bars;
+    [SerializeField] private Dictionary<ResourceType, MyBar> bars;
 
     private Coroutine coroutine;
 

@@ -2121,6 +2121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7137d89035153bf4dbd226aab3ea72c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Classes: []
 --- !u!4 &723221998
 Transform:
   m_ObjectHideFlags: 0
@@ -4196,17 +4197,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 69571154256159397, guid: c6ec4a434a34d12419ccf4d58c14155d, type: 3}
   m_PrefabInstance: {fileID: 1417745931}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1442298199 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6149211206633933276, guid: c6ec4a434a34d12419ccf4d58c14155d, type: 3}
-  m_PrefabInstance: {fileID: 1417745931}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1449747430
 GameObject:
   m_ObjectHideFlags: 0
@@ -4704,17 +4694,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1506077514 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6149211206633933276, guid: c6ec4a434a34d12419ccf4d58c14155d, type: 3}
-  m_PrefabInstance: {fileID: 976981456}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1513612781
 GameObject:
   m_ObjectHideFlags: 0
@@ -5655,17 +5634,6 @@ MonoBehaviour:
     m_SubObjectGUID: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
---- !u!114 &1881301186 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6149211206633933276, guid: c6ec4a434a34d12419ccf4d58c14155d, type: 3}
-  m_PrefabInstance: {fileID: 1072492343}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1899134530
 GameObject:
   m_ObjectHideFlags: 0
@@ -5697,14 +5665,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxResource: 500
   TickRate: 1
-  bars:
-    list:
-    - Key: 0
-      Value: {fileID: 1881301186}
-    - Key: 0
-      Value: {fileID: 1506077514}
-    - Key: 0
-      Value: {fileID: 1442298199}
 --- !u!4 &1899134532
 Transform:
   m_ObjectHideFlags: 0
@@ -6639,6 +6599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 210f34f9236f53040a9079006a9d68ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  assetsToLoad: []
 --- !u!4 &7337256492365265152
 Transform:
   m_ObjectHideFlags: 0

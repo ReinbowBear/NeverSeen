@@ -15,53 +15,8 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 38b0a7a2d15c3fc46906aec44545b327
   m_SerializeEntries:
-  - m_GUID: 10551a8b968b3d944913084e74376aa1
-    m_Address: Miner
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 13e801cbfc6d72a458d27048afacccbd
-    m_Address: TileOre
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 167bba19aacfbf2439367bbdad4b0242
-    m_Address: Assets/Game/Prefabs/Buildings/CarStation.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 4b7b9ac51ceeb1048978d27b0cd0965a
-    m_Address: Tile
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 50ea18cf098444840be6abc3ee3301c9
-    m_Address: Repeater
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6499785dc0a41604c903d72294421a39
-    m_Address: Tower
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c0b7a629c8c336041898884fbc3a1fd2
     m_Address: Wire
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e45bcc9d3bf5b2e4790d25f518769c3b
-    m_Address: Generator
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ebd77c04abfea8a47a2ea8dc916f0be9
-    m_Address: Assets/Game/Prefabs/Buildings/Road.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ec7bef49d4682ff4fa1b3232a0a7b156
-    m_Address: Assets/Game/Prefabs/Buildings/Storage.prefab
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

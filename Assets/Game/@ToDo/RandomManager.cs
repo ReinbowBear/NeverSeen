@@ -6,7 +6,7 @@ public static class RandomManager
 
     static RandomManager()
     {
-        SetSeed(SaveLoad.gameData.seed);
+        SetSeed(GameData.seed);
     }
 
 
@@ -15,7 +15,7 @@ public static class RandomManager
         if (newSeed == 0)
         {
             newSeed = System.DateTime.Now.Millisecond;
-            SaveLoad.gameData.seed = newSeed;
+            GameData.seed = newSeed;
         }
 
         random = new System.Random(newSeed);

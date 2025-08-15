@@ -14,7 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: MapAssets
   m_GUID: 5af9cd332ebd4a3499e373f54481c6c7
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 13e801cbfc6d72a458d27048afacccbd
+    m_Address: TileOre
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b7b9ac51ceeb1048978d27b0cd0965a
+    m_Address: Tile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 5bb7f9651bed27546a446493c92fb3c6, type: 2}
   m_SchemaSet:

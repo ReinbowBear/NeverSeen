@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class MapGenerator : MonoBehaviour
 {
     public static MapGenerator Instance;
 
     [SerializeField] private AssetReference[] tilePrefabs;
-    private List<Task<GameObject>> tileHandles = new();
+    private List<AsyncOperationHandle<GameObject>> tileHandles = new();
     [SerializeField] private float hexWidth; // диамтр от плоской стороны к плоской, при диаметре 1m это будет 0.866
     [SerializeField] private float hexY;
 
@@ -38,10 +38,10 @@ public class MapGenerator : MonoBehaviour
 
         foreach (var tile in tilePrefabs)
         {
-            var newHandle = Loader.LoadAssetAsync<GameObject>(tile.RuntimeKey.ToString());
-            await newHandle;
+            var handle = Addressables.LoadAssetAsync<GameObject>(tile.RuntimeKey.ToString());
+            await handle.Task;
 
-            tileHandles.Add(newHandle);
+            tileHandles.Add(handle);
         }
         GenerateMap();
     }
@@ -248,27 +248,12 @@ public class MapGenerator : MonoBehaviour
     }
 
 
-    private void Save(OnSave _)
+    void OnDestroy()
     {
-        Debug.Log("пока не ясно что тут сохранять");
-    }
-
-    private void Load(OnLoad _)
-    {
-
-    }
-
-
-    void OnEnable()
-    {
-        EventBus.Add<OnSave>(Save);
-        EventBus.Add<OnLoad>(Load);
-    }
-
-    void OnDisable()
-    {
-        EventBus.Remove<OnSave>(Save);
-        EventBus.Remove<OnLoad>(Load);
+        foreach (var handle in tileHandles)
+        {
+            Addressables.Release(handle);
+        }
     }
     #endregion
 }

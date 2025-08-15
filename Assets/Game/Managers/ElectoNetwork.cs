@@ -1,17 +1,12 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ElectoNetwork : MonoBehaviour
+public class ElectoNetwork : EventSubscriber
 {
-    public static ElectoNetwork Instance;
-
     private List<EnergyCarrier> energyCarriers = new();
     private List<Generator> generators = new();
 
-    void Awake()
-    {
-        Instance = this;
-    }
 
     public void AddEnergyCarrier(EnergyCarrier carrier)
     {
@@ -35,8 +30,8 @@ public class ElectoNetwork : MonoBehaviour
         energyCarriers.Remove(carrier);
     }
 
-
-    public void UpdateNetwork()
+    [EventHandler]
+    public void UpdateNetwork(OnUpdateNetwork onUpdate)
     {
         foreach (var carrier in energyCarriers)
         {

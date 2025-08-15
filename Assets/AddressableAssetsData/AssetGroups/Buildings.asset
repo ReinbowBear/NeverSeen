@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Buildings
+  m_EditorClassIdentifier: 
+  m_GroupName: Buildings
+  m_GUID: 81bde88d152bf0a40a4fecbddbc7a037
+  m_SerializeEntries:
+  - m_GUID: 10551a8b968b3d944913084e74376aa1
+    m_Address: Miner
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 167bba19aacfbf2439367bbdad4b0242
+    m_Address: CarStation
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 50ea18cf098444840be6abc3ee3301c9
+    m_Address: Repeater
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6499785dc0a41604c903d72294421a39
+    m_Address: Tower
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e45bcc9d3bf5b2e4790d25f518769c3b
+    m_Address: Generator
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ebd77c04abfea8a47a2ea8dc916f0be9
+    m_Address: Road
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ec7bef49d4682ff4fa1b3232a0a7b156
+    m_Address: Storage
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5bb7f9651bed27546a446493c92fb3c6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a4d8e47e6c3d2c14ea6b62846675cb12, type: 2}
+    - {fileID: 11400000, guid: 7f099f6e04e780a4e848a53d68cec555, type: 2}

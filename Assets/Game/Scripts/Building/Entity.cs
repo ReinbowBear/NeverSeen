@@ -9,7 +9,7 @@ public abstract class Entity : MonoBehaviour
     [SerializeField] protected ShapeType shapeType;
     protected Vector3Int[] shape => Shape.Shapes[shapeType];
 
-    [SerializeField] protected byte radius;
+    public byte radius;
     [HideInInspector] public List<Tile> TilesInRadius;
     [HideInInspector] public Tile Tile;
 

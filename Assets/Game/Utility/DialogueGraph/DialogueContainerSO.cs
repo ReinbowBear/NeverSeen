@@ -5,8 +5,8 @@ using UnityEngine;
 public class DialogueContainerSO : ScriptableObject
 {
     public string FileName;
-    public SerializableDictionary<NodeGroupSO, List<DialogueNodeSO>> DialogueGroups = new SerializableDictionary<NodeGroupSO, List<DialogueNodeSO>>();
-    public List<DialogueNodeSO> UngroupedDialogues = new List<DialogueNodeSO>();
+    public Dictionary<NodeGroupSO, List<DialogueNodeSO>> DialogueGroups = new ();
+    public List<DialogueNodeSO> UngroupedDialogues = new ();
 
 
     public List<string> GetDialogueGroupNames()
@@ -28,10 +28,7 @@ public class DialogueContainerSO : ScriptableObject
 
         foreach (DialogueNodeSO groupedDialogue in groupedDialogues)
         {
-            if (startingDialoguesOnly && !groupedDialogue.IsStartNode)
-            {
-                continue;
-            }
+            if (startingDialoguesOnly && !groupedDialogue.IsStartNode) continue;
 
             groupedDialogueNames.Add(groupedDialogue.Name);
         }
@@ -45,10 +42,7 @@ public class DialogueContainerSO : ScriptableObject
 
         foreach (DialogueNodeSO ungroupedDialogue in UngroupedDialogues)
         {
-            if (startingDialoguesOnly && !ungroupedDialogue.IsStartNode)
-            {
-                continue;
-            }
+            if (startingDialoguesOnly && !ungroupedDialogue.IsStartNode) continue;
 
             ungroupedDialogueNames.Add(ungroupedDialogue.Name);
         }

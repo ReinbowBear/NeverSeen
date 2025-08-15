@@ -1,38 +1,46 @@
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
+using UnityEditor.Build;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 
-public static class AddressExporter
+public class AddressExporter : IPreprocessBuildWithReport
 {
     [MenuItem("Tools/Export Addressable Assets to JSON")]
-    private static void ExportAddressable()
+    public static void ExportAddressable()
     {
+        string filePath = Path.Combine(MyPaths.ADRESS, "AddressableAssets.json");
         var settings = AddressableAssetSettingsDefaultObject.Settings;
 
-        List<string> groupNames = new List<string>();
-        List<AddressAssetsList> keys = new List<AddressAssetsList>();
+        Dictionary<string, List<string>> addressData = new();
 
-        for (int i = 0; i < settings.groups.Count; i++)
+        foreach (var group in settings.groups)
         {
-            List<string> assetKeys = new List<string>();
+            List<string> assetKeys = new ();
 
-            foreach (var entry in settings.groups[i].entries)
+
+            foreach (var entry in group.entries)
             {
                 assetKeys.Add(entry.address);
             }
 
-            groupNames.Add(settings.groups[i].Name);
-            keys.Add(new AddressAssetsList(assetKeys));
+            addressData[group.Name] = assetKeys;
         }
 
-        string json = JsonUtility.ToJson(new AddressGroupList(groupNames, keys), true);
-        string filePath = MyPaths.ADRESS + "/AddressableAssets.json";
+        string json = JsonConvert.SerializeObject(addressData);
 
-        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-
+        Directory.CreateDirectory(MyPaths.ADRESS);
         File.WriteAllText(filePath, json);
-        Debug.Log("Addressable assets exported to: " + filePath);
+
+        Debug.Log("Addressable assets exported to: " + MyPaths.ADRESS);
+    }
+
+    public int callbackOrder => 0;
+    public void OnPreprocessBuild(BuildReport report)
+    {
+        ExportAddressable();
     }
 }

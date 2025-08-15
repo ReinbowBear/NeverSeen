@@ -8,8 +8,8 @@ public class BuildButton : MonoBehaviour
 
     async void Start()
     {
-        var handle = Loader.LoadAssetAsync<GameObject>(building.RuntimeKey.ToString());
-        await handle;
+        var handle = Addressables.LoadAssetAsync<GameObject>(building.RuntimeKey.ToString());
+        await handle.Task;
 
         LoadedBuilding = handle.Result;
     }
@@ -20,5 +20,11 @@ public class BuildButton : MonoBehaviour
 
         ClickHandler.Instance.NewBuilding = building;
         building.StartCoroutine(building.OnSpawn());
+    }
+
+
+    void OnDestroy()
+    {
+        Addressables.Release(building.RuntimeKey.ToString());
     }
 }

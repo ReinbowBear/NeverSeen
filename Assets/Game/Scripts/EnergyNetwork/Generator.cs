@@ -16,12 +16,14 @@ public class Generator : EnergyCarrier
 
     public override void Init()
     {
+        //base.Init(); // а как он конектится то
         currentEnergy = energyValue;
         energyBar.StartedValue(currentEnergy);
     }
 
-    public override void Active(bool isActive) // а ведь при удалении генератора нихуя не происходит
+    public override void Active(bool isActive)
     {
+        base.Init();
         TransferEnergy(new EnergyData(this, energyRange));
         StartCoroutine(UpdateEnergyBar());
     }
@@ -77,5 +79,7 @@ public struct EnergyData
         Depth = 0;
         MaxDepth = newMaxDepth;
         Generator = newGenerator;
+
+        Visited.Add(newGenerator);
     }
 }
