@@ -56,7 +56,8 @@ public class EntityMenu : MonoBehaviour
     {
         if (entity is Building building)
         {
-            building.Delete();
+            Debug.Log("переделываем архитектуру! обджект пул момент");
+            //building.Delete();
             HidePanel();
         }
         else

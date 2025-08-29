@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9132817784148388489}
   - component: {fileID: 3111568854275682317}
   m_Layer: 5
-  m_Name: Effect
+  m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.5
+  m_fontSize: 8.95
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 4389883377645565843}
   - component: {fileID: 6149211206633933276}
   - component: {fileID: -3953699573792304746}
+  - component: {fileID: 9158024586099541674}
   m_Layer: 5
   m_Name: Bar
   m_TagString: Untagged
@@ -274,6 +275,7 @@ MonoBehaviour:
   barImage: {fileID: 3111568854275682317}
   barText: {fileID: 2716589798652306634}
   canvasGroup: {fileID: -3953699573792304746}
+  rotate: {fileID: 9158024586099541674}
   fillSpeed: 0.5
   fadeTimeOut: 2
   fadeSpeed: 1
@@ -319,3 +321,15 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &9158024586099541674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304309431824654618}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fc5c85cbc2117d4b924e1ad2b8685e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

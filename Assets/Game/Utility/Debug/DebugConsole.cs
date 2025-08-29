@@ -36,7 +36,7 @@ public class DebugConsole : MonoBehaviour
         {
             inputField.ActivateInputField();
 
-            Input.Instance.ActiveInputs(false);
+            Input.Instance.SetActiveInputs(false);
 
             Input.Instance.GameInput.Debug.BackSpace.started += Return;
             Input.Instance.GameInput.Debug.UpArrow.started += UpArrow;
@@ -52,7 +52,7 @@ public class DebugConsole : MonoBehaviour
             Input.Instance.GameInput.Debug.DownArrow.started -= DownArrow;
             Input.Instance.GameInput.Debug.Tab.started -= Tab;
 
-            Input.Instance.ActiveInputs(true);
+            Input.Instance.SetActiveInputs(true);
 
             inputField.onValueChanged.RemoveListener(ShowSuggestions);
         }

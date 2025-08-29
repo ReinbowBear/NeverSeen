@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class CarStation : BuildingAction
+public class CarStation : MonoBehaviour
 {
     [SerializeField] private GameObject carPref;
     private GameObject car;
@@ -11,13 +11,15 @@ public class CarStation : BuildingAction
 
     private HashSet<Transform> pathPoints = new();
     private HashSet<Transform> reversPoints;
+    [SerializeField] protected Spawned owner;
+    [SerializeField] protected GameMapState mapData;
 
-    public override void Init()
+    public void Init()
     {
         car = Instantiate(carPref, transform);
     }
 
-    public override void Active(bool isActive)
+    public void SetActive(bool isActive)
     {
         if (isActive)
         {
@@ -34,17 +36,17 @@ public class CarStation : BuildingAction
     {
         pathPoints.Clear();
 
-        Tile currentTile = Owner.Tile;
+        Tile currentTile = owner.Tile;
         bool isFoundRoad = true;
 
         while (isFoundRoad == true)
         {
-            var tiles = Owner.GetTilesInRadius(currentTile.tileData.CubeCoord, 1);
+            var tiles = mapData.GetTilesInRadius(currentTile.tileData.CubeCoord, 1);
             isFoundRoad = false;
 
             foreach (var tile in tiles)
             {
-                if (tile.tileData.IsTaken is Building building && building.TryGetComponent(out Road road))
+                if (tile.tileData.IsTaken is Spawned building && building.TryGetComponent(out Road road))
                 {
                     if (pathPoints.Contains(road.transform)) continue;
 

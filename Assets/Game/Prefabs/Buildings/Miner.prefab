@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3978388874833158516
+--- !u!1 &3618523260191794112
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,51 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8623696573635695028}
-  - component: {fileID: 7918002853612091693}
-  - component: {fileID: 5158666417297893425}
-  - component: {fileID: 3167904556431439530}
-  - component: {fileID: 1556856869378663728}
-  - component: {fileID: 7483407661020940137}
-  m_Layer: 3
-  m_Name: Miner
+  - component: {fileID: 8978971060929927745}
+  - component: {fileID: 8762163562350329798}
+  - component: {fileID: 2651914894273218497}
+  m_Layer: 0
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8623696573635695028
+--- !u!4 &8978971060929927745
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3978388874833158516}
+  m_GameObject: {fileID: 3618523260191794112}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 8733352078498854257}
-  - {fileID: 6119872850786460476}
-  m_Father: {fileID: 0}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8623696573635695028}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7918002853612091693
+--- !u!33 &8762163562350329798
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3978388874833158516}
+  m_GameObject: {fileID: 3618523260191794112}
   m_Mesh: {fileID: -9111446733670104075, guid: af0dbe4138f3f614dbfef3e9fad2bdcb, type: 3}
---- !u!23 &5158666417297893425
+--- !u!23 &2651914894273218497
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3978388874833158516}
+  m_GameObject: {fileID: 3618523260191794112}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -69,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a7cdb3a99cf3a634bbbb75534209d7b5, type: 2}
+  - {fileID: 2100000, guid: 903f7aafdf5d7e3428531ba72ee4a685, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -91,61 +86,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3167904556431439530
-MonoBehaviour:
+--- !u!1 &3978388874833158516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8623696573635695028}
+  m_Layer: 3
+  m_Name: Miner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8623696573635695028
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3978388874833158516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b661d2f7c9c9e54c862e07671861c22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shapeType: 0
-  radius: 2
-  TilesInRadius: []
-  Tile: {fileID: 0}
-  Actions:
-  - {fileID: 1556856869378663728}
-  PassiveActions:
-  - {fileID: 7483407661020940137}
---- !u!114 &1556856869378663728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3978388874833158516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0a4f5126e6b22740af7ed3909a6ca34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
-  miningValue: 5
-  storageSize: 50
-  storage: 0
---- !u!114 &7483407661020940137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3978388874833158516}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c22b1a4671420e439a74cf7f3578ad2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
-  Type: 4
-  Connections: 3
-  WirePref: {fileID: 1293371968335305080, guid: c0b7a629c8c336041898884fbc3a1fd2, type: 3}
-  WirePoint: {fileID: 8733352078498854257}
-  EnergyPoint: {fileID: 6154675710166551620}
-  UsedEnergy: 2
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 8978971060929927745}
+  - {fileID: 8733352078498854257}
+  - {fileID: 6119872850786460476}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4452261128673780164
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.svermeulen.extenject": {
+      "version": "https://github.com/Mathijs-Bakker/Extenject.git?path=UnityProject/Assets/Plugins/Zenject/Source",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "1ee302d4c626aa36e0aee9897f63ef3c4dbe33f6"
+    },
     "com.unity.2d.tilemap": {
       "version": "1.0.0",
       "depth": 0,
@@ -97,7 +104,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.5.5",
+      "version": "1.5.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {

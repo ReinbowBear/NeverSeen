@@ -8,7 +8,7 @@ public static class CoroutineManager
 
     static CoroutineManager()
     {
-        EventBus.Subscribe<OnSceneRelease>(Clear);
+        EventBus.AddSubscriber<OnSceneRelease>(Clear);
     }
 
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Helicopter : Building
+public class Helicopter : Spawned
 {
 
 }
