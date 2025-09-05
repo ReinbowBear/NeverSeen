@@ -10,10 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9d9f37cec8fbe344bd428531627b40e, type: 3}
-  m_Name: AudioSO
+  m_Name: PanelSounds
   m_EditorClassIdentifier: 
-  audioClips:
-  - {fileID: 8300000, guid: 4d35f2fb96a50424caa02a4653f08c16, type: 3}
-  - {fileID: 8300000, guid: b9b45a70ed52e364a835335c85b0c084, type: 3}
-  - {fileID: 8300000, guid: f87bef1806bc9fd40b041c1ed35cd3d0, type: 3}
-  - {fileID: 8300000, guid: 60256981eceba6f4898e42ec9e7cd1b3, type: 3}
+  AudioClips:
+  - Name: Open
+    Sound: {fileID: 8300000, guid: 736049508e68c87439c8862f0a0a3ac7, type: 3}
+    type: 1
+  - Name: Close
+    Sound: {fileID: 8300000, guid: 54af095429b57e345a73f37969ff7ec5, type: 3}
+    type: 1

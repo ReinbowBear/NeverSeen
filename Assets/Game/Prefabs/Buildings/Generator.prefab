@@ -213,7 +213,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1587925884290965597}
   - component: {fileID: 7509227552111747309}
-  - component: {fileID: 8823124998482262927}
   - component: {fileID: 4154817848877116045}
   - component: {fileID: 6755271878435454377}
   m_Layer: 3
@@ -254,23 +253,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d4758d58bc0e641b1b9d20cc99c005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shapeType: 0
-  radius: 0
+  ConfigSO: {fileID: 11400000, guid: de3a93686aac61648ae24fb3135c03d6, type: 2}
   mapData:
     buildings: []
---- !u!114 &8823124998482262927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6871088436327219803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ffb9e3532058444baeacdbc802597c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ConfigSO: {fileID: 11400000, guid: de3a93686aac61648ae24fb3135c03d6, type: 2}
 --- !u!114 &4154817848877116045
 MonoBehaviour:
   m_ObjectHideFlags: 0

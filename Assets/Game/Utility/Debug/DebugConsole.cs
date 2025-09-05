@@ -6,9 +6,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class DebugConsole : MonoBehaviour
 {
+    private Input input;
+
     [Header("UI")]
     public GameObject consoleUI;
     public InputField inputField;
@@ -26,6 +29,12 @@ public class DebugConsole : MonoBehaviour
         RegisterCommands();
     }
 
+    [Inject]
+    public void Construct(Input input)
+    {
+        this.input = input;
+    }
+
 
     #region keyboard keys
     private void Toggle(InputAction.CallbackContext _)
@@ -36,23 +45,23 @@ public class DebugConsole : MonoBehaviour
         {
             inputField.ActivateInputField();
 
-            Input.Instance.SetActiveInputs(false);
+            input.SetActiveInputs(false);
 
-            Input.Instance.GameInput.Debug.BackSpace.started += Return;
-            Input.Instance.GameInput.Debug.UpArrow.started += UpArrow;
-            Input.Instance.GameInput.Debug.DownArrow.started += DownArrow;
-            Input.Instance.GameInput.Debug.Tab.started += Tab;
+            input.Debug.BackSpace.started += Return;
+            input.Debug.UpArrow.started += UpArrow;
+            input.Debug.DownArrow.started += DownArrow;
+            input.Debug.Tab.started += Tab;
 
             inputField.onValueChanged.AddListener(ShowSuggestions);
         }
         else
         {
-            Input.Instance.GameInput.Debug.BackSpace.started -= Return;
-            Input.Instance.GameInput.Debug.UpArrow.started -= UpArrow;
-            Input.Instance.GameInput.Debug.DownArrow.started -= DownArrow;
-            Input.Instance.GameInput.Debug.Tab.started -= Tab;
+            input.Debug.BackSpace.started -= Return;
+            input.Debug.UpArrow.started -= UpArrow;
+            input.Debug.DownArrow.started -= DownArrow;
+            input.Debug.Tab.started -= Tab;
 
-            Input.Instance.SetActiveInputs(true);
+            input.SetActiveInputs(true);
 
             inputField.onValueChanged.RemoveListener(ShowSuggestions);
         }
@@ -245,13 +254,13 @@ public class DebugConsole : MonoBehaviour
     #region other
     void Start()
     {
-        Input.Instance.GameInput.Debug.Toggle.started += Toggle;
+        input.Debug.Toggle.started += Toggle;
 
     }
 
     void OnDestroy()
     {
-        Input.Instance.GameInput.Debug.Toggle.started -= Toggle;
+        input.Debug.Toggle.started -= Toggle;
     }
     #endregion
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class EnergyView : MonoBehaviour, IEnergyView
 {
@@ -9,9 +10,13 @@ public class EnergyView : MonoBehaviour, IEnergyView
     private string wirePref = "Wire";
     private List<Wire> wires;
 
-    void Awake()
+    private Factory objectFactory;
+
+    [Inject]
+    public void Construct(Factory objectFactory)
     {
-        ObjectPool.Register(wirePref).GetAwaiter().GetResult();;
+        this.objectFactory = objectFactory;
+        objectFactory.Register(wirePref).GetAwaiter().GetResult();
     }
 
 
@@ -24,7 +29,7 @@ public class EnergyView : MonoBehaviour, IEnergyView
     {
         if (IEnergyView is not EnergyView energyView) return;
 
-        GameObject obj = ObjectPool.Get(wirePref);
+        GameObject obj = objectFactory.Create(wirePref);
         Wire wire = obj.GetComponent<Wire>();
 
         obj.transform.SetParent(wirePoint);

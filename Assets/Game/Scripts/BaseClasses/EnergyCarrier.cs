@@ -11,7 +11,7 @@ public abstract class EnergyCarrier : IBehavior
     protected IEnergyView view;
 
     protected bool isHasEnergy;
-    protected Spawned owner;
+    protected Entity owner;
 
     protected virtual void Init()
     {
@@ -21,7 +21,7 @@ public abstract class EnergyCarrier : IBehavior
             if (tile.tileData.IsTaken is Building building)
             {
 
-                var carrierEffect = building.Config.Behaviours.FirstOrDefault(effect => effect is EnergyCarrier);
+                var carrierEffect = building.Behaviours.FirstOrDefault(effect => effect is EnergyCarrier);
                 if (carrierEffect != null)
                 {
                     TryConnect((EnergyCarrier)carrierEffect);

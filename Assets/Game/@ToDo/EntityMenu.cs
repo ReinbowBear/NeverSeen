@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EntityMenu : MonoBehaviour
 {
-    public static EntityMenu Instance;
-
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private float openSpeed;
     [SerializeField] private Vector2 hiddenOffset;
@@ -13,11 +11,9 @@ public class EntityMenu : MonoBehaviour
     private Entity entity;
     private bool isShow;
 
-    private void Awake()
+    void Awake()
     {
-        Instance = this;
         ShowPosition = rectTransform.anchoredPosition;
-
         rectTransform.anchoredPosition = ShowPosition + hiddenOffset;
     }
 
@@ -49,21 +45,4 @@ public class EntityMenu : MonoBehaviour
         rectTransform.anchoredPosition = targetPosition;
         isShow = showOrHide;
     }
-
-
-    #region ButtonsFunc
-    public void DeleteEntity()
-    {
-        if (entity is Building building)
-        {
-            Debug.Log("переделываем архитектуру! обджект пул момент");
-            //building.Delete();
-            HidePanel();
-        }
-        else
-        {
-            Debug.Log("пора делать стейты сюда какие нибудь?");
-        }
-    }
-    #endregion
 }

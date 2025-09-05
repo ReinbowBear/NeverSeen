@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
-public class MapGenerator : MonoBehaviour, IAsyncInit
+public class MapGenerator : MonoBehaviour
 {
-    [SerializeField] private GameMapState mapState;
     [SerializeField] private Transform mapPoint;
 
     [SerializeField] private float hexWidth; // диамтр от плоской стороны к плоской, при диаметре 1m это будет 0.866
@@ -25,32 +23,24 @@ public class MapGenerator : MonoBehaviour, IAsyncInit
     [SerializeField] private byte mountCount;
     [SerializeField] private byte mountTiles;
 
-    public Dictionary<Vector3Int, Tile> TileMap;
     private Dictionary<Vector3Int, TileData> tilesData; // Vector3Int нужен для установки соседей, да и в целом весь список для генерации данных карты
     private List<TileData> freeTiles;
-    private MyRandom random = new(new GameState()); // заглушка, надо прокидывать заивисимость
 
-    void Awake()
-    {
-
-    }
-
-    public async Task AsyncInit()
-    {
-        await ObjectPool.Register("Tile");
-        await ObjectPool.Register("TileOre");
-    }
+    private GameMapData mapData;
+    private Factory objectFactory;
+    private MyRandom random;
 
     [Inject]
-    public void Construct(GameMapState mapState)
+    public void Construct(GameData gameData, Factory objectFactory, MyRandom random)
     {
-        this.mapState = mapState;
+        this.mapData = gameData.GameMap;
+        this.objectFactory = objectFactory;
+        this.random = random;
     }
 
-
+    [EventHandler(Priority.low)]
     private void GenerateMap(OnSceneStart _)
     {
-        TileMap = new();
         tilesData = new();
         freeTiles = new();
 
@@ -85,14 +75,14 @@ public class MapGenerator : MonoBehaviour, IAsyncInit
             Vector3 pos = CubeToWorld(tileData.CubeCoord, hexWidth);
             pos.y = (int)tileData.TileHeightType * hexY;
 
-            GameObject obj = ObjectPool.Get("Tile");
+            GameObject obj = objectFactory.Create("Tile");
             obj.transform.position = pos;
             obj.transform.SetParent(mapPoint);
 
             Tile component = obj.GetComponent<Tile>();
             component.tileData = tileData;
 
-            TileMap.Add(tileData.CubeCoord, component);
+            mapData.TileMap.Add(tileData.CubeCoord, component);
             yield return null;
         }
         tilesData = null;
@@ -254,11 +244,11 @@ public class MapGenerator : MonoBehaviour, IAsyncInit
 
     void OnEnable()
     {
-        EventBus.AddSubscriber<OnSceneStart>(GenerateMap);
+        //EventBus.AddSubscriber<OnSceneStart>(GenerateMap);
     }
 
     void OnDisable()
     {
-        EventBus.RemoveSubscriber<OnSceneStart>(GenerateMap);
+        //EventBus.RemoveSubscriber<OnSceneStart>(GenerateMap);
     }
 }

@@ -1,35 +1,29 @@
-using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class TimeManager : IDisposable
+public class TimeManager
 {
     private bool isPaused => Time.timeScale == 0f;
     private Input input;
 
-    public TimeManager(Input newInput)
+    public TimeManager(Input input)
     {
-        input = newInput;
-        input.GameInput.System.Esc.started += OnEscPressed;
+        this.input = input;
     }
+
 
     public void SetTime(float timeValue)
     {
         Time.timeScale = timeValue;
     }
 
+    public void ToglePause()
+    {
+        SetPause(!isPaused);
+    }
 
-    private void OnEscPressed(InputAction.CallbackContext _) => SetPause(!isPaused);
     public void SetPause(bool paused)
     {
         Time.timeScale = paused ? 0f : 1f;
-        input.SetInputMode(paused ? input.GameInput.UI : input.GameInput.Gameplay);
-    }
-
-
-    public void Dispose()
-    {
-        input.GameInput.System.Esc.started -= OnEscPressed;
-        Debug.Log("Dispose сработал");
+        input.SetInputMode(paused ? input.UI : input.GamePlay);
     }
 }

@@ -4,10 +4,10 @@ using Zenject;
 
 public class MenuButtons : MonoBehaviour
 {
-    private GameState gameState;
+    private GameData gameState;
 
     [Inject]
-    public void Construct(GameState gameState)
+    public void Construct(GameData gameState)
     {
         this.gameState = gameState;
     }
@@ -15,12 +15,12 @@ public class MenuButtons : MonoBehaviour
 
     public void ContinueGame()
     {
-        SceneManager.LoadScene(gameState.sceneIndex);
+        SceneManager.LoadScene(gameState.General.SceneIndex);
     }
 
     public void NewGame()
     {
-        SaveLoad.DeleteSave();
+        //SaveLoad.DeleteSave();
         EventBus.Invoke<OnSave>(); // нужен что бы условно сохранить выбранного персонажа для нового забега, но пока это может быть не нужно
 
         SceneManager.LoadScene(1);

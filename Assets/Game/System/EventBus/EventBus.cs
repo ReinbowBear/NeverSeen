@@ -7,11 +7,6 @@ public static class EventBus
     private static Dictionary<Type, List<Listener>> subscribers = new();
     private static Dictionary<Type, bool> needSorting = new();
 
-    static EventBus()
-    {
-        AddSubscriber<OnSceneRelease>(Clear);
-    }
-
     private class Listener
     {
         public Delegate Callback;
@@ -83,18 +78,15 @@ public static class EventBus
     }
 
 
-    private static void Clear(OnSceneRelease _)
+    public static void Clear()
     {
-        subscribers = new();
-        needSorting = new();
-
-        AddSubscriber<OnSceneRelease>(Clear);
+        subscribers.Clear();
+        needSorting.Clear();
     }
 }
 
 public enum Priority
 {
-    none = 0,
     low = 10,
     normal = 20,
     high = 30,

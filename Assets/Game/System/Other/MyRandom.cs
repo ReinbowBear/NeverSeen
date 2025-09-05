@@ -1,19 +1,25 @@
 using UnityEngine;
+using Zenject;
 
-public class MyRandom
+public class MyRandom : IInitializable
 {
-    private GameState gameState;
+    private GameData gameState;
     public System.Random System { get; private set; }
 
-    public MyRandom(GameState gameState)
+    public MyRandom(GameData gameState)
     {
         this.gameState = gameState;
+    }
+
+    public void Initialize()
+    {
+        SetSeed(0);
     }
 
 
     public void LoadSeed()
     {
-        SetSeed(gameState.seed);
+        SetSeed(gameState.General.Seed);
     }
 
     public void SetSeed(int newSeed = 0)
@@ -21,7 +27,7 @@ public class MyRandom
         if (newSeed == 0)
         {
             newSeed = global::System.DateTime.Now.Millisecond;
-            gameState.seed = newSeed;
+            gameState.General.Seed = newSeed;
         }
 
         System = new System.Random(newSeed);

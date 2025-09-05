@@ -178,7 +178,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Gameplay"",
+            ""name"": ""GamePlay"",
             ""id"": ""4f7610fa-d977-48ee-a3b2-e12f169670c2"",
             ""actions"": [
                 {
@@ -636,15 +636,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
         m_UI_Esc = m_UI.FindAction("Esc", throwIfNotFound: true);
-        // Gameplay
-        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
-        m_Gameplay_WASD = m_Gameplay.FindAction("WASD", throwIfNotFound: true);
-        m_Gameplay_MouseLeft = m_Gameplay.FindAction("MouseLeft", throwIfNotFound: true);
-        m_Gameplay_MouseRight = m_Gameplay.FindAction("MouseRight", throwIfNotFound: true);
-        m_Gameplay_Scroll = m_Gameplay.FindAction("Scroll", throwIfNotFound: true);
-        m_Gameplay_Shift = m_Gameplay.FindAction("Shift", throwIfNotFound: true);
-        m_Gameplay_Q = m_Gameplay.FindAction("Q", throwIfNotFound: true);
-        m_Gameplay_E = m_Gameplay.FindAction("E", throwIfNotFound: true);
+        // GamePlay
+        m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
+        m_GamePlay_WASD = m_GamePlay.FindAction("WASD", throwIfNotFound: true);
+        m_GamePlay_MouseLeft = m_GamePlay.FindAction("MouseLeft", throwIfNotFound: true);
+        m_GamePlay_MouseRight = m_GamePlay.FindAction("MouseRight", throwIfNotFound: true);
+        m_GamePlay_Scroll = m_GamePlay.FindAction("Scroll", throwIfNotFound: true);
+        m_GamePlay_Shift = m_GamePlay.FindAction("Shift", throwIfNotFound: true);
+        m_GamePlay_Q = m_GamePlay.FindAction("Q", throwIfNotFound: true);
+        m_GamePlay_E = m_GamePlay.FindAction("E", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_Toggle = m_Debug.FindAction("Toggle", throwIfNotFound: true);
@@ -662,7 +662,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     ~@GameInput()
     {
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, GameInput.UI.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Gameplay.enabled, "This will cause a leak and performance issues, GameInput.Gameplay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GamePlay.enabled, "This will cause a leak and performance issues, GameInput.GamePlay.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Debug.enabled, "This will cause a leak and performance issues, GameInput.Debug.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_System.enabled, "This will cause a leak and performance issues, GameInput.System.Disable() has not been called.");
     }
@@ -855,59 +855,59 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     /// </summary>
     public UIActions @UI => new UIActions(this);
 
-    // Gameplay
-    private readonly InputActionMap m_Gameplay;
-    private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
-    private readonly InputAction m_Gameplay_WASD;
-    private readonly InputAction m_Gameplay_MouseLeft;
-    private readonly InputAction m_Gameplay_MouseRight;
-    private readonly InputAction m_Gameplay_Scroll;
-    private readonly InputAction m_Gameplay_Shift;
-    private readonly InputAction m_Gameplay_Q;
-    private readonly InputAction m_Gameplay_E;
+    // GamePlay
+    private readonly InputActionMap m_GamePlay;
+    private List<IGamePlayActions> m_GamePlayActionsCallbackInterfaces = new List<IGamePlayActions>();
+    private readonly InputAction m_GamePlay_WASD;
+    private readonly InputAction m_GamePlay_MouseLeft;
+    private readonly InputAction m_GamePlay_MouseRight;
+    private readonly InputAction m_GamePlay_Scroll;
+    private readonly InputAction m_GamePlay_Shift;
+    private readonly InputAction m_GamePlay_Q;
+    private readonly InputAction m_GamePlay_E;
     /// <summary>
-    /// Provides access to input actions defined in input action map "Gameplay".
+    /// Provides access to input actions defined in input action map "GamePlay".
     /// </summary>
-    public struct GameplayActions
+    public struct GamePlayActions
     {
         private @GameInput m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public GameplayActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public GamePlayActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/WASD".
+        /// Provides access to the underlying input action "GamePlay/WASD".
         /// </summary>
-        public InputAction @WASD => m_Wrapper.m_Gameplay_WASD;
+        public InputAction @WASD => m_Wrapper.m_GamePlay_WASD;
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/MouseLeft".
+        /// Provides access to the underlying input action "GamePlay/MouseLeft".
         /// </summary>
-        public InputAction @MouseLeft => m_Wrapper.m_Gameplay_MouseLeft;
+        public InputAction @MouseLeft => m_Wrapper.m_GamePlay_MouseLeft;
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/MouseRight".
+        /// Provides access to the underlying input action "GamePlay/MouseRight".
         /// </summary>
-        public InputAction @MouseRight => m_Wrapper.m_Gameplay_MouseRight;
+        public InputAction @MouseRight => m_Wrapper.m_GamePlay_MouseRight;
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/Scroll".
+        /// Provides access to the underlying input action "GamePlay/Scroll".
         /// </summary>
-        public InputAction @Scroll => m_Wrapper.m_Gameplay_Scroll;
+        public InputAction @Scroll => m_Wrapper.m_GamePlay_Scroll;
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/Shift".
+        /// Provides access to the underlying input action "GamePlay/Shift".
         /// </summary>
-        public InputAction @Shift => m_Wrapper.m_Gameplay_Shift;
+        public InputAction @Shift => m_Wrapper.m_GamePlay_Shift;
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/Q".
+        /// Provides access to the underlying input action "GamePlay/Q".
         /// </summary>
-        public InputAction @Q => m_Wrapper.m_Gameplay_Q;
+        public InputAction @Q => m_Wrapper.m_GamePlay_Q;
         /// <summary>
-        /// Provides access to the underlying input action "Gameplay/E".
+        /// Provides access to the underlying input action "GamePlay/E".
         /// </summary>
-        public InputAction @E => m_Wrapper.m_Gameplay_E;
+        public InputAction @E => m_Wrapper.m_GamePlay_E;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
+        public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -915,9 +915,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="GameplayActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="GamePlayActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(GamePlayActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -925,11 +925,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="GameplayActions" />
-        public void AddCallbacks(IGameplayActions instance)
+        /// <seealso cref="GamePlayActions" />
+        public void AddCallbacks(IGamePlayActions instance)
         {
-            if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_GamePlayActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GamePlayActionsCallbackInterfaces.Add(instance);
             @WASD.started += instance.OnWASD;
             @WASD.performed += instance.OnWASD;
             @WASD.canceled += instance.OnWASD;
@@ -959,8 +959,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="GameplayActions" />
-        private void UnregisterCallbacks(IGameplayActions instance)
+        /// <seealso cref="GamePlayActions" />
+        private void UnregisterCallbacks(IGamePlayActions instance)
         {
             @WASD.started -= instance.OnWASD;
             @WASD.performed -= instance.OnWASD;
@@ -986,12 +986,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="GamePlayActions.UnregisterCallbacks(IGamePlayActions)" />.
         /// </summary>
-        /// <seealso cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />
-        public void RemoveCallbacks(IGameplayActions instance)
+        /// <seealso cref="GamePlayActions.UnregisterCallbacks(IGamePlayActions)" />
+        public void RemoveCallbacks(IGamePlayActions instance)
         {
-            if (m_Wrapper.m_GameplayActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_GamePlayActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -1001,21 +1001,21 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="GameplayActions.AddCallbacks(IGameplayActions)" />
-        /// <seealso cref="GameplayActions.RemoveCallbacks(IGameplayActions)" />
-        /// <seealso cref="GameplayActions.UnregisterCallbacks(IGameplayActions)" />
-        public void SetCallbacks(IGameplayActions instance)
+        /// <seealso cref="GamePlayActions.AddCallbacks(IGamePlayActions)" />
+        /// <seealso cref="GamePlayActions.RemoveCallbacks(IGamePlayActions)" />
+        /// <seealso cref="GamePlayActions.UnregisterCallbacks(IGamePlayActions)" />
+        public void SetCallbacks(IGamePlayActions instance)
         {
-            foreach (var item in m_Wrapper.m_GameplayActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_GamePlayActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_GamePlayActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="GameplayActions" /> instance referencing this action map.
+    /// Provides a new <see cref="GamePlayActions" /> instance referencing this action map.
     /// </summary>
-    public GameplayActions @Gameplay => new GameplayActions(this);
+    public GamePlayActions @GamePlay => new GamePlayActions(this);
 
     // Debug
     private readonly InputActionMap m_Debug;
@@ -1369,11 +1369,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnEsc(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Gameplay" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "GamePlay" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="GameplayActions.AddCallbacks(IGameplayActions)" />
-    /// <seealso cref="GameplayActions.RemoveCallbacks(IGameplayActions)" />
-    public interface IGameplayActions
+    /// <seealso cref="GamePlayActions.AddCallbacks(IGamePlayActions)" />
+    /// <seealso cref="GamePlayActions.RemoveCallbacks(IGamePlayActions)" />
+    public interface IGamePlayActions
     {
         /// <summary>
         /// Method invoked when associated input action "WASD" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.

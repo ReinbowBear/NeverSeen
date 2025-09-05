@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class SoundObject : MonoBehaviour
 {
-    [SerializeField] public AudioSource Source { get; private set; }
+    [SerializeField] private AudioSource source;
+    public AudioSource Source => source;
 
     public IEnumerator ReturnAfterPlayback(float delay)
     {
@@ -12,6 +13,7 @@ public class SoundObject : MonoBehaviour
         Source.Stop();
         Source.clip = null;
 
-        ObjectPool.Return(gameObject);
+        Destroy(gameObject);
+        //ObjectFactory.Return(gameObject); // ранее тут был пул объектов
     }
 }

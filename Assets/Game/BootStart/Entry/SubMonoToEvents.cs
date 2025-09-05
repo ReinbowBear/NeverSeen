@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EventBusSearchMono : MonoBehaviour
+public class SubMonoToEvents : MonoBehaviour
 {
     private readonly List<MonoBehaviour> monoBehaviours = new();
     private readonly List<MonoBehaviour> tempBehaviours = new();
@@ -28,7 +28,7 @@ public class EventBusSearchMono : MonoBehaviour
     {
         tempBehaviours.Clear();
 
-        current.GetComponents(tempBehaviours); // есть смысл проверять по интерфейсу что бы снизить нагрузку
+        current.GetComponents(tempBehaviours);
         monoBehaviours.AddRange(tempBehaviours);
 
         for (int i = 0; i < current.childCount; i++)
@@ -48,6 +48,6 @@ public class EventBusSearchMono : MonoBehaviour
 
     void OnDestroy()
     {
-        SubMono(false);
+        EventBus.Clear();
     }
 }

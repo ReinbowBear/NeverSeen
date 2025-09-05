@@ -13,7 +13,7 @@ public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
     [HideInInspector] public ItemData item;
     [HideInInspector] public Transform originalParent;
     private Vector3 originalpos;
-    private Tween tween;
+    private DG.Tweening.Tween tween;
 
     public void Init(ItemData newItem)
     {

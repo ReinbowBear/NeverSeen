@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Elevator : Spawned
+public class Elevator : Entity
 {
 
 }

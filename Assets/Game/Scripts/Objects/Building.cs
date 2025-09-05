@@ -1,13 +1,10 @@
 using UnityEngine;
 
-public class Building : Spawned, IBehavior
+public class Building : Entity, IBehavior
 {
-    public ConfigHandler Config { get; private set; }
-
-    public void SetActive() { SetActive(true); }
     public void SetActive(bool isActive)
     {
-        foreach (var behaviour in Config.Behaviours)
+        foreach (var behaviour in Behaviours)
         {
             behaviour.SetActive(isActive);
         }
@@ -17,17 +14,9 @@ public class Building : Spawned, IBehavior
         TweenAnimation.Impact(transform);
     }
 
-
-    void OnEnable()
+    protected override void OnDelete()
     {
-        OnSpawned += SetActive;
-    }
-
-    void OnDisable()
-    {
-        Selected(false);
+        base.OnDelete();
         SetActive(false);
-
-        OnSpawned -= SetActive;
     }
 }

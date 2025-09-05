@@ -13,7 +13,7 @@ public class MapButtons : MonoBehaviour
     public void ExitToMenu()
     {
         EventBus.Invoke<OnSave>();
-        SaveLoad.SaveFile();
+        //SaveLoad.SaveFile();
 
         SceneManager.LoadScene(0);
     }

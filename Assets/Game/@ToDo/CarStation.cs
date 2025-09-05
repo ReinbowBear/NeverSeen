@@ -11,8 +11,8 @@ public class CarStation : MonoBehaviour
 
     private HashSet<Transform> pathPoints = new();
     private HashSet<Transform> reversPoints;
-    [SerializeField] protected Spawned owner;
-    [SerializeField] protected GameMapState mapData;
+    [SerializeField] protected Entity owner;
+    [SerializeField] protected GameMapData mapData;
 
     public void Init()
     {
@@ -46,7 +46,7 @@ public class CarStation : MonoBehaviour
 
             foreach (var tile in tiles)
             {
-                if (tile.tileData.IsTaken is Spawned building && building.TryGetComponent(out Road road))
+                if (tile.tileData.IsTaken is Entity building && building.TryGetComponent(out Road road))
                 {
                     if (pathPoints.Contains(road.transform)) continue;
 

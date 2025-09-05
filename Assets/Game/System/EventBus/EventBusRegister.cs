@@ -11,12 +11,14 @@ public static class EventBusRegister
         Register<OnSave>();
         Register<OnLoad>();
 
-        Register<OnSceneEntry>();
+        Register<OnPanelOpen>();
+
+        Register<OnSound>();
         Register<OnSceneStart>();
-        Register<OnSceneGameOver>();
         Register<OnSceneRelease>();
 
         Register<OnUpdateNetwork>();
+        Register<OnGameOver>();
     }
 
     public static void Register<T>()
@@ -34,13 +36,35 @@ public class OnSave : EventArgs { }
 public class OnLoad : EventArgs { }
 #endregion
 
+#region UI
+public class OnPanelOpen : EventArgs
+{
+    public Panel panel;
+    public bool isOpen;
+
+    public OnPanelOpen(Panel panel, bool isOpen)
+    {
+        this.panel = panel;
+        this.isOpen = isOpen;
+    }
+}
+#endregion
+
 #region Scene
-public class OnSceneEntry : EventArgs { }
 public class OnSceneStart : EventArgs { }
-public class OnSceneGameOver : EventArgs { }
 public class OnSceneRelease : EventArgs { }
 #endregion
 
 #region gamelay
+public struct OnSound
+{
+    public SoundData SoundData;
+
+    public OnSound(SoundData soundData)
+    {
+        SoundData = soundData;
+    }
+}
 public class OnUpdateNetwork : EventArgs { }
+public class OnGameOver : EventArgs { }
 #endregion

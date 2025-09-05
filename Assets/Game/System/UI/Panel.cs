@@ -1,70 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
-    [SerializeField] private GameObject navigateObject;
-    [SerializeField] private float navigateTime;
-    [Space]
-    [SerializeField] private AudioClip openSound;
-    [SerializeField] private AudioClip closeSound;
-    [Space]
-    public List<MyButton> buttons;
-    
-    [HideInInspector] public int currentButton;
-    private Coroutine myCoroutine;
+    [SerializeField] private Button[] buttons;
+    public Button[] Buttons => buttons;
+    public Button CurrentButton => EventSystem.current.currentSelectedGameObject?.GetComponent<Button>();
+    private GameObject previousSelected;
 
-    public void OpenPanel()
+
+    public void SetActive(bool isTrue)
     {
-        gameObject.SetActive(true);
-        Debug.Log("у нас тут скрипт звуков реворкнут был (почти) надо разобратся");
-        //Sound.Instance.PlaySFX(openSound);
-        MenuManager.instance.panels.Add(this);
-        MenuManager.instance.CheckPanel();
-        MenuManager.instance.ChoseNewButton(0);
-    }
+        gameObject.SetActive(isTrue);
+        SetNavigation(isTrue);
 
-    public void ClosePanel()
-    {
-        //Sound.instance.Play(closeSound);
-        MenuManager.instance.panels.Remove(this);
-        MenuManager.instance.CheckPanel();
-
-        gameObject.SetActive(false);
-    }
-
-
-    public void ChoseNewButton(int newButton)
-    {
-        if (newButton == currentButton)
+        if (isTrue)
         {
+            RestoreOrSelectButton();
+        }
+        else
+        {
+            previousSelected = null;
+        }
+
+        EventBus.Invoke(new OnPanelOpen(this, isTrue));
+    }
+
+    public void SetNavigation(bool isEnable)
+    {
+        var newMode = isEnable ? Navigation.Mode.Automatic : Navigation.Mode.None;
+
+        foreach (var button in buttons)
+        {
+            var nav = button.navigation;
+            nav.mode = newMode;
+            button.navigation = nav;
+        }
+    }
+
+
+    private void RestoreOrSelectButton()
+    {
+        if (previousSelected != null)
+        {
+            EventSystem.current.SetSelectedGameObject(previousSelected);
             return;
         }
 
-        buttons[newButton].Trigger(0.9f, true);
-        buttons[currentButton].Trigger(0.5f, false);
-        currentButton = newButton;
-
-        if (myCoroutine != null) StopCoroutine(myCoroutine);
-
-        StartCoroutine(MoveToButton(buttons[newButton].transform));
-    }
-
-    private IEnumerator MoveToButton(Transform target)
-    {
-        GameObject moveTarget = navigateObject;
-        Vector3 startPos = moveTarget.transform.position;
-        Vector3 endPos = new Vector3 (0, target.position.y, 0);
-
-        float timeElapsed = 0f;
-        while (timeElapsed < navigateTime)
+        foreach (var button in buttons)
         {
-            moveTarget.transform.position = Vector3.Lerp(startPos, endPos, timeElapsed / navigateTime);
-            timeElapsed += Time.unscaledDeltaTime;
-            yield return null;
+            if (button.gameObject.activeInHierarchy)
+            {
+                EventSystem.current.SetSelectedGameObject(button.gameObject);
+                break;
+            }
         }
-        moveTarget.transform.position = endPos;
-        myCoroutine = null;
     }
 }

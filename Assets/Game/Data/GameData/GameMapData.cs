@@ -2,10 +2,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class GameMapState
+public class GameMapData
 {
     public Dictionary<Vector3Int, Tile> TileMap = new();
     public List<Building> buildings = new();
+
+    public bool CanPlaceBuilding(Tile tile, ShapeType shapeType)
+    {
+        foreach (var offset in Shape.Shapes[shapeType])
+        {
+            Vector3Int tilePos = tile.tileData.CubeCoord + offset;
+
+            if (TileMap.TryGetValue(tilePos, out Tile tileOnMap) == false) return false;
+
+            if (tileOnMap.tileData.IsTaken != null) return false;
+
+            if (tileOnMap.tileData.TileHeightType != tile.tileData.TileHeightType) return false;
+        }
+        return true;
+    }
 
     public List<Tile> GetTilesInRadius(Vector3Int center, int radius)
     {

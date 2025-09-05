@@ -3,41 +3,30 @@ using Zenject;
 
 public class Input : IInitializable
 {
-    public static Input Instance;
-    private GameState gameState;
-
     public GameInput GameInput { get; private set; }
-    public InputActionMap UI { get; private set; }
-    public InputActionMap GamePlay { get; private set; }
-    public InputActionMap System { get; private set; }
-    #if UNITY_EDITOR
-    public InputActionMap Debug { get; private set; }
-    #endif
-    private InputActionMap currentInputs;
 
-    public Input(GameState gameState)
-    {
-        this.gameState = gameState;
-    }
+    public GameInput.UIActions UI { get; private set; }
+    public GameInput.GamePlayActions GamePlay { get; private set; }
+    public GameInput.SystemActions System { get; private set; }
+#if UNITY_EDITOR
+    public GameInput.DebugActions Debug { get; private set; }
+#endif
+    private InputActionMap currentInputs;
 
     public void Initialize()
     {
-        Instance = this;
         GameInput = new GameInput();
 
         GameInput.System.Enable();
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         GameInput.Debug.Enable();
-        #endif
+#endif
 
         UI = GameInput.UI;
-        GamePlay = GameInput.Gameplay;
-
-        #if UNITY_EDITOR
-        #endif
-
-        SetInputByIndex(gameState.sceneIndex);
+        GamePlay = GameInput.GamePlay;
+        System = GameInput.System;
+        Debug = GameInput.Debug;
     }
 
 

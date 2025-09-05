@@ -1,23 +1,38 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using Zenject;
 
 public class SceneLoader : MonoBehaviour
 {
+    [SerializeField] private byte sceneIndex;
     [Header("Fade Settings")]
-    [SerializeField] private Image fadeImage;
-    private float fadeDuration = 0.5f;
+    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private float fadeDuration;
 
-    private void Start()
+    private Input input;
+    private Coroutine coroutine;
+
+    [Inject]
+    public void Construct(Input input)
     {
-        Fade(1f, 0f);
+        this.input = input;
+    }
+
+    [EventHandler(Priority.low)]
+    private void StartScene(OnSceneStart _)
+    {
+        StartCoroutine(Fade(1f, 0f));
+        input.SetInputByIndex(sceneIndex);
     }
 
 
     public void LoadSceneWithFade(string sceneName)
     {
-        StartCoroutine(FadeAndLoadScene(sceneName));
+        if (coroutine != null) return;
+
+        coroutine = StartCoroutine(FadeAndLoadScene(sceneName));
+        input.SetActiveInputs(false);
     }
 
     private IEnumerator FadeAndLoadScene(string sceneName)
@@ -39,23 +54,18 @@ public class SceneLoader : MonoBehaviour
 
     private IEnumerator Fade(float from, float to)
     {
+        canvasGroup.alpha = from;
+
         float time = 0f;
         while (time < fadeDuration)
         {
             float alpha = Mathf.Lerp(from, to, time / fadeDuration);
-            SetAlpha(alpha);
+            canvasGroup.alpha = alpha;
 
             time += Time.deltaTime;
             yield return null;
         }
 
-        SetAlpha(to);
-    }
-
-    private void SetAlpha(float alpha) // цвет ебучая структура
-    {
-        Color color = fadeImage.color;
-        color.a = alpha;
-        fadeImage.color = color;
+        canvasGroup.alpha = to;
     }
 }

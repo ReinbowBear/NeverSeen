@@ -1,13 +1,20 @@
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using Zenject;
 
 public class Preloader : MonoBehaviour
 {
-    [SerializeField] private AssetReference[] toLoad;
+    [SerializeField] private string[] toLoad;
+    private Factory objectFactory;
 
     void Awake()
     {
         LoadAssets();
+    }
+
+    [Inject]
+    public void Construct(Factory objectFactory)
+    {
+        this.objectFactory = objectFactory;
     }
 
 
@@ -15,9 +22,10 @@ public class Preloader : MonoBehaviour
     {
         foreach (var item in toLoad)
         {
-            await ObjectPool.Register(item.RuntimeKey.ToString());
+            await objectFactory.Register(item);
         }
 
+        Debug.Log("стартую OnSceneStart");
         EventBus.Invoke<OnSceneStart>();
     }
 }

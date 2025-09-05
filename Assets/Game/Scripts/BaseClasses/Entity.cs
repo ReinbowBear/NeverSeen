@@ -6,20 +6,29 @@ public abstract class Entity : MonoBehaviour
 {
     public Action<bool> OnSelected;
 
-    [SerializeField] protected ShapeType shapeType;
-    [SerializeField] protected byte radius;
-    protected List<Tile> tilesInRadius;
-    protected Tile tile;
+    [SerializeField] private ConfigSO ConfigSO;
+    public EntityStats Stats { get; protected set; }
+    public List<IBehavior> Behaviours { get; protected set; }
 
-    protected Vector3Int[] shape => Shape.Shapes[shapeType];
-    public byte Radius => radius;
-    public List<Tile> TilesInRadius => tilesInRadius;
-    public Tile Tile => tile;
+    public List<Tile> TilesInRadius { get; protected set; } = new();
+    public Tile Tile { get; protected set; }
+
+    void Awake()
+    {
+        Stats = ConfigSO.stats;
+        Behaviours = ConfigSO.GetBehaviors();
+    }
+
+    public void Init(Tile tile, List<Tile> list)
+    {
+        Tile = tile;
+        TilesInRadius = list;
+    }
 
 
     public void Selected(bool isSelected)
     {
-        foreach (var tile in tilesInRadius)
+        foreach (var tile in TilesInRadius)
         {
             tile.SetBacklight(isSelected);
         }
@@ -29,5 +38,16 @@ public abstract class Entity : MonoBehaviour
         if (!isSelected) return;
 
         TweenAnimation.Impact(transform);
+    }
+
+    protected virtual void OnDelete()
+    {
+        Selected(false);
+    }
+
+
+    void OnDisable()
+    {
+        OnDelete();
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class InputRebind : MonoBehaviour
 {
@@ -14,6 +15,13 @@ public class InputRebind : MonoBehaviour
     public event Action<string> OnRebindComplete;
     public event Action<string> OnRebindCanceled;
     private InputActionRebindingExtensions.RebindingOperation rebindOperation;
+
+    [Inject]
+    public void Construct(Input input)
+    {
+        this.input = input;
+    }
+
 
     public void RebindInputs(InputAction actionToRebind, int bindingIndex = 0)
     {

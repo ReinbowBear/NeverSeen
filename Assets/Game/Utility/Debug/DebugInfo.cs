@@ -8,15 +8,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class DebugInfo : MonoBehaviour
 {
+    private Input input;
+
     [SerializeField] private Text infoText;
     [SerializeField] private Camera cam;
 
     private GameObject selectedObject;
     private HashSet<string> expandedPaths = new HashSet<string>();
     private HashSet<object> visitedObjects = new HashSet<object>();
+
+    [Inject]
+    public void Construct(Input input)
+    {
+        this.input = input;
+    }
+
 
     private void SelectObject(InputAction.CallbackContext _) => StartCoroutine(DoSelectObject());
     private IEnumerator DoSelectObject()
@@ -221,14 +231,14 @@ public class DebugInfo : MonoBehaviour
 
     void OnEnable()
     {
-        Input.Instance.GameInput.Debug.Click.started += SelectObject;
-        Input.Instance.GameInput.Debug.E.started += ToggleComponents;
+        input.Debug.Click.started += SelectObject;
+        input.Debug.E.started += ToggleComponents;
     }
 
     void OnDisable()
     {
-        Input.Instance.GameInput.Debug.Click.started -= SelectObject;
-        Input.Instance.GameInput.Debug.E.started -= ToggleComponents;
+        input.Debug.Click.started -= SelectObject;
+        input.Debug.E.started -= ToggleComponents;
     }
 }
 #endif

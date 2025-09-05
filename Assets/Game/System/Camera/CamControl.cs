@@ -2,6 +2,7 @@ using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public class CamControl : MonoBehaviour // Cinemachine плагин для настройки и управления камерой (кажется есть в пакет менеджере даже)
 {
@@ -28,11 +29,17 @@ public class CamControl : MonoBehaviour // Cinemachine плагин для на�
 
     private float targetZoom;
 
-    private GameInput.GameplayActions inputs;
+    private Input input;
 
     void Awake()
     {
         targetZoom = Vector3.Distance(transform.position, cam.transform.position);
+    }
+
+    [Inject]
+    public void Construct(Input input)
+    {
+        this.input = input;
     }
 
 
@@ -50,7 +57,7 @@ public class CamControl : MonoBehaviour // Cinemachine плагин для на�
     private IEnumerator DoDragging()
     {
         Vector3 lastPosition = UnityEngine.Input.mousePosition;
-        while (Input.Instance.GameInput.Gameplay.MouseRight.IsPressed())
+        while (input.GamePlay.MouseRight.IsPressed())
         {
             Vector3 delta = UnityEngine.Input.mousePosition - lastPosition;
             lastPosition = UnityEngine.Input.mousePosition;
@@ -105,13 +112,13 @@ public class CamControl : MonoBehaviour // Cinemachine плагин для на�
         float currentRotateVelocity = 0;
         float targetAngle;
 
-        while (inputs.Q.IsPressed() || inputs.E.IsPressed() || Mathf.Abs(currentRotateVelocity) > 0.01f)
+        while (input.GamePlay.Q.IsPressed() || input.GamePlay.E.IsPressed() || Mathf.Abs(currentRotateVelocity) > 0.01f)
         {
-            if (inputs.Q.IsPressed())
+            if (input.GamePlay.Q.IsPressed())
             {
                 targetAngle = rotateSensitivity;
             }
-            else if (inputs.E.IsPressed())
+            else if (input.GamePlay.E.IsPressed())
             {
                 targetAngle = -rotateSensitivity;
             }
@@ -131,7 +138,7 @@ public class CamControl : MonoBehaviour // Cinemachine плагин для на�
 
     private void ZoomCam(InputAction.CallbackContext _)
     {
-        Vector2 scrollValue = inputs.Scroll.ReadValue<Vector2>();
+        Vector2 scrollValue = input.GamePlay.Scroll.ReadValue<Vector2>();
 
         targetZoom -= scrollValue.y * zoomSensitivity;
         targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
@@ -162,33 +169,23 @@ public class CamControl : MonoBehaviour // Cinemachine плагин для на�
 
     void Start()
     {
-        inputs = Input.Instance.GameInput.Gameplay;
+        input.GamePlay.MouseRight.started += DragCam;
+        input.GamePlay.MouseRight.canceled += DragCam;
 
-        inputs.MouseRight.started += DragCam;
-        inputs.MouseRight.canceled += DragCam;
+        input.GamePlay.Q.started += RotateCamera;
+        input.GamePlay.E.started += RotateCamera;
 
-        inputs.Q.started += RotateCamera;
-        inputs.E.started += RotateCamera;
-
-        inputs.Scroll.started += ZoomCam;
+        input.GamePlay.Scroll.started += ZoomCam;
     }
 
     void OnDestroy()
     {
-        inputs.MouseRight.started -= DragCam;
-        inputs.MouseRight.canceled -= DragCam;
+        input.GamePlay.MouseRight.started -= DragCam;
+        input.GamePlay.MouseRight.canceled -= DragCam;
 
-        inputs.Q.started -= RotateCamera;
-        inputs.E.started -= RotateCamera;
+        input.GamePlay.Q.started -= RotateCamera;
+        input.GamePlay.E.started -= RotateCamera;
 
-        inputs.Scroll.started -= ZoomCam;
-    }
-
-
-
-    // ооо функция твинера? надо посмотреть как нибудь будет
-    public void Shake(float strength, float time) // Shake(0.025f, 0.4f);
-    {
-        Camera.main.DOShakePosition(time, strength, 10, 45f);
+        input.GamePlay.Scroll.started -= ZoomCam;
     }
 }

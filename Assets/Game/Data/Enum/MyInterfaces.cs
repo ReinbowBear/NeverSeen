@@ -1,16 +1,32 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using UnityEngine;
 
 #region global
-public interface IAsyncInit
-{
-    Task AsyncInit();
-}
-
 public interface ISaveable<T> where T : struct
 {
     T CaptureData();
     void ApplyData(T data);
+}
+
+public interface IViewMode
+{
+    LayerMask GetRayLayer();
+    void LeftClick(RaycastHit hit);
+    void RightClick();
+}
+#endregion
+
+
+#region UI
+public interface IPanel
+{
+    void SetActive(bool isActive);
+    void SetNavigation(bool isEnable);
+}
+
+public interface IBarView
+{
+    void DrawBar(bool isActive);
+    void ChangeValue(int value, int maxValue);
 }
 #endregion
 
@@ -27,13 +43,8 @@ public interface IBehavior
 }
 #endregion
 
-#region view
-public interface IBarView
-{
-    void DrawBar(bool isActive);
-    void ChangeValue(int value, int maxValue);
-}
 
+#region view
 public interface IEnergyView
 {
     void DrawWireTo(IEnergyView otherView);
