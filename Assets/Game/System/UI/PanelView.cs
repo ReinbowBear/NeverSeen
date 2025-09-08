@@ -5,13 +5,16 @@ public class PanelView : MonoBehaviour
     [SerializeField] private Panel panel;
     [SerializeField] private AudioSO PanelSounds;
 
-    [EventHandler(Priority.low)]
-    private void PlaySound(OnPanelOpen panelEvent)
+    private void OnPanelOpenClose(bool IsOpen)
     {
-        string soundName = panelEvent.isOpen ? "Open" : "Close";
-        EventBus.Invoke(new OnSound(PanelSounds.GetByName(soundName)));
+        string soundName = IsOpen ? "Open" : "Close";
+        EventBus.Invoke(PanelSounds.GetByName(soundName));
 
-        if (panelEvent.isOpen) TweenAnimation.Spawn(panel.transform);
-        else TweenAnimation.Destroy(panel.transform);
+        if (IsOpen) Tween.Spawn(panel.transform);
+        else Tween.Destroy(panel.transform);
     }
+
+
+    void Awake() => panel.OnPanelToggle += OnPanelOpenClose;
+    void OnDestroy() => panel.OnPanelToggle -= OnPanelOpenClose;
 }

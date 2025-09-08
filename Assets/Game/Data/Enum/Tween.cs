@@ -1,22 +1,24 @@
-using System;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public static class Tween
 {
-    public static Sequence Impact(Transform transform)
+    #region GameObject
+    public static Sequence Impact(Transform transform, float power = 0.1f, float time = 0.5f)
     {
         return DOTween.Sequence()
         .SetLink(transform.gameObject)
-        .Append(transform.DOScale(new Vector3(0.95f, 1.1f, 0.95f), 0.25f))
-        .Append(transform.DOScale(Vector3.one, 0.25f));
+        .Append(transform.DOScale(new Vector3(1f - power, 1f + power * 2, 1f - power), time / 2))
+        .Append(transform.DOScale(Vector3.one, time / 2));
     }
 
 
     public static DG.Tweening.Tween Spawn(Transform transform, float duration = 0.3f)
     {
+        transform.gameObject.SetActive(true);
         transform.localScale = Vector3.zero;
+
         return transform.DOScale(Vector3.one, duration)
         .SetLink(transform.gameObject)
         .SetEase(Ease.OutBack);
@@ -29,8 +31,9 @@ public static class Tween
         .SetEase(Ease.InBack)
         .OnComplete(() => transform.gameObject.SetActive(false));
     }
+    #endregion
 
-
+    #region SFX
     public static DG.Tweening.Tween Shake(Transform transform, float duration = 0.3f, float strength = 10f)
     {
         return transform.DOShakePosition(duration, strength)
@@ -38,7 +41,7 @@ public static class Tween
         .SetEase(Ease.OutQuad);
     }
 
-    public static Sequence Blink(SpriteRenderer spriteRenderer, int blinks = 3, float blinkDuration = 0.1f)
+    public static Sequence Blink(SpriteRenderer spriteRenderer, int blinks = 2, float blinkDuration = 0.1f)
     {
         Sequence sequence = DOTween.Sequence().SetLink(spriteRenderer.gameObject);
         for (int i = 0; i < blinks; i++)
@@ -56,19 +59,18 @@ public static class Tween
         .SetLoops(count, LoopType.Yoyo)
         .SetEase(Ease.InOutSine);
     }
+    #endregion
 
-
-    public static DG.Tweening.Tween MoveFromCenter(Transform transform, Vector3 offset, float duration = 0.5f)
+    #region Transformation
+    public static DG.Tweening.Tween MoveToPosition(Transform transform, Vector3 targetPosition, float duration = 0.5f)
     {
-        Vector3 targetPosition = transform.position + offset;
-
-        return transform.DOMove(targetPosition, duration / 2)
+        return transform.DOMove(targetPosition, duration)
         .SetLink(transform.gameObject)
         .SetEase(Ease.InOutSine);
     }
+    #endregion
 
-
-
+    #region Text
     public static Sequence FloatText(Transform transform, float moveY = 1f, float duration = 0.5f)
     {
         return DOTween.Sequence()
@@ -85,4 +87,32 @@ public static class Tween
         .SetLink(group.gameObject)
         .OnComplete(() => group.gameObject.SetActive(isActive));
     }
+    #endregion
+
+    #region Audio
+    public static DG.Tweening.Tween FadeVolume(AudioSource source, float toVolume, float duration = 0.5f)
+    {
+        return DOTween.To(() => source.volume, x => source.volume = x, toVolume, duration)
+        .SetEase(Ease.InOutSine)
+        .SetLink(source.gameObject);
+    }
+
+    public static DG.Tweening.Tween FadePitch(AudioSource source, float toPitch, float duration = 0.5f)
+    {
+        return DOTween.To(() => source.pitch, x => source.pitch = x, toPitch, duration)
+        .SetEase(Ease.InOutSine)
+        .SetLink(source.gameObject);
+    }
+
+    public static DG.Tweening.Tween FadeMixerVolume(AudioMixer mixer, string parameter, float toVolume01, float duration = 0.5f)
+    {
+        float targetDb = Mathf.Log10(Mathf.Clamp(toVolume01, 0.0001f, 1f)) * 20f;
+        float currentDb;
+
+        mixer.GetFloat(parameter, out currentDb);
+
+        return DOTween.To(() => currentDb, x => { currentDb = x; mixer.SetFloat(parameter, currentDb); }, targetDb, duration)
+        .SetEase(Ease.InOutSine);
+    }
+    #endregion
 }

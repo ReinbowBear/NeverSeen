@@ -23,10 +23,7 @@ public struct SoundData
 {
     public string Name;
     public AudioClip Sound;
-    public SoundType type;
-}
-
-public enum SoundType
-{
-    music, ui, effect, 
+    public SoundType Type;
+    public bool IsLoud;
+    public bool IsPitchStacked;
 }

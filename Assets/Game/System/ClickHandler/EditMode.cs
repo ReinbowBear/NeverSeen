@@ -60,12 +60,12 @@ public class EditMode : IViewMode
             }
 
             Building.Init(newTile, mapData.GetTilesInRadius(newTile.tileData.CubeCoord, Building.Stats.Radius));
-            TweenAnimation.Spawn(Building.transform);
+            Tween.Spawn(Building.transform);
             Building = null;
         }
         else
         {
-            TweenAnimation.Shake(Building.transform);
+            Tween.Shake(Building.transform);
         }
     }
 }

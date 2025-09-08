@@ -1,60 +1,88 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
-    [SerializeField] private Button[] buttons;
-    public Button[] Buttons => buttons;
-    public Button CurrentButton => EventSystem.current.currentSelectedGameObject?.GetComponent<Button>();
-    private GameObject previousSelected;
+    public Action<bool> OnPanelToggle;
+
+    [SerializeField] private MyButton[] buttons;
+
+    public MyButton[] Buttons => buttons;
+    public MyButton CurrentButton => buttons[CurrentButtonIndex];
+
+    private Dictionary<MyButton, int> ButtonIndexes = new();
+    public int CurrentButtonIndex { get; private set; }
+
+    void Awake()
+    {
+        for (int i = 0; i < Buttons.Length; i++)
+        {
+            ButtonIndexes.Add(buttons[i], i);
+        }
+    }
 
 
     public void SetActive(bool isTrue)
     {
-        gameObject.SetActive(isTrue);
-        SetNavigation(isTrue);
-
         if (isTrue)
         {
-            RestoreOrSelectButton();
-        }
-        else
-        {
-            previousSelected = null;
+            gameObject.SetActive(true); // подписка View не происходит если объект выключен, соотведственно не может включить анимацию отображения // костыль
+            FocusFirstButton();
         }
 
-        EventBus.Invoke(new OnPanelOpen(this, isTrue));
+        OnPanelToggle?.Invoke(isTrue);
     }
 
-    public void SetNavigation(bool isEnable)
+    public void ChoseButtonByIndex(int newButtonIndex)
     {
-        var newMode = isEnable ? Navigation.Mode.Automatic : Navigation.Mode.None;
-
-        foreach (var button in buttons)
+        if (!buttons[newButtonIndex].gameObject.activeInHierarchy)
         {
-            var nav = button.navigation;
-            nav.mode = newMode;
-            button.navigation = nav;
-        }
-    }
-
-
-    private void RestoreOrSelectButton()
-    {
-        if (previousSelected != null)
-        {
-            EventSystem.current.SetSelectedGameObject(previousSelected);
+            FocusFirstButton(newButtonIndex);
             return;
         }
 
-        foreach (var button in buttons)
+        CurrentButton.OnExit();
+        CurrentButtonIndex = newButtonIndex;
+        CurrentButton.OnEnter(); // вызывает срабатывание OnButtonChose но там проверка
+    }
+
+    public void FocusFirstButton(int startIndex = 0)
+    {
+        for (int i = startIndex; i < buttons.Length; i++)
         {
-            if (button.gameObject.activeInHierarchy)
+            if (buttons[i].gameObject.activeInHierarchy)
             {
-                EventSystem.current.SetSelectedGameObject(button.gameObject);
+                ChoseButtonByIndex(i);
                 break;
             }
+        }
+    }
+
+
+    private void OnButtonChose(MyButton newButton)
+    {
+        if (newButton == CurrentButton) return;
+
+        CurrentButton.OnExit();
+        CurrentButtonIndex = ButtonIndexes[newButton];
+    }
+
+
+    void OnEnable()
+    {
+        foreach (var button in buttons)
+        {
+            button.OnButtonEnter += OnButtonChose;
+        }
+    }
+
+    void OnDisable()
+    {
+        foreach (var button in buttons)
+        {
+            button.OnButtonEnter -= OnButtonChose;
         }
     }
 }

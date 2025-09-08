@@ -37,7 +37,7 @@ public abstract class Entity : MonoBehaviour
 
         if (!isSelected) return;
 
-        TweenAnimation.Impact(transform);
+        Tween.Impact(transform);
     }
 
     protected virtual void OnDelete()

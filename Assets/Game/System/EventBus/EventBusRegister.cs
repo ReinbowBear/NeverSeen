@@ -11,9 +11,7 @@ public static class EventBusRegister
         Register<OnSave>();
         Register<OnLoad>();
 
-        Register<OnPanelOpen>();
-
-        Register<OnSound>();
+        Register<SoundData>(); // не ивент класс
         Register<OnSceneStart>();
         Register<OnSceneRelease>();
 
@@ -37,17 +35,7 @@ public class OnLoad : EventArgs { }
 #endregion
 
 #region UI
-public class OnPanelOpen : EventArgs
-{
-    public Panel panel;
-    public bool isOpen;
 
-    public OnPanelOpen(Panel panel, bool isOpen)
-    {
-        this.panel = panel;
-        this.isOpen = isOpen;
-    }
-}
 #endregion
 
 #region Scene
@@ -56,15 +44,6 @@ public class OnSceneRelease : EventArgs { }
 #endregion
 
 #region gamelay
-public struct OnSound
-{
-    public SoundData SoundData;
-
-    public OnSound(SoundData soundData)
-    {
-        SoundData = soundData;
-    }
-}
 public class OnUpdateNetwork : EventArgs { }
 public class OnGameOver : EventArgs { }
 #endregion

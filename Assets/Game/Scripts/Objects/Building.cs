@@ -11,7 +11,7 @@ public class Building : Entity, IBehavior
 
         if (!isActive) return;
 
-        TweenAnimation.Impact(transform);
+        Tween.Impact(transform);
     }
 
     protected override void OnDelete()

@@ -8,9 +8,9 @@ public class Input : IInitializable
     public GameInput.UIActions UI { get; private set; }
     public GameInput.GamePlayActions GamePlay { get; private set; }
     public GameInput.SystemActions System { get; private set; }
-#if UNITY_EDITOR
+    #if UNITY_EDITOR
     public GameInput.DebugActions Debug { get; private set; }
-#endif
+    #endif
     private InputActionMap currentInputs;
 
     public void Initialize()
@@ -19,9 +19,9 @@ public class Input : IInitializable
 
         GameInput.System.Enable();
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
         GameInput.Debug.Enable();
-#endif
+        #endif
 
         UI = GameInput.UI;
         GamePlay = GameInput.GamePlay;
