@@ -3,7 +3,7 @@ using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class SaveLoad // https://github.com/TeamSirenix/odin-serializer.git?path=UnityOdinSerializer один инспектор
+public class SaveLoad
 {
     public string filePath = Path.Combine(MyPaths.SAVE, "Save.json");
     private GameData gameData;

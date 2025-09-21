@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DefaultMode : IViewMode
+public class DefaultMode : IState, IViewMode
 {
     private LayerMask rayLayer;
     private Entity SelectedEntity;
@@ -9,6 +9,10 @@ public class DefaultMode : IViewMode
     {
         this.rayLayer = rayLayer;
     }
+
+
+    public void Enter() { }
+    public void Exit() { }
 
 
     public LayerMask GetRayLayer()

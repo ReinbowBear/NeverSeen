@@ -13,7 +13,7 @@ public class MyRandom : IInitializable
 
     public void Initialize()
     {
-        SetSeed(0);
+        SetSeed();
     }
 
 

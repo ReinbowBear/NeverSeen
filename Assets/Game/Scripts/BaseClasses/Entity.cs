@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public abstract class Entity : MonoBehaviour
 {
@@ -8,15 +9,26 @@ public abstract class Entity : MonoBehaviour
 
     [SerializeField] private ConfigSO ConfigSO;
     public EntityStats Stats { get; protected set; }
-    public List<IBehavior> Behaviours { get; protected set; }
+    public Dictionary<Type, object> Behaviours { get; protected set; } = new ();
+
 
     public List<Tile> TilesInRadius { get; protected set; } = new();
     public Tile Tile { get; protected set; }
 
+    [Inject] private Factory factory;
+
     void Awake()
     {
-        Stats = ConfigSO.stats;
-        Behaviours = ConfigSO.GetBehaviors();
+        Stats = ConfigSO.Stats;
+        
+        foreach (var configClass in ConfigSO.BehaviorConfigs)
+        {
+            var type = configClass.GetType();
+            var args = configClass.GetArgs();
+            var myClass = (IBehavior)factory.GetClassWithActivator(type, args);
+            
+            Behaviours.Add(type, myClass);
+        }
     }
 
     public void Init(Tile tile, List<Tile> list)
@@ -28,26 +40,28 @@ public abstract class Entity : MonoBehaviour
 
     public void Selected(bool isSelected)
     {
-        foreach (var tile in TilesInRadius)
+        OnSelected?.Invoke(isSelected);
+    }
+
+
+    public T GetBehaviour<T>() where T : class
+    {
+        if (Behaviours.TryGetValue(typeof(T), out var EntityClass))
         {
-            tile.SetBacklight(isSelected);
+            return (T)EntityClass;
         }
 
-        OnSelected?.Invoke(isSelected);
-
-        if (!isSelected) return;
-
-        Tween.Impact(transform);
+        return null;
     }
+
 
     protected virtual void OnDelete()
     {
         Selected(false);
     }
 
-
     void OnDisable()
     {
-        OnDelete();
+        Selected(false);
     }
 }

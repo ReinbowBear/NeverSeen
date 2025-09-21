@@ -7,7 +7,7 @@ public class EnergyView : MonoBehaviour, IEnergyView
     [SerializeField] private GameObject energyPoint;
     [SerializeField] public Transform wirePoint { get; private set; }
 
-    private string wirePref = "Wire";
+    [SerializeField] private GameObject wirePref;
     private List<Wire> wires;
 
     private Factory objectFactory;
@@ -16,7 +16,6 @@ public class EnergyView : MonoBehaviour, IEnergyView
     public void Construct(Factory objectFactory)
     {
         this.objectFactory = objectFactory;
-        objectFactory.Register(wirePref).GetAwaiter().GetResult();
     }
 
 
@@ -29,7 +28,7 @@ public class EnergyView : MonoBehaviour, IEnergyView
     {
         if (IEnergyView is not EnergyView energyView) return;
 
-        GameObject obj = objectFactory.Create(wirePref);
+        GameObject obj = objectFactory.Instantiate(wirePref);
         Wire wire = obj.GetComponent<Wire>();
 
         obj.transform.SetParent(wirePoint);

@@ -5,9 +5,10 @@ using UnityEngine;
 public class GameMapData
 {
     public Dictionary<Vector3Int, Tile> TileMap = new();
-    public List<Building> buildings = new();
+    public List<Building> Buildings = new();
+    public Building CurrentBuilding;
 
-    public bool CanPlaceBuilding(Tile tile, ShapeType shapeType)
+    public bool CanPlace(Tile tile, ShapeType shapeType)
     {
         foreach (var offset in Shape.Shapes[shapeType])
         {

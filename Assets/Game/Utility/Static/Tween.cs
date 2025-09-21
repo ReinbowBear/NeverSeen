@@ -92,27 +92,40 @@ public static class Tween
     #region Audio
     public static DG.Tweening.Tween FadeVolume(AudioSource source, float toVolume, float duration = 0.5f)
     {
-        return DOTween.To(() => source.volume, x => source.volume = x, toVolume, duration)
+        return DOTween.To(() => source.volume, value => source.volume = value, toVolume, duration)
         .SetEase(Ease.InOutSine)
         .SetLink(source.gameObject);
     }
 
-    public static DG.Tweening.Tween FadePitch(AudioSource source, float toPitch, float duration = 0.5f)
+    public static DG.Tweening.Tween FadeMixerVolume(AudioMixer mixer, string parameter, float toVolume, float duration = 0.5f)
     {
-        return DOTween.To(() => source.pitch, x => source.pitch = x, toPitch, duration)
-        .SetEase(Ease.InOutSine)
-        .SetLink(source.gameObject);
-    }
-
-    public static DG.Tweening.Tween FadeMixerVolume(AudioMixer mixer, string parameter, float toVolume01, float duration = 0.5f)
-    {
-        float targetDb = Mathf.Log10(Mathf.Clamp(toVolume01, 0.0001f, 1f)) * 20f;
+        float targetDb = Mathf.Log10(Mathf.Clamp(toVolume, 0.0001f, 1f)) * 20f;
         float currentDb;
 
         mixer.GetFloat(parameter, out currentDb);
 
         return DOTween.To(() => currentDb, x => { currentDb = x; mixer.SetFloat(parameter, currentDb); }, targetDb, duration)
         .SetEase(Ease.InOutSine);
+    }
+
+    public static DG.Tweening.Tween FadePitch(AudioSource source, float toPitch, float duration = 0.5f)
+    {
+        return DOTween.To(() => source.pitch, value => source.pitch = value, toPitch, duration)
+        .SetEase(Ease.InOutSine)
+        .SetLink(source.gameObject);
+    }
+
+    public static DG.Tweening.Sequence MutingVolume(AudioMixer mixer, string parameter, float targetVolume, float duration)
+    {
+        mixer.GetFloat(parameter, out float originalDb);
+        float targetDb = Mathf.Log10(Mathf.Clamp(targetVolume, 0.0001f, 1f)) * 20f; // targetDb это децибелы
+
+        return DOTween.Sequence()
+        .Append(DOTween.To(() => originalDb, x => mixer.SetFloat(parameter, x), targetDb, duration / 2)
+        .SetEase(Ease.InOutSine))
+
+        .Append(DOTween.To(() => targetDb, x => mixer.SetFloat(parameter, x), originalDb, duration / 2)
+        .SetEase(Ease.InOutSine));
     }
     #endregion
 }

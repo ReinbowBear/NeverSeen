@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
-public abstract class EnergyCarrier : IBehavior
+public abstract class EnergyCarrier : MonoBehaviour, IBehavior
 {
     public EnergyCarrierType type { get; protected set; }
     public EnergyCarrierType connections { get; protected set; }
@@ -28,7 +29,6 @@ public abstract class EnergyCarrier : IBehavior
                 }
             }
         }
-        //ElectoNetwork.Instance.AddEnergyCarrier(this);
         EventBus.Invoke<OnUpdateNetwork>();
     }
 

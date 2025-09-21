@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 #region global
@@ -7,11 +8,10 @@ public interface ISaveable<T> where T : struct
     void ApplyData(T data);
 }
 
-public interface IViewMode
+public interface IState
 {
-    LayerMask GetRayLayer();
-    void LeftClick(RaycastHit hit);
-    void RightClick();
+    void Enter();
+    void Exit();
 }
 #endregion
 
@@ -45,6 +45,13 @@ public interface IBehavior
 
 
 #region view
+public interface IViewMode
+{
+    LayerMask GetRayLayer();
+    void LeftClick(RaycastHit hit);
+    void RightClick();
+}
+
 public interface IEnergyView
 {
     void DrawWireTo(IEnergyView otherView);
@@ -61,6 +68,7 @@ public interface IInspectable
 
 public interface IConfig
 {
-    IBehavior Build();
+    object[] GetArgs();
 }
+
 #endregion

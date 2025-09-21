@@ -1,17 +1,19 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 public class ButtonView : MonoBehaviour
 {
     [SerializeField] private MyButton button;
     [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private AudioSO ButtonSounds;
+    [SerializeField] private AudioSO ClickSounds;
+    [SerializeField] private AudioSO ChoseSounds;
     [SerializeField] bool isOpenPanelButton;
     [Space]
     [SerializeField] private float animationOffset = 50;
     [SerializeField] private float animationTime = 0.2f;
-
+    private AudioService audioService;
     private Vector3 originalPos;
 
     void Awake()
@@ -19,16 +21,22 @@ public class ButtonView : MonoBehaviour
         originalPos = button.transform.position;
     }
 
+    [Inject]
+    public void Construct(AudioService audioService)
+    {
+        this.audioService = audioService;
+    }
+
 
     private void OnButtonClick()
     {
         if (isOpenPanelButton) return;
-        EventBus.Invoke(ButtonSounds.GetByName("Click"));
+        audioService.Play(ClickSounds);
     }
 
     private void OnButtonEnter(MyButton button)
     {
-        EventBus.Invoke(ButtonSounds.GetByName("Chose"));
+        audioService.Play(ChoseSounds);
         Tween.MoveToPosition(button.transform, originalPos + new Vector3(animationOffset, 0, 0), animationTime);
         DoTextFade(0.9f);
     }

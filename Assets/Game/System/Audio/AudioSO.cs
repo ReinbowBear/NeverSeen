@@ -3,27 +3,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "AudioSO", menuName = "Scriptable Objects/AudioSO")]
 public class AudioSO : ScriptableObject
 {
-    public SoundData[] AudioClips;
-
-    public SoundData GetByName(string soundName)
-    {
-        foreach (var soundData in AudioClips)
-        {
-            if (soundData.Name == soundName)
-            {
-                return soundData;
-            }
-        }
-        return default;
-    }
-}
-
-[System.Serializable]
-public struct SoundData
-{
-    public string Name;
+    [Header("General")]
     public AudioClip Sound;
     public SoundType Type;
+
+    [Header("Effects")]
     public bool IsLoud;
-    public bool IsPitchStacked;
+    public bool IsStacked;
+}
+
+public enum SoundType
+{
+    UI, SFX, Ambience, Music, Dialogues
 }

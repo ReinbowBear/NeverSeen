@@ -1,5 +1,6 @@
+using UnityEngine;
 
-public class Storage : IBehavior
+public class Storage : MonoBehaviour, IBehavior
 {
     private short size;
 

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Miner : IBehavior
+public class Miner : MonoBehaviour, IBehavior
 {
     private short miningValue;
     private short storageSize;

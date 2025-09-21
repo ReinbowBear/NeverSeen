@@ -7,53 +7,29 @@ using Zenject;
 public class ClickHandler : MonoBehaviour
 {
     private Camera cam;
-
-    public IViewMode DefaultMode { get; private set; }
-    public IViewMode editMode { get; private set; }
-    private IViewMode currentMode;
+    public StateMachine StateMachine { get; private set; } = new();
 
     private Input input;
-    private Factory factory;
+    [SerializeField] private Factory factory;
 
     [Inject]
-    public void Construct(Input input, Factory factory) // EditMode на кой то хрен забинжен в зенджекте, хотя нужен только тут!
+    public void Construct(Input input)
     {
         this.input = input;
-        this.factory = factory;
     }
 
     void Awake()
     {
         cam = Camera.main;
 
-        DefaultMode = new DefaultMode(LayerMask.GetMask("Entity"));
+        StateMachine.AddState(new DefaultMode(LayerMask.GetMask("Entity")));
+        StateMachine.AddState(factory.GetClass<EditMode>(LayerMask.GetMask("Tile")));
 
-        EditMode edit = factory.CreateClass<EditMode>();
-        edit.Init(LayerMask.GetMask("Tile"));
-        editMode = edit;
-
-        currentMode = DefaultMode;
-    }
-
-
-    public void SetMode(ViewMode newState)
-    {
-        currentMode.RightClick();
-
-        switch (newState)
-        {
-            case ViewMode.view:
-                currentMode = DefaultMode;
-                break;
-            case ViewMode.edit:
-                currentMode = editMode;
-                break;
-        }
+        StateMachine.Start<DefaultMode>();
     }
 
 
     private void LeftClick(InputAction.CallbackContext _) => StartCoroutine(DoLeftClick());
-
     private IEnumerator DoLeftClick()
     {
         Ray ray = cam.ScreenPointToRay(UnityEngine.Input.mousePosition);
@@ -61,6 +37,7 @@ public class ClickHandler : MonoBehaviour
         yield return null;
         if (EventSystem.current.IsPointerOverGameObject()) yield break;
 
+        var currentMode = StateMachine.CurrentState as IViewMode;
         if (!Physics.Raycast(ray, out RaycastHit hit, 30, currentMode.GetRayLayer())) yield break;
 
         currentMode.LeftClick(hit);
@@ -68,7 +45,6 @@ public class ClickHandler : MonoBehaviour
 
 
     private void RightClick(InputAction.CallbackContext _) => StartCoroutine(TryRightClick());
-
     private IEnumerator TryRightClick()
     {
         Vector3 mousePos = UnityEngine.Input.mousePosition;
@@ -77,6 +53,7 @@ public class ClickHandler : MonoBehaviour
 
         if ((mousePos - UnityEngine.Input.mousePosition).magnitude <= 100f) // срабатывает если разница не более number float
         {
+            var currentMode = StateMachine.CurrentState as IViewMode;
             currentMode.RightClick();
         }
     }
@@ -93,9 +70,4 @@ public class ClickHandler : MonoBehaviour
         input.GamePlay.MouseLeft.started -= LeftClick;
         input.GamePlay.MouseRight.started -= RightClick;
     }
-}
-
-public enum ViewMode
-{
-    view, edit
 }

@@ -1,53 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
+using System.Collections.Generic;
+using Zenject;
+using DG.Tweening;
 
-public class AudioService : MonoBehaviour
+public class AudioService : IInitializable
 {
     [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] private AudioSO backgroundMusic;
-    [Space]
+    [SerializeField] private AudioSettingsSO settings;
+
     private Dictionary<SoundType, AudioSource> sources = new();
-    private Dictionary<SoundData, PitchStackData> pitchStacks = new();
-    [SerializeField] private float pitchIncrement = 0.15f;
-    [SerializeField] private float pitchResetDelay = 1.5f;
-    [SerializeField] private float maxPitch = 2.5f;
-    [SerializeField] private float minPitchAfterReset = 1f;
-    [SerializeField] private float maxRandomizedReset = 1.2f;
-    [Space]
-    [SerializeField] private float musicPauseVolume = -80f;
-    [SerializeField] private float musicNormalVolume = 0f;
-    [SerializeField] private float musicFadeOutTime = 1.5f;
-    [SerializeField] private float musicFadeInTime = 0.5f;
+    private Dictionary<AudioSO, PitchStackData> pitchStacks = new();
+    private ObjectPool pool = new ObjectPool("Sound", true);
 
     private class PitchStackData
     {
         public float Pitch = 1f;
         public float LastPlayTime;
-        public Coroutine Coroutine;
     }
 
-    void Awake()
+    public void Initialize()
     {
-        var cam = Camera.main;
-        sources.Add(SoundType.UI, cam.gameObject.AddComponent<AudioSource>());
-        sources.Add(SoundType.SFX, cam.gameObject.AddComponent<AudioSource>());
-        //sources.Add(SoundType.Ambience, cam.gameObject.AddComponent<AudioSource>());
-        sources.Add(SoundType.Music, cam.gameObject.AddComponent<AudioSource>());
-        //sources.Add(SoundType.Dialogues, cam.gameObject.AddComponent<AudioSource>());
+        CreateAudioSources();
     }
 
-    void Start()
-    {
-        var randomInt = Random.Range(0, backgroundMusic.AudioClips.Length);
-        var musicData = backgroundMusic.AudioClips[randomInt];
-        Play(musicData);
-    }
 
-    [EventHandler(Priority.low)]
-    public void Play(SoundData data)
+    public void Play(AudioSO data)
     {
         var source = sources[data.Type];
         source.clip = data.Sound;
@@ -57,63 +35,23 @@ public class AudioService : MonoBehaviour
             source.pitch = Random.Range(0.9f, 1.1f);
         }
 
-        if (data.IsLoud)
-        {
-            CoroutineManager.Start(DuckVolume("MusicVolume", 0.2f, 1f, 0.5f), this);
-        }
-
-        if (data.IsPitchStacked)
+        if (data.IsStacked)
         {
             PlayStackedSound(data);
         }
         else
         {
-            //source.Play();
             source.PlayOneShot(data.Sound);
         }
-    }
 
-    private IEnumerator DuckVolume(string mixerParam, float targetVolume, float duration, float restoreTime) // затухание звука и его востановление позже
-    {
-        float originalVolume;
-        audioMixer.GetFloat(mixerParam, out originalVolume);
-        originalVolume = Mathf.Pow(10, originalVolume / 20f); // переводим децибелы в линейное значение как то что то?
-
-        float currentTime = 0f;
-        while (currentTime < duration)
+        if (data.IsLoud)
         {
-            float vol = Mathf.Lerp(originalVolume, targetVolume, currentTime / duration);
-            audioMixer.SetFloat(mixerParam, Mathf.Log10(vol) * 20f);
-
-            currentTime += Time.deltaTime;
-            yield return null;
+            Tween.MutingVolume(audioMixer, "MusicVolume", 0.4f, 1f).SetLink(source.gameObject);
         }
-
-        yield return new WaitForSeconds(restoreTime);
-
-        currentTime = 0f;
-        while (currentTime < duration)
-        {
-            float vol = Mathf.Lerp(targetVolume, originalVolume, currentTime / duration);
-            audioMixer.SetFloat(mixerParam, Mathf.Log10(vol) * 20f);
-
-            currentTime += Time.deltaTime;
-            yield return null;
-        }
-
-        audioMixer.SetFloat(mixerParam, Mathf.Log10(originalVolume) * 20f);
     }
 
 
-    private IEnumerator TemporarilyDuckMusic(AudioMixer mixer, string parameter = "MusicVolume") // не помню что делает
-    {
-        yield return Tween.FadeMixerVolume(mixer, parameter, 0.2f, 0.3f).WaitForCompletion();
-        yield return new WaitForSeconds(0.5f);
-        yield return Tween.FadeMixerVolume(mixer, parameter, 1f, 0.5f).WaitForCompletion();
-    }
-
-
-    public void PlayStackedSound(SoundData data)
+    private void PlayStackedSound(AudioSO data) // тон шепарда
     {
         if (!pitchStacks.TryGetValue(data, out var stack))
         {
@@ -121,85 +59,34 @@ public class AudioService : MonoBehaviour
             pitchStacks[data] = stack;
         }
 
-        stack.LastPlayTime = Time.time;
+        float timeSinceLastPlay = Time.time - stack.LastPlayTime;
 
-        if (stack.Coroutine == null)
+        if (timeSinceLastPlay > settings.pitchResetDelay)
         {
-            stack.Coroutine = StartCoroutine(ResetPitchCoroutine(stack));
+            stack.Pitch = 1f;
         }
+
+        stack.LastPlayTime = Time.time;
 
         var source = sources[data.Type];
         source.clip = data.Sound;
         source.pitch = stack.Pitch;
         source.Play();
 
-        stack.Pitch += pitchIncrement;
-        if (stack.Pitch > maxPitch)
+        stack.Pitch += settings.pitchIncrement;
+
+        if (stack.Pitch > settings.maxPitch)
         {
-            stack.Pitch = Random.Range(minPitchAfterReset, maxRandomizedReset);
+            stack.Pitch = Random.Range(settings.minPitchAfterReset, settings.maxRandomizedReset);
         }
     }
 
-    private IEnumerator ResetPitchCoroutine(PitchStackData stack)
+
+    private void CreateAudioSources()
     {
-        while (Time.time - stack.LastPlayTime < pitchResetDelay)
-        {
-            yield return null;
-        }
-        stack.Pitch = 1f;
-        stack.Coroutine = null;
+        var cam = Camera.main;
+        sources.Add(SoundType.UI, cam.gameObject.AddComponent<AudioSource>());
+        sources.Add(SoundType.SFX, cam.gameObject.AddComponent<AudioSource>());
+        sources.Add(SoundType.Music, cam.gameObject.AddComponent<AudioSource>());
     }
-
-
-    public void PauseMusic()
-    {
-        CoroutineManager.Start(FadeMusicVolume(AudioMixerParams.MusicVolume, musicPauseVolume, musicFadeOutTime), this);
-    }
-    
-    public void ResumeMusic()
-    {
-        CoroutineManager.Start(FadeMusicVolume(AudioMixerParams.MusicVolume, musicNormalVolume, musicFadeInTime), this);
-    }
-
-    private IEnumerator FadeMusicVolume(string param, float targetDb, float duration)
-    {
-        audioMixer.GetFloat(param, out float currentDb);
-        float currentTime = 0f;
-
-        while (currentTime < duration)
-        {
-            float t = currentTime / duration;
-            float value = Mathf.Lerp(currentDb, targetDb, t);
-            audioMixer.SetFloat(param, value);
-
-            currentTime += Time.deltaTime;
-            yield return null;
-        }
-
-        audioMixer.SetFloat(param, targetDb);
-    }
-}
-
-
-public enum SoundType
-{
-    UI, SFX, Ambience, Music, Dialogues
-}
-
-
-public static class AudioMixerParams
-{
-    public const string MasterVolume = "MasterVolume";
-
-    public const string MusicVolume = "MusicVolume";
-    public const string SFXVolume = "SFXVolume";
-    public const string UIVolume = "UIVolume";
-    public const string DialoguesVolume = "DialoguesVolume";
-    public const string AmbienceVolume = "AmbienceVolume";
-
-    public const string DuckingAmount = "DuckingAmount";
-
-    public const string ReverbAmount = "ReverbAmount";
-    public const string LowpassCutoff = "LowpassCutoff";
-    public const string PitchShift = "PitchShift";
 }

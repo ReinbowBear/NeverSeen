@@ -5,21 +5,33 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
+using Random = UnityEngine.Random;
 
-public class Factory : IDisposable
+public class Factory : MonoBehaviour
 {
     private Dictionary<string, AsyncOperationHandle<GameObject>> handles = new();
     private DiContainer diContainer;
 
-    public Factory(DiContainer diContainer)
+    [SerializeField] private string[] preloadKeys;
+
+    [Inject]
+    public void Construct(DiContainer diContainer)
     {
         this.diContainer = diContainer;
     }
 
-
-    public async Task Register(string key)
+    async void Awake()
     {
-        if (handles.ContainsKey(key)) return;
+        foreach (var key in preloadKeys)
+        {
+            await GetAsset(key);
+        }
+    }
+
+
+    public async Task<GameObject> GetAsset(string key)
+    {
+        if (handles.ContainsKey(key)) return handles[key].Result;
 
         var handle = Addressables.LoadAssetAsync<GameObject>(key);
         await handle.Task;
@@ -27,27 +39,53 @@ public class Factory : IDisposable
         if (handle.Status != AsyncOperationStatus.Succeeded)
         {
             Debug.LogError("Ошибка загрузки ассета имя: " + key);
-            return;
-        }
-
-        handles.Add(key, handle);
-    }
-
-
-    public T CreateClass<T>() where T : class
-    {
-        return diContainer.Instantiate<T>();
-    }
-
-    public GameObject Create(string key)
-    {
-        if (!handles.TryGetValue(key, out var handle))
-        {
-            Debug.LogError($"[{nameof(Factory)}] Объект: [{key}] не зарегестрирован!");
             return null;
         }
 
-        return diContainer.InstantiatePrefab(handle.Result);
+        handles[key] = handle;
+        return handle.Result;
+    }
+
+
+    public async Task<GameObject> Create(string key)
+    {
+        var prefab = await GetAsset(key);
+        return diContainer.InstantiatePrefab(prefab);
+    }
+
+    public GameObject Instantiate(GameObject key)
+    {
+        return diContainer.InstantiatePrefab(key);
+    }
+
+
+    public object GetClassWithActivator(Type type, object[] args)
+    {
+        var myClass = Activator.CreateInstance(type, args);
+        diContainer.Inject(myClass);
+        return myClass;
+    }
+
+    public T GetClass<T>(params object[] args) where T : class
+    {
+        return diContainer.Instantiate<T>(args);
+    }
+
+
+    public async Task<string> GetRandomKey(string label)
+    {
+        var locations = await Addressables.LoadResourceLocationsAsync(label).Task;
+
+        if (locations == null || locations.Count == 0)
+        {
+            Debug.LogError("Нет предметов с меткой: " + label);
+            return null;
+        }
+
+        var randomIndex = Random.Range(0, locations.Count);
+        var item = locations[randomIndex];
+
+        return item.PrimaryKey;
     }
 
 
@@ -63,7 +101,7 @@ public class Factory : IDisposable
     }
 
 
-    public void Dispose()
+    void OnDestroy()
     {
         foreach (var handle in handles.Values)
         {

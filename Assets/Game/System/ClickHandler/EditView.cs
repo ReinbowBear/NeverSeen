@@ -21,17 +21,16 @@ public class EditView : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        editMode = clickHandler.editMode as EditMode;
     }
 
-
-    public void OnSpawnBuilding() => CoroutineManager.Start(MoveBuilding(), this);
+    [EventHandler(Priority.low)]
+    public void OnSpawnBuilding(OnNewBuilding _) => CoroutineManager.Start(MoveBuilding(), this);
     public IEnumerator MoveBuilding()
     {
         Tile oldTile = null;
         Tile newTile;
 
-        Building building = editMode.Building;
+        var building = mapData.CurrentBuilding;
         tilesInRadius.Clear();
 
         while (building != null)
@@ -60,16 +59,5 @@ public class EditView : MonoBehaviour
         {
             tile.SetBacklight(isTrue);
         }
-    }
-
-
-    void OnEnable()
-    {
-        editMode.OnNewBuilding += OnSpawnBuilding;
-    }
-
-    void OnDisable()
-    {
-        editMode.OnNewBuilding -= OnSpawnBuilding;
     }
 }

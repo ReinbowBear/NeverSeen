@@ -1,23 +1,20 @@
 using System;
 using UnityEngine;
 
-public class EditMode : IViewMode
+public class EditMode : IState, IViewMode
 {
-    public Action OnNewBuilding;
-    public Building Building { get; private set; }
-
     private LayerMask rayLayer;
-    private GameMapData mapData;
+    private GameMapData gameMap;
 
-    public EditMode(GameData gameData)
+    public EditMode(int rayLayer, GameData gameData)
     {
-        this.mapData = gameData.GameMap;
+        this.rayLayer = new LayerMask { value = rayLayer };
+        this.gameMap = gameData.GameMap;
     }
 
-    public void Init(LayerMask rayLayer)
-    {
-        this.rayLayer = rayLayer;
-    }
+
+    public void Enter() { }
+    public void Exit() { }
 
 
     public LayerMask GetRayLayer()
@@ -27,7 +24,7 @@ public class EditMode : IViewMode
 
     public void LeftClick(RaycastHit hit)
     {
-        if (Building == null) return;
+        if (gameMap.CurrentBuilding == null) return;
 
         Tile tile = hit.transform.gameObject.GetComponent<Tile>();
         TryPlace(tile);
@@ -35,37 +32,30 @@ public class EditMode : IViewMode
 
     public void RightClick()
     {
-        if (Building == null) return;
+        if (gameMap.CurrentBuilding == null) return;
 
-        GameObject.Destroy(Building.gameObject);
-        Building = null;
+        GameObject.Destroy(gameMap.CurrentBuilding.gameObject);
+        gameMap.CurrentBuilding = null;
     }
-
-
-    public void SetBuilding(Building newBuilding)
-    {
-        Building = newBuilding;
-        OnNewBuilding?.Invoke();
-    }
-
 
     private void TryPlace(Tile newTile)
     {
-        if (mapData.CanPlaceBuilding(newTile, Building.Stats.Shape))
+        var building = gameMap.CurrentBuilding;
+        if (gameMap.CanPlace(newTile, building.Stats.Shape))
         {
-            foreach (var offset in Shape.Shapes[Building.Stats.Shape])
+            foreach (var offset in Shape.Shapes[building.Stats.Shape])
             {
                 Vector3Int tilePos = newTile.tileData.CubeCoord + offset;
-                mapData.TileMap[tilePos].tileData.IsTaken = Building;
+                gameMap.TileMap[tilePos].tileData.IsTaken = building;
             }
 
-            Building.Init(newTile, mapData.GetTilesInRadius(newTile.tileData.CubeCoord, Building.Stats.Radius));
-            Tween.Spawn(Building.transform);
-            Building = null;
+            building.Init(newTile, gameMap.GetTilesInRadius(newTile.tileData.CubeCoord, building.Stats.Radius));
+            Tween.Spawn(building.transform);
+            building = null;
         }
         else
         {
-            Tween.Shake(Building.transform);
+            Tween.Shake(building.transform);
         }
     }
 }

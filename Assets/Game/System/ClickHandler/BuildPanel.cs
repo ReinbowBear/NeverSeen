@@ -4,37 +4,26 @@ using Zenject;
 public class BuildPanel : MonoBehaviour
 {
     [SerializeField] private ClickHandler clickHandler;
-    [SerializeField] private string[] building;
+    [SerializeField] private Factory factory;
 
-    private Factory factory;
-    private InventoryData inventoryData;
-    private bool isInit;
+    private GameMapData gameMap;
+    private InventoryData inventory;
 
     [Inject]
-    public void Construct(Factory factory, GameData gameData)
+    public void Construct(GameData gameData)
     {
-        this.factory = factory;
-        this.inventoryData = gameData.inventory;
-    }
-
-    async void Start()
-    {
-        foreach (var item in building) // подставить инвентарь потом
-        {
-            await factory.Register(item);
-        }
-        isInit = true;
+        gameMap = gameData.GameMap;
+        inventory = gameData.Inventory;
     }
 
 
-    public void GetBuilding(string buildingName)
+    public async void GetBuilding(string buildingName)
     {
-        if (!isInit) return;
+        clickHandler.StateMachine.SetMode<DefaultMode>();
 
-        clickHandler.SetMode(ViewMode.edit);
-        var mode = clickHandler.editMode as EditMode;
+        var obj = await factory.Create(buildingName);
+        gameMap.CurrentBuilding = obj.GetComponent<Building>();
 
-        var obj = factory.Create(buildingName);
-        mode.SetBuilding(obj.GetComponent<Building>());
+        EventBus.Invoke<OnNewBuilding>();
     }
 }

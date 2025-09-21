@@ -4,13 +4,13 @@ public class GameData // есть подорение что лучше не де
 {
     public GeneralData General = new();
     public GameMapData GameMap = new();
-    public InventoryData inventory = new();
+    public InventoryData Inventory = new();
 
     public void LoadData(GameData loaded) // без обёртки и айди может легко поломатся!
     {
         General = loaded.General;
         GameMap = loaded.GameMap;
-        inventory = loaded.inventory;
+        Inventory = loaded.Inventory;
     }
 }
 

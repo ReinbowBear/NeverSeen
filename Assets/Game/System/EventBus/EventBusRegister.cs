@@ -11,10 +11,10 @@ public static class EventBusRegister
         Register<OnSave>();
         Register<OnLoad>();
 
-        Register<SoundData>(); // не ивент класс
         Register<OnSceneStart>();
         Register<OnSceneRelease>();
 
+        Register<OnNewBuilding>();
         Register<OnUpdateNetwork>();
         Register<OnGameOver>();
     }
@@ -44,6 +44,7 @@ public class OnSceneRelease : EventArgs { }
 #endregion
 
 #region gamelay
+public class OnNewBuilding : EventArgs { }
 public class OnUpdateNetwork : EventArgs { }
 public class OnGameOver : EventArgs { }
 #endregion

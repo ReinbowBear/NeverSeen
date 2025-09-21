@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -26,16 +27,21 @@ public class MapGenerator : MonoBehaviour
     private Dictionary<Vector3Int, TileData> tilesData; // Vector3Int нужен для установки соседей, да и в целом весь список для генерации данных карты
     private List<TileData> freeTiles;
 
+    [SerializeField] private Factory objectFactory;
     private GameMapData mapData;
-    private Factory objectFactory;
     private MyRandom random;
 
     [Inject]
-    public void Construct(GameData gameData, Factory objectFactory, MyRandom random)
+    public void Construct(GameData gameData, MyRandom random)
     {
         this.mapData = gameData.GameMap;
-        this.objectFactory = objectFactory;
         this.random = random;
+    }
+
+    void Start()
+    {
+        EventBus.Invoke<OnSceneStart>();
+        Debug.Log("костыльный запуск");
     }
 
     [EventHandler(Priority.low)]
@@ -70,12 +76,15 @@ public class MapGenerator : MonoBehaviour
     #region DisplayMap
     private IEnumerator DisplayMap()
     {
+        var handle = objectFactory.GetAsset("Tile");
+        yield return new WaitUntil(() => handle.IsCompleted);
+
         foreach (var tileData in tilesData.Values)
         {
             Vector3 pos = CubeToWorld(tileData.CubeCoord, hexWidth);
             pos.y = (int)tileData.TileHeightType * hexY;
 
-            GameObject obj = objectFactory.Create("Tile");
+            GameObject obj = Instantiate(handle.Result);
             obj.transform.position = pos;
             obj.transform.SetParent(mapPoint);
 
@@ -83,7 +92,6 @@ public class MapGenerator : MonoBehaviour
             component.tileData = tileData;
 
             mapData.TileMap.Add(tileData.CubeCoord, component);
-            yield return null;
         }
         tilesData = null;
         freeTiles = null;
@@ -241,14 +249,4 @@ public class MapGenerator : MonoBehaviour
         return new Vector3(x, 0, z);
     }
     #endregion
-
-    void OnEnable()
-    {
-        //EventBus.AddSubscriber<OnSceneStart>(GenerateMap);
-    }
-
-    void OnDisable()
-    {
-        //EventBus.RemoveSubscriber<OnSceneStart>(GenerateMap);
-    }
 }
