@@ -4,8 +4,8 @@ using Zenject;
 public class PanelView : MonoBehaviour
 {
     [SerializeField] private Panel panel;
-    [SerializeField] private AudioSO OpenSounds;
-    [SerializeField] private AudioSO CloseSounds;
+    [SerializeField] private SoundSO OpenSounds;
+    [SerializeField] private SoundSO CloseSounds;
 
     private AudioService audioService;
 
@@ -18,7 +18,7 @@ public class PanelView : MonoBehaviour
     private void OnPanelOpenClose(bool IsOpen)
     {
         var soundSO = IsOpen ? OpenSounds : CloseSounds;
-        audioService.Play(soundSO);;
+        audioService.Play(soundSO);
 
         if (IsOpen) Tween.Spawn(panel.transform);
         else Tween.Destroy(panel.transform);

@@ -1,5 +1,5 @@
 
-public class EnergyUser : EnergyCarrier
+public class EnergyUser : EnergyCarrier, ICondition
 {
     private short usedEnergy;
     private IBehavior effect;
@@ -10,7 +10,12 @@ public class EnergyUser : EnergyCarrier
         this.effect = effect;
 
         type = EnergyCarrierType.User;
-        connections = EnergyCarrierType.Generator | EnergyCarrierType.Tower;
+        connectionsType = EnergyCarrierType.Generator | EnergyCarrierType.Tower;
+    }
+
+    public bool IsConditionMet()
+    {
+        return true;
     }
 
     public override void SetActive(bool isActive)
@@ -19,7 +24,7 @@ public class EnergyUser : EnergyCarrier
         effect.SetActive(isActive);
     }
 
-    public override void TransferEnergy(EnergyData energyData)
+    public override void TransferEnergy(EnergyTransferData energyData)
     {
         if (energyData.Visited.Contains(this)) return;
         if (energyData.Depth > energyData.MaxDepth) return;

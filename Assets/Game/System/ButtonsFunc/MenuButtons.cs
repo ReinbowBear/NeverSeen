@@ -4,18 +4,18 @@ using Zenject;
 
 public class MenuButtons : MonoBehaviour
 {
-    private GameData gameState;
+    private GeneralData generalData;
 
     [Inject]
-    public void Construct(GameData gameState)
+    public void Construct(GeneralData generalData)
     {
-        this.gameState = gameState;
+        this.generalData = generalData;
     }
 
 
     public void ContinueGame()
     {
-        SceneManager.LoadScene(gameState.General.SceneIndex);
+        SceneManager.LoadScene(generalData.SceneIndex);
     }
 
     public void NewGame()

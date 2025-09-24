@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Wire : MonoBehaviour
+public class Chain : MonoBehaviour
 {
     [HideInInspector] public Vector3 StartPoint;
     [HideInInspector] public Vector3 EndPoint;

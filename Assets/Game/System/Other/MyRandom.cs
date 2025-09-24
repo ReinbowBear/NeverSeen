@@ -3,12 +3,12 @@ using Zenject;
 
 public class MyRandom : IInitializable
 {
-    private GameData gameState;
+    private GeneralData generalData;
     public System.Random System { get; private set; }
 
-    public MyRandom(GameData gameState)
+    public MyRandom(GeneralData generalData)
     {
-        this.gameState = gameState;
+        this.generalData = generalData;
     }
 
     public void Initialize()
@@ -19,7 +19,7 @@ public class MyRandom : IInitializable
 
     public void LoadSeed()
     {
-        SetSeed(gameState.General.Seed);
+        SetSeed(generalData.Seed);
     }
 
     public void SetSeed(int newSeed = 0)
@@ -27,7 +27,7 @@ public class MyRandom : IInitializable
         if (newSeed == 0)
         {
             newSeed = global::System.DateTime.Now.Millisecond;
-            gameState.General.Seed = newSeed;
+            generalData.Seed = newSeed;
         }
 
         System = new System.Random(newSeed);

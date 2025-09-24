@@ -1,8 +1,17 @@
-using System;
 using UnityEngine;
 
-public class Building : Entity, IBehavior
+public class BuildingAI : MonoBehaviour
 {
+    public ICondition[] conditions;
+
+    private IBehavior[] Behaviours;
+
+    void Start()
+    {
+        Behaviours = GetComponents<IBehavior>();
+    }
+
+
     public void SetActive(bool isActive)
     {
         foreach (var behaviour in Behaviours)
@@ -15,9 +24,9 @@ public class Building : Entity, IBehavior
         Tween.Impact(transform);
     }
 
-    protected override void OnDelete()
+
+    void OnDisable()
     {
-        base.OnDelete();
         SetActive(false);
     }
 }

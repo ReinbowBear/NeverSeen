@@ -27,7 +27,7 @@ public class Generator : EnergyCarrier
     public override void SetActive(bool isActive)
     {
         base.Init();
-        TransferEnergy(new EnergyData(this, range));
+        TransferEnergy(new EnergyTransferData(this, range));
 
         barView.ChangeValue(energy, maxEnergy);
         barView.DrawBar(false);
@@ -56,25 +56,5 @@ public class Generator : EnergyCarrier
     {
         //rotateBar.enabled = isSelected;
         //energyBar.FadeBar(isSelected ? 1f : 0f);
-    }
-}
-
-
-public struct EnergyData
-{
-    public HashSet<EnergyCarrier> Visited;
-    public int Depth;
-    public int MaxDepth;
-    public Generator Generator;
-
-    public EnergyData(Generator newGenerator, int newMaxDepth)
-    {
-        Visited = new();
-        Depth = 0;
-
-        MaxDepth = newMaxDepth;
-        Generator = newGenerator;
-
-        Visited.Add(newGenerator);
     }
 }

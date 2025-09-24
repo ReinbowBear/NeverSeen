@@ -1,18 +1,15 @@
 using UnityEngine;
 
-public class DefaultMode : IState, IViewMode
+public class DefaultMode : IViewMode
 {
     private LayerMask rayLayer;
-    private Entity SelectedEntity;
+    private TileMapData mapData;
 
-    public DefaultMode(LayerMask rayLayer)
+    public DefaultMode(LayerMask  rayLayer, TileMapData mapData)
     {
         this.rayLayer = rayLayer;
+        this.mapData = mapData;
     }
-
-
-    public void Enter() { }
-    public void Exit() { }
 
 
     public LayerMask GetRayLayer()
@@ -20,20 +17,21 @@ public class DefaultMode : IState, IViewMode
         return rayLayer;
     }
 
+
     public void LeftClick(RaycastHit hit)
     {
         RightClick();
 
-        SelectedEntity = hit.transform.gameObject.GetComponent<Entity>();
-        SelectedEntity.Selected(true);
+        mapData.CurrentEntity = hit.transform.gameObject.GetComponent<Entity>();
+        mapData.CurrentEntity.Selected(true);
     }
 
     public void RightClick()
     {
-        if (SelectedEntity != null)
+        if (mapData.CurrentEntity != null)
         {
-            SelectedEntity.Selected(false);
-            SelectedEntity = null;
+            mapData.CurrentEntity.Selected(false);
+            mapData.CurrentEntity = null;
         }
     }
 }

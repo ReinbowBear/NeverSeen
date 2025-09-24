@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -7,25 +6,15 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class Factory : MonoBehaviour
+public class Factory
 {
     private Dictionary<string, AsyncOperationHandle<GameObject>> handles = new();
     private DiContainer diContainer;
-
-    [SerializeField] private string[] preloadKeys;
 
     [Inject]
     public void Construct(DiContainer diContainer)
     {
         this.diContainer = diContainer;
-    }
-
-    async void Awake()
-    {
-        foreach (var key in preloadKeys)
-        {
-            await GetAsset(key);
-        }
     }
 
 
@@ -50,25 +39,25 @@ public class Factory : MonoBehaviour
     public async Task<GameObject> Create(string key)
     {
         var prefab = await GetAsset(key);
-        return diContainer.InstantiatePrefab(prefab);
+        return Instantiate(prefab); 
     }
 
-    public GameObject Instantiate(GameObject key)
+    public GameObject Instantiate(GameObject prefab)
     {
-        return diContainer.InstantiatePrefab(key);
+        var obj = diContainer.InstantiatePrefab(prefab);
+        obj.transform.SetParent(null);
+        return obj;
     }
 
-
-    public object GetClassWithActivator(Type type, object[] args)
-    {
-        var myClass = Activator.CreateInstance(type, args);
-        diContainer.Inject(myClass);
-        return myClass;
-    }
 
     public T GetClass<T>(params object[] args) where T : class
     {
         return diContainer.Instantiate<T>(args);
+    }
+
+    public void Inject(object injectable)
+    {
+        diContainer.Inject(injectable);
     }
 
 
@@ -91,17 +80,13 @@ public class Factory : MonoBehaviour
 
     public void Release(string key)
     {
-        if (!handles.TryGetValue(key, out var handle))
-        {
-            Debug.LogError($"[{nameof(Factory)}] Объект: {key} не зарегестрирован!");
-            return;
-        }
+        if (!handles.TryGetValue(key, out var handle)) return;
 
         Addressables.Release(handle);
     }
 
 
-    void OnDestroy()
+    public void Clear()
     {
         foreach (var handle in handles.Values)
         {

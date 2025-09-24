@@ -4,7 +4,7 @@ public class Repeater : EnergyCarrier
 {
     [SerializeField] private byte EnergyBuff;
 
-    public override void TransferEnergy(EnergyData energyData)
+    public override void TransferEnergy(EnergyTransferData energyData)
     {
         if (energyData.Visited.Contains(this)) return;
         if (energyData.Depth > energyData.MaxDepth) return;
@@ -14,7 +14,7 @@ public class Repeater : EnergyCarrier
         SetActive(true);
 
         energyData.Depth = -EnergyBuff;
-        foreach (var neighborKey in connectionsList)
+        foreach (var neighborKey in connections)
         {
             neighborKey.TransferEnergy(energyData);
         }

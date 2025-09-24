@@ -1283,7 +1283,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &366373372
 Transform:
@@ -1564,7 +1564,7 @@ GameObject:
   - component: {fileID: 430083807}
   - component: {fileID: 430083806}
   m_Layer: 0
-  m_Name: ClickController
+  m_Name: ClickHandler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1582,7 +1582,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d0e838d0d82edd41bd0ac8ccc809dec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  factory: {fileID: 1711034101}
 --- !u!4 &430083807
 Transform:
   m_ObjectHideFlags: 0
@@ -1956,12 +1955,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 567152319}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &567152319
 Transform:
@@ -3262,51 +3261,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 69571154256159397, guid: c6ec4a434a34d12419ccf4d58c14155d, type: 3}
   m_PrefabInstance: {fileID: 1072492343}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1082438996
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1082438998}
-  - component: {fileID: 1082438997}
-  m_Layer: 0
-  m_Name: EditView
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!114 &1082438997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1082438996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 914832b3feb43744ea93a2674ca113c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clickHandler: {fileID: 430083806}
---- !u!4 &1082438998
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1082438996}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1197688498
 GameObject:
   m_ObjectHideFlags: 0
@@ -4758,7 +4712,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickHandler: {fileID: 430083806}
-  factory: {fileID: 1711034101}
 --- !u!4 &1522045153
 Transform:
   m_ObjectHideFlags: 0
@@ -5108,7 +5061,6 @@ MonoBehaviour:
   hillTiles: 20
   mountCount: 2
   mountTiles: 20
-  objectFactory: {fileID: 1711034101}
 --- !u!1 &1711034099
 GameObject:
   m_ObjectHideFlags: 0
@@ -5120,7 +5072,7 @@ GameObject:
   - component: {fileID: 1711034100}
   - component: {fileID: 1711034101}
   m_Layer: 0
-  m_Name: Factory
+  m_Name: Preloader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5150,7 +5102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1711034099}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23605164c45a12f4dbb387ac0cc5c48d, type: 3}
+  m_Script: {fileID: 11500000, guid: a1bd181e9532e084d85351756993a0ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   preloadKeys:
@@ -6095,6 +6047,84 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960662462}
   m_CullTransparentMesh: 1
+--- !u!1 &2040360874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2040360877}
+  - component: {fileID: 2040360876}
+  - component: {fileID: 2040360875}
+  m_Layer: 0
+  m_Name: SceneContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &2040360875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040360874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44e6da8ee4b0f8a4695e7007aa226e17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2040360876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040360874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 2040360875}
+  _installerPrefabs: []
+  _findSiblingMonoInstallers: 0
+  _autoRun: 1
+  OnPreInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPreResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  _parentNewObjectsUnderSceneContext: 0
+  _contractNames: []
+  _parentContractNames: []
+--- !u!4 &2040360877
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040360874}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2092224305
 GameObject:
   m_ObjectHideFlags: 0
@@ -6536,6 +6566,8 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1505450983}
+  - {fileID: 2040360877}
+  - {fileID: 1711034100}
   - {fileID: 1046762981}
   - {fileID: 1262050461}
   - {fileID: 954248863}
@@ -6552,13 +6584,11 @@ SceneRoots:
   - {fileID: 430083807}
   - {fileID: 1899134532}
   - {fileID: 723221998}
-  - {fileID: 1711034100}
   - {fileID: 906764631}
   - {fileID: 1059504323}
   - {fileID: 1025488541}
   - {fileID: 1522045153}
   - {fileID: 127141362}
-  - {fileID: 1082438998}
   - {fileID: 1842423039}
   - {fileID: 441272685}
   - {fileID: 2092224308}

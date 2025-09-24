@@ -21,7 +21,7 @@ public class MyBar : MonoBehaviour
 
     private bool isRotate;
 
-    public void StartedValue(float value, bool isRotate = false)
+    public void Init(float value, bool isRotate = false)
     {
         barText.text = Mathf.CeilToInt(value).ToString();
         this.isRotate = isRotate;

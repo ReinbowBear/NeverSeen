@@ -7,24 +7,18 @@ public class ButtonView : MonoBehaviour
 {
     [SerializeField] private MyButton button;
     [SerializeField] private TextMeshProUGUI text;
-    [SerializeField] private AudioSO ClickSounds;
-    [SerializeField] private AudioSO ChoseSounds;
+    [SerializeField] private SoundSO ClickSounds;
+    [SerializeField] private SoundSO ChoseSounds;
     [SerializeField] bool isOpenPanelButton;
     [Space]
     [SerializeField] private float animationOffset = 50;
     [SerializeField] private float animationTime = 0.2f;
-    private AudioService audioService;
+    [Inject] private AudioService audioService;
     private Vector3 originalPos;
 
     void Awake()
     {
         originalPos = button.transform.position;
-    }
-
-    [Inject]
-    public void Construct(AudioService audioService)
-    {
-        this.audioService = audioService;
     }
 
 

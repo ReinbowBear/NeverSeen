@@ -12,7 +12,7 @@ public class CarStation : MonoBehaviour
     private HashSet<Transform> pathPoints = new();
     private HashSet<Transform> reversPoints;
     [SerializeField] protected Entity owner;
-    [SerializeField] protected GameMapData mapData;
+    [SerializeField] protected TileMapData mapData;
 
     public void Init()
     {
@@ -36,7 +36,7 @@ public class CarStation : MonoBehaviour
     {
         pathPoints.Clear();
 
-        Tile currentTile = owner.Tile;
+        Tile currentTile = mapData.GetTileFromCord(transform.position);
         bool isFoundRoad = true;
 
         while (isFoundRoad == true)

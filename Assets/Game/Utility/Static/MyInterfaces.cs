@@ -1,17 +1,17 @@
-using System;
 using UnityEngine;
 
 #region global
 public interface ISaveable<T> where T : struct
 {
-    T CaptureData();
-    void ApplyData(T data);
+    T GetData();
+    void SetData(T data);
 }
 
 public interface IState
 {
     void Enter();
     void Exit();
+    void Execute();
 }
 #endregion
 
@@ -41,6 +41,26 @@ public interface IBehavior
 {
     void SetActive(bool isActive);
 }
+
+public interface IEnergyCarrier
+{
+
+}
+
+public interface IGenerator
+{
+
+}
+
+public interface IMiner
+{
+
+}
+
+public interface IStorage
+{
+    
+}
 #endregion
 
 
@@ -51,24 +71,9 @@ public interface IViewMode
     void LeftClick(RaycastHit hit);
     void RightClick();
 }
-
-public interface IEnergyView
-{
-    void DrawWireTo(IEnergyView otherView);
-    void ShowEnergyPoint(bool isActive);
-}
 #endregion
 
 
 #region utility
-public interface IInspectable
-{
-    string GetDisplayData();
-}
-
-public interface IConfig
-{
-    object[] GetArgs();
-}
 
 #endregion

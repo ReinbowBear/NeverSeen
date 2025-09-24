@@ -2,23 +2,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class GameMapData
+public class TileMapData
 {
     public Dictionary<Vector3Int, Tile> TileMap = new();
-    public List<Building> Buildings = new();
-    public Building CurrentBuilding;
+    public List<Entity> Buildings = new();
+    public Entity CurrentEntity;
 
-    public bool CanPlace(Tile tile, ShapeType shapeType)
+    public bool CanPlace(Tile center, ShapeType shapeType)
     {
         foreach (var offset in Shape.Shapes[shapeType])
         {
-            Vector3Int tilePos = tile.tileData.CubeCoord + offset;
+            Vector3Int tilePos = center.tileData.CubeCoord + offset;
 
             if (TileMap.TryGetValue(tilePos, out Tile tileOnMap) == false) return false;
 
             if (tileOnMap.tileData.IsTaken != null) return false;
 
-            if (tileOnMap.tileData.TileHeightType != tile.tileData.TileHeightType) return false;
+            if (tileOnMap.tileData.TileHeightType != center.tileData.TileHeightType) return false;
         }
         return true;
     }
@@ -44,5 +44,15 @@ public class GameMapData
             }
         }
         return result;
+    }
+
+    public Tile GetTileFromCord(Vector3 pos)
+    {
+        if (Physics.Raycast(pos + Vector3.up * 10, Vector3.down, out RaycastHit hit, 20, LayerMask.GetMask("Tile")))
+        {
+            Tile tile = hit.collider.GetComponent<Tile>();
+            return tile;
+        }
+        return null;
     }
 }

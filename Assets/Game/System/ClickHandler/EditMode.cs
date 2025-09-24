@@ -1,20 +1,18 @@
-using System;
 using UnityEngine;
 
-public class EditMode : IState, IViewMode
+public class EditMode : IViewMode
 {
     private LayerMask rayLayer;
-    private GameMapData gameMap;
+    private TileMapData mapData;
 
-    public EditMode(int rayLayer, GameData gameData)
+    private ClickHandler clickHandler;
+
+    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMapData mapData)
     {
-        this.rayLayer = new LayerMask { value = rayLayer };
-        this.gameMap = gameData.GameMap;
+        this.rayLayer = rayLayer;
+        this.clickHandler = clickHandler;
+        this.mapData = mapData;
     }
-
-
-    public void Enter() { }
-    public void Exit() { }
 
 
     public LayerMask GetRayLayer()
@@ -22,9 +20,14 @@ public class EditMode : IState, IViewMode
         return rayLayer;
     }
 
+
     public void LeftClick(RaycastHit hit)
     {
-        if (gameMap.CurrentBuilding == null) return;
+        if (mapData.CurrentEntity == null)
+        {
+            clickHandler.SetMode<DefaultMode>();
+            return;
+        }
 
         Tile tile = hit.transform.gameObject.GetComponent<Tile>();
         TryPlace(tile);
@@ -32,30 +35,31 @@ public class EditMode : IState, IViewMode
 
     public void RightClick()
     {
-        if (gameMap.CurrentBuilding == null) return;
+        if (mapData.CurrentEntity == null) return;
 
-        GameObject.Destroy(gameMap.CurrentBuilding.gameObject);
-        gameMap.CurrentBuilding = null;
+        GameObject.Destroy(mapData.CurrentEntity.gameObject);
+        mapData.CurrentEntity = null;
     }
 
     private void TryPlace(Tile newTile)
     {
-        var building = gameMap.CurrentBuilding;
-        if (gameMap.CanPlace(newTile, building.Stats.Shape))
+        var entity = mapData.CurrentEntity;
+        if (mapData.CanPlace(newTile, entity.Stats.Shape))
         {
-            foreach (var offset in Shape.Shapes[building.Stats.Shape])
+            foreach (var offset in Shape.Shapes[entity.Stats.Shape])
             {
                 Vector3Int tilePos = newTile.tileData.CubeCoord + offset;
-                gameMap.TileMap[tilePos].tileData.IsTaken = building;
+                mapData.TileMap[tilePos].tileData.IsTaken = entity;
             }
+            //entity.transform.position = newTile.transform.position; // позиция объекта устанавливается через MouseFollowView
+            mapData.CurrentEntity = null;
 
-            building.Init(newTile, gameMap.GetTilesInRadius(newTile.tileData.CubeCoord, building.Stats.Radius));
-            Tween.Spawn(building.transform);
-            building = null;
+            Tween.Spawn(entity.transform);
+            Debug.Log("тут ещё активация здания походу должна быть");
         }
         else
         {
-            Tween.Shake(building.transform);
+            Tween.Shake(entity.transform);
         }
     }
 }

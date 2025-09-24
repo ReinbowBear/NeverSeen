@@ -1,33 +1,37 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
+using Zenject;
 
-public abstract class EnergyCarrier : MonoBehaviour, IBehavior
+public abstract class EnergyCarrier : MonoBehaviour
 {
-    public EnergyCarrierType type { get; protected set; }
-    public EnergyCarrierType connections { get; protected set; }
+    public EnergyCarrierType type;
+    public EnergyCarrierType connectionsType;
+    [HideInInspector] public List<EnergyCarrier> connections = new();
+    [Space]
+    [HideInInspector] public bool isHasEnergy;
+    [Space]
+    public UnityEvent<bool> OnIsActive;
+    public UnityEvent<Transform> OnConect;
+    [Inject] TileMapData mapData;
 
-    public List<EnergyCarrier> connectionsList { get; protected set; }
-    protected IEnergyView view;
-
-    protected bool isHasEnergy;
-    protected Entity owner;
+    private Entity entity;
 
     protected virtual void Init()
     {
-        connectionsList = new();
-        foreach (var tile in owner.TilesInRadius)
-        {
-            if (tile.tileData.IsTaken is Building building)
-            {
+        entity = GetComponent<Entity>();
+        var myTile = mapData.GetTileFromCord(transform.position);
 
-                var carrierEffect = building.Behaviours.FirstOrDefault(effect => effect is EnergyCarrier);
-                if (carrierEffect != null)
-                {
-                    TryConnect((EnergyCarrier)carrierEffect);
-                }
+        foreach (var tile in mapData.GetTilesInRadius(myTile.tileData.CubeCoord, entity.Stats.Radius))
+        {
+            tile.tileData.IsTaken.gameObject.TryGetComponent<EnergyCarrier>(out var component);
+
+            if (component != null)
+            {
+                TryConnect(component);
             }
+
         }
         EventBus.Invoke<OnUpdateNetwork>();
     }
@@ -36,34 +40,53 @@ public abstract class EnergyCarrier : MonoBehaviour, IBehavior
     public virtual void SetActive(bool isActive)
     {
         isHasEnergy = isActive;
-        view.ShowEnergyPoint(isHasEnergy);
+        OnIsActive.Invoke(isHasEnergy);
     }
 
     protected void TryConnect(EnergyCarrier energyCarrier)
     {
-        if ((energyCarrier.type & connections) == 0) return; // 0 если нет совпадений по флагам
+        if ((energyCarrier.type & connectionsType) == 0) return; // 0 если нет совпадений по флагам
 
-        connectionsList.Add(energyCarrier);
-        energyCarrier.connectionsList.Add(this);
+        connections.Add(energyCarrier);
+        energyCarrier.connections.Add(this);
 
-        view.ShowEnergyPoint(true);
-        view.DrawWireTo(energyCarrier.view);
+        OnConect.Invoke(energyCarrier.transform);
     }
 
-    public virtual void TransferEnergy(EnergyData energyData)
+    public virtual void TransferEnergy(EnergyTransferData transferData)
     {
-        if (energyData.Visited.Contains(this)) return;
-        if (energyData.Depth > energyData.MaxDepth) return;
+        if (transferData.Visited.Contains(this)) return;
+        if (transferData.Depth > transferData.MaxDepth) return;
         if (isHasEnergy) return;
 
-        energyData.Visited.Add(this);
+        transferData.Visited.Add(this);
         SetActive(true);
 
-        energyData.Depth += 1;
-        foreach (var neighborKey in connectionsList)
+        transferData.Depth += 1;
+        foreach (var neighbor in connections)
         {
-            neighborKey.TransferEnergy(energyData);
+            neighbor.TransferEnergy(transferData);
         }
+    }
+}
+
+
+public struct EnergyTransferData
+{
+    public HashSet<EnergyCarrier> Visited;
+    public int Depth;
+    public int MaxDepth;
+    public Generator Generator;
+
+    public EnergyTransferData(Generator newGenerator, int newMaxDepth)
+    {
+        Visited = new();
+        Depth = 0;
+
+        MaxDepth = newMaxDepth;
+        Generator = newGenerator;
+
+        Visited.Add(newGenerator);
     }
 }
 

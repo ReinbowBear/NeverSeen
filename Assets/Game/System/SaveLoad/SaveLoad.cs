@@ -6,17 +6,17 @@ using UnityEngine;
 public class SaveLoad
 {
     public string filePath = Path.Combine(MyPaths.SAVE, "Save.json");
-    private GameData gameData;
+    private GeneralData generalData;
 
-    public SaveLoad(GameData gameData)
+    public SaveLoad(GeneralData generalData)
     {
-        this.gameData = gameData;
+        this.generalData = generalData;
     }
 
 
     private void CheckSave()
     {
-        if (gameData.General.IsGameInit) return;
+        if (generalData.IsGameInit) return;
         
         if (File.Exists(filePath))
         {
@@ -34,7 +34,7 @@ public class SaveLoad
         {
             EventBus.Invoke<OnSave>();
 
-            var json = JsonConvert.SerializeObject(gameData);
+            var json = JsonConvert.SerializeObject(generalData);
             Directory.CreateDirectory(MyPaths.SAVE);
             File.WriteAllText(filePath, json);
 
@@ -57,8 +57,8 @@ public class SaveLoad
         try
         {
             string json = File.ReadAllText(filePath);
-            var loadedData = JsonConvert.DeserializeObject<GameData>(json);
-            gameData.LoadData(loadedData);
+            var loadedData = JsonConvert.DeserializeObject<GeneralData>(json);
+            //generalData.LoadData(loadedData);
 
             EventBus.Invoke<OnLoad>();
         }

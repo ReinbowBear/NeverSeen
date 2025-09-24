@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -7,25 +9,28 @@ using Zenject;
 public class ClickHandler : MonoBehaviour
 {
     private Camera cam;
-    public StateMachine StateMachine { get; private set; } = new();
 
-    private Input input;
-    [SerializeField] private Factory factory;
+    private Dictionary<Type, IViewMode> states = new();
+    public IViewMode CurrentState { get; private set; }
 
-    [Inject]
-    public void Construct(Input input)
-    {
-        this.input = input;
-    }
+    [Inject] private Input input;
+    [Inject] private Factory factory;
 
     void Awake()
     {
         cam = Camera.main;
 
-        StateMachine.AddState(new DefaultMode(LayerMask.GetMask("Entity")));
-        StateMachine.AddState(factory.GetClass<EditMode>(LayerMask.GetMask("Tile")));
+        states.Add(typeof(DefaultMode), factory.GetClass<DefaultMode>((LayerMask)LayerMask.GetMask("Entity"))); // без ручного преобразования зенджект жалуется
+        states.Add(typeof(EditMode), factory.GetClass<EditMode>((LayerMask)LayerMask.GetMask("Tile"), this));
 
-        StateMachine.Start<DefaultMode>();
+        SetMode<DefaultMode>();
+    }
+
+
+    public void SetMode<T>() where T : class, IViewMode
+    {
+        var type = typeof(T);
+        CurrentState = states[type];
     }
 
 
@@ -36,11 +41,9 @@ public class ClickHandler : MonoBehaviour
 
         yield return null;
         if (EventSystem.current.IsPointerOverGameObject()) yield break;
+        if (!Physics.Raycast(ray, out RaycastHit hit, 30, CurrentState.GetRayLayer())) yield break;
 
-        var currentMode = StateMachine.CurrentState as IViewMode;
-        if (!Physics.Raycast(ray, out RaycastHit hit, 30, currentMode.GetRayLayer())) yield break;
-
-        currentMode.LeftClick(hit);
+        CurrentState.LeftClick(hit);
     }
 
 
@@ -53,8 +56,7 @@ public class ClickHandler : MonoBehaviour
 
         if ((mousePos - UnityEngine.Input.mousePosition).magnitude <= 100f) // срабатывает если разница не более number float
         {
-            var currentMode = StateMachine.CurrentState as IViewMode;
-            currentMode.RightClick();
+            CurrentState.RightClick();
         }
     }
 

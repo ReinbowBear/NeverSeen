@@ -10,7 +10,7 @@ public class AudioService : IInitializable
     [SerializeField] private AudioSettingsSO settings;
 
     private Dictionary<SoundType, AudioSource> sources = new();
-    private Dictionary<AudioSO, PitchStackData> pitchStacks = new();
+    private Dictionary<SoundSO, PitchStackData> pitchStacks = new();
     private ObjectPool pool = new ObjectPool("Sound", true);
 
     private class PitchStackData
@@ -25,7 +25,7 @@ public class AudioService : IInitializable
     }
 
 
-    public void Play(AudioSO data)
+    public void Play(SoundSO data)
     {
         var source = sources[data.Type];
         source.clip = data.Sound;
@@ -51,7 +51,7 @@ public class AudioService : IInitializable
     }
 
 
-    private void PlayStackedSound(AudioSO data) // тон шепарда
+    private void PlayStackedSound(SoundSO data) // тон шепарда
     {
         if (!pitchStacks.TryGetValue(data, out var stack))
         {

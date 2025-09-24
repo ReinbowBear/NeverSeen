@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -27,22 +26,10 @@ public class MapGenerator : MonoBehaviour
     private Dictionary<Vector3Int, TileData> tilesData; // Vector3Int нужен для установки соседей, да и в целом весь список для генерации данных карты
     private List<TileData> freeTiles;
 
-    [SerializeField] private Factory objectFactory;
-    private GameMapData mapData;
-    private MyRandom random;
+    [Inject] private Factory factory;
+    [Inject] private TileMapData mapData;
+    [Inject] private MyRandom random;
 
-    [Inject]
-    public void Construct(GameData gameData, MyRandom random)
-    {
-        this.mapData = gameData.GameMap;
-        this.random = random;
-    }
-
-    void Start()
-    {
-        EventBus.Invoke<OnSceneStart>();
-        Debug.Log("костыльный запуск");
-    }
 
     [EventHandler(Priority.low)]
     private void GenerateMap(OnSceneStart _)
@@ -76,7 +63,7 @@ public class MapGenerator : MonoBehaviour
     #region DisplayMap
     private IEnumerator DisplayMap()
     {
-        var handle = objectFactory.GetAsset("Tile");
+        var handle = factory.GetAsset("Tile");
         yield return new WaitUntil(() => handle.IsCompleted);
 
         foreach (var tileData in tilesData.Values)

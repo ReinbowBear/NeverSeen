@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class EventBusRegister
 {
@@ -14,7 +15,7 @@ public static class EventBusRegister
         Register<OnSceneStart>();
         Register<OnSceneRelease>();
 
-        Register<OnNewBuilding>();
+        Register<OnNewEntity>();
         Register<OnUpdateNetwork>();
         Register<OnGameOver>();
     }
@@ -35,7 +36,10 @@ public class OnLoad : EventArgs { }
 #endregion
 
 #region UI
-
+public class OnChoise : EventArgs
+{
+    public GameObject Obj;
+}
 #endregion
 
 #region Scene
@@ -44,7 +48,7 @@ public class OnSceneRelease : EventArgs { }
 #endregion
 
 #region gamelay
-public class OnNewBuilding : EventArgs { }
+public class OnNewEntity : EventArgs { }
 public class OnUpdateNetwork : EventArgs { }
 public class OnGameOver : EventArgs { }
 #endregion
