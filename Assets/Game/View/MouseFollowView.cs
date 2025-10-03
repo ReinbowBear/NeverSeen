@@ -54,6 +54,7 @@ public class MouseFollowView : MonoBehaviour
             }
 
             objectToMove.transform.position = hit.transform.position;
+            originalCords = objectToMove.transform.position;
             OnMoveToTarget.Invoke();
 
             yield return null;

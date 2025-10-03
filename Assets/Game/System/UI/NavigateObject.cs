@@ -9,9 +9,9 @@ public class NavigateObject : MonoBehaviour
     [SerializeField] private Panel panel;
 
 
-    public void OnButtonChose(MyButton button)
+    public void OnButtonChose()
     {
-        CoroutineManager.Start(MoveToButton(button.transform), this);
+        CoroutineManager.Start(MoveToButton(panel.CurrentButton.transform), this);
     }
 
     private IEnumerator MoveToButton(Transform target)

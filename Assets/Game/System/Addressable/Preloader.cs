@@ -1,32 +1,17 @@
-using System.Collections;
 using UnityEngine;
 using Zenject;
 
 public class Preloader : MonoBehaviour
 {
-    [SerializeField] private string[] preloadKeys;
-    private bool isInit;
-
+    [Inject] private InventoryData inventory;
     [Inject] private Factory factory;
 
     async void Awake()
     {
-        foreach (var key in preloadKeys)
-        {
-            await factory.GetAsset(key);
-        }
-        isInit = true;
-    }
+        await factory.GetAsset("Generator");
+        await factory.GetAsset("Miner");
+        await factory.GetAsset("Storage");
 
-    void Start()
-    {
-        StartCoroutine(WaitToStart()); 
-    }
-
-
-    private IEnumerator WaitToStart()
-    {
-        yield return new WaitUntil(() => isInit == true);
         EventBus.Invoke<OnSceneStart>();
     }
 

@@ -10,13 +10,20 @@ public class Factory
 {
     private Dictionary<string, AsyncOperationHandle<GameObject>> handles = new();
     private DiContainer diContainer;
+    private World world;
 
-    [Inject]
-    public void Construct(DiContainer diContainer)
+    public Factory(DiContainer diContainer, World world)
     {
         this.diContainer = diContainer;
+        this.world = world;
     }
 
+
+    public async Task<GameObject> Create(string key)
+    {
+        var prefab = await GetAsset(key);
+        return Instantiate(prefab); 
+    }
 
     public async Task<GameObject> GetAsset(string key)
     {
@@ -35,17 +42,12 @@ public class Factory
         return handle.Result;
     }
 
-
-    public async Task<GameObject> Create(string key)
-    {
-        var prefab = await GetAsset(key);
-        return Instantiate(prefab); 
-    }
-
     public GameObject Instantiate(GameObject prefab)
     {
         var obj = diContainer.InstantiatePrefab(prefab);
         obj.transform.SetParent(null);
+
+        world.AddEntity(obj);
         return obj;
     }
 

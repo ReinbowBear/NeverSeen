@@ -7,6 +7,10 @@ public interface ISaveable<T> where T : struct
     void SetData(T data);
 }
 
+public interface IStateMachine
+{
+    void SetState(string stateName);
+}
 public interface IState
 {
     void Enter();

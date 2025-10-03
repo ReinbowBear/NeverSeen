@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
 
-public abstract class EnergyCarrier : MonoBehaviour
+public abstract class EnergyCarrier : MonoBehaviour, IInitializable
 {
     public EnergyCarrierType type;
     public EnergyCarrierType connectionsType;
@@ -14,11 +14,11 @@ public abstract class EnergyCarrier : MonoBehaviour
     [Space]
     public UnityEvent<bool> OnIsActive;
     public UnityEvent<Transform> OnConect;
-    [Inject] TileMapData mapData;
+    [Inject] TileMap mapData;
 
     private Entity entity;
 
-    protected virtual void Init()
+    public virtual void Initialize()
     {
         entity = GetComponent<Entity>();
         var myTile = mapData.GetTileFromCord(transform.position);
@@ -56,37 +56,17 @@ public abstract class EnergyCarrier : MonoBehaviour
     public virtual void TransferEnergy(EnergyTransferData transferData)
     {
         if (transferData.Visited.Contains(this)) return;
-        if (transferData.Depth > transferData.MaxDepth) return;
-        if (isHasEnergy) return;
 
         transferData.Visited.Add(this);
-        SetActive(true);
+        if (!isHasEnergy)
+        {
+            SetActive(true);
+        }
 
-        transferData.Depth += 1;
         foreach (var neighbor in connections)
         {
             neighbor.TransferEnergy(transferData);
         }
-    }
-}
-
-
-public struct EnergyTransferData
-{
-    public HashSet<EnergyCarrier> Visited;
-    public int Depth;
-    public int MaxDepth;
-    public Generator Generator;
-
-    public EnergyTransferData(Generator newGenerator, int newMaxDepth)
-    {
-        Visited = new();
-        Depth = 0;
-
-        MaxDepth = newMaxDepth;
-        Generator = newGenerator;
-
-        Visited.Add(newGenerator);
     }
 }
 

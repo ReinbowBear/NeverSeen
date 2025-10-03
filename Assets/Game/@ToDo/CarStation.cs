@@ -12,7 +12,7 @@ public class CarStation : MonoBehaviour
     private HashSet<Transform> pathPoints = new();
     private HashSet<Transform> reversPoints;
     [SerializeField] protected Entity owner;
-    [SerializeField] protected TileMapData mapData;
+    [SerializeField] protected TileMap mapData;
 
     public void Init()
     {

@@ -61,8 +61,10 @@ public class Panel : MonoBehaviour
     }
 
 
-    private void OnButtonChose(MyButton newButton)
+    private void OnButtonChose()
     {
+        Debug.Log("панель не знает куда ты навёлся!");
+        var newButton = CurrentButton;
         if (newButton == CurrentButton) return;
 
         CurrentButton.OnExit();

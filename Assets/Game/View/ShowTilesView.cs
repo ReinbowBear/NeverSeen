@@ -7,15 +7,15 @@ public class ShowTilesView : MonoBehaviour
     public int Radius;
 
     private List<Tile> tilesInRadius = new();
-    private TileMapData mapData;
+    private TileMap mapData;
 
     [Inject]
-    public void Construct(TileMapData mapData)
+    public void Construct(TileMap mapData)
     {
         this.mapData = mapData;
     }
 
-
+    
     public void ShowTiles()
     {
         SetTileslight(false);
@@ -26,7 +26,7 @@ public class ShowTilesView : MonoBehaviour
         SetTileslight(true);
     }
 
-    public void HideTiles() // подразумевается что тайлы светятся
+    public void HideTiles()
     {
         SetTileslight(false);
     }
@@ -41,7 +41,7 @@ public class ShowTilesView : MonoBehaviour
     }
 
 
-    void OnDestroy()
+    void OnDisable()
     {
         SetTileslight(false);
     }

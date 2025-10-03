@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,11 +5,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class ClickHandler : MonoBehaviour
+public class ClickHandler : MonoBehaviour, IStateMachine
 {
     private Camera cam;
 
-    private Dictionary<Type, IViewMode> states = new();
+    public EnumPanel buildPanel;
+
+    private Dictionary<ViewMode, IViewMode> states;
     public IViewMode CurrentState { get; private set; }
 
     [Inject] private Input input;
@@ -19,18 +20,42 @@ public class ClickHandler : MonoBehaviour
     void Awake()
     {
         cam = Camera.main;
+    
+        states = new Dictionary<ViewMode, IViewMode>
+        {
+            { ViewMode.view, factory.GetClass<DefaultMode>((LayerMask)LayerMask.GetMask("Tile")) },
+            { ViewMode.edit, factory.GetClass<EditMode>((LayerMask)LayerMask.GetMask("Tile"), this) }
+        };
 
-        states.Add(typeof(DefaultMode), factory.GetClass<DefaultMode>((LayerMask)LayerMask.GetMask("Entity"))); // без ручного преобразования зенджект жалуется
-        states.Add(typeof(EditMode), factory.GetClass<EditMode>((LayerMask)LayerMask.GetMask("Tile"), this));
-
-        SetMode<DefaultMode>();
+        SetMode(ViewMode.view);
     }
 
 
-    public void SetMode<T>() where T : class, IViewMode
+    public void SetState(string stateName)
     {
-        var type = typeof(T);
-        CurrentState = states[type];
+        
+    }
+
+    public void ToggleMode(int newMode)
+    {
+        if (CurrentState is DefaultMode)
+        {
+            SetMode((ViewMode)newMode);
+        }
+        else
+        {
+            SetMode(ViewMode.view);
+        }
+    }
+
+    public void SetMode(ViewMode mode)
+    {
+        if (states.TryGetValue(mode, out var newState))
+        {
+            if (CurrentState == newState) return;
+            CurrentState = newState;
+            Debug.Log(CurrentState.GetType());
+        }
     }
 
 
@@ -72,4 +97,9 @@ public class ClickHandler : MonoBehaviour
         input.GamePlay.MouseLeft.started -= LeftClick;
         input.GamePlay.MouseRight.started -= RightClick;
     }
+}
+
+public enum ViewMode
+{
+    view, edit
 }

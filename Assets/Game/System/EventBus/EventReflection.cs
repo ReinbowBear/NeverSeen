@@ -100,7 +100,7 @@ public class EventHandlerAttribute : Attribute
 {
     public Priority Priority { get; }
 
-    public EventHandlerAttribute(Priority priority = 0)
+    public EventHandlerAttribute(Priority priority)
     {
         Priority = priority;
     }

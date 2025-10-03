@@ -1,37 +1,25 @@
 
 public class EnergyUser : EnergyCarrier, ICondition
 {
-    private short usedEnergy;
-    private IBehavior effect;
-
-    public EnergyUser(short usedEnergy, IBehavior effect)
-    {
-        this.usedEnergy = usedEnergy;
-        this.effect = effect;
-
-        type = EnergyCarrierType.User;
-        connectionsType = EnergyCarrierType.Generator | EnergyCarrierType.Tower;
-    }
+    public short usedEnergy;
 
     public bool IsConditionMet()
     {
-        return true;
+        return isHasEnergy;
     }
 
-    public override void SetActive(bool isActive)
+    public override void TransferEnergy(EnergyTransferData transferData)
     {
-        base.SetActive(isActive);
-        effect.SetActive(isActive);
-    }
+        if (transferData.Visited.Contains(this)) return;
+        if (transferData.EnergyLeft! >= usedEnergy) return;
 
-    public override void TransferEnergy(EnergyTransferData energyData)
-    {
-        if (energyData.Visited.Contains(this)) return;
-        if (energyData.Depth > energyData.MaxDepth) return;
-        if (isHasEnergy) return;
+        transferData.Visited.Add(this);
+        transferData.EnergyLeft -= usedEnergy;
+        SetActive(true);
 
-        energyData.Visited.Add(this);
-        isHasEnergy = energyData.Generator.GetEnergy(this, usedEnergy);
-        SetActive(isHasEnergy);
+        foreach (var neighbor in connections)
+        {
+            neighbor.TransferEnergy(transferData);
+        }
     }
 }

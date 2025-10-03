@@ -2,19 +2,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class TileMapData
+public class TileMap
 {
-    public Dictionary<Vector3Int, Tile> TileMap = new();
-    public List<Entity> Buildings = new();
-    public Entity CurrentEntity;
+    public Dictionary<Vector3Int, Tile> Tiles = new();
 
-    public bool CanPlace(Tile center, ShapeType shapeType)
+
+    public bool IsCanPlace(Tile center, ShapeType shapeType)
     {
         foreach (var offset in Shape.Shapes[shapeType])
         {
             Vector3Int tilePos = center.tileData.CubeCoord + offset;
 
-            if (TileMap.TryGetValue(tilePos, out Tile tileOnMap) == false) return false;
+            if (Tiles.TryGetValue(tilePos, out Tile tileOnMap) == false) return false;
 
             if (tileOnMap.tileData.IsTaken != null) return false;
 
@@ -37,7 +36,7 @@ public class TileMapData
                 Vector3Int offset = new Vector3Int(cubeX, cubeY, cubeZ);
                 Vector3Int neighborCoord = center + offset;
 
-                if (TileMap.TryGetValue(neighborCoord, out Tile newTile))
+                if (Tiles.TryGetValue(neighborCoord, out Tile newTile))
                 {
                     result.Add(newTile);
                 }

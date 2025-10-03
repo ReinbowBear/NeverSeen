@@ -6,8 +6,9 @@ public class ProjectInstaller : MonoInstaller // https://www.youtube.com/watch?v
     public override void InstallBindings()
     {
         Container.Bind<GeneralData>().AsSingle();
-        Container.Bind<TileMapData>().AsSingle();
+        Container.Bind<TileMap>().AsSingle();
         Container.Bind<InventoryData>().AsSingle();
+        Container.Bind<World>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<Input>().AsSingle();
         Container.Bind<Factory>().AsSingle();

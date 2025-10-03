@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9d9f37cec8fbe344bd428531627b40e, type: 3}
-  m_Name: PanelSounds
+  m_Name: OpenPanel
   m_EditorClassIdentifier: 
   AudioClips:
   - Name: Open

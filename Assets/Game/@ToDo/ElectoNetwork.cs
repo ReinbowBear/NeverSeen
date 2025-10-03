@@ -1,46 +1,30 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class ElectoNetwork : MonoBehaviour
 {
-    private List<EnergyCarrier> energyCarriers = new();
-    private List<Generator> generators = new();
+    [Inject] World world;
 
-
-    public void AddEnergyCarrier(EnergyCarrier carrier)
+    [EventHandler(Priority.low)]
+    public void UpdateNetwork(OnUpdateNetwork _)
     {
-        if (carrier is Generator generator)
-        {
-            generators.Add(generator);
-            return;
-        }
-
-        energyCarriers.Add(carrier);
-    }
-
-    public void RemoveEnergyCarrier(EnergyCarrier carrier)
-    {
-        if (carrier is Generator generator)
-        {
-            generators.Remove(generator);
-            return;
-        }
-
-        energyCarriers.Remove(carrier);
-    }
-
-    [EventHandler]
-    public void UpdateNetwork(OnUpdateNetwork onUpdate)
-    {
-        foreach (var carrier in energyCarriers)
-        {
-            carrier.SetActive(false);
-        }
+        var users = world.GetEntityWithComponents<EnergyUser>();
+        var generators = world.GetEntityWithComponents<Generator>();
 
         foreach (var generator in generators)
         {
             generator.SetActive(true);
+        }
+
+        foreach (var generator in generators)
+        {
+            foreach (var conect in generator.connections)
+            {
+                if (conect is EnergyUser && users.Contains(conect as EnergyUser) && !generator.connections.Contains(conect))
+                {
+                    conect.SetActive(false);
+                }
+            }
         }
     }
 }

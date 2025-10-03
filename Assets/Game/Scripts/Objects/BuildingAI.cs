@@ -1,19 +1,27 @@
 using UnityEngine;
+using Zenject;
 
-public class BuildingAI : MonoBehaviour
+public class BuildingAI : MonoBehaviour, IInitializable
 {
-    public ICondition[] conditions;
-
+    private ICondition[] conditions;
     private IBehavior[] Behaviours;
 
-    void Start()
+    public void Initialize()
     {
+        GetComponents<IInitializable>().Initialize();
+        conditions = GetComponents<ICondition>();
         Behaviours = GetComponents<IBehavior>();
+        SetActive(true);
     }
 
 
     public void SetActive(bool isActive)
     {
+        foreach (var condition in conditions)
+        {
+            if (!condition.IsConditionMet()) return;
+        }
+
         foreach (var behaviour in Behaviours)
         {
             behaviour.SetActive(isActive);

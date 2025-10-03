@@ -9,6 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3476123929469640299}
+  - component: {fileID: 8668467497050565680}
+  - component: {fileID: 4328896470564832645}
+  - component: {fileID: 208519094295904034}
   m_Layer: 3
   m_Name: Tower
   m_TagString: Untagged
@@ -34,6 +37,96 @@ Transform:
   - {fileID: 4338105124799053932}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8668467497050565680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840557412688496580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d4758d58bc0e641b1b9d20cc99c005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4328896470564832645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840557412688496580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150a5c44b87e5954e9982b94f9f0a163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3562486276911157289}
+        m_TargetAssemblyTypeName: ShowTilesView, Assembly-CSharp
+        m_MethodName: ShowTiles
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  Stats:
+    audio: {fileID: 0}
+    Cost: 0
+    Radius: 0
+    Shape: 0
+--- !u!114 &208519094295904034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840557412688496580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6a2532cdf19c374598e8b805cf3e929, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  connectionsType: 0
+  connections: []
+  isHasEnergy: 0
+  OnIsActive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5795858351311462847}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnConect:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2626147035649730792}
+        m_TargetAssemblyTypeName: ChainView, Assembly-CSharp
+        m_MethodName: DrawTo
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3143393264330402048
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,6 +255,8 @@ GameObject:
   - component: {fileID: 1224571227045692126}
   - component: {fileID: 3415238485825149720}
   - component: {fileID: 444603558465257853}
+  - component: {fileID: 3562486276911157289}
+  - component: {fileID: 2626147035649730792}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -237,3 +332,30 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &3562486276911157289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6440461492883272264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c742f00cfba35034d84184108135cc6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Radius: 2
+--- !u!114 &2626147035649730792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6440461492883272264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ea3b0d1e81b124597515b2d700de7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChainPref: {fileID: 1293371968335305080, guid: c0b7a629c8c336041898884fbc3a1fd2, type: 3}
+  ChainPoint: {fileID: 4512792145544087394}

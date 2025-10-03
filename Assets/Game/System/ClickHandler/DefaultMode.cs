@@ -3,12 +3,12 @@ using UnityEngine;
 public class DefaultMode : IViewMode
 {
     private LayerMask rayLayer;
-    private TileMapData mapData;
+    private World world;
 
-    public DefaultMode(LayerMask  rayLayer, TileMapData mapData)
+    public DefaultMode(LayerMask  rayLayer, World world)
     {
         this.rayLayer = rayLayer;
-        this.mapData = mapData;
+        this.world = world;
     }
 
 
@@ -22,16 +22,17 @@ public class DefaultMode : IViewMode
     {
         RightClick();
 
-        mapData.CurrentEntity = hit.transform.gameObject.GetComponent<Entity>();
-        mapData.CurrentEntity.Selected(true);
+        var tile = hit.transform.gameObject.GetComponent<Tile>();
+        world.ChosenEntity = tile.tileData.IsTaken;
+        world.ChosenEntity?.Selected(true);
     }
 
     public void RightClick()
     {
-        if (mapData.CurrentEntity != null)
+        if (world.ChosenEntity != null)
         {
-            mapData.CurrentEntity.Selected(false);
-            mapData.CurrentEntity = null;
+            world.ChosenEntity.Selected(false);
+            world.ChosenEntity = null;
         }
     }
 }

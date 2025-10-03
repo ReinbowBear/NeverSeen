@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class MyButton : Button
 {
-    public Action<MyButton> OnButtonEnter;
+    public Action OnButtonEnter;
     public Action OnButtonExit;
 
-    public override void OnPointerEnter(PointerEventData pointerEventData) // интерфейсы наведения мышкой
+    public override void OnPointerEnter(PointerEventData pointerEventData)
     {
         base.OnPointerEnter(pointerEventData);
         OnEnter();
@@ -16,10 +16,10 @@ public class MyButton : Button
 
     public void OnEnter()
     {
-        OnButtonEnter?.Invoke(this);
+        OnButtonEnter?.Invoke();
     }
 
-    public void OnExit() // панель следит за наведением на новую кнопку и отключает старые
+    public void OnExit()
     {
         OnButtonExit?.Invoke();
     }

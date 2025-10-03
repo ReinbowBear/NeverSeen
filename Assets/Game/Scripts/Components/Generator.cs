@@ -1,60 +1,40 @@
 using System.Collections.Generic;
+using UnityEngine.Events;
 
 public class Generator : EnergyCarrier
 {
-    private IBarView barView;
-    private List<EnergyUser> generatorUsers = new();
+    public UnityEvent<float, float> OnValueChanged;
 
-    private short maxEnergy;
-    private short energy;
-    private short range;
+    public int maxEnergy;
+    public int CurrentEnergy;
 
-    public Generator(short maxEnergy, short range, IBarView barView)
+    public HashSet<EnergyCarrier> allConections { get; private set; }
+
+    public override void Initialize()
     {
-        this.maxEnergy = maxEnergy;
-        this.range = range;
-        this.barView = barView;
-
-        energy = maxEnergy;
+        base.Initialize();
+        OnValueChanged.Invoke(maxEnergy, maxEnergy);
     }
 
-    protected override void Init()
+    public override void SetActive(bool isActive) // не умеет выключать
     {
-        base.Init();
-        barView.ChangeValue(energy, maxEnergy);
+        var energyData = new EnergyTransferData(maxEnergy);
+        TransferEnergy(energyData);
+
+        CurrentEnergy = energyData.EnergyLeft;
+        allConections = energyData.Visited;
+        OnValueChanged.Invoke(CurrentEnergy, maxEnergy);
     }
+}
 
-    public override void SetActive(bool isActive)
+public class EnergyTransferData
+{
+    public HashSet<EnergyCarrier> Visited;
+    public int EnergyLeft;
+
+    public EnergyTransferData(int maxEnergy)
     {
-        base.Init();
-        TransferEnergy(new EnergyTransferData(this, range));
-
-        barView.ChangeValue(energy, maxEnergy);
-        barView.DrawBar(false);
-    }
-
-
-    public bool GetEnergy(EnergyUser newUser, short usedEnergy)
-    {
-        if (energy < usedEnergy) return false;
-
-        generatorUsers.Add(newUser);
-        energy -= usedEnergy;
-        return true;
-    }
-
-    public void ReleaseEnergy(EnergyUser oldUser, short usedEnergy)
-    {
-        if (!generatorUsers.Contains(oldUser)) return;
-
-        generatorUsers.Remove(oldUser);
-        energy += usedEnergy;
-    }
-
-
-    public void Selected(bool isSelected) // надо подписать на выделение
-    {
-        //rotateBar.enabled = isSelected;
-        //energyBar.FadeBar(isSelected ? 1f : 0f);
+        Visited = new();
+        EnergyLeft = maxEnergy;
     }
 }

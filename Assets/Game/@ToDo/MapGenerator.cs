@@ -27,7 +27,7 @@ public class MapGenerator : MonoBehaviour
     private List<TileData> freeTiles;
 
     [Inject] private Factory factory;
-    [Inject] private TileMapData mapData;
+    [Inject] private TileMap mapData;
     [Inject] private MyRandom random;
 
 
@@ -78,7 +78,7 @@ public class MapGenerator : MonoBehaviour
             Tile component = obj.GetComponent<Tile>();
             component.tileData = tileData;
 
-            mapData.TileMap.Add(tileData.CubeCoord, component);
+            mapData.Tiles.Add(tileData.CubeCoord, component);
         }
         tilesData = null;
         freeTiles = null;

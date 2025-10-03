@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2203367325512035426}
   - component: {fileID: 6884737745847986992}
   - component: {fileID: 4727505726211962564}
+  - component: {fileID: 2096019668435629325}
+  - component: {fileID: 1435262737881576105}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -86,6 +88,33 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2096019668435629325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169142069606875803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7ea3b0d1e81b124597515b2d700de7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ChainPref: {fileID: 1293371968335305080, guid: c0b7a629c8c336041898884fbc3a1fd2, type: 3}
+  ChainPoint: {fileID: 8370900833243587390}
+--- !u!114 &1435262737881576105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169142069606875803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c742f00cfba35034d84184108135cc6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Radius: 2
 --- !u!1 &4737788313591192547
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +244,6 @@ GameObject:
   - component: {fileID: 7509227552111747309}
   - component: {fileID: 6510588067618633764}
   - component: {fileID: 8406513939859752057}
-  - component: {fileID: 4154817848877116045}
   m_Layer: 3
   m_Name: Generator
   m_TagString: Untagged
@@ -269,20 +297,34 @@ MonoBehaviour:
   OnSelected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 0
+      - m_Target: {fileID: 1435262737881576105}
+        m_TargetAssemblyTypeName: ShowTilesView, Assembly-CSharp
+        m_MethodName: ShowTiles
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnDiselected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1435262737881576105}
+        m_TargetAssemblyTypeName: ShowTilesView, Assembly-CSharp
+        m_MethodName: HideTiles
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
   Stats:
-    Name: 
     audio: {fileID: 0}
     Cost: 0
     Radius: 2
@@ -321,7 +363,7 @@ MonoBehaviour:
   OnConect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4154817848877116045}
+      - m_Target: {fileID: 2096019668435629325}
         m_TargetAssemblyTypeName: ChainView, Assembly-CSharp
         m_MethodName: DrawTo
         m_Mode: 0
@@ -333,20 +375,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4154817848877116045
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6871088436327219803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7ea3b0d1e81b124597515b2d700de7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ChainPref: {fileID: 1293371968335305080, guid: c0b7a629c8c336041898884fbc3a1fd2, type: 3}
-  ChainPoint: {fileID: 8370900833243587390}
+  OnValueChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8904935886966503804}
+        m_TargetAssemblyTypeName: MyBar, Assembly-CSharp
+        m_MethodName: SetValue
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  maxEnergy: 10
+  CurrentEnergy: 0
 --- !u!1 &8288346965034431915
 GameObject:
   m_ObjectHideFlags: 0
@@ -572,5 +617,16 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fc5c85cbc2117d4b924e1ad2b8685e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8904935886966503804 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6149211206633933276, guid: c6ec4a434a34d12419ccf4d58c14155d, type: 3}
+  m_PrefabInstance: {fileID: 3369487474454720672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

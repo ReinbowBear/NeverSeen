@@ -3,15 +3,17 @@ using UnityEngine;
 public class EditMode : IViewMode
 {
     private LayerMask rayLayer;
-    private TileMapData mapData;
+    private TileMap tileMap;
+    private World world;
 
     private ClickHandler clickHandler;
 
-    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMapData mapData)
+    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMap tileMap, World world)
     {
         this.rayLayer = rayLayer;
         this.clickHandler = clickHandler;
-        this.mapData = mapData;
+        this.tileMap = tileMap;
+        this.world = world;
     }
 
 
@@ -23,9 +25,9 @@ public class EditMode : IViewMode
 
     public void LeftClick(RaycastHit hit)
     {
-        if (mapData.CurrentEntity == null)
+        if (world.ChosenEntity == null)
         {
-            clickHandler.SetMode<DefaultMode>();
+            clickHandler.SetMode(0);
             return;
         }
 
@@ -35,27 +37,25 @@ public class EditMode : IViewMode
 
     public void RightClick()
     {
-        if (mapData.CurrentEntity == null) return;
+        if (world.ChosenEntity == null) return;
 
-        GameObject.Destroy(mapData.CurrentEntity.gameObject);
-        mapData.CurrentEntity = null;
+        GameObject.Destroy(world.ChosenEntity.gameObject);
+        world.ChosenEntity = null;
     }
 
     private void TryPlace(Tile newTile)
     {
-        var entity = mapData.CurrentEntity;
-        if (mapData.CanPlace(newTile, entity.Stats.Shape))
+        var entity = world.ChosenEntity;
+        if (tileMap.IsCanPlace(newTile, entity.Stats.Shape))
         {
             foreach (var offset in Shape.Shapes[entity.Stats.Shape])
             {
                 Vector3Int tilePos = newTile.tileData.CubeCoord + offset;
-                mapData.TileMap[tilePos].tileData.IsTaken = entity;
+                tileMap.Tiles[tilePos].tileData.IsTaken = entity;
             }
-            //entity.transform.position = newTile.transform.position; // позиция объекта устанавливается через MouseFollowView
-            mapData.CurrentEntity = null;
-
-            Tween.Spawn(entity.transform);
-            Debug.Log("тут ещё активация здания походу должна быть");
+            world.ChosenEntity = null;
+            entity.GetComponent<BuildingAI>().Initialize();
+            //Tween.Spawn(entity.transform);
         }
         else
         {
