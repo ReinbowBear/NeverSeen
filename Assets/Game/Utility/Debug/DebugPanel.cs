@@ -65,7 +65,7 @@ public class DebugPanel : MonoBehaviour
 
             var btnGO = Instantiate(commandButtonPrefab, commandContainer);
             var btnText = btnGO.GetComponentInChildren<Text>();
-            var button = btnGO.GetComponent<Button>();
+            var button = btnGO.GetComponent<UnityEngine.UI.Button>();
 
             btnText.text = $"{commandName} ({paramInfo.Length})";
 

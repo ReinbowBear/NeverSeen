@@ -3,9 +3,9 @@ using UnityEngine;
 public class DefaultMode : IViewMode
 {
     private LayerMask rayLayer;
-    private World world;
+    private EntityRegistry world;
 
-    public DefaultMode(LayerMask  rayLayer, World world)
+    public DefaultMode(LayerMask  rayLayer, EntityRegistry world)
     {
         this.rayLayer = rayLayer;
         this.world = world;

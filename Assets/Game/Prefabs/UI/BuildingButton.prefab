@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2189833859249507789}
   - component: {fileID: 3790704713343533714}
   - component: {fileID: 6725832778804529229}
+  - component: {fileID: 220072950181088875}
+  - component: {fileID: 6622472024242999873}
   m_Layer: 5
   m_Name: BuildingButton
   m_TagString: Untagged
@@ -91,6 +93,33 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &220072950181088875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552084447885482075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f376e44050d7a844bfb890af2d5bad1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6622472024242999873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552084447885482075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29bcbeb1b8c98d841ab0ce6f0b57f4a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelPos: {fileID: 2189833859249507789}
+  modelRotation: {x: 0, y: 180, z: 0}
+  targetSize: 1
 --- !u!1 &1923107642137371508
 GameObject:
   m_ObjectHideFlags: 0
@@ -176,7 +205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29bcbeb1b8c98d841ab0ce6f0b57f4a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: {fileID: 6725832778804529229}
   modelPos: {fileID: 4310444569800779813}
   modelRotation: {x: 0, y: 180, z: 0}
   targetSize: 1

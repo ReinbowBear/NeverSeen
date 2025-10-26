@@ -31,7 +31,6 @@ public class MapGenerator : MonoBehaviour
     [Inject] private MyRandom random;
 
 
-    [EventHandler(Priority.low)]
     private void GenerateMap(OnSceneStart _)
     {
         tilesData = new();

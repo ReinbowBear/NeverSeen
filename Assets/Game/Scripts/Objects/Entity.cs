@@ -1,26 +1,24 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Entity : MonoBehaviour
+public class EntityOld : MonoBehaviour
 {
     public UnityEvent OnSelected;
     public UnityEvent OnDiselected;
 
-    public EntityStats Stats;
+    public int Cost;
+    public ShapeType Shape;
+
 
     public void Selected(bool isSelected)
     {
         var myEvent = isSelected ? OnSelected : OnDiselected;
         myEvent.Invoke();
     }
-}
 
-[System.Serializable]
-public struct EntityStats
-{
-    public SoundSO audio;
-    [Space]
-    public int Cost;
-    public int Radius;
-    public ShapeType Shape;
+
+    void OnDisable()
+    {
+        Selected(false);
+    }
 }

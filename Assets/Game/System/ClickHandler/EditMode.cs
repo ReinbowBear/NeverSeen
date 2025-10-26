@@ -4,11 +4,11 @@ public class EditMode : IViewMode
 {
     private LayerMask rayLayer;
     private TileMap tileMap;
-    private World world;
+    private EntityRegistry world;
 
     private ClickHandler clickHandler;
 
-    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMap tileMap, World world)
+    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMap tileMap, EntityRegistry world)
     {
         this.rayLayer = rayLayer;
         this.clickHandler = clickHandler;
@@ -46,15 +46,17 @@ public class EditMode : IViewMode
     private void TryPlace(Tile newTile)
     {
         var entity = world.ChosenEntity;
-        if (tileMap.IsCanPlace(newTile, entity.Stats.Shape))
+        if (tileMap.IsCanPlace(newTile, entity.Shape))
         {
-            foreach (var offset in Shape.Shapes[entity.Stats.Shape])
+            foreach (var offset in Shape.Shapes[entity.Shape])
             {
                 Vector3Int tilePos = newTile.tileData.CubeCoord + offset;
                 tileMap.Tiles[tilePos].tileData.IsTaken = entity;
             }
             world.ChosenEntity = null;
-            entity.GetComponent<BuildingAI>().Initialize();
+
+            if(entity.TryGetComponent<Initialazer>(out var component)) component.Initialize();
+
             //Tween.Spawn(entity.transform);
         }
         else

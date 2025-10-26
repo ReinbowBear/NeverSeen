@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Zenject;
 
 public class EnumPanel : MonoBehaviour
@@ -8,57 +9,38 @@ public class EnumPanel : MonoBehaviour
     public GameObject ItemPref;
 
     [Inject] private Factory factory;
-    [Inject] private World world;
     [Inject] private InventoryData inventory;
 
-    private Dictionary<string, MyButton> Buttons = new();
-    private Dictionary<MyButton, UnityAction> SubLamdas = new();
+    private Dictionary<string, Button> Buttons = new();
+    private Dictionary<Button, UnityAction> SubLamdas = new();
 
-    public void CheckItems()
+    public void CheckItems(OnSceneStart _)
     {
-        foreach (var key in inventory.buildings.Keys)
+        foreach (var value in inventory.buildings.Values)
         {
-            if (Buttons.ContainsKey(key)) continue;
-            AddBuilding(key);
+            if (Buttons.ContainsKey(value)) continue;
+            AddPref(value);
         }
     }
 
-    public async void AddBuilding(string buildingName)
+    public async void AddPref(string buildingName)
     {
-        await factory.GetAsset(buildingName);
+        var asset = await factory.GetAsset(buildingName);
 
-        var buttonObj = Instantiate(ItemPref, transform);
-        var Button = buttonObj.GetComponent<MyButton>();
+        var buttonObj = factory.Instantiate(ItemPref, transform);
+        var Button = buttonObj.GetComponent<Button>();
+        var GetBuildingSript = buttonObj.GetComponent<GetBuilding>();
+        var modelView = buttonObj.GetComponent<MeshButtonView>();
 
-        UnityAction action = () => GetBuilding(buildingName);
+        UnityAction action = () => GetBuildingSript.GetBuildingToMouse(buildingName);
         SubLamdas.Add(Button, action);
         Button.onClick.AddListener(action);
+
+        modelView.SetModel(asset);
     }
 
 
-    public async void GetBuilding(string buildingName)
-    {
-        if (world.ChosenEntity != null) return;
-
-        var obj = await factory.Create(buildingName);
-        world.ChosenEntity = obj.GetComponent<Entity>();
-
-        var mouseFollow = obj.AddComponent<MouseFollowView>();
-        mouseFollow.Init(obj, LayerMask.GetMask("Tile"), null);
-
-        var showTiles = obj.AddComponent<ShowTilesView>();
-        showTiles.Radius = world.ChosenEntity.Stats.Radius;
-        mouseFollow.OnMoveToTarget.AddListener(showTiles.ShowTiles);
-        mouseFollow.OnStopFollowing.AddListener(showTiles.HideTiles);
-
-        factory.Inject(showTiles);
-        mouseFollow.StartFollow();
-
-        EventBus.Invoke<OnNewEntity>();
-    }
-
-
-    void OnDisable()
+    void OnDestroy()
     {
         foreach (var keyButton in SubLamdas.Keys)
         {

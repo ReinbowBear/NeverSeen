@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
     public Action<bool> OnPanelToggle;
 
-    [SerializeField] private MyButton[] buttons;
+    [SerializeField] private Button[] buttons;
 
-    public MyButton[] Buttons => buttons;
-    public MyButton CurrentButton => buttons[CurrentButtonIndex];
+    public Button[] Buttons => buttons;
+    public Button CurrentButton => buttons[CurrentButtonIndex];
 
-    private Dictionary<MyButton, int> ButtonIndexes = new();
+    private Dictionary<Button, int> ButtonIndexes = new();
     public int CurrentButtonIndex { get; private set; }
 
     void Awake()
@@ -43,9 +44,9 @@ public class Panel : MonoBehaviour
             return;
         }
 
-        CurrentButton.OnExit();
+        //CurrentButton.OnExit();
         CurrentButtonIndex = newButtonIndex;
-        CurrentButton.OnEnter(); // вызывает срабатывание OnButtonChose но там проверка
+        //CurrentButton.OnEnter(); // вызывает срабатывание OnButtonChose но там проверка
     }
 
     public void FocusFirstButton(int startIndex = 0)
@@ -67,7 +68,7 @@ public class Panel : MonoBehaviour
         var newButton = CurrentButton;
         if (newButton == CurrentButton) return;
 
-        CurrentButton.OnExit();
+        //CurrentButton.OnExit();
         CurrentButtonIndex = ButtonIndexes[newButton];
     }
 
@@ -76,7 +77,7 @@ public class Panel : MonoBehaviour
     {
         foreach (var button in buttons)
         {
-            button.OnButtonEnter += OnButtonChose;
+            //button.OnEnter += OnButtonChose;
         }
     }
 
@@ -84,7 +85,7 @@ public class Panel : MonoBehaviour
     {
         foreach (var button in buttons)
         {
-            button.OnButtonEnter -= OnButtonChose;
+            //button.OnEnter -= OnButtonChose;
         }
     }
 }

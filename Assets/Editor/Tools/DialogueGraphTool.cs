@@ -38,9 +38,9 @@ public class DialogueGraphTool : EditorWindow
             label = "File Name:"
         };
 
-        Button saveButton = new Button(() => Save()) { text = "Save" };
-        Button loadButton = new Button(() => Load()) { text = "Load" };
-        Button clearButton = new Button(() => graphView.ClearGraph()) { text = "clear" };
+        UnityEngine.UIElements.Button saveButton = new UnityEngine.UIElements.Button(() => Save()) { text = "Save" };
+        UnityEngine.UIElements.Button loadButton = new UnityEngine.UIElements.Button(() => Load()) { text = "Load" };
+        UnityEngine.UIElements.Button clearButton = new UnityEngine.UIElements.Button(() => graphView.ClearGraph()) { text = "clear" };
 
         toolbar.Add(fileName);
 

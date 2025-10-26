@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class RotateToCam : MonoBehaviour
+public class RotateToCamView : MonoBehaviour
 {
     private Camera cam;
 

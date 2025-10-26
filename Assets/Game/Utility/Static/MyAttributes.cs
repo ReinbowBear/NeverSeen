@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -61,5 +62,56 @@ public class ProgressBarDrawer : PropertyDrawer
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
         return EditorGUIUtility.singleLineHeight;
+    }
+}
+
+
+
+[AttributeUsage(AttributeTargets.Field)]
+public class SerializeInterfaceAttribute : PropertyAttribute
+{
+    public Type TargetType;
+
+    public SerializeInterfaceAttribute(Type targetType)
+    {
+        TargetType = targetType;
+    }
+}
+
+[CustomPropertyDrawer(typeof(SerializeInterfaceAttribute))]
+public class SerializeInterfaceDrawer : PropertyDrawer
+{
+    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    {
+        var attr = (SerializeInterfaceAttribute)attribute;
+        Type interfaceType = attr.TargetType;
+
+        EditorGUI.BeginProperty(position, label, property);
+
+        UnityEngine.Object assignedObject = property.managedReferenceValue as UnityEngine.Object;
+
+        UnityEngine.Object newObject = EditorGUI.ObjectField(position, label, assignedObject, typeof(UnityEngine.Object), true);
+
+        if (newObject != assignedObject)
+        {
+            if (newObject == null)
+            {
+                property.managedReferenceValue = null;
+            }
+            else
+            {
+                var newType = newObject.GetType();
+                if (interfaceType.IsAssignableFrom(newType))
+                {
+                    property.managedReferenceValue = newObject;
+                }
+                else
+                {
+                    Debug.LogWarning($"Класс не наследуется от: {interfaceType.Name}");
+                }
+            }
+        }
+
+        EditorGUI.EndProperty();
     }
 }

@@ -1,94 +1,83 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-public static class EventBus
+public class EventBus
 {
-    private static Dictionary<Type, List<Listener>> subscribers = new();
-    private static Dictionary<Type, bool> needSorting = new();
+    private readonly Dictionary<CombineKey, SortedDictionary<Priority, HashSet<Action>>> eventMap = new();
 
-    private class Listener
+    public void AddListener<T>(Action callback, Priority priority, object scope = null)
     {
-        public Delegate Callback;
-        public Priority Priority;
+        var key = new CombineKey(typeof(T), scope);
 
-        public Listener(Delegate newcallback, Priority priority)
+        if (!eventMap.TryGetValue(key, out var priorityMap))
         {
-            Callback = newcallback;
-            Priority = priority;
-        }
-    }
-
-
-    public static void AddSubscriber<T>(Action<T> callback, Priority priority = 0)
-    {
-        Type eventType = typeof(T);
-
-        if (!subscribers.ContainsKey(eventType))
-        {
-            subscribers[eventType] = new List<Listener>();
+            priorityMap = new SortedDictionary<Priority, HashSet<Action>>();
+            eventMap[key] = priorityMap;
         }
 
-        subscribers[eventType].Add(new Listener(callback, priority));
-        needSorting[eventType] = true;
+        if (!priorityMap.TryGetValue(priority, out var subscribers))
+        {
+            subscribers = new HashSet<Action>();
+            priorityMap[priority] = subscribers;
+        }
+
+        subscribers.Add(callback);
     }
 
-    public static void RemoveSubscriber<T>(Action<T> callback)
+    public void RemoveListener<T>(Action callback, object scope = null)
     {
-        Type eventType = typeof(T);
-        if (!subscribers.TryGetValue(eventType, out var list)) return;
+        var key = new CombineKey(typeof(T), scope);
 
-        var listener = list.FirstOrDefault(mylistener => Equals(mylistener.Callback, callback));
-
-        if (listener != null)
+        if (eventMap.TryGetValue(key, out var priorityMap))
         {
-            list.Remove(listener);
-
-
-            if (list.Count == 0)
+            foreach (var subscribers in priorityMap.Values)
             {
-                subscribers.Remove(eventType);
+                subscribers.Remove(callback);
             }
         }
     }
 
 
-    public static void Invoke<T>(T eventData = default)
+    public void Invoke<T>(object scope = null) where T : EventArgs
     {
-        Type eventType = typeof(T);
-        if (!subscribers.TryGetValue(eventType, out var list)) return;
+        var key = new CombineKey(typeof(T), scope);
 
-        Sort(eventType);
-        foreach (var listener in list)
+        if (eventMap.TryGetValue(key, out var priorityMap))
         {
-            if (listener.Callback is Action<T> EventType)
+            foreach (var priorityHash in priorityMap)
             {
-                EventType.Invoke(eventData);
+                foreach (var callback in priorityHash.Value)
+                {
+                    callback.Invoke();
+                }
             }
         }
-    }
-
-    private static void Sort(Type type) // фани идея не сортировать списки вообще а создать на каждое событие списки с разными приоритетами
-    {
-        if (needSorting.TryGetValue(type, out bool isNeedSorting) && isNeedSorting)
-        {
-            subscribers[type].Sort((a, b) => b.Priority.CompareTo(a.Priority));
-            needSorting[type] = false;
-        }
-    }
-
-
-    public static void Clear()
-    {
-        subscribers.Clear();
-        needSorting.Clear();
     }
 }
 
+
 public enum Priority
 {
-    low = 10,
-    normal = 20,
-    high = 30,
-    critical = 100
+    Init, Logic, View,
+}
+
+public readonly struct CombineKey : IEquatable<CombineKey>
+{
+    public readonly Type EventType;
+    public readonly object SubKey;
+
+    public CombineKey(Type type, object subKey)
+    {
+        EventType = type;
+        SubKey = subKey;
+    }
+
+    private bool Equals(CombineKey other) => EventType == other.EventType && Equals(SubKey, other.SubKey);
+    public override bool Equals(object obj) => obj is CombineKey other && Equals(other);
+    public override int GetHashCode() => HashCode.Combine(EventType, SubKey);
+
+    bool IEquatable<CombineKey>.Equals(CombineKey other)
+    {
+        return Equals(other);
+    }
 }

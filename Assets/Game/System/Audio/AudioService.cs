@@ -11,7 +11,8 @@ public class AudioService : IInitializable
 
     private Dictionary<SoundType, AudioSource> sources = new();
     private Dictionary<SoundSO, PitchStackData> pitchStacks = new();
-    private ObjectPool pool = new ObjectPool("Sound", true);
+    [Inject] private Factory factory;
+    private ObjectPool pool;
 
     private class PitchStackData
     {
@@ -22,6 +23,7 @@ public class AudioService : IInitializable
     public void Initialize()
     {
         CreateAudioSources();
+        pool = factory.GetClass<ObjectPool>("Sound");
     }
 
 

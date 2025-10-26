@@ -36,7 +36,8 @@ public class NavigateObject : MonoBehaviour
     {
         foreach (var button in panel.Buttons)
         {
-            button.OnButtonEnter += OnButtonChose;
+            Debug.Log("были изменения надо править тут");
+            //button.OnEnter += OnButtonChose;
         }
     }
 
@@ -44,7 +45,7 @@ public class NavigateObject : MonoBehaviour
     {
         foreach (var button in panel.Buttons)
         {
-            button.OnButtonEnter -= OnButtonChose;
+            //button.OnEnter -= OnButtonChose;
         }
     }
 }

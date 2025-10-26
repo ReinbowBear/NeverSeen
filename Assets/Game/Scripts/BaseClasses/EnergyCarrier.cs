@@ -4,26 +4,33 @@ using UnityEngine;
 using UnityEngine.Events;
 using Zenject;
 
-public abstract class EnergyCarrier : MonoBehaviour, IInitializable
+public abstract class EnergyCarrier : MonoBehaviour, IInitializable, IHaveRadius
 {
-    public EnergyCarrierType type;
-    public EnergyCarrierType connectionsType;
-    [HideInInspector] public List<EnergyCarrier> connections = new();
-    [Space]
-    [HideInInspector] public bool isHasEnergy;
-    [Space]
+    [Inject] EventBus eventBus;
     public UnityEvent<bool> OnIsActive;
     public UnityEvent<Transform> OnConect;
-    [Inject] TileMap mapData;
 
-    private Entity entity;
+    public byte Radius;
+    public EnergyCarrierType type;
+    public EnergyCarrierType connectionsType;
+
+    [HideInInspector] public List<EnergyCarrier> connections = new();
+    [HideInInspector] public bool isHasEnergy;
+
+    [Inject] TileMap mapData;
 
     public virtual void Initialize()
     {
-        entity = GetComponent<Entity>();
+        RefreshConections();
+    }
+
+
+    public void RefreshConections()
+    {
+        connections.Clear();
         var myTile = mapData.GetTileFromCord(transform.position);
 
-        foreach (var tile in mapData.GetTilesInRadius(myTile.tileData.CubeCoord, entity.Stats.Radius))
+        foreach (var tile in mapData.GetTilesInRadius(myTile.tileData.CubeCoord, Radius))
         {
             tile.tileData.IsTaken.gameObject.TryGetComponent<EnergyCarrier>(out var component);
 
@@ -31,16 +38,8 @@ public abstract class EnergyCarrier : MonoBehaviour, IInitializable
             {
                 TryConnect(component);
             }
-
         }
-        EventBus.Invoke<OnUpdateNetwork>();
-    }
-
-
-    public virtual void SetActive(bool isActive)
-    {
-        isHasEnergy = isActive;
-        OnIsActive.Invoke(isHasEnergy);
+        eventBus.Invoke<OnUpdateNetwork>();
     }
 
     protected void TryConnect(EnergyCarrier energyCarrier)
@@ -53,11 +52,19 @@ public abstract class EnergyCarrier : MonoBehaviour, IInitializable
         OnConect.Invoke(energyCarrier.transform);
     }
 
+
+    public virtual void SetActive(bool isActive)
+    {
+        isHasEnergy = isActive;
+        OnIsActive.Invoke(isHasEnergy);
+    }
+
     public virtual void TransferEnergy(EnergyTransferData transferData)
     {
         if (transferData.Visited.Contains(this)) return;
 
         transferData.Visited.Add(this);
+
         if (!isHasEnergy)
         {
             SetActive(true);
@@ -67,6 +74,12 @@ public abstract class EnergyCarrier : MonoBehaviour, IInitializable
         {
             neighbor.TransferEnergy(transferData);
         }
+    }
+
+
+    public int GetRadius()
+    {
+        return Radius;
     }
 }
 

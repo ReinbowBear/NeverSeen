@@ -3,9 +3,8 @@ using Zenject;
 
 public class ElectoNetwork : MonoBehaviour
 {
-    [Inject] World world;
+    [Inject] EntityRegistry world;
 
-    [EventHandler(Priority.low)]
     public void UpdateNetwork(OnUpdateNetwork _)
     {
         var users = world.GetEntityWithComponents<EnergyUser>();

@@ -168,12 +168,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.95
-  m_fontSizeBase: 10
+  m_fontSize: 0.8
+  m_fontSizeBase: 1
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 0.5
-  m_fontSizeMax: 10
+  m_fontSizeMax: 0.8
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -222,8 +222,11 @@ GameObject:
   m_Component:
   - component: {fileID: 69571154256159397}
   - component: {fileID: 4389883377645565843}
-  - component: {fileID: 6149211206633933276}
   - component: {fileID: -3953699573792304746}
+  - component: {fileID: 8325574553532492806}
+  - component: {fileID: 8669741227247919849}
+  - component: {fileID: 7152182611816164198}
+  - component: {fileID: 8825662445672989751}
   - component: {fileID: 9158024586099541674}
   m_Layer: 5
   m_Name: Bar
@@ -260,7 +263,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7304309431824654618}
   m_CullTransparentMesh: 1
---- !u!114 &6149211206633933276
+--- !u!225 &-3953699573792304746
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304309431824654618}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
+--- !u!114 &8325574553532492806
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -269,20 +284,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 7304309431824654618}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1df20a0a5aa3c47b00691d5159d7e1, type: 3}
+  m_Script: {fileID: 11500000, guid: a854b0407e0b2b64f98db6f9f7fef88b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barView: {fileID: 8669741227247919849}
+  numberView: {fileID: 7152182611816164198}
+  fadeView: {fileID: 8825662445672989751}
+--- !u!114 &8669741227247919849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304309431824654618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9282a85e358adb64f9d8e1956e78c4fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   barImage: {fileID: 3111568854275682317}
-  barText: {fileID: 2716589798652306634}
-  canvasGroup: {fileID: -3953699573792304746}
-  rotate: {fileID: 9158024586099541674}
-  fillSpeed: 0.5
-  fadeTimeOut: 2
-  fadeSpeed: 1
   barGradient:
     serializedVersion: 2
-    key0: {r: 0.8679245, g: 0, b: 0, a: 1}
-    key1: {r: 0.17720322, g: 0.7735849, b: 0.13501246, a: 1}
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
@@ -309,18 +333,35 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
---- !u!225 &-3953699573792304746
-CanvasGroup:
+  fillSpeed: 0
+--- !u!114 &7152182611816164198
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7304309431824654618}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a09660f7246c5f74593ca475e884a456, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  barText: {fileID: 2716589798652306634}
+  fillSpeed: 0.3
+--- !u!114 &8825662445672989751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304309431824654618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 389f602647b4a3c43b217021a399478b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvasGroup: {fileID: -3953699573792304746}
+  fadeSpeed: 0.3
 --- !u!114 &9158024586099541674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -328,7 +369,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7304309431824654618}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3fc5c85cbc2117d4b924e1ad2b8685e0, type: 3}
   m_Name: 

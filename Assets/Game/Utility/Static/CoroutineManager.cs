@@ -8,7 +8,8 @@ public static class CoroutineManager
 
     static CoroutineManager()
     {
-        EventBus.AddSubscriber<OnSceneRelease>(Clear);
+        Debug.Log("тут была подписка статик класса!");
+        //EventBus.AddSubscriber<OnSceneRelease>(Clear);
     }
 
 

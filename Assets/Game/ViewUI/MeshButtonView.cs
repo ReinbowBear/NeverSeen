@@ -2,18 +2,15 @@ using UnityEngine;
 
 public class MeshButtonView : MonoBehaviour
 {
-    [Header("Ref")]
-    public MyButton button;
     public Transform modelPos;
-
-    [Header("Settings")]
-    public Vector3 modelRotation = new Vector3(0, 180, 0);
+    [Space]
+    public Vector3 modelRotation = new Vector3(0, 90, 0);
     public float targetSize = 1.0f;
 
     private GameObject currentModel;
 
 
-    public void ShowModel(GameObject modelPrefab)
+    public void SetModel(GameObject modelPrefab) // моделька появляется все дела. но она крошечная и поза камерой что может их вообще рендерить
     {
         if (currentModel != null) Destroy(currentModel);
 

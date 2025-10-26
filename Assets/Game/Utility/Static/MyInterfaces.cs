@@ -1,6 +1,13 @@
+using System;
 using UnityEngine;
 
 #region global
+public interface ISystem
+{
+    void SetFilter(Filter filter);
+    void Update(World world, Filter filter);
+}
+
 public interface ISaveable<T> where T : struct
 {
     T GetData();
@@ -19,18 +26,15 @@ public interface IState
 }
 #endregion
 
-
-#region UI
-public interface IPanel
+#region Data
+public interface IComponentData
 {
-    void SetActive(bool isActive);
-    void SetNavigation(bool isEnable);
+
 }
 
-public interface IBarView
+public interface IHaveRadius
 {
-    void DrawBar(bool isActive);
-    void ChangeValue(int value, int maxValue);
+    int GetRadius();
 }
 #endregion
 
@@ -74,6 +78,33 @@ public interface IViewMode
     LayerMask GetRayLayer();
     void LeftClick(RaycastHit hit);
     void RightClick();
+}
+#endregion
+
+
+#region UI
+public interface IPanel
+{
+    void SetActive(bool isActive);
+    void SetNavigation(bool isEnable);
+}
+
+public interface IBarView
+{
+    void DrawBar(bool isActive);
+    void ChangeValue(int value, int maxValue);
+}
+#endregion
+
+#region indicatorUI
+public interface IHaveBar
+{
+    event Action<int, int> OnChangeValue;
+}
+
+public interface IHaveNumber
+{
+    event Action<int> OnChangeValue;
 }
 #endregion
 

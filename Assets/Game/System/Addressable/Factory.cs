@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -6,16 +7,14 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 using Random = UnityEngine.Random;
 
-public class Factory
+public class Factory : IDisposable
 {
     private Dictionary<string, AsyncOperationHandle<GameObject>> handles = new();
     private DiContainer diContainer;
-    private World world;
 
-    public Factory(DiContainer diContainer, World world)
+    public Factory(DiContainer diContainer)
     {
         this.diContainer = diContainer;
-        this.world = world;
     }
 
 
@@ -42,12 +41,9 @@ public class Factory
         return handle.Result;
     }
 
-    public GameObject Instantiate(GameObject prefab)
+    public GameObject Instantiate(GameObject prefab, Transform parent = null)
     {
-        var obj = diContainer.InstantiatePrefab(prefab);
-        obj.transform.SetParent(null);
-
-        world.AddEntity(obj);
+        var obj = diContainer.InstantiatePrefab(prefab, parent);
         return obj;
     }
 
@@ -88,7 +84,7 @@ public class Factory
     }
 
 
-    public void Clear()
+    public void Dispose()
     {
         foreach (var handle in handles.Values)
         {

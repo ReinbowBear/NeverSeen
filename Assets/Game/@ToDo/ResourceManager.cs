@@ -11,7 +11,7 @@ public class ResourceManager : MonoBehaviour
     private List<Miner> miners = new();
     [SerializeField] private float TickRate;
     [Space]
-    [SerializeField] private Dictionary<ResourceType, MyBar> bars;
+    //[SerializeField] private Dictionary<ResourceType, MyBar> bars;
 
     private Coroutine coroutine;
 
@@ -24,7 +24,7 @@ public class ResourceManager : MonoBehaviour
     public void RefreshResource(ResourceType type, short value)
     {
         resources[type] += value;
-        bars[type].SetValue(resources[type], MaxResource);
+        //bars[type].SetValue(resources[type], MaxResource);
     }
 
     #region miners

@@ -5,7 +5,7 @@ using UnityEngine;
 public class TextFadeView : MonoBehaviour
 {
     [Header("Ref")]
-    public MyButton button;
+    public PointerEnter pointerEnter;
     public TextMeshProUGUI text;
     public SoundSO ClickSounds;
     public SoundSO ChoseSounds;
@@ -29,13 +29,13 @@ public class TextFadeView : MonoBehaviour
 
     void OnEnable()
     {
-        button.OnButtonEnter += OnButtonEnter;
-        button.OnButtonExit += OnButtonExit;
+        pointerEnter.OnEnter += OnButtonEnter;
+        pointerEnter.OnExit += OnButtonExit;
     }
 
     void OnDisable()
     {
-        button.OnButtonEnter -= OnButtonEnter;
-        button.OnButtonExit -= OnButtonExit;
+        pointerEnter.OnEnter -= OnButtonEnter;
+        pointerEnter.OnExit -= OnButtonExit;
     }
 }

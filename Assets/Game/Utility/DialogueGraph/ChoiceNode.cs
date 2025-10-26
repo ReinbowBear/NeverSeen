@@ -23,7 +23,7 @@ public class ChoiceNode : DialogueNode
 
     private void AddChoiceButton()
     {
-        Button addChoiceButton = new Button(() => AddChoice())
+        UnityEngine.UIElements.Button addChoiceButton = new UnityEngine.UIElements.Button(() => AddChoice())
         {
             text = "Add Choice"
         };
@@ -42,7 +42,7 @@ public class ChoiceNode : DialogueNode
         choicePort.userData = userData;
         ChoiceData choiceData = (ChoiceData)userData;
 
-        Button deleteChoiceButton = new Button(() => DeleteChoise(choicePort, choiceData))
+        UnityEngine.UIElements.Button deleteChoiceButton = new UnityEngine.UIElements.Button(() => DeleteChoise(choicePort, choiceData))
         {
             text = "X"
         };

@@ -2,9 +2,11 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 using UnityEngine;
+using Zenject;
 
 public class SaveLoad
 {
+    [Inject] EventBus eventBus;
     public string filePath = Path.Combine(MyPaths.SAVE, "Save.json");
     private GeneralData generalData;
 
@@ -32,7 +34,7 @@ public class SaveLoad
     {
         try
         {
-            EventBus.Invoke<OnSave>();
+            eventBus.Invoke<OnSave>();
 
             var json = JsonConvert.SerializeObject(generalData);
             Directory.CreateDirectory(MyPaths.SAVE);
@@ -60,7 +62,7 @@ public class SaveLoad
             var loadedData = JsonConvert.DeserializeObject<GeneralData>(json);
             //generalData.LoadData(loadedData);
 
-            EventBus.Invoke<OnLoad>();
+            eventBus.Invoke<OnLoad>();
         }
         catch (Exception ex)
         {

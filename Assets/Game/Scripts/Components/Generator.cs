@@ -10,12 +10,6 @@ public class Generator : EnergyCarrier
 
     public HashSet<EnergyCarrier> allConections { get; private set; }
 
-    public override void Initialize()
-    {
-        base.Initialize();
-        OnValueChanged.Invoke(maxEnergy, maxEnergy);
-    }
-
     public override void SetActive(bool isActive) // не умеет выключать
     {
         var energyData = new EnergyTransferData(maxEnergy);

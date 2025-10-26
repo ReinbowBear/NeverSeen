@@ -2,14 +2,11 @@ using Zenject;
 
 public class SceneInstaller : MonoInstaller
 {
-    [Inject] private Input _input;
+    [Inject] private Input input; // просто что бы ProjectInstaller сработал ДО SceneInstaller
 
     public override void InstallBindings()
     {
-
+        Container.Bind<EventBus>().AsSingle();
+        Container.Bind<ObjectPool>();
     }
 }
-
-// скрипт существует что бы форсировать загрузку проджект инсталлера до начала сцен инсталлеров
-
-// потому что зенджект сука и даже если у меня в принципе нет сцен инсталлера, он всё равно пропускает проджект инсталлер

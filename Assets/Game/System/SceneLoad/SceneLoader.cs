@@ -19,7 +19,6 @@ public class SceneLoader : MonoBehaviour
         this.input = input;
     }
 
-    [EventHandler(Priority.normal)]
     private void StartScene(OnSceneStart _)
     {
         StartCoroutine(Fade(1f, 0f));

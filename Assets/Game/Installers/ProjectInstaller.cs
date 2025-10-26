@@ -8,10 +8,10 @@ public class ProjectInstaller : MonoInstaller // https://www.youtube.com/watch?v
         Container.Bind<GeneralData>().AsSingle();
         Container.Bind<TileMap>().AsSingle();
         Container.Bind<InventoryData>().AsSingle();
-        Container.Bind<World>().AsSingle();
+        Container.Bind<EntityRegistry>().AsSingle();
 
         Container.BindInterfacesAndSelfTo<Input>().AsSingle();
-        Container.Bind<Factory>().AsSingle();
+        Container.BindInterfacesAndSelfTo<Factory>().AsSingle();
         Container.BindInterfacesAndSelfTo<AudioService>().AsSingle();
         Container.Bind<SaveLoad>().AsSingle();
         Container.Bind<TimeManager>().AsSingle();

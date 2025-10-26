@@ -10,54 +10,32 @@ public class ObjectPool : IDisposable
     private string addressKey;
     private Transform root;
 
-    private Queue<GameObject> freeObjects = new();
+    private Queue<GameObject> freeObjects;
     private AsyncOperationHandle<GameObject> handle;
 
-    private GameObject prefab => handle.IsDone ? handle.Result : null;
-    private bool isLoaded => handle.IsDone;
-    private bool dontDestroy;
+    private Factory factory;
 
-    public ObjectPool(string addressKey, bool dontDestroy = false)
+    public ObjectPool(Factory factory)
     {
-        this.addressKey = addressKey;
-        this.dontDestroy = dontDestroy;
+        this.factory = factory;
     }
 
 
-    public async Task LoadAsync()
+    public void Init(string newAddressKey, Transform newRoot = null)
     {
-        if (handle.IsValid()) return;
+        addressKey = newAddressKey;
+        freeObjects = new();
 
-        handle = Addressables.LoadAssetAsync<GameObject>(addressKey);
-        await handle.Task;
-
-        if (handle.Status != AsyncOperationStatus.Succeeded)
-        {
-            Debug.LogError($"ошибка загрузки префаба: {addressKey}");
-            return;
-        }
+        if (newRoot != null) return;
 
         var poolObj = UnityEngine.Object.Instantiate(new GameObject());
         root = poolObj.transform;
-
-        if (!dontDestroy)
-        {
-            var cleater = poolObj.AddComponent<ObjectPoolCleaner>();
-            cleater.Init(this);
-        }
-        else
-        {
-            UnityEngine.Object.DontDestroyOnLoad(poolObj);
-        }
-
-        poolObj.name = addressKey + "_Pool";
+        poolObj.name = newAddressKey + "_Root";
     }
 
 
-    public GameObject Get()
+    public async Task<GameObject> Get()
     {
-        if (!isLoaded) return null;
-
         GameObject obj;
         if (freeObjects.Count > 0)
         {
@@ -66,7 +44,8 @@ public class ObjectPool : IDisposable
         }
         else
         {
-            obj = UnityEngine.Object.Instantiate(handle.Result, root);
+            await factory.GetAsset(addressKey);
+            obj = factory.Instantiate(handle.Result, root);
         }
 
         return obj;
@@ -85,25 +64,5 @@ public class ObjectPool : IDisposable
         {
             Addressables.Release(handle);
         }
-
-        if (!dontDestroy) // а если он дестрой то объект удалит ObjectPoolCleaner
-        {
-            UnityEngine.Object.Destroy(root.gameObject);
-        }
-    }
-}
-
-public class ObjectPoolCleaner : MonoBehaviour
-{
-    private ObjectPool objectPool;
-
-    public void Init(ObjectPool objectPool)
-    {
-        this.objectPool = objectPool;
-    }
-
-    void OnDestroy()
-    {
-        objectPool.Dispose();
     }
 }

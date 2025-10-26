@@ -1,17 +1,17 @@
 using UnityEngine;
-using Zenject;
+using UnityEngine.Events;
 
-public class BuildingAI : MonoBehaviour, IInitializable
+public class BuildingAI : MonoBehaviour
 {
+    public UnityEvent<bool> OnActive;
+
     private ICondition[] conditions;
     private IBehavior[] Behaviours;
 
-    public void Initialize()
+    void Awake()
     {
-        GetComponents<IInitializable>().Initialize();
         conditions = GetComponents<ICondition>();
         Behaviours = GetComponents<IBehavior>();
-        SetActive(true);
     }
 
 
@@ -27,14 +27,10 @@ public class BuildingAI : MonoBehaviour, IInitializable
             behaviour.SetActive(isActive);
         }
 
+        OnActive.Invoke(isActive);
+
         if (!isActive) return;
 
-        Tween.Impact(transform);
-    }
-
-
-    void OnDisable()
-    {
-        SetActive(false);
+        //Tween.Impact(transform);
     }
 }
