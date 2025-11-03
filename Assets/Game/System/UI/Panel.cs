@@ -1,91 +1,45 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
-    public Action<bool> OnPanelToggle;
-
-    [SerializeField] private Button[] buttons;
-
-    public Button[] Buttons => buttons;
-    public Button CurrentButton => buttons[CurrentButtonIndex];
-
-    private Dictionary<Button, int> ButtonIndexes = new();
+    public Button[] Buttons;
+    public Button CurrentButton => Buttons[CurrentButtonIndex];
     public int CurrentButtonIndex { get; private set; }
 
-    void Awake()
+    public void NavigateInput(InputAction.CallbackContext context)
     {
-        for (int i = 0; i < Buttons.Length; i++)
-        {
-            ButtonIndexes.Add(buttons[i], i);
-        }
+        float input = context.ReadValue<float>();
+
+        int direction = (input == 1) ? -1 : 1; // смотрим направление ввода
+        int newButtonIndex = (CurrentButtonIndex + direction + Buttons.Length) % Buttons.Length; // если вышли за край, возращаемся с другой стороны
+
+        ChoseButtonByIndex(newButtonIndex);
     }
 
 
-    public void SetActive(bool isTrue)
+    public void ChoseButtonByIndex(int index)
     {
-        if (isTrue)
+        for (int i = index; i < Buttons.Length; i++)
         {
-            gameObject.SetActive(true); // подписка View не происходит если объект выключен, соотведственно не может включить анимацию отображения // костыль
-            FocusFirstButton();
-        }
-
-        OnPanelToggle?.Invoke(isTrue);
-    }
-
-    public void ChoseButtonByIndex(int newButtonIndex)
-    {
-        if (!buttons[newButtonIndex].gameObject.activeInHierarchy)
-        {
-            FocusFirstButton(newButtonIndex);
-            return;
-        }
-
-        //CurrentButton.OnExit();
-        CurrentButtonIndex = newButtonIndex;
-        //CurrentButton.OnEnter(); // вызывает срабатывание OnButtonChose но там проверка
-    }
-
-    public void FocusFirstButton(int startIndex = 0)
-    {
-        for (int i = startIndex; i < buttons.Length; i++)
-        {
-            if (buttons[i].gameObject.activeInHierarchy)
+            if (Buttons[i].gameObject.activeInHierarchy)
             {
-                ChoseButtonByIndex(i);
+                ChoseButton(Buttons[i]);
                 break;
             }
         }
     }
 
-
-    private void OnButtonChose()
+    public void ChoseButton(Button button)
     {
-        Debug.Log("панель не знает куда ты навёлся!");
-        var newButton = CurrentButton;
-        if (newButton == CurrentButton) return;
-
-        //CurrentButton.OnExit();
-        CurrentButtonIndex = ButtonIndexes[newButton];
+        //ButtonToTrigger[CurrentButton]?.OnPointerExit(); // PointerEnter просто "ввод" он тригерит менеджер что бы тот сменил кнопку.
+        //CurrentButtonIndex = buttonToIndex[button]; // а здесь (всмысле в функции) уже будет вызов конкретно логики выбора кнопки.
+        //ButtonToTrigger[CurrentButton]?.OnPointerEnter();
     }
 
-
-    void OnEnable()
+    public void InvokeButton()
     {
-        foreach (var button in buttons)
-        {
-            //button.OnEnter += OnButtonChose;
-        }
-    }
-
-    void OnDisable()
-    {
-        foreach (var button in buttons)
-        {
-            //button.OnEnter -= OnButtonChose;
-        }
+        CurrentButton.onClick.Invoke();
     }
 }

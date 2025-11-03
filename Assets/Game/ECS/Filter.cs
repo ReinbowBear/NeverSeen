@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public sealed class Filter
 {
     private readonly EntityRegistry entityRegistry;
-    private readonly TypeRegistry typeRegistry;
+    private readonly CompTypeRegistry typeRegistry;
 
     private readonly BitMask requiredMask = new();
     private readonly BitMask excludedMask = new();
@@ -14,12 +14,10 @@ public sealed class Filter
     public IReadOnlyCollection<Type> RequiredTypes => requiredTypes;
     public IReadOnlyCollection<Type> ExcludedTypes => excludedTypes;
 
-    private readonly HashSet<Entity> entitySet = new(); // хеш сет для проверок, лист для быстрых итераций
-    private readonly List<Entity> entities = new();
+    private readonly SparseSet<Entity> entities = new();
+    public ReadOnlySpan<Entity> Entities => entities.AsSpan();
 
-    public IReadOnlyList<Entity> Entities => entities;
-
-    public Filter(EntityRegistry entityRegistry, TypeRegistry typeRegistry)
+    public Filter(EntityRegistry entityRegistry, CompTypeRegistry typeRegistry)
     {
         this.entityRegistry = entityRegistry;
         this.typeRegistry = typeRegistry;
@@ -41,9 +39,8 @@ public sealed class Filter
     }
 
 
-    public void Build()
+    public void Build() // метод вероятно излишний, потенциально нужен при пересборке сцены но ведь её можно всю перегрузить
     {
-        entitySet.Clear();
         entities.Clear();
 
         foreach (var entity in entityRegistry.GetAllEntities())
@@ -72,19 +69,13 @@ public sealed class Filter
         }
     }
 
-    private void AddEntity(Entity e)
+    private void AddEntity(Entity entity)
     {
-        if (entitySet.Add(e))
-        {
-            entities.Add(e);
-        }
+        entities.Add(entity);
     }
 
-    public void RemoveEntity(Entity e)
+    public void RemoveEntity(Entity entity)
     {
-        if (entitySet.Remove(e))
-        {
-            entities.Remove(e);
-        }
+        entities.Remove(entity);
     }
 }

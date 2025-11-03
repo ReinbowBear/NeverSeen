@@ -25,17 +25,4 @@ public class ButtonOffsetView : MonoBehaviour
     {
         Tween.MoveToPosition(pointerEnter.transform, originalPos, animationTime);
     }
-
-
-    void OnEnable()
-    {
-        pointerEnter.OnEnter += OnButtonEnter;
-        pointerEnter.OnExit += OnButtonExit;
-    }
-
-    void OnDisable()
-    {
-        pointerEnter.OnEnter -= OnButtonEnter;
-        pointerEnter.OnExit -= OnButtonExit;
-    }
 }

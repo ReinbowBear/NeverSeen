@@ -46,15 +46,15 @@ public class CarStation : MonoBehaviour
 
             foreach (var tile in tiles)
             {
-                if (tile.tileData.IsTaken is Entity building && building.TryGetComponent(out Road road))
-                {
-                    if (pathPoints.Contains(road.transform)) continue;
-
-                    pathPoints.Add(road.transform);
-                    currentTile = road.Tile;
-                    isFoundRoad = true;
-                    break;
-                }
+                //if (tile.tileData.IsTaken is Entity building && building.TryGetComponent(out Road road))
+                //{
+                //    if (pathPoints.Contains(road.transform)) continue;
+//
+                //    pathPoints.Add(road.transform);
+                //    currentTile = road.Tile;
+                //    isFoundRoad = true;
+                //    break;
+                //}
             }
         }
 

@@ -1,19 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
-
-public class ToggleButton : MonoBehaviour, IToggle
+public class ButtomToggleView : MonoBehaviour, IToggle
 {
     public Image Image;
-    public float Value;
+    [Range(0, 1)] public float Value;
 
-    private bool isActive;
     private Color originalColor;
+    private bool isActive;
 
     void Awake()
     {
         originalColor = Image.color;
     }
-
 
     public void Toggle()
     {

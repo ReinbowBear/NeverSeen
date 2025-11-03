@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -7,8 +8,8 @@ public class ElectoNetwork : MonoBehaviour
 
     public void UpdateNetwork(OnUpdateNetwork _)
     {
-        var users = world.GetEntityWithComponents<EnergyUser>();
-        var generators = world.GetEntityWithComponents<Generator>();
+        List<EnergyUser> users = new ();
+        Generator[] generators = new Generator[5];
 
         foreach (var generator in generators)
         {

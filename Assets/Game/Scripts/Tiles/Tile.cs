@@ -42,7 +42,7 @@ public class Tile : MonoBehaviour
 public class TileData
 {
     public Vector3Int CubeCoord;
-    public Entity IsTaken;
+    public EntityOld IsTaken;
 
     public TileType TileType = TileType.empty;
     public TileHeightType TileHeightType = TileHeightType.ground;

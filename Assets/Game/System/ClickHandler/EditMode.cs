@@ -4,11 +4,11 @@ public class EditMode : IViewMode
 {
     private LayerMask rayLayer;
     private TileMap tileMap;
-    private EntityRegistry world;
+    private WorldOld world;
 
     private ClickHandler clickHandler;
 
-    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMap tileMap, EntityRegistry world)
+    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMap tileMap, WorldOld world)
     {
         this.rayLayer = rayLayer;
         this.clickHandler = clickHandler;

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 public class ComponentRegistry
 {
-    private readonly TypeRegistry typeRegistry;
+    private readonly CompTypeRegistry typeRegistry;
     private readonly Dictionary<Type, IComponentStorage> storages = new();
 
-    public ComponentRegistry(TypeRegistry typeRegistry)
+    public ComponentRegistry(CompTypeRegistry typeRegistry)
     {
         this.typeRegistry = typeRegistry;
     }
@@ -26,16 +26,6 @@ public class ComponentRegistry
         GetStorage<T>().Remove(entity);
     }
 
-    public void RemoveAllComponents(ref Entity entity)
-    {
-        foreach (var storage in storages.Values)
-        {
-            storage.Remove(entity);
-        }
-    }
-
-
-
     public bool HasComponent<T>(Entity entity) where T : struct, IComponentData
     {
         return GetStorage<T>().Has(entity);
@@ -44,6 +34,14 @@ public class ComponentRegistry
     public ref T GetComponent<T>(Entity entity) where T : struct, IComponentData
     {
         return ref GetStorage<T>().Get(entity);
+    }
+
+    public void RemoveAllComponents(ref Entity entity)
+    {
+        foreach (var storage in storages.Values)
+        {
+            storage.Remove(entity);
+        }
     }
 
 

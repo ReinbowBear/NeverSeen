@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TypeRegistry
+public class CompTypeRegistry
 {
     private Dictionary<Type, int> typeToIndex = new();
     private int nextIndex = 0;

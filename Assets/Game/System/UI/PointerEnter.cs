@@ -1,19 +1,27 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class PointerEnter : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Action OnEnter;
-    public Action OnExit;
+    public UnityEvent OnEnter;
+    public UnityEvent OnExit;
 
-    public void OnPointerEnter(PointerEventData eventData)
+    private bool isCursorInside;
+
+    public void OnPointerEnter(PointerEventData eventData = null)
     {
+        if (isCursorInside) return;
+
+        isCursorInside = true;
         OnEnter?.Invoke();
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData = null)
     {
+        if (!isCursorInside) return;
+
+        isCursorInside = false;
         OnExit?.Invoke();
     }
 }

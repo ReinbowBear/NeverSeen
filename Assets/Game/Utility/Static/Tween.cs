@@ -12,25 +12,6 @@ public static class Tween
         .Append(transform.DOScale(new Vector3(1f - power, 1f + power * 2, 1f - power), time / 2))
         .Append(transform.DOScale(Vector3.one, time / 2));
     }
-
-
-    public static DG.Tweening.Tween Spawn(Transform transform, float duration = 0.3f)
-    {
-        transform.gameObject.SetActive(true);
-        transform.localScale = Vector3.zero;
-
-        return transform.DOScale(Vector3.one, duration)
-        .SetLink(transform.gameObject)
-        .SetEase(Ease.OutBack);
-    }
-
-    public static DG.Tweening.Tween Destroy(Transform transform, float duration = 0.3f)
-    {
-        return transform.DOScale(Vector3.zero, duration)
-        .SetLink(transform.gameObject)
-        .SetEase(Ease.InBack)
-        .OnComplete(() => transform.gameObject.SetActive(false));
-    }
     #endregion
 
     #region SFX

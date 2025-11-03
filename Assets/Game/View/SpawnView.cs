@@ -1,11 +1,11 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class SpawnView : MonoBehaviour
+public class SpawnView : MonoBehaviour, IActivatable
 {
     public float duration = 0.3f;
 
-    public void Spawn()
+    public void Activate()
     {
         transform.gameObject.SetActive(true);
         transform.localScale = Vector3.zero;
@@ -15,7 +15,7 @@ public class SpawnView : MonoBehaviour
         .SetEase(Ease.OutBack);
     }
 
-    public void Destroy()
+    public void Deactivate()
     {
         transform.DOScale(Vector3.zero, duration)
         .SetLink(transform.gameObject)

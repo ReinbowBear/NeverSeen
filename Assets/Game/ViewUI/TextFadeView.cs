@@ -25,17 +25,4 @@ public class TextFadeView : MonoBehaviour
         .SetLink(text.gameObject)
         .SetUpdate(true); // игнорирует тайм скейл, то бишь паузу
     }
-
-
-    void OnEnable()
-    {
-        pointerEnter.OnEnter += OnButtonEnter;
-        pointerEnter.OnExit += OnButtonExit;
-    }
-
-    void OnDisable()
-    {
-        pointerEnter.OnEnter -= OnButtonEnter;
-        pointerEnter.OnExit -= OnButtonExit;
-    }
 }

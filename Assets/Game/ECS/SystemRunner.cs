@@ -4,54 +4,25 @@ using System.Collections.Generic;
 public sealed class SystemRunner
 {
     private readonly List<ISystem> systems = new();
-    private readonly Dictionary<Type, ISystem> systemsByType = new();
-    private readonly Dictionary<Type, Filter> systemFilters = new();
-
-    private readonly Dictionary<ISystem, Type> systemTypes = new();
-    private readonly Dictionary<Type, List<Filter>> filtersByComponent = new();
 
     private World world;
+    private FilterRegistry filterRegistry;
 
-    public SystemRunner(World world)
+    public SystemRunner(World world, FilterRegistry filterRegistry)
     {
         this.world = world;
+        this.filterRegistry = filterRegistry;
     }
 
 
-    public void AddSystem<T>(T newSystem) where T : struct, ISystem
+    public void AddSystem(ISystem newSystem)
     {
-        var type = typeof(T);
-        if (systemFilters.ContainsKey(type)) return;
-
-        var newFilter = world.GetFilter();
-
         systems.Add(newSystem);
-        systemsByType[type] = newSystem;
-        systemFilters[type] = newFilter;
-        systemTypes[newSystem] = type;
-
-        newSystem.SetFilter(newFilter);
-        newFilter.Build();
-
-        foreach (var filterType in newFilter.RequiredTypes)
-        {
-            if (!filtersByComponent.TryGetValue(filterType, out var list))
-            {
-                filtersByComponent[type] = list = new();
-            }
-            list.Add(newFilter);
-        }
     }
     
-    public void RemoveSystem<T>() where T : ISystem
-    {
-        var type = typeof(T);
-        if (systemsByType.TryGetValue(type, out var system))
-        {
-            systems.Remove(system);
-            systemsByType.Remove(type);
-            systemFilters.Remove(type);
-        }
+    public void RemoveSystem(ISystem oldSystem)
+    {   
+        systems.Remove(oldSystem);
     }
 
 
@@ -59,42 +30,39 @@ public sealed class SystemRunner
     {
         foreach (var system in systems)
         {
-            var filter = systemFilters[systemTypes[system]];
-            if (filter.Entities.Count == 0) continue;
+            var type = system.GetType();
+            var filter = filterRegistry.GetFilter(type);
+
+            if (filter.Entities.Length == 0) continue;
             system.Update(world, filter);
         }
     }
+}
 
+public class SystemContext : IEquatable<SystemContext>
+{
+    public ISystem System;
+    public Filter Filter;
 
-    public void AddEntityToFilters(Entity entity)
+    public SystemContext(ISystem system, Filter filter)
     {
-        foreach (var filterList in filtersByComponent.Values)
-        {
-            foreach (var filter in filterList)
-            {
-                filter.UpdateEntity(entity);
-            }
-        }
+        System = system;
+        Filter = filter;
     }
 
-    public void UpdateFilters(Entity entity, Type componentType)
+    public bool Equals(SystemContext other)
     {
-        if (!filtersByComponent.TryGetValue(componentType, out var filters)) return;
-
-        foreach (var filter in filters)
-        {
-            filter.UpdateEntity(entity);
-        }
+        if (other is null) return false;
+        return ReferenceEquals(this, other);
     }
 
-    public void RemoveEntityFromFilters(Entity entity)
+    public override bool Equals(object obj)
     {
-        foreach (var filterList in filtersByComponent.Values)
-        {
-            foreach (var filter in filterList)
-            {
-                filter.RemoveEntity(entity);
-            }
-        }
+        return Equals(obj as SystemContext);
+    }
+
+    public override int GetHashCode() // сравнение идёт по переменной System
+    {
+        return System.GetHashCode();
     }
 }

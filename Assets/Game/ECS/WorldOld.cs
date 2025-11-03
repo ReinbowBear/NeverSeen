@@ -5,5 +5,5 @@ using UnityEngine;
 
 public class WorldOld
 {
-    public Entity ChosenEntity;
+    public EntityOld ChosenEntity;
 }
