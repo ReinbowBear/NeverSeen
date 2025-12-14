@@ -1,26 +1,29 @@
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
 
-public class PanelStack : MonoBehaviour
+public class PanelStack
 {
-    public UnityEvent OnPanelOpen;
-    public UnityEvent OnPanelOClose;
-
     private Stack<Panel> PanelsStack = new();
+    private Dictionary<Panel, IActivatable> panelToActivatable = new();
+
     public Panel CurrentPanel => PanelsStack.Count > 0 ? PanelsStack.Peek() : null;
 
 
-    public void OpenPanel(Panel panelControl) // а где эффекты?
+    public void OpenPanel(Panel panel)
     {
-        PanelsStack.Push(panelControl);
-        OnPanelOpen.Invoke();
+        if(!panelToActivatable.TryGetValue(panel, out var activatable))
+        {
+            activatable = panel.gameObject.GetComponent<IActivatable>();
+            panelToActivatable.Add(panel, activatable);
+        }
+
+        PanelsStack.Push(panel);
+        activatable.Activate();
     }
 
-    private void ClosePanel() // реализация открытия закрытия может быть разной, это другой компонент
+    public void ClosePanel()
     {
         if (CurrentPanel == null) return;
+        panelToActivatable[CurrentPanel].Deactivate();
         PanelsStack.Pop();
-        OnPanelOClose.Invoke();
     }
 }

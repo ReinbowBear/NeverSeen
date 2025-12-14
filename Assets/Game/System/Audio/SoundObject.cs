@@ -28,7 +28,6 @@ public class SoundObject : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         source.Stop();
-        source.clip = null;
         pool.Return(gameObject);
     }
 }

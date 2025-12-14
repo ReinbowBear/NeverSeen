@@ -6,7 +6,7 @@ public class SceneInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<EventBus>().AsSingle();
-        Container.Bind<ObjectPool>();
+        //Container.Bind<EventBus>().AsSingle();
+        //Container.Bind<ObjectPool>().AsTransient();
     }
 }

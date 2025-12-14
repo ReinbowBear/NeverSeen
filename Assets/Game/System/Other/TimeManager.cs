@@ -24,6 +24,6 @@ public class TimeManager
     public void SetPause(bool paused)
     {
         Time.timeScale = paused ? 0f : 1f;
-        input.SetInputMode(paused ? input.UI : input.GamePlay);
+        input.SwitchTo(paused ? InputMode.UI : InputMode.GamePlay);
     }
 }

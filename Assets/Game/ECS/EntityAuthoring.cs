@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -14,13 +15,16 @@ public class EntityAuthoring : MonoBehaviour
 
     private void CreateEntity()
     {
-        entity = world.CreateEntity();
-
         var authorings = GetComponents<IAuthoring>();
-        foreach (var autho in authorings)
+        List<object> components = new List<object>();
+
+        foreach (var authoring in authorings)
         {
-            autho.Bake(entity, world);
+            var component = authoring.GetComponentData();
+            components.Add(component);
         }
+
+        entity = world.CreateEntity(components.ToArray());
     }
 
 
@@ -28,4 +32,10 @@ public class EntityAuthoring : MonoBehaviour
     {
         world.DestroyEntity(entity);
     }
+}
+
+
+public struct EntityObject : IComponentData
+{
+    public GameObject gameObject;
 }

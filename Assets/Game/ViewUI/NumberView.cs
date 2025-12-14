@@ -10,7 +10,8 @@ public class NumberView : MonoBehaviour
 
     public void SetNumber(float targetValue)
     {
-        CoroutineManager.Start(AnimateNumber(targetValue), this);
+        StopAllCoroutines();
+        StartCoroutine(AnimateNumber(targetValue));
     }
 
     private IEnumerator AnimateNumber(float targetValue)

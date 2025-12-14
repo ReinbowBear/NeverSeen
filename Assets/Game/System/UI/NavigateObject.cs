@@ -3,18 +3,17 @@ using UnityEngine;
 
 public class NavigateObject : MonoBehaviour
 {
-    [SerializeField] private RectTransform navigateObject;
-    [SerializeField] private float navigateTime = 0.1f;
-    [Space]
-    [SerializeField] private Panel panel;
+    public RectTransform navigateObject;
+    public float navigateTime = 0.1f;
 
 
-    public void OnButtonChose()
+    public void MoveTo(Transform target)
     {
-        CoroutineManager.Start(MoveToButton(panel.CurrentButton.transform), this);
+        StopAllCoroutines();
+        StartCoroutine(DoMove(target));
     }
 
-    private IEnumerator MoveToButton(Transform target)
+    private IEnumerator DoMove(Transform target)
     {
         Vector3 startPos = navigateObject.position;
         Vector3 endPos = new Vector3(startPos.x, target.position.y, startPos.z); // анимация навигации идёт только по Y!
@@ -29,23 +28,5 @@ public class NavigateObject : MonoBehaviour
         }
 
         navigateObject.position = endPos;
-    }
-
-
-    void OnEnable()
-    {
-        foreach (var button in panel.Buttons)
-        {
-            Debug.Log("были изменения надо править тут");
-            //button.OnEnter += OnButtonChose;
-        }
-    }
-
-    void OnDisable()
-    {
-        foreach (var button in panel.Buttons)
-        {
-            //button.OnEnter -= OnButtonChose;
-        }
     }
 }

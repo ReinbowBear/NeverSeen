@@ -22,7 +22,7 @@ public class SceneLoader : MonoBehaviour
     private void StartScene(OnSceneStart _)
     {
         StartCoroutine(Fade(1f, 0f));
-        input.SetInputByIndex(sceneIndex);
+        input.SwitchTo((InputMode)sceneIndex);
     }
 
 
@@ -31,7 +31,7 @@ public class SceneLoader : MonoBehaviour
         if (coroutine != null) return;
 
         coroutine = StartCoroutine(FadeAndLoadScene(sceneName));
-        input.SetActiveInputs(false);
+        input.SetActive(false);
     }
 
     private IEnumerator FadeAndLoadScene(string sceneName)

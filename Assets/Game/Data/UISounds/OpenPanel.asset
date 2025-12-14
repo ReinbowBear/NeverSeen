@@ -12,10 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d9f37cec8fbe344bd428531627b40e, type: 3}
   m_Name: OpenPanel
   m_EditorClassIdentifier: 
-  AudioClips:
-  - Name: Open
-    Sound: {fileID: 8300000, guid: 736049508e68c87439c8862f0a0a3ac7, type: 3}
-    type: 1
-  - Name: Close
-    Sound: {fileID: 8300000, guid: 54af095429b57e345a73f37969ff7ec5, type: 3}
-    type: 1
+  Sound: {fileID: 8300000, guid: 54af095429b57e345a73f37969ff7ec5, type: 3}
+  Type: 0
+  Tag: 0
+  IsLoud: 0
+  IsStacked: 0

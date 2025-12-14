@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BuildButton : ButtonOffsetView
+public class BuildButton : OffsetView
 {
     private string BuildingPrefName;
 

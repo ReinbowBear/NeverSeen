@@ -28,12 +28,13 @@ public class MouseFollowView : MonoBehaviour
 
     public void StartFollow()
     {
-        CoroutineManager.Start(DoMove(), this);
+        StopAllCoroutines();
+        StartCoroutine(DoMove());
     }
 
     public void StopFollowing()
     {
-        CoroutineManager.Stop(DoMove(), this);
+        StopAllCoroutines();
 
         objectToMove.transform.position = originalCords;
         OnStopFollowing.Invoke();

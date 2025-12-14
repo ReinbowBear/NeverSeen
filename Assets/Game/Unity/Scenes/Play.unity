@@ -1471,6 +1471,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1492,6 +1494,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -2116,8 +2119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8731d9f4373b3ef4199fe2d5173c8514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerEnter: {fileID: 0}
-  animationOffset: 50
+  showPos: {x: 0, y: 0, z: 0}
+  HidePos: {x: 0, y: 0, z: 0}
   animationTime: 0.2
 --- !u!114 &838586102
 MonoBehaviour:
@@ -2299,8 +2302,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 954248863}
-  - component: {fileID: 954248865}
-  - component: {fileID: 954248866}
   m_Layer: 0
   m_Name: CameraPoint
   m_TagString: Untagged
@@ -2325,41 +2326,6 @@ Transform:
   - {fileID: 1687437327}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &954248865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954248862}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb01b3587633f8a4485827e6c827d4bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &954248866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954248862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 470612374c8c33a48930d0f97c9c0971, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 1333302700}
-  dragSensitivity: 15
-  dragVelocity: 5
-  maxPosZ: 20
-  maxPosX: 20
-  rotateSensitivity: 140
-  rotateVelocity: 7.5
-  zoomSensitivity: 1
-  zoomVelocity: 10
-  minZoom: 7.5
-  maxZoom: 15
 --- !u!1001 &976981456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2571,51 +2537,6 @@ Transform:
   - {fileID: 1800477899}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1059504322
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1059504323}
-  - component: {fileID: 1059504324}
-  m_Layer: 0
-  m_Name: PanelManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!4 &1059504323
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059504322}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1059504324
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1059504322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9884668312065046828ae71bee47aba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rootPanel: {fileID: 1325022842}
 --- !u!1001 &1072492343
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3191,9 +3112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62af0f8d79895704f94d0eb6732935d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttons:
-  - {fileID: 0}
-  - {fileID: 0}
+  Buttons: []
 --- !u!222 &1325022844
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4077,8 +3996,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8731d9f4373b3ef4199fe2d5173c8514, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pointerEnter: {fileID: 0}
-  animationOffset: 50
+  showPos: {x: 0, y: 0, z: 0}
+  HidePos: {x: 0, y: 0, z: 0}
   animationTime: 0.2
 --- !u!114 &1821512968
 MonoBehaviour:
@@ -4847,7 +4766,6 @@ SceneRoots:
   - {fileID: 1899134532}
   - {fileID: 723221998}
   - {fileID: 906764631}
-  - {fileID: 1059504323}
   - {fileID: 1025488541}
   - {fileID: 127141362}
   - {fileID: 1842423039}

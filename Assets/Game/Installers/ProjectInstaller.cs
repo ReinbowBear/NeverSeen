@@ -1,4 +1,3 @@
-using UnityEngine;
 using Zenject;
 
 public class ProjectInstaller : MonoInstaller // https://www.youtube.com/watch?v=XapdjT6wEkw&ab_channel=SergeyKazantsev
@@ -16,5 +15,8 @@ public class ProjectInstaller : MonoInstaller // https://www.youtube.com/watch?v
         Container.Bind<SaveLoad>().AsSingle();
         Container.Bind<TimeManager>().AsSingle();
         Container.BindInterfacesAndSelfTo<MyRandom>().AsSingle();
+
+        Container.Bind<EventBus>().AsSingle();
+        Container.Bind<ObjectPool>().AsTransient(); // обджект пул нужен аудио скрипту!
     }
 }

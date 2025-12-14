@@ -12,7 +12,8 @@ public class BarView : MonoBehaviour
 
     public void SetValue(float current, float max)
     {
-        CoroutineManager.Start(AnimateBar(current, max), this);
+        StopAllCoroutines();
+        StartCoroutine(AnimateBar(current, max));
     }
 
     private IEnumerator AnimateBar(float current, float max)

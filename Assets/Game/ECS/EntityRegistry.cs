@@ -1,54 +1,25 @@
-using System.Collections.Generic;
 
 public sealed class EntityRegistry
 {
-    private readonly Dictionary<int, BitMask> entityMasks = new();
-    private readonly HashSet<Entity> entities = new();
-    private int nextEntityId = 0;
+    private readonly SparseSet<Entity> entities = new();
+    private int nextEntityId = 1;
 
     public Entity CreateEntity()
     {
-        var entity = new Entity(nextEntityId++);
-        entities.Add(entity);
-        entityMasks[entity.Id] = new BitMask();
-        return entity;
+        int id = nextEntityId++;
+        var newEntity = new Entity(id);
+        entities.Add(newEntity);
+
+        return newEntity;
     }
 
-    public void DestroyEntity(Entity entity)
+    public void RemoveEntity(Entity entity)
     {
         entities.Remove(entity);
-        entityMasks.Remove(entity.Id);
     }
 
-
-    public bool Exists(Entity entity)
+    public bool Contains(Entity entity)
     {
         return entities.Contains(entity);
-    }
-
-    public IEnumerable<Entity> GetAllEntities()
-    {
-        return entities;
-    }
-
-
-    public BitMask GetMask(Entity entity) // EntityRegistry помимо сущностей хранит их битовые маски компонентов
-    {
-        return entityMasks[entity.Id]; // осторожно! не возращаем ref
-    }
-
-
-    public void AddComponentBit(Entity entity, int bitIndex)
-    {
-        var mask = entityMasks[entity.Id];
-        mask.Set(bitIndex, true);
-        entityMasks[entity.Id] = mask;
-    }
-
-    public void RemoveComponentBit(Entity entity, int bitIndex)
-    {
-        var mask = entityMasks[entity.Id];
-        mask.Set(bitIndex, false);
-        entityMasks[entity.Id] = mask;
     }
 }

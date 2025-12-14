@@ -42,15 +42,6 @@ public static class Tween
     }
     #endregion
 
-    #region Transformation
-    public static DG.Tweening.Tween MoveToPosition(Transform transform, Vector3 targetPosition, float duration = 0.5f)
-    {
-        return transform.DOMove(targetPosition, duration)
-        .SetLink(transform.gameObject)
-        .SetEase(Ease.InOutSine);
-    }
-    #endregion
-
     #region Text
     public static Sequence FloatText(Transform transform, float moveY = 1f, float duration = 0.5f)
     {

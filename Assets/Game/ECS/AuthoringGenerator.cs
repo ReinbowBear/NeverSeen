@@ -33,7 +33,7 @@ public static class AuthoringGenerator
 
     private static void GenerateAuthoringFor(Type componentType)
     {
-        string className = componentType.Name + "Authoring";
+        string className = componentType.Name + "Actor";
         string filePath = Path.Combine(GeneratedPath, className + ".cs");
 
         if (File.Exists(filePath)) return;

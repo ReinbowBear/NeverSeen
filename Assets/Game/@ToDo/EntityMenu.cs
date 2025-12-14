@@ -22,12 +22,12 @@ public class EntityMenu : MonoBehaviour
     {
         entity = newEntity;
 
-        if (!isShow) CoroutineManager.Start(SlideTo(ShowPosition, true), this);
+        //if (!isShow) CoroutineCotroller.Start(SlideTo(ShowPosition, true), this);
     }
 
     public void HidePanel()
     {
-        if (isShow) CoroutineManager.Start(SlideTo(ShowPosition + hiddenOffset, false), this);
+        //if (isShow) CoroutineCotroller.Start(SlideTo(ShowPosition + hiddenOffset, false), this);
     }
 
 

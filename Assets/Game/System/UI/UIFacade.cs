@@ -1,44 +1,56 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using Zenject;
 
 public class UIFacade : MonoBehaviour
 {
-    private PanelStack panelStack;
+    [Inject] private Input input;
 
-    public void OpenPanel(Panel panelControl) // а где эффекты?
+    private PanelStack panelStack = new();
+    private Panel CurrentPanel => panelStack.CurrentPanel;
+
+    [SerializeField] private NavigateObject navigateObject;
+
+
+    public void OpenPanel(Panel panel)
     {
-        //PanelsStack.Push(panelControl);
-        //OnPanelOpen.Invoke();
+        panelStack.OpenPanel(panel);
     }
 
-    private void ClosePanel() // реализация открытия закрытия может быть разной, это другой компонент
+    public void ClosePanel(InputAction.CallbackContext context = default)
     {
-        //if (CurrentPanel == null) return;
-        //PanelsStack.Pop();
-        //OnPanelOClose.Invoke();
+        panelStack.ClosePanel();
+    }
+
+
+    public void NavigateInput(InputAction.CallbackContext context)
+    {
+        float input = context.ReadValue<float>();
+
+        int direction = (input == 1) ? -1 : 1;
+        int newButtonIndex = (CurrentPanel.CurrentButtonIndex + direction + CurrentPanel.Buttons.Length) % CurrentPanel.Buttons.Length; // если вышли за край, возращаемся с другой стороны
+
+        CurrentPanel.ChoseButtonByIndex(newButtonIndex);
+        navigateObject.MoveTo(CurrentPanel.CurrentButton.transform);
+    }
+
+    public void InvokeButton(InputAction.CallbackContext context)
+    {
+        CurrentPanel.InvokeButton();
     }
 
 
     public void ActiveInput()
     {
-        //if (isActiveInputs) return;
-        //input.UI.Navigate.started += NavigateInput;
-        //input.UI.Submit.started += InvokeButton;
-        //input.System.Esc.started += ClosePanel;
-        //isActiveInputs = true;
+        input.UI.Navigate.started += NavigateInput;
+        input.UI.Submit.started += InvokeButton;
+        input.System.Esc.started += ClosePanel; // не активируется потому что карта инпутов другая!
     }
 
     public void DisableInput()
     {
-        //if (!isActiveInputs) return;
-        //input.UI.Navigate.started -= NavigateInput;
-        //input.UI.Submit.started -= InvokeButton;
-        //input.System.Esc.started -= ClosePanel;
-        //isActiveInputs = false;
+        input.UI.Navigate.started -= NavigateInput;
+        input.UI.Submit.started -= InvokeButton;
+        input.System.Esc.started -= ClosePanel;
     }
-}
-
-public class PanelData
-{
-    public Panel panel;
-    public IActivatable activatable;
 }

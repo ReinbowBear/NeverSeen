@@ -24,11 +24,11 @@ public class CarStation : MonoBehaviour
         if (isActive)
         {
             RefreshPath();
-            CoroutineManager.Start(GoCar(), this);
+            //CoroutineCotroller.Start(GoCar(), this);
         }
         else
         {
-            CoroutineManager.Stop(GoCar(), this);
+            //CoroutineCotroller.Stop(GoCar(), this);
         }
     }
 

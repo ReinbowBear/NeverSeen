@@ -1,20 +1,21 @@
 using System;
 using System.Collections.Generic;
 
-public sealed class SparseSet<TKey> where TKey : IEquatable<TKey> // класс заменяющий лист, делающий Contains и Add\Remove О(1)
+public sealed class SparseSet<TKey> where TKey : IEquatable<TKey>
 {
-    private readonly Dictionary<TKey, int> sparse; // для поиска по ключу
-    private TKey[] dense; // для итерации
+    private readonly Dictionary<TKey, int> sparse;
+    private TKey[] dense;
     private int count;
 
     public int Count => count;
-    public ReadOnlySpan<TKey> AsSpan() => dense.AsSpan(0, count);
+    //public StructEnumerator<TKey> GetEnumerator() => new StructEnumerator<TKey>(dense, count);
+    public TKey this[int index] => dense[index];
+
 
     public SparseSet(int initialCapacity = 16)
     {
         sparse = new Dictionary<TKey, int>(initialCapacity);
         dense = new TKey[Math.Max(initialCapacity, 16)];
-        count = 0;
     }
 
 
@@ -36,17 +37,27 @@ public sealed class SparseSet<TKey> where TKey : IEquatable<TKey> // класс 
     {
         if (!sparse.TryGetValue(key, out int index)) return;
 
-        var last = dense[count - 1];
-        dense[index] = last;
-        sparse[last] = index;
+        int last = count - 1;
+        if (index != last)
+        {
+            var lastKey = dense[last];
+            dense[index] = lastKey;
+            sparse[lastKey] = index;
+        }
 
         sparse.Remove(key);
         count--;
     }
 
+
     public bool Contains(TKey key)
     {
         return sparse.ContainsKey(key);
+    }
+
+    public int IndexOf(TKey key)
+    {
+        return sparse.TryGetValue(key, out int index) ? index : -1;
     }
 
 

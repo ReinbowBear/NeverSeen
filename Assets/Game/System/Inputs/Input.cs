@@ -1,74 +1,61 @@
+using System;
 using UnityEngine.InputSystem;
 using Zenject;
 
-public class Input : IInitializable
+public class Input : IInitializable, IDisposable
 {
-    public GameInput GameInput { get; private set; }
+    private GameInput gameInput;
+    private InputActionMap currentMap;
 
-    public GameInput.UIActions UI { get; private set; }
-    public GameInput.GamePlayActions GamePlay { get; private set; }
-    public GameInput.SystemActions System { get; private set; }
-    #if UNITY_EDITOR
-    public GameInput.DebugActions Debug { get; private set; }
-    #endif
-    private InputActionMap currentInputs;
+    public GameInput GameInput => gameInput;
+    public GameInput.UIActions UI => gameInput.UI;
+    public GameInput.GamePlayActions GamePlay => gameInput.GamePlay;
+    public GameInput.SystemActions System => gameInput.System;
+    public GameInput.DebugActions Debug => gameInput.Debug;
+
 
     public void Initialize()
     {
-        GameInput = new GameInput();
-
-        GameInput.System.Enable();
-
-        #if UNITY_EDITOR
-        GameInput.Debug.Enable();
-        #endif
-
-        UI = GameInput.UI;
-        GamePlay = GameInput.GamePlay;
-        System = GameInput.System;
-        Debug = GameInput.Debug;
+        gameInput = new GameInput();
+        gameInput.System.Enable();
+        gameInput.Debug.Enable();
     }
 
 
-    public void SetInputByIndex(byte index)
+    public void SwitchTo(InputMode mode)
     {
-        switch (index)
+        currentMap.Disable();
+
+        currentMap = mode switch
         {
-            case 0:
-                SetInputMode(UI);
-                break;
+            InputMode.UI => gameInput.UI.Get(),
+            InputMode.GamePlay => gameInput.GamePlay.Get(),
+            InputMode.System => gameInput.System.Get(),
+            InputMode.Debug => gameInput.Debug.Get(),
 
-            case 1:
-                SetInputMode(GamePlay);
-                break;
+            _ => throw new ArgumentOutOfRangeException(nameof(mode))
+        };
 
-            case 2:
-                SetInputMode(System);
-                break;
-
-            case 3:
-                SetInputMode(Debug);
-                break;
-        }
+        currentMap.Enable();
     }
 
-    public void SetInputMode(InputActionMap inputMap)
+    public void SetActive(bool isActive)
     {
-        if (currentInputs != null)
-        {
-            currentInputs.Disable();
-        }
-
-        inputMap.Enable();
-        currentInputs = inputMap;
+        if (isActive) currentMap.Enable();
+        else currentMap.Disable();
     }
 
-    public void SetActiveInputs(bool varBool)
+
+    public void Dispose()
     {
-        if (varBool)
-        {
-            currentInputs.Enable();
-        }
-        else currentInputs.Disable();
+        gameInput.Dispose();
     }
+}
+
+public enum InputMode
+{
+    UI,
+    GamePlay,
+    System,
+    Debug
 }

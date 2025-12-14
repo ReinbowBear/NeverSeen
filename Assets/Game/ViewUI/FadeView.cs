@@ -10,13 +10,17 @@ public class FadeView : MonoBehaviour
     public void FadeBar(bool isVisible)
     {
         var value = isVisible ? 1f : 0f;
-        CoroutineManager.Start(FadeCanvasGroup(value), this);
+
+        StopAllCoroutines();
+        StartCoroutine(FadeCanvasGroup(value));
     }
 
     public void FadeAfterDelay(bool isVisible, float delay)
     {
         var value = isVisible ? 1f : 0f;
-        CoroutineManager.Start(FadeAfter(value, delay), this);
+
+        StopAllCoroutines();
+        StartCoroutine(FadeAfter(value, delay));
     }
 
 

@@ -1,10 +1,5 @@
 using System;
 
-public interface IAuthoring
-{
-    void Bake(Entity entity, World world);
-}
-
 public interface ISaveable<T> where T : struct
 {
     T GetData();

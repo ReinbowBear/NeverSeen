@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "GameInput",
     "maps": [
         {
@@ -264,6 +265,34 @@
             ]
         },
         {
+            "name": "System",
+            "id": "cdde4edb-d964-4fd3-9ba1-aa3b29a9786d",
+            "actions": [
+                {
+                    "name": "Esc",
+                    "type": "Button",
+                    "id": "73f91692-605b-4c05-aa18-3c12b55e091f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7ab0ecdd-ab39-4f30-902d-9ae588d7daad",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Esc",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "Debug",
             "id": "28b74b43-efc5-4a0c-beee-6a54f5051565",
             "actions": [
@@ -428,34 +457,6 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "E",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "System",
-            "id": "cdde4edb-d964-4fd3-9ba1-aa3b29a9786d",
-            "actions": [
-                {
-                    "name": "Esc",
-                    "type": "Button",
-                    "id": "73f91692-605b-4c05-aa18-3c12b55e091f",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "7ab0ecdd-ab39-4f30-902d-9ae588d7daad",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Esc",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
