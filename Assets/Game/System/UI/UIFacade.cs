@@ -1,10 +1,9 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 public class UIFacade : MonoBehaviour
 {
-    [Inject] private Input input;
+    private Input input;
 
     private PanelStack panelStack = new();
     private Panel CurrentPanel => panelStack.CurrentPanel;

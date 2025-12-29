@@ -826,7 +826,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1693351509}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MapButtons, Assembly-CSharp
         m_MethodName: ExitToMenu
         m_Mode: 1
@@ -1083,89 +1083,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cad2cdc28c77b7645a351160aaf02e58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1693351502
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1693351506}
-  - component: {fileID: 1693351510}
-  - component: {fileID: 1693351504}
-  - component: {fileID: 1693351508}
-  - component: {fileID: 1693351509}
-  m_Layer: 0
-  m_Name: General
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
---- !u!114 &1693351504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693351502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3358a8de667a5e54f8325f10ed81ee9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1693351506
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693351502}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1693351508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693351502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e40bd838d8f374945bd21e0b72334b81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1693351509
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693351502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea3e0c9bbe4aea34685a085fdbe356ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1693351510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1693351502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 210f34f9236f53040a9079006a9d68ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1705002720
@@ -1569,7 +1486,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1693351509}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MapButtons, Assembly-CSharp
         m_MethodName: GoBattle
         m_Mode: 1
@@ -1744,5 +1661,4 @@ SceneRoots:
   - {fileID: 1865189773}
   - {fileID: 1154733439}
   - {fileID: 1705002724}
-  - {fileID: 1693351506}
   - {fileID: 332399212}

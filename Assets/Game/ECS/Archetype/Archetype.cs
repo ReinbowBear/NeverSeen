@@ -48,4 +48,13 @@ public sealed class Archetype
         lastUsedChunk = newChunk;
         return newChunk;
     }
+
+
+    public void ClearAllMasks()
+    {
+        foreach (var Chunk in Chunks)
+        {
+            Chunk.ClearMasks();
+        }
+    }
 }

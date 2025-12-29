@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
+using UnityEngine.AddressableAssets;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -26,9 +26,8 @@ public class MapGenerator : MonoBehaviour
     private Dictionary<Vector3Int, TileData> tilesData; // Vector3Int нужен для установки соседей, да и в целом весь список для генерации данных карты
     private List<TileData> freeTiles;
 
-    [Inject] private Factory factory;
-    [Inject] private TileMap mapData;
-    [Inject] private MyRandom random;
+    private TileMap mapData;
+    private MyRandom random;
 
 
     private void GenerateMap(OnSceneStart _)
@@ -62,8 +61,8 @@ public class MapGenerator : MonoBehaviour
     #region DisplayMap
     private IEnumerator DisplayMap()
     {
-        var handle = factory.GetAsset("Tile");
-        yield return new WaitUntil(() => handle.IsCompleted);
+        var handle = Addressables.LoadAssetAsync<GameObject>("Tile");
+        yield return handle;
 
         foreach (var tileData in tilesData.Values)
         {

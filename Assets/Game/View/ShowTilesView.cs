@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class ShowTilesView : MonoBehaviour
 {
@@ -8,12 +7,6 @@ public class ShowTilesView : MonoBehaviour
 
     private List<Tile> tilesInRadius = new();
     private TileMap mapData;
-
-    [Inject]
-    public void Construct(TileMap mapData)
-    {
-        this.mapData = mapData;
-    }
 
     
     public void ShowTiles()

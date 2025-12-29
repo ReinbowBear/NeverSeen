@@ -8,7 +8,7 @@ public sealed class Chunk
 
     public readonly SparseSet<Entity> Entities;
     public readonly Array[] ComponentArrays;
-    public readonly BitMaskSet[] ChangeMasks;
+    public readonly BitMaskSet[] ChangeMasks; // есть идея создать списки на каждый тип компонента, хранящие индекс изменённой сущности. системы просто on off делают если список не пустой
 
     public Chunk(List<Type> ComponentTypes)
     {

@@ -79,7 +79,7 @@ public class SerializeInterfaceAttribute : PropertyAttribute
 }
 
 [CustomPropertyDrawer(typeof(SerializeInterfaceAttribute))]
-public class SerializeInterfaceDrawer : PropertyDrawer
+public class SerializeInterfaceDrawer : PropertyDrawer // [SerializeReference, SerializeInterface(typeof(IWeapon))]
 {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {

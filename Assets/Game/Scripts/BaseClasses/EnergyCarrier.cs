@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using Zenject;
 
-public abstract class EnergyCarrier : MonoBehaviour, IInitializable, IHaveRadius
+public abstract class EnergyCarrier : MonoBehaviour, IHaveRadius
 {
-    [Inject] EventBus eventBus;
+    public EventBus eventBus;
     public UnityEvent<bool> OnIsActive;
     public UnityEvent<Transform> OnConect;
 
@@ -17,7 +16,7 @@ public abstract class EnergyCarrier : MonoBehaviour, IInitializable, IHaveRadius
     [HideInInspector] public List<EnergyCarrier> connections = new();
     [HideInInspector] public bool isHasEnergy;
 
-    [Inject] TileMap mapData;
+    public TileMap mapData;
 
     public virtual void Initialize()
     {

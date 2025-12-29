@@ -4,16 +4,15 @@ public class EditMode : IViewMode
 {
     private LayerMask rayLayer;
     private TileMap tileMap;
-    private WorldOld world;
 
     private ClickHandler clickHandler;
+    private EntityOld ChosenEntity;
 
-    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMap tileMap, WorldOld world)
+    public EditMode(LayerMask  rayLayer, ClickHandler clickHandler, TileMap tileMap)
     {
         this.rayLayer = rayLayer;
         this.clickHandler = clickHandler;
         this.tileMap = tileMap;
-        this.world = world;
     }
 
 
@@ -25,7 +24,7 @@ public class EditMode : IViewMode
 
     public void LeftClick(RaycastHit hit)
     {
-        if (world.ChosenEntity == null)
+        if (ChosenEntity == null)
         {
             clickHandler.SetMode(0);
             return;
@@ -37,31 +36,30 @@ public class EditMode : IViewMode
 
     public void RightClick()
     {
-        if (world.ChosenEntity == null) return;
+        if (ChosenEntity == null) return;
 
-        GameObject.Destroy(world.ChosenEntity.gameObject);
-        world.ChosenEntity = null;
+        GameObject.Destroy(ChosenEntity.gameObject);
+        ChosenEntity = null;
     }
 
     private void TryPlace(Tile newTile)
     {
-        var entity = world.ChosenEntity;
-        if (tileMap.IsCanPlace(newTile, entity.Shape))
+        if (tileMap.IsCanPlace(newTile, ChosenEntity.Shape))
         {
-            foreach (var offset in Shape.Shapes[entity.Shape])
+            foreach (var offset in Shape.Shapes[ChosenEntity.Shape])
             {
                 Vector3Int tilePos = newTile.tileData.CubeCoord + offset;
-                tileMap.Tiles[tilePos].tileData.IsTaken = entity;
+                tileMap.Tiles[tilePos].tileData.IsTaken = ChosenEntity;
             }
-            world.ChosenEntity = null;
+            ChosenEntity = null;
 
-            if(entity.TryGetComponent<Initialazer>(out var component)) component.Initialize();
+            //if(entity.TryGetComponent<Initialazer>(out var component)) component.Initialize();
 
             //Tween.Spawn(entity.transform);
         }
         else
         {
-            Tween.Shake(entity.transform);
+            Tween.Shake(ChosenEntity.transform);
         }
     }
 }

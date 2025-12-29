@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Zenject;
 
 public class MenuButtons : MonoBehaviour
 {
-    [Inject] private GeneralData generalData;
-    [Inject] private EventBus eventBus;
+    private GeneralData generalData;
+    private EventBus eventBus;
 
 
     public void ContinueGame()

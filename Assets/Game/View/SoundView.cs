@@ -1,11 +1,10 @@
 using UnityEngine;
-using Zenject;
 
 public class SoundView : MonoBehaviour
 {
     [SerializeField] private SoundSO[] Sounds;
 
-    [Inject] private AudioService audioService;
+    private AudioService audioService;
 
     public void playSound(int soundIndex)
     {

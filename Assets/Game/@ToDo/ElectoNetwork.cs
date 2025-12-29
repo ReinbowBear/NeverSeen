@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class ElectoNetwork : MonoBehaviour
 {
-    [Inject] EntityRegistry world;
-
     public void UpdateNetwork(OnUpdateNetwork _)
     {
         List<EnergyUser> users = new ();

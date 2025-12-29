@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using Zenject;
 
-public class ClickHandler : MonoBehaviour, IStateMachine
+public class ClickHandler : MonoBehaviour
 {
     private Camera cam;
 
@@ -14,18 +13,17 @@ public class ClickHandler : MonoBehaviour, IStateMachine
     private Dictionary<ViewMode, IViewMode> states;
     public IViewMode CurrentState { get; private set; }
 
-    [Inject] private Input input;
-    [Inject] private Factory factory;
+    private Input input;
 
     void Awake()
     {
         cam = Camera.main;
     
-        states = new Dictionary<ViewMode, IViewMode>
-        {
-            { ViewMode.view, factory.GetClass<DefaultMode>((LayerMask)LayerMask.GetMask("Tile")) },
-            { ViewMode.edit, factory.GetClass<EditMode>((LayerMask)LayerMask.GetMask("Tile"), this) }
-        };
+        //states = new Dictionary<ViewMode, IViewMode>
+        //{
+        //    { ViewMode.view, factory.GetClass<DefaultMode>((LayerMask)LayerMask.GetMask("Tile")) },
+        //    { ViewMode.edit, factory.GetClass<EditMode>((LayerMask)LayerMask.GetMask("Tile"), this) }
+        //};
 
         SetMode(ViewMode.view);
     }
@@ -102,4 +100,71 @@ public class ClickHandler : MonoBehaviour, IStateMachine
 public enum ViewMode
 {
     view, edit
+}
+
+
+public class ClickController
+{
+    private Input input;
+    private Camera cam;
+
+    private PointerEventData pointerEventData;
+    private List<RaycastResult> raycastResults;
+    private LayerMask layerMask;
+
+    public ClickController(Input input)
+    {
+        this.input = input;
+        cam = Camera.main;
+
+        pointerEventData = new PointerEventData(EventSystem.current);
+        raycastResults = new();
+    }
+
+
+    public void LeftClick(InputAction.CallbackContext _)
+    {
+        if (IsPointerOverUI()) return;
+
+        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+        if (Physics.Raycast(ray, out var hit, 30, layerMask, QueryTriggerInteraction.Ignore))
+        {
+            //Select(hit.collider.gameObject);
+        }
+    }
+
+    public void RightClick(InputAction.CallbackContext _)
+    {
+        
+    }
+
+    public void SetLayer(int layer, bool enabled)
+    {
+        if (enabled) layerMask |= 1 << layer;
+        else layerMask &= ~(1 << layer);
+    }
+
+
+    private bool IsPointerOverUI()
+    {
+        pointerEventData.position = Mouse.current.position.ReadValue();
+
+        raycastResults.Clear();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+
+        return raycastResults.Count > 0;
+    }
+
+
+    void Start()
+    {
+        input.GamePlay.MouseLeft.started += LeftClick;
+        input.GamePlay.MouseRight.started += RightClick;
+    }
+
+    void OnDestroy()
+    {
+        input.GamePlay.MouseLeft.started -= LeftClick;
+        input.GamePlay.MouseRight.started -= RightClick;
+    }
 }

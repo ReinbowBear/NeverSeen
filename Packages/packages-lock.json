@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.svermeulen.extenject": {
-      "version": "https://github.com/Mathijs-Bakker/Extenject.git?path=UnityProject/Assets/Plugins/Zenject/Source",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "1ee302d4c626aa36e0aee9897f63ef3c4dbe33f6"
-    },
     "com.unity.addressables": {
       "version": "2.7.4",
       "depth": 1,
@@ -87,7 +80,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.5.8",
+      "version": "1.5.9",
       "depth": 0,
       "source": "registry",
       "dependencies": {

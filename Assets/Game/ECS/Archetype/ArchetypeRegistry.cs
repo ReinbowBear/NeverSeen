@@ -113,6 +113,15 @@ public sealed class ArchetypeRegistry
         }
         return mask;
     }
+
+
+    public void ClearAllMasks()
+    {
+        foreach (var archetype in archetypes.Values)
+        {
+            archetype.ClearAllMasks();
+        }
+    }
 }
 
 
