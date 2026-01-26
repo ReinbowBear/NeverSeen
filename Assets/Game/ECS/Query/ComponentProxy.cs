@@ -1,5 +1,5 @@
 
-public readonly ref struct ComponentProxy<T> where T : struct, IComponentData // класс должен быть дженерик так или иначе что бы возращать Т
+public readonly ref struct ComponentProxy<T> where T : struct, IComponentData
 {
     private readonly Chunk chunk;
     private readonly int slot;

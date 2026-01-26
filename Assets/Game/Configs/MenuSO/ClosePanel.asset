@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: ClosePanel
   m_EditorClassIdentifier: 
   Sound: {fileID: 8300000, guid: 54af095429b57e345a73f37969ff7ec5, type: 3}
-  Type: 0
-  Tag: 0
   IsLoud: 0
   IsStacked: 0
+  IsPitch: 1

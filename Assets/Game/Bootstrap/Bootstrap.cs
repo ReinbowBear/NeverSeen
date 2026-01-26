@@ -2,18 +2,15 @@ using UnityEngine;
 
 public class Bootstrap : MonoBehaviour
 {
-    [SerializeField, SerializeInterface(typeof(IState))] private IState StartedState;
-    [SerializeField, SerializeInterface(typeof(IState))] private IState[] states;
+    public BaseProxy[] states;
 
     private StateMachine stateMachine = new();
-    private ServicesContext servicesContext = new();
-
+    private EventWorld eventWorld = new();
 
     void Awake()
     {
         AddStates();
-        servicesContext.Input.Init();
-        stateMachine.SetCurrent(StartedState); // немного костыльная функция
+        stateMachine.SetMode(states[0]);
     }
 
 
@@ -23,32 +20,24 @@ public class Bootstrap : MonoBehaviour
         {
             stateMachine.AddState(state);
 
-            var gameState = state as IGameState;
-            gameState.Init(servicesContext);
+            state.SetEventBus(eventWorld);
+            state.Init();
         }
     }
 
 
     void OnDestroy()
     {
-        stateMachine.Exit();
-        servicesContext.Factory.Dispose();
+        stateMachine.Dispose();
     }
-}
 
-public interface IGameState
-{
-    void Init(ServicesContext servicesContext);
-}
 
-public class ServicesContext
-{
-    public CommandBus commandBus = new();
-    public EventBus eventBus = new();
+    public void ExitGame()
+    {
+        #if UNITY_EDITOR
+        Debug.Log("Отсюда нет выхода.. x_x");
+        #endif
 
-    public Input Input = new();
-    public AudioService AudioService = new();
-
-    public SaveLoad SaveLoad = new();
-    public Factory Factory = new();
+        Application.Quit();
+    }
 }

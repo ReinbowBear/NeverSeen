@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: ClickButton
   m_EditorClassIdentifier: 
   Sound: {fileID: 8300000, guid: 736049508e68c87439c8862f0a0a3ac7, type: 3}
-  Type: 0
-  Tag: 0
   IsLoud: 0
   IsStacked: 0
+  IsPitch: 1

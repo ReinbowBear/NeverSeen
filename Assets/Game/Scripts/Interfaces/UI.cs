@@ -5,12 +5,6 @@ public interface IActivatable
     void Deactivate();
 }
 
-public interface IPanel
-{
-    void SetActive(bool isActive);
-    void SetNavigation(bool isEnable);
-}
-
 public interface IBarView
 {
     void DrawBar(bool isActive);

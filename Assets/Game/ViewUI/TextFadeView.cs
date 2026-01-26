@@ -5,7 +5,6 @@ using UnityEngine;
 public class TextFadeView : MonoBehaviour
 {
     [Header("Ref")]
-    public PointerEnter pointerEnter;
     public TextMeshProUGUI text;
     public SoundSO ClickSounds;
     public SoundSO ChoseSounds;

@@ -20,6 +20,7 @@ public class DialogueGraphTool : EditorWindow
     }
 
 
+    #region Init
     private void InitGraphView()
     {
         graphView = new DialogueGraph();
@@ -38,9 +39,9 @@ public class DialogueGraphTool : EditorWindow
             label = "File Name:"
         };
 
-        UnityEngine.UIElements.Button saveButton = new UnityEngine.UIElements.Button(() => Save()) { text = "Save" };
-        UnityEngine.UIElements.Button loadButton = new UnityEngine.UIElements.Button(() => Load()) { text = "Load" };
-        UnityEngine.UIElements.Button clearButton = new UnityEngine.UIElements.Button(() => graphView.ClearGraph()) { text = "clear" };
+        Button saveButton = new Button(() => Save()) { text = "Save" };
+        Button loadButton = new Button(() => Load()) { text = "Load" };
+        Button clearButton = new Button(() => graphView.ClearGraph()) { text = "Clear" };
 
         toolbar.Add(fileName);
 
@@ -50,8 +51,10 @@ public class DialogueGraphTool : EditorWindow
 
         rootVisualElement.Add(toolbar);
     }
+    #endregion
 
 
+    #region Save and load
     private void Save()
     {
         if (string.IsNullOrEmpty(fileName.value))
@@ -80,4 +83,5 @@ public class DialogueGraphTool : EditorWindow
 
         fileName.value = graphView.Name;
     }
+    #endregion
 }

@@ -4,7 +4,7 @@ public class WaveText : MonoBehaviour
 {
     public float Frequency = 6;
     public float Magnitude = 0.1f;
-    public float Offset; // не знаю что делает эта переменная, надо смотреть в синусе ниже
+    public float Offset;
 
     private Vector3 startPos;
 

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81a940be38793d349a61ba26eeb41ea2, type: 3}
+  m_Name: AudioSettingsSO
+  m_EditorClassIdentifier: Assembly-CSharp::AudioSettingsSO
+  pitchIncrement: 0.15
+  pitchResetDelay: 1.5
+  maxPitch: 2.5
+  minPitchAfterReset: 1
+  maxRandomizedReset: 1.2
+  musicPauseVolume: -80
+  musicNormalVolume: 0
+  musicFadeOutTime: 1.5
+  musicFadeInTime: 0.5

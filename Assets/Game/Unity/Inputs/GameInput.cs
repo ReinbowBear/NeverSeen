@@ -109,6 +109,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""294423c0-a9d6-4344-935a-fa694e439315"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -144,6 +153,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d41b2fe-c005-43bd-a0ab-438f2bc282eb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -190,15 +210,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Scroll"",
-                    ""type"": ""Value"",
-                    ""id"": ""7950dabe-b39c-43e8-a8a1-5eca858724e9"",
-                    ""expectedControlType"": ""Vector2"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Shift"",
                     ""type"": ""Button"",
                     ""id"": ""0eb0df65-7fec-4145-ad9c-1bad7b314952"",
@@ -206,6 +217,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""7950dabe-b39c-43e8-a8a1-5eca858724e9"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Q"",
@@ -349,204 +369,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""System"",
-            ""id"": ""cdde4edb-d964-4fd3-9ba1-aa3b29a9786d"",
-            ""actions"": [
-                {
-                    ""name"": ""Esc"",
-                    ""type"": ""Button"",
-                    ""id"": ""73f91692-605b-4c05-aa18-3c12b55e091f"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""7ab0ecdd-ab39-4f30-902d-9ae588d7daad"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Esc"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
-        },
-        {
-            ""name"": ""Debug"",
-            ""id"": ""28b74b43-efc5-4a0c-beee-6a54f5051565"",
-            ""actions"": [
-                {
-                    ""name"": ""Toggle"",
-                    ""type"": ""Button"",
-                    ""id"": ""814ecc94-0f7c-4ad6-9218-9bb5271245f0"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""UpArrow"",
-                    ""type"": ""Button"",
-                    ""id"": ""3e58fdb5-ff11-4f74-bc3d-7a5c50ed5b24"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""DownArrow"",
-                    ""type"": ""Button"",
-                    ""id"": ""99e92519-f7eb-4960-a78f-3669bdcd5189"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Click"",
-                    ""type"": ""Button"",
-                    ""id"": ""8594b533-bc9d-41f3-81ab-97150dceba30"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""E"",
-                    ""type"": ""Button"",
-                    ""id"": ""0b98acca-02c3-4f11-b64d-51766f1394d0"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""BackSpace"",
-                    ""type"": ""Button"",
-                    ""id"": ""c816988f-89d4-4c41-99da-63df709958ff"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Tab"",
-                    ""type"": ""Button"",
-                    ""id"": ""703cf065-7ea8-4095-82a4-65703af85359"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""ea88fb5b-5429-44d9-aab0-ea6d3b7cca61"",
-                    ""path"": ""<Keyboard>/backquote"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Toggle"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ea383b85-4a1c-452b-bf10-92e29569f304"",
-                    ""path"": ""<Keyboard>/backspace"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""BackSpace"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ff1c16ef-34e7-45f8-9aaf-1cccbf1e4d88"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Tab"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d57675a0-6457-4ed9-904d-d82807bc2bc8"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""UpArrow"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""499458f4-b1ea-4c59-a63a-4dd7f1cec484"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""UpArrow"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""4ef98cf8-1cc2-4039-8f33-e9a4027cb8e3"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownArrow"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""833d9f7b-8d62-491e-9240-3784e7a94319"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DownArrow"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a2de4984-bc71-445e-969a-30101af254bf"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Click"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a88e14b1-9026-4ac5-853c-6923b5eb6be2"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""E"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": [
@@ -616,35 +438,22 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
+        m_UI_Esc = m_UI.FindAction("Esc", throwIfNotFound: true);
         // GamePlay
         m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
         m_GamePlay_WASD = m_GamePlay.FindAction("WASD", throwIfNotFound: true);
         m_GamePlay_MouseLeft = m_GamePlay.FindAction("MouseLeft", throwIfNotFound: true);
         m_GamePlay_MouseRight = m_GamePlay.FindAction("MouseRight", throwIfNotFound: true);
-        m_GamePlay_Scroll = m_GamePlay.FindAction("Scroll", throwIfNotFound: true);
         m_GamePlay_Shift = m_GamePlay.FindAction("Shift", throwIfNotFound: true);
+        m_GamePlay_Scroll = m_GamePlay.FindAction("Scroll", throwIfNotFound: true);
         m_GamePlay_Q = m_GamePlay.FindAction("Q", throwIfNotFound: true);
         m_GamePlay_E = m_GamePlay.FindAction("E", throwIfNotFound: true);
-        // System
-        m_System = asset.FindActionMap("System", throwIfNotFound: true);
-        m_System_Esc = m_System.FindAction("Esc", throwIfNotFound: true);
-        // Debug
-        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
-        m_Debug_Toggle = m_Debug.FindAction("Toggle", throwIfNotFound: true);
-        m_Debug_UpArrow = m_Debug.FindAction("UpArrow", throwIfNotFound: true);
-        m_Debug_DownArrow = m_Debug.FindAction("DownArrow", throwIfNotFound: true);
-        m_Debug_Click = m_Debug.FindAction("Click", throwIfNotFound: true);
-        m_Debug_E = m_Debug.FindAction("E", throwIfNotFound: true);
-        m_Debug_BackSpace = m_Debug.FindAction("BackSpace", throwIfNotFound: true);
-        m_Debug_Tab = m_Debug.FindAction("Tab", throwIfNotFound: true);
     }
 
     ~@GameInput()
     {
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, GameInput.UI.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_GamePlay.enabled, "This will cause a leak and performance issues, GameInput.GamePlay.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_System.enabled, "This will cause a leak and performance issues, GameInput.System.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_Debug.enabled, "This will cause a leak and performance issues, GameInput.Debug.Disable() has not been called.");
     }
 
     /// <summary>
@@ -722,6 +531,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Navigate;
     private readonly InputAction m_UI_Submit;
+    private readonly InputAction m_UI_Esc;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -741,6 +551,10 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/Submit".
         /// </summary>
         public InputAction @Submit => m_Wrapper.m_UI_Submit;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/Esc".
+        /// </summary>
+        public InputAction @Esc => m_Wrapper.m_UI_Esc;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -773,6 +587,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Submit.started += instance.OnSubmit;
             @Submit.performed += instance.OnSubmit;
             @Submit.canceled += instance.OnSubmit;
+            @Esc.started += instance.OnEsc;
+            @Esc.performed += instance.OnEsc;
+            @Esc.canceled += instance.OnEsc;
         }
 
         /// <summary>
@@ -790,6 +607,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @Submit.started -= instance.OnSubmit;
             @Submit.performed -= instance.OnSubmit;
             @Submit.canceled -= instance.OnSubmit;
+            @Esc.started -= instance.OnEsc;
+            @Esc.performed -= instance.OnEsc;
+            @Esc.canceled -= instance.OnEsc;
         }
 
         /// <summary>
@@ -830,8 +650,8 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_WASD;
     private readonly InputAction m_GamePlay_MouseLeft;
     private readonly InputAction m_GamePlay_MouseRight;
-    private readonly InputAction m_GamePlay_Scroll;
     private readonly InputAction m_GamePlay_Shift;
+    private readonly InputAction m_GamePlay_Scroll;
     private readonly InputAction m_GamePlay_Q;
     private readonly InputAction m_GamePlay_E;
     /// <summary>
@@ -858,13 +678,13 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @MouseRight => m_Wrapper.m_GamePlay_MouseRight;
         /// <summary>
-        /// Provides access to the underlying input action "GamePlay/Scroll".
-        /// </summary>
-        public InputAction @Scroll => m_Wrapper.m_GamePlay_Scroll;
-        /// <summary>
         /// Provides access to the underlying input action "GamePlay/Shift".
         /// </summary>
         public InputAction @Shift => m_Wrapper.m_GamePlay_Shift;
+        /// <summary>
+        /// Provides access to the underlying input action "GamePlay/Scroll".
+        /// </summary>
+        public InputAction @Scroll => m_Wrapper.m_GamePlay_Scroll;
         /// <summary>
         /// Provides access to the underlying input action "GamePlay/Q".
         /// </summary>
@@ -908,12 +728,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @MouseRight.started += instance.OnMouseRight;
             @MouseRight.performed += instance.OnMouseRight;
             @MouseRight.canceled += instance.OnMouseRight;
-            @Scroll.started += instance.OnScroll;
-            @Scroll.performed += instance.OnScroll;
-            @Scroll.canceled += instance.OnScroll;
             @Shift.started += instance.OnShift;
             @Shift.performed += instance.OnShift;
             @Shift.canceled += instance.OnShift;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
             @Q.started += instance.OnQ;
             @Q.performed += instance.OnQ;
             @Q.canceled += instance.OnQ;
@@ -940,12 +760,12 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @MouseRight.started -= instance.OnMouseRight;
             @MouseRight.performed -= instance.OnMouseRight;
             @MouseRight.canceled -= instance.OnMouseRight;
-            @Scroll.started -= instance.OnScroll;
-            @Scroll.performed -= instance.OnScroll;
-            @Scroll.canceled -= instance.OnScroll;
             @Shift.started -= instance.OnShift;
             @Shift.performed -= instance.OnShift;
             @Shift.canceled -= instance.OnShift;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
             @Q.started -= instance.OnQ;
             @Q.performed -= instance.OnQ;
             @Q.canceled -= instance.OnQ;
@@ -985,264 +805,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="GamePlayActions" /> instance referencing this action map.
     /// </summary>
     public GamePlayActions @GamePlay => new GamePlayActions(this);
-
-    // System
-    private readonly InputActionMap m_System;
-    private List<ISystemActions> m_SystemActionsCallbackInterfaces = new List<ISystemActions>();
-    private readonly InputAction m_System_Esc;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "System".
-    /// </summary>
-    public struct SystemActions
-    {
-        private @GameInput m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public SystemActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "System/Esc".
-        /// </summary>
-        public InputAction @Esc => m_Wrapper.m_System_Esc;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_System; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="SystemActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(SystemActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="SystemActions" />
-        public void AddCallbacks(ISystemActions instance)
-        {
-            if (instance == null || m_Wrapper.m_SystemActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_SystemActionsCallbackInterfaces.Add(instance);
-            @Esc.started += instance.OnEsc;
-            @Esc.performed += instance.OnEsc;
-            @Esc.canceled += instance.OnEsc;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="SystemActions" />
-        private void UnregisterCallbacks(ISystemActions instance)
-        {
-            @Esc.started -= instance.OnEsc;
-            @Esc.performed -= instance.OnEsc;
-            @Esc.canceled -= instance.OnEsc;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="SystemActions.UnregisterCallbacks(ISystemActions)" />.
-        /// </summary>
-        /// <seealso cref="SystemActions.UnregisterCallbacks(ISystemActions)" />
-        public void RemoveCallbacks(ISystemActions instance)
-        {
-            if (m_Wrapper.m_SystemActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="SystemActions.AddCallbacks(ISystemActions)" />
-        /// <seealso cref="SystemActions.RemoveCallbacks(ISystemActions)" />
-        /// <seealso cref="SystemActions.UnregisterCallbacks(ISystemActions)" />
-        public void SetCallbacks(ISystemActions instance)
-        {
-            foreach (var item in m_Wrapper.m_SystemActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_SystemActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="SystemActions" /> instance referencing this action map.
-    /// </summary>
-    public SystemActions @System => new SystemActions(this);
-
-    // Debug
-    private readonly InputActionMap m_Debug;
-    private List<IDebugActions> m_DebugActionsCallbackInterfaces = new List<IDebugActions>();
-    private readonly InputAction m_Debug_Toggle;
-    private readonly InputAction m_Debug_UpArrow;
-    private readonly InputAction m_Debug_DownArrow;
-    private readonly InputAction m_Debug_Click;
-    private readonly InputAction m_Debug_E;
-    private readonly InputAction m_Debug_BackSpace;
-    private readonly InputAction m_Debug_Tab;
-    /// <summary>
-    /// Provides access to input actions defined in input action map "Debug".
-    /// </summary>
-    public struct DebugActions
-    {
-        private @GameInput m_Wrapper;
-
-        /// <summary>
-        /// Construct a new instance of the input action map wrapper class.
-        /// </summary>
-        public DebugActions(@GameInput wrapper) { m_Wrapper = wrapper; }
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/Toggle".
-        /// </summary>
-        public InputAction @Toggle => m_Wrapper.m_Debug_Toggle;
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/UpArrow".
-        /// </summary>
-        public InputAction @UpArrow => m_Wrapper.m_Debug_UpArrow;
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/DownArrow".
-        /// </summary>
-        public InputAction @DownArrow => m_Wrapper.m_Debug_DownArrow;
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/Click".
-        /// </summary>
-        public InputAction @Click => m_Wrapper.m_Debug_Click;
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/E".
-        /// </summary>
-        public InputAction @E => m_Wrapper.m_Debug_E;
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/BackSpace".
-        /// </summary>
-        public InputAction @BackSpace => m_Wrapper.m_Debug_BackSpace;
-        /// <summary>
-        /// Provides access to the underlying input action "Debug/Tab".
-        /// </summary>
-        public InputAction @Tab => m_Wrapper.m_Debug_Tab;
-        /// <summary>
-        /// Provides access to the underlying input action map instance.
-        /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_Debug; }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
-        public void Enable() { Get().Enable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
-        public void Disable() { Get().Disable(); }
-        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
-        public bool enabled => Get().enabled;
-        /// <summary>
-        /// Implicitly converts an <see ref="DebugActions" /> to an <see ref="InputActionMap" /> instance.
-        /// </summary>
-        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
-        /// <summary>
-        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <param name="instance">Callback instance.</param>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
-        /// </remarks>
-        /// <seealso cref="DebugActions" />
-        public void AddCallbacks(IDebugActions instance)
-        {
-            if (instance == null || m_Wrapper.m_DebugActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_DebugActionsCallbackInterfaces.Add(instance);
-            @Toggle.started += instance.OnToggle;
-            @Toggle.performed += instance.OnToggle;
-            @Toggle.canceled += instance.OnToggle;
-            @UpArrow.started += instance.OnUpArrow;
-            @UpArrow.performed += instance.OnUpArrow;
-            @UpArrow.canceled += instance.OnUpArrow;
-            @DownArrow.started += instance.OnDownArrow;
-            @DownArrow.performed += instance.OnDownArrow;
-            @DownArrow.canceled += instance.OnDownArrow;
-            @Click.started += instance.OnClick;
-            @Click.performed += instance.OnClick;
-            @Click.canceled += instance.OnClick;
-            @E.started += instance.OnE;
-            @E.performed += instance.OnE;
-            @E.canceled += instance.OnE;
-            @BackSpace.started += instance.OnBackSpace;
-            @BackSpace.performed += instance.OnBackSpace;
-            @BackSpace.canceled += instance.OnBackSpace;
-            @Tab.started += instance.OnTab;
-            @Tab.performed += instance.OnTab;
-            @Tab.canceled += instance.OnTab;
-        }
-
-        /// <summary>
-        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
-        /// </summary>
-        /// <remarks>
-        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
-        /// </remarks>
-        /// <seealso cref="DebugActions" />
-        private void UnregisterCallbacks(IDebugActions instance)
-        {
-            @Toggle.started -= instance.OnToggle;
-            @Toggle.performed -= instance.OnToggle;
-            @Toggle.canceled -= instance.OnToggle;
-            @UpArrow.started -= instance.OnUpArrow;
-            @UpArrow.performed -= instance.OnUpArrow;
-            @UpArrow.canceled -= instance.OnUpArrow;
-            @DownArrow.started -= instance.OnDownArrow;
-            @DownArrow.performed -= instance.OnDownArrow;
-            @DownArrow.canceled -= instance.OnDownArrow;
-            @Click.started -= instance.OnClick;
-            @Click.performed -= instance.OnClick;
-            @Click.canceled -= instance.OnClick;
-            @E.started -= instance.OnE;
-            @E.performed -= instance.OnE;
-            @E.canceled -= instance.OnE;
-            @BackSpace.started -= instance.OnBackSpace;
-            @BackSpace.performed -= instance.OnBackSpace;
-            @BackSpace.canceled -= instance.OnBackSpace;
-            @Tab.started -= instance.OnTab;
-            @Tab.performed -= instance.OnTab;
-            @Tab.canceled -= instance.OnTab;
-        }
-
-        /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="DebugActions.UnregisterCallbacks(IDebugActions)" />.
-        /// </summary>
-        /// <seealso cref="DebugActions.UnregisterCallbacks(IDebugActions)" />
-        public void RemoveCallbacks(IDebugActions instance)
-        {
-            if (m_Wrapper.m_DebugActionsCallbackInterfaces.Remove(instance))
-                UnregisterCallbacks(instance);
-        }
-
-        /// <summary>
-        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
-        /// </summary>
-        /// <remarks>
-        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
-        /// </remarks>
-        /// <seealso cref="DebugActions.AddCallbacks(IDebugActions)" />
-        /// <seealso cref="DebugActions.RemoveCallbacks(IDebugActions)" />
-        /// <seealso cref="DebugActions.UnregisterCallbacks(IDebugActions)" />
-        public void SetCallbacks(IDebugActions instance)
-        {
-            foreach (var item in m_Wrapper.m_DebugActionsCallbackInterfaces)
-                UnregisterCallbacks(item);
-            m_Wrapper.m_DebugActionsCallbackInterfaces.Clear();
-            AddCallbacks(instance);
-        }
-    }
-    /// <summary>
-    /// Provides a new <see cref="DebugActions" /> instance referencing this action map.
-    /// </summary>
-    public DebugActions @Debug => new DebugActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     /// <summary>
     /// Provides access to the input control scheme.
@@ -1329,6 +891,13 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSubmit(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Esc" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEsc(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "GamePlay" which allows adding and removing callbacks.
@@ -1359,19 +928,19 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMouseRight(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Scroll" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnScroll(InputAction.CallbackContext context);
-        /// <summary>
         /// Method invoked when associated input action "Shift" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnShift(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Scroll" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnScroll(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Q" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -1386,77 +955,5 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnE(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "System" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="SystemActions.AddCallbacks(ISystemActions)" />
-    /// <seealso cref="SystemActions.RemoveCallbacks(ISystemActions)" />
-    public interface ISystemActions
-    {
-        /// <summary>
-        /// Method invoked when associated input action "Esc" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnEsc(InputAction.CallbackContext context);
-    }
-    /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Debug" which allows adding and removing callbacks.
-    /// </summary>
-    /// <seealso cref="DebugActions.AddCallbacks(IDebugActions)" />
-    /// <seealso cref="DebugActions.RemoveCallbacks(IDebugActions)" />
-    public interface IDebugActions
-    {
-        /// <summary>
-        /// Method invoked when associated input action "Toggle" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnToggle(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "UpArrow" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnUpArrow(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "DownArrow" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDownArrow(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Click" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnClick(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "E" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnE(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "BackSpace" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnBackSpace(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Tab" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnTab(InputAction.CallbackContext context);
     }
 }
