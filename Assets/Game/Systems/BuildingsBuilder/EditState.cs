@@ -2,64 +2,40 @@ using UnityEngine;
 
 public class EditState : IViewMode, IState
 {
-    public LayerMask rayLayer;
-    public BuilderData builderData;
+    public EventWorld EventWorld;
+    public BuilderData BuilderData;
 
-    public EditState(BuilderData builderData, LayerMask  rayLayer)
+    public EditState(EventWorld eventWorld, BuilderData builderData)
     {
-        this.builderData = builderData;
-        this.rayLayer = rayLayer;
+        EventWorld = eventWorld;
+        BuilderData = builderData;
     }
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        EventWorld.Invoke(BuilderEvents.EditModeEnter);
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        RightClick();
     }
 
 
-    public void LeftClick(RaycastHit hit)
+    public void LeftClick(Tile tile)
     {
-        if (builderData.BuildingInHand == null)
-        {
-            //clickHandler.SetMode(0);
-            return;
-        }
+        var obj = BuilderData.CurrentBuilding;
+        if (obj == null) return;
 
-        Tile tile = hit.transform.gameObject.GetComponent<Tile>();
-        TryPlace(tile);
+        EventWorld.Invoke(obj, BuilderEvents.Spawn);
     }
 
     public void RightClick()
     {
-        if (builderData.BuildingInHand == null) return;
+        var obj = BuilderData.CurrentBuilding;
+        if (obj == null) return;
 
-        GameObject.Destroy(builderData.BuildingInHand.gameObject);
-        builderData.BuildingInHand = null;
-    }
-
-    private void TryPlace(Tile newTile)
-    {
-        if (tileMap.IsCanPlace(newTile, builderData.BuildingInHand.Shape))
-        {
-            foreach (var offset in Shape.Shapes[builderData.BuildingInHand.Shape])
-            {
-                Vector3Int tilePos = newTile.tileData.CubeCoord + offset;
-                tileMap.Tiles[tilePos].tileData.IsTaken = builderData.BuildingInHand;
-            }
-            builderData.BuildingInHand = null;
-
-            //if(entity.TryGetComponent<Initialazer>(out var component)) component.Initialize();
-
-            //Tween.Spawn(entity.transform);
-        }
-        else
-        {
-            //Tween.Shake(ChosenEntity.transform);
-        }
+        BuilderData.CurrentBuilding = null;
+        EventWorld.Invoke(obj, BuilderEvents.Destroy);
     }
 }

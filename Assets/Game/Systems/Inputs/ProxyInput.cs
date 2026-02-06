@@ -1,17 +1,17 @@
 
 public class ProxyInput : BaseProxy
 {
-    public InputMode inputMode;
-    private Input input = new();
+    public InputMode StartedMode;
+    private Input Input = new();
 
     public override void Init()
     {
-        input.Init(eventWorld);
-        input.SwitchTo(inputMode);
+        Input.Init(eventWorld);
+        Input.SwitchTo(StartedMode);
     }
 
     public override void Exit()
     {
-        input.Dispose();
+        Input.Dispose();
     }
 }

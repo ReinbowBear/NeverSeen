@@ -6,7 +6,7 @@ public class ProxyTween : BaseProxy
 
     public override void Enter()
     {
-        eventWorld.AddListener<Spawn>(tween.Spawn, UIEvents.OnPanelOpen);
-        eventWorld.AddListener<Destroy>(tween.Destroy, UIEvents.OnPanelClose);
+        eventWorld.AddListener<Spawn>(tween.Spawn, Events.UIEvents.OnPanelOpen);
+        eventWorld.AddListener<Destroy>(tween.Destroy, Events.UIEvents.OnPanelClose);
     }
 }

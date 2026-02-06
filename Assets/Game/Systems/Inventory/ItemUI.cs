@@ -1,63 +1,38 @@
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class ItemUI : MonoBehaviour,  IBeginDragHandler, IDragHandler, IEndDragHandler,  IEventSender
 {    
-    [SerializeField] private Image image;
-    [Space]
-    [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private RectTransform rectTransform;
+    public Image image;
+    public ItemData ItemData;
 
-    [HideInInspector] public ItemData item;
-    [HideInInspector] public Transform originalParent;
-    private Vector3 originalpos;
-    private DG.Tweening.Tween tween;
+    public EventWorld EventWorld;
 
     public void Init(ItemData newItem)
     {
-        item = newItem;
-        image.sprite = item.UI.sprite;
+        ItemData = newItem;
+        image.sprite = ItemData.Sprite;
+    }
+
+    public void SetEventBus(EventWorld eventWorld)
+    {
+        EventWorld = eventWorld;
     }
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (tween != null)
-        {
-            tween.Kill();
-        }
-        canvasGroup.blocksRaycasts = false; //отключаем захват рейкастов, предмет ловит рейкасты на себя, не пропуская проверки на OnDrop
-        
-        originalParent = transform.parent;
-        transform.SetParent(transform.root);
+        EventWorld.Invoke(gameObject, InventoryEvents.ItemBeginDrag);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        Vector3 targetPosition = UnityEngine.Input.mousePosition;
-        rectTransform.position = targetPosition;
+        EventWorld.Invoke(gameObject, InventoryEvents.ItemDrag);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        canvasGroup.blocksRaycasts = true;
-        transform.SetParent(originalParent); // во время движения объект уже прикреплён к своему слоту, от чего другие слоты по иерархии объектов в сцене, отображаются выше него!
-        MoveToSlot();
-    }
-
-    public void MoveToSlot()
-    {
-        tween = rectTransform.DOAnchorPos(originalpos, 0.4f).OnComplete(() => { tween = null; });
-    }
-
-
-    void OnDestroy()
-    {
-        if (tween != null)
-        {
-            tween.Kill();
-        }
+        EventWorld.Invoke(gameObject, InventoryEvents.ItemEndDrag);
     }
 }

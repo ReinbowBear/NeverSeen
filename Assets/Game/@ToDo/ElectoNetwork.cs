@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ElectoNetwork : MonoBehaviour
 {
-    public void UpdateNetwork(OnUpdateNetwork _)
+    public void UpdateNetwork()
     {
         List<EnergyUser> users = new ();
         Generator[] generators = new Generator[5];

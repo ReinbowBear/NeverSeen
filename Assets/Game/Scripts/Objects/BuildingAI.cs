@@ -34,3 +34,13 @@ public class BuildingAI : MonoBehaviour
         //Tween.Impact(transform);
     }
 }
+
+public interface ICondition
+{
+    bool IsConditionMet();
+}
+
+public interface IBehavior
+{
+    void SetActive(bool isActive);
+}

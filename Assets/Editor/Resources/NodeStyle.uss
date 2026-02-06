@@ -1,5 +1,4 @@
 
-
 // containers
 .ds-node__main-container
 {
@@ -125,6 +124,19 @@ TextField
 {
     margin-left: -12px;
     margin-top: 8px;
+}
+
+.ds-node__quote-textfield
+{
+    min-width: 260px;
+    max-width: 260px;
+
+    font-size: 14px;
+    white-space: normal;
+
+    unity-text-align: upper-left;
+
+    padding: 6px;
 }
 
 // built in

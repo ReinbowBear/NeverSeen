@@ -30,7 +30,7 @@ public class SaveLoad
         try
         {
             string json = File.ReadAllText(filePath);
-            var loadedData = JsonConvert.DeserializeObject<GeneralData>(json);
+            //var loadedData = JsonConvert.DeserializeObject<GeneralData>(json);
             //generalData.LoadData(loadedData);
         }
         catch (Exception ex)

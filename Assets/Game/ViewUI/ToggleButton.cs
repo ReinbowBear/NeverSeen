@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ToggleButton : MonoBehaviour, IToggle
+public class ToggleButton : MonoBehaviour
 {
     public Image Image;
     public float Value;

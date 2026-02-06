@@ -1,6 +1,5 @@
-using UnityEngine;
 
-public class BehaviorWrapper
+public struct BehaviorWrapper
 {
     public IBehavior behavior;
     public ICondition condition;

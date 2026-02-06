@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class EnergyCarrier : MonoBehaviour, IHaveRadius
+public abstract class EnergyCarrier : MonoBehaviour
 {
     public ComponentBus eventBus;
     public UnityEvent<bool> OnIsActive;

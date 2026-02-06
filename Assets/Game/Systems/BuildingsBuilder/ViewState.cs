@@ -1,42 +1,41 @@
-using UnityEngine;
 
 public class ViewState : IViewMode, IState
 {
-    public LayerMask rayLayer;
-    public BuilderData builderData;
+    public EventWorld EventWorld;
+    public BuilderData BuilderData;
 
-    public ViewState(BuilderData builderData, LayerMask  rayLayer)
+    public ViewState(EventWorld eventWorld, BuilderData builderData)
     {
-        this.builderData = builderData;
-        this.rayLayer = rayLayer;
+        EventWorld = eventWorld;
+        BuilderData = builderData;
     }
 
     public void Enter()
     {
-        throw new System.NotImplementedException();
+        EventWorld.Invoke(BuilderEvents.ViewModeEnter);
     }
 
     public void Exit()
     {
-        throw new System.NotImplementedException();
+        RightClick();
     }
 
 
-    public void LeftClick(RaycastHit hit)
+    public void LeftClick(Tile tile)
     {
-        RightClick();
+        var obj = tile.tileData.IsTaken;
+        if (obj == null) return;
 
-        var tile = hit.transform.gameObject.GetComponent<Tile>();
-        builderData.BuildingInHand = tile.tileData.IsTaken;
-        builderData.BuildingInHand?.Selected(true);
+        BuilderData.CurrentBuilding = obj;
+        EventWorld.Invoke(obj, BuilderEvents.Select);
     }
 
     public void RightClick()
     {
-        if (builderData.BuildingInHand != null)
-        {
-            builderData.BuildingInHand.Selected(false);
-            builderData.BuildingInHand = null;
-        }
+        var obj = BuilderData.CurrentBuilding;
+        if (obj == null) return;
+        
+        obj = null;
+        EventWorld.Invoke(BuilderEvents.Deselect);
     }
 }

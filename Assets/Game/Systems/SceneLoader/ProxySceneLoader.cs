@@ -13,6 +13,11 @@ public class ProxySceneLoader : BaseProxy
         _ = Fade(1f, 0f);
     }
 
+    public override void Enter()
+    {
+        Debug.Log($"подписать на {Events.SceneEvents.EnterScene}");
+    }
+
 
     public async void LoadScene(int sceneIndex)
     {

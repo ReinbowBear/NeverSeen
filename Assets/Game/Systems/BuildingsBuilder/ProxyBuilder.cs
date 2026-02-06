@@ -1,31 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class ProxyBuilder : BaseProxy
 {
-    private Camera cam;
     private StateMachine stateMachine = new();
-
-    private BuildingsBuilder buildingsBuilder = new();
     private BuilderData builderData = new();
 
-    private PointerEventData pointerEventData;
-    private List<RaycastResult> raycastResults;
+    private Vector2 mousePos;
+    public float MouseMagnitude = 100f;
+
 
     public override void Init()
     {
-        cam = Camera.main;
-
-        pointerEventData = new PointerEventData(EventSystem.current);
-        raycastResults = new();
-
-        var mask = (LayerMask)LayerMask.GetMask("Tile");
-
-        var view = new ViewState(builderData, mask);
-        var edit = new EditState(builderData, mask);
+        var view = new ViewState(eventWorld, builderData);
+        var edit = new EditState(eventWorld, builderData);
 
         stateMachine.AddState(view);
         stateMachine.AddState(edit);
@@ -35,63 +23,66 @@ public class ProxyBuilder : BaseProxy
 
     public override void Enter()
     {
-        eventWorld.AddListener(LeftClick, GamePlayInputEvents.LeftClick);
-        eventWorld.AddListener(RightClick, GamePlayInputEvents.RightClick);
+        eventWorld.AddListener<Tile>(LeftClick, Events.RayCaster.Select);
+        eventWorld.AddListener(SaveMousePos, Events.RayCaster.Deselect);
+
+        eventWorld.AddListener(AfterRightClick, Events.GamePlayInput.RightClickCancel);
     }
 
     public override void Exit()
     {
-        eventWorld.RemoveListener(LeftClick, GamePlayInputEvents.LeftClick);
-        eventWorld.RemoveListener(RightClick, GamePlayInputEvents.RightClick);
+        eventWorld.RemoveListener<Tile>(LeftClick, Events.RayCaster.Select);
+        eventWorld.RemoveListener(SaveMousePos, Events.RayCaster.Deselect);
+
+        eventWorld.RemoveListener(AfterRightClick, Events.GamePlayInput.RightClickCancel);
     }
 
 
-    public void SetMode()
+    public void SetMode(IState state)
     {
-
+        stateMachine.SetMode(state);
     }
 
 
-    public void LeftClick()
+    private void LeftClick(Tile tile)
     {
-        if (IsPointerOverUI()) return;
-
-        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
-        //if (Physics.Raycast(ray, out var hit, 30, layerMask, QueryTriggerInteraction.Ignore))
-        //{
-        //    //Select(hit.collider.gameObject);
-        //}
+        var mode = stateMachine.CurrentState as IViewMode;
+        mode.LeftClick(tile);
     }
 
-
-    private void RightClick() => StartCoroutine(TryRightClick());
-    private IEnumerator TryRightClick()
+    private void SaveMousePos()
     {
-        Vector3 mousePos = UnityEngine.Input.mousePosition;
+        if (builderData.CurrentBuilding == null) return;
+        mousePos = Mouse.current.position.ReadValue();
+    }
 
-        //while (input.GamePlay.MouseRight.IsPressed()) yield return null;
-        yield return null;
+    private void AfterRightClick()
+    {
+        float distance = Vector2.Distance(mousePos, mousePos);
 
-        if ((mousePos - UnityEngine.Input.mousePosition).magnitude <= 100f) // срабатывает если разница не более number float
+        if (distance <= MouseMagnitude)
         {
-            //CurrentState.RightClick();
+            var viewMode = stateMachine.CurrentState as IViewMode;
+            viewMode.RightClick();
         }
-    }
-
-
-    private bool IsPointerOverUI()
-    {
-        pointerEventData.position = Mouse.current.position.ReadValue();
-
-        raycastResults.Clear();
-        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
-
-        return raycastResults.Count > 0;
     }
 }
 
 public interface IViewMode
 {
-    void LeftClick(RaycastHit hit);
+    void LeftClick(Tile tile);
     void RightClick();
+}
+
+public enum BuilderEvents
+{
+    Select,
+    Deselect,
+
+    Spawn,
+    Destroy,
+
+    NoneModeEnter,
+    ViewModeEnter,
+    EditModeEnter,
 }

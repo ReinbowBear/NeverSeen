@@ -1,19 +1,21 @@
+using UnityEngine;
 
-public class ProxyState : BaseProxy
+public class ProxyState : MonoBehaviour, IState
 {
     public BaseProxy[] proxys;
 
-    public override void Init()
+    public void Init(EventWorld eventWorld, DependencyResolver resolver)
     {
         foreach (var proxy in proxys)
         {
             proxy.SetEventBus(eventWorld);
+            resolver.Resolve(proxy);
             proxy.Init();
         }
     }
 
 
-    public override void Enter()
+    public void Enter()
     {
         foreach (var proxy in proxys)
         {
@@ -21,7 +23,7 @@ public class ProxyState : BaseProxy
         }
     }
 
-    public override void Exit()
+    public void Exit()
     {
         foreach (var proxy in proxys)
         {

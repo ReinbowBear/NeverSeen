@@ -1,40 +1,26 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemSlot : MonoBehaviour, IDropHandler
+public class ItemSlot : MonoBehaviour, IDropHandler, IEventSender
 {
-    [SerializeField] private ItemType slotType;
-    private ItemUI item;
+    public ItemType slotType;
+    public ItemUI item;
 
-    public ItemUI GetItem()
+    public EventWorld EventWorld;
+
+    public void SetEventBus(EventWorld eventWorld)
     {
-        if (item == null)
-        {
-            item = GetComponentInChildren<ItemUI>();
-        }
-        return item;
+        EventWorld = eventWorld;
     }
-
-
-    private void SwapItems(ItemUI newItem)
-    {
-        if (GetItem() != null)
-        {
-            item.originalParent = newItem.originalParent;
-            item.MoveToSlot();
-        }
-
-        newItem.originalParent = transform; //дальше Item передвинет его собсвтенный MoveToSlot()
-    }
-
 
     public void OnDrop(PointerEventData eventData)
     {
         ItemUI newItem = eventData.pointerDrag.GetComponent<ItemUI>();
 
-        if (slotType == ItemType.None || slotType.ToString() == newItem.item.GetType().Name)
+        if (slotType == ItemType.None || slotType == newItem.ItemData.ItemType)
         {
-            SwapItems(newItem);
+            item = newItem;
+            EventWorld.Invoke(newItem.gameObject, InventoryEvents.ItemDrop);
         }
     }
 }

@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class Bootstrap : MonoBehaviour
 {
-    public BaseProxy[] states;
+    public ProxyState[] states;
 
     private StateMachine stateMachine = new();
     private EventWorld eventWorld = new();
+    private DependencyResolver resolver = new();
 
     void Awake()
     {
         AddStates();
         stateMachine.SetMode(states[0]);
+
+        eventWorld.Invoke(Events.SceneEvents.EnterScene);
     }
 
 
@@ -19,15 +22,14 @@ public class Bootstrap : MonoBehaviour
         foreach (var state in states)
         {
             stateMachine.AddState(state);
-
-            state.SetEventBus(eventWorld);
-            state.Init();
+            state.Init(eventWorld, resolver);
         }
     }
 
 
     void OnDestroy()
     {
+        eventWorld.Invoke(Events.SceneEvents.CloseScene);
         stateMachine.Dispose();
     }
 

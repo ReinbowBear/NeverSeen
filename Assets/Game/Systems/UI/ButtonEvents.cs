@@ -15,22 +15,22 @@ public class ButtonEvents : MonoBehaviour, ISelectHandler, ISubmitHandler, IPoin
 
     public void OnSelect(BaseEventData eventData)
     {
-        eventWorld.Invoke(gameObject, UIEvents.OnNavigate);
+        eventWorld.Invoke(gameObject, Events.UIEvents.OnNavigate);
     }
 
     public void OnSubmit(BaseEventData eventData)
     {
-        eventWorld.Invoke(gameObject, UIEvents.OnButtonInvoke);
+        eventWorld.Invoke(gameObject, Events.UIEvents.OnButtonInvoke);
     }
 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        eventWorld.Invoke(gameObject, UIEvents.OnNavigate);
+        eventWorld.Invoke(gameObject, Events.UIEvents.OnNavigate);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        eventWorld.Invoke(gameObject, UIEvents.OnButtonInvoke);
+        eventWorld.Invoke(gameObject, Events.UIEvents.OnButtonInvoke);
     }
 }

@@ -22,10 +22,10 @@ public class ProxyAudio : BaseProxy
 
     public override void Enter()
     {
-        eventWorld.AddListener<Sound>(ExecuteSound, UIEvents.OnNavigate);
-        eventWorld.AddListener<Sound>(ExecuteSound, UIEvents.OnButtonInvoke);
-        eventWorld.AddListener<Sound>(ExecuteSound, UIEvents.OnPanelOpen);
-        eventWorld.AddListener<Sound>(ExecuteSound, UIEvents.OnPanelClose);
+        eventWorld.AddListener<Sound>(ExecuteSound, Events.UIEvents.OnNavigate);
+        eventWorld.AddListener<Sound>(ExecuteSound, Events.UIEvents.OnButtonInvoke);
+        eventWorld.AddListener<Sound>(ExecuteSound, Events.UIEvents.OnPanelOpen);
+        eventWorld.AddListener<Sound>(ExecuteSound, Events.UIEvents.OnPanelClose);
     }
 
 

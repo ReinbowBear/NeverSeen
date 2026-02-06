@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Panel : MonoBehaviour, IActivatable
+public class Panel : MonoBehaviour
 {
     public CanvasGroup canvasGroup;
 

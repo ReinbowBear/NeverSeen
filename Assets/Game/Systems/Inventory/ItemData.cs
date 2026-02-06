@@ -1,22 +1,14 @@
 using UnityEngine;
 
-public abstract class ItemData : MonoBehaviour
+public struct ItemData
 {
-    public InterfaceData UI;
-    public ItemType itemType;
-}
-
-
-[System.Serializable]
-public class InterfaceData
-{
-    public Sprite sprite;
-    public string itemName;
+    public Sprite Sprite;
+    public string ItemName;
+    public ItemType ItemType;
     [Space]
     [TextArea(5, 0)]
-    public string description;
+    public string Description;
 }
-
 
 public enum ItemType
 {

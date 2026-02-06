@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class BuilderData
 {
-    public GameObject BuildingInHand;
+    public GameObject CurrentBuilding;
 }

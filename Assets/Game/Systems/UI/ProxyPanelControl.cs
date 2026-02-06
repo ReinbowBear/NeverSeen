@@ -15,14 +15,14 @@ public class ProxyPanelControl : BaseProxy
 
     public override void Enter()
     {
-        eventWorld.AddListener(ClosePanel, UIInputEvents.Esc);
-        eventWorld.AddListener<Transform>(NavigateInput, UIEvents.OnNavigate);
+        eventWorld.AddListener(ClosePanel, Events.UIInput.Esc);
+        eventWorld.AddListener<Transform>(NavigateInput, Events.UIEvents.OnNavigate);
     }
 
     public override void Exit()
     {
-        eventWorld.RemoveListener(ClosePanel, UIInputEvents.Esc);
-        eventWorld.RemoveListener<Transform>(NavigateInput, UIEvents.OnNavigate);
+        eventWorld.RemoveListener(ClosePanel, Events.UIInput.Esc);
+        eventWorld.RemoveListener<Transform>(NavigateInput, Events.UIEvents.OnNavigate);
     }
 
 
@@ -42,12 +42,12 @@ public class ProxyPanelControl : BaseProxy
     public void OpenPanel(Panel panel)
     {
         panelControl.OpenPanel(panel);
-        eventWorld.Invoke(UIEvents.OnPanelOpen);
+        eventWorld.Invoke(Events.UIEvents.OnPanelOpen);
     }
 
     public void ClosePanel()
     {
         if(panelControl.ClosePanel(out var closed)) return;
-        eventWorld.Invoke(UIEvents.OnPanelClose);
+        eventWorld.Invoke(Events.UIEvents.OnPanelClose);
     }
 }

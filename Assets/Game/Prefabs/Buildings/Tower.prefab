@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3476123929469640299}
   - component: {fileID: 8668467497050565680}
-  - component: {fileID: 4328896470564832645}
   - component: {fileID: 208519094295904034}
   m_Layer: 3
   m_Name: Tower
@@ -49,38 +48,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3d4758d58bc0e641b1b9d20cc99c005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4328896470564832645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840557412688496580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 150a5c44b87e5954e9982b94f9f0a163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OnSelected:
+  OnActive:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3562486276911157289}
-        m_TargetAssemblyTypeName: ShowTilesView, Assembly-CSharp
-        m_MethodName: ShowTiles
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  Stats:
-    audio: {fileID: 0}
-    Cost: 0
-    Radius: 0
-    Shape: 0
+      m_Calls: []
 --- !u!114 &208519094295904034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,10 +63,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6a2532cdf19c374598e8b805cf3e929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
-  connectionsType: 0
-  connections: []
-  isHasEnergy: 0
   OnIsActive:
     m_PersistentCalls:
       m_Calls:
@@ -127,6 +93,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  Radius: 0
+  type: 0
+  connectionsType: 0
+  connections: []
+  isHasEnergy: 0
 --- !u!1 &3143393264330402048
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,6 +190,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -240,6 +213,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
@@ -307,6 +281,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -328,6 +304,7 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
