@@ -25,7 +25,6 @@ public class CellularAutomaton
 
             foreach (var neighbor in cellCondig.GetNeighbors(current))
             {
-                if (neighbor == null) continue;
                 if (Visited.Contains(neighbor)) continue;
                 
                 if (cellCondig.CanExpand(neighbor) == true)

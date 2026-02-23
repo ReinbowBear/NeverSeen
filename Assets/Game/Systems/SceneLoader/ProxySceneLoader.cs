@@ -1,27 +1,32 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ProxySceneLoader : BaseProxy
+public class ProxySceneLoader : MonoBehaviour, IEventListener
 {
     public CanvasGroup canvasGroup;
     public float fadeDuration = 0.5f;
 
     private SceneLoader sceneLoader = new();
 
-    public override void Init()
+    public void SetEvents(EventWorld eventWorld)
     {
-        _ = Fade(1f, 0f);
-    }
-
-    public override void Enter()
-    {
-        Debug.Log($"подписать на {Events.SceneEvents.EnterScene}");
+        eventWorld.AddListener(this, FadeOut, Events.SceneEvents.EnterScene);
     }
 
 
     public async void LoadScene(int sceneIndex)
     {
         await sceneLoader.RunAsync(sceneIndex, Fade(0f, 1f), Fade(1f, 0f));
+    }
+
+    private void FadeOut()
+    {
+        _ = Fade(1f, 0f);
+    }
+
+    private void FadeTo()
+    {
+        _ = Fade(0f, 1f);
     }
 
     private async Task Fade(float from, float to)

@@ -3,26 +3,13 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField] private MeshRenderer renderMat;
-    [SerializeField] private MeshRenderer highlight;
-
-    [HideInInspector] public int toStartCost;
-    [HideInInspector] public int toTargetCost;
-    [HideInInspector] public int fullCost => toStartCost + toTargetCost;
-    [HideInInspector] public Tile parent;
-
-    [HideInInspector] public TileData tileData;
-
-    void Awake()
-    {
-        float tintRange = 0.1f;
-        renderMat.material.color += new Color(Random.Range(-tintRange, tintRange), Random.Range(-tintRange, tintRange), Random.Range(-tintRange, tintRange));
-    }
+    public MeshRenderer Highlight;
+    public TileData TileData;
 
 
     public void SetBacklight(bool isActive)
     {
-        highlight.enabled = isActive;
+        Highlight.enabled = isActive;
     }
 
     public int GetDistance(Tile target) 
@@ -39,26 +26,22 @@ public class Tile : MonoBehaviour
 }
 
 
-public class TileData
+public struct TileData
 {
     public Vector3Int CubeCoord;
-    public GameObject IsTaken;
+    public BiomeType BiomeType;
 
-    public TileType TileType = TileType.Empty;
-    public BiomeType TileHeightType = BiomeType.Ground;
+    public Stack<GameObject> Takers;
+    public List<TileData> Neighbors;
 
-    public List<TileData> Neighbors = new();
+    public GameObject IsTaken => Takers.Count > 0 ? Takers.Peek() : null;
 
-    public TileData(Vector3Int cord)
+    public TileData(Vector3Int cord, BiomeType biomeType = BiomeType.Bottom)
     {
         CubeCoord = cord;
+        BiomeType = biomeType;
+
+        Takers = new();
+        Neighbors = new();
     }
-}
-
-
-public enum TileType
-{
-    Empty,
-    Building,
-    Ore,
 }

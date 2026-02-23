@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ObjectPoolAddressable
+public class ObjectPoolAddressable : IDisposable
 {
     private string addressKey;
     private Transform root;
@@ -47,5 +48,11 @@ public class ObjectPoolAddressable
     {
         obj.SetActive(false);
         freeObjects.Enqueue(obj);
+    }
+
+
+    public void Dispose()
+    {
+        factory.Dispose();
     }
 }

@@ -4,7 +4,7 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class ProxyAudio : BaseProxy
+public class ProxyAudio : MonoBehaviour, IInitializable, IEventListener
 {
     public GameObject SoundPref;
     public AudioMixer Mixer;
@@ -14,18 +14,18 @@ public class ProxyAudio : BaseProxy
     private Audio Audio;
     private ObjectPool pool;
 
-    public override void Init()
+    public void Init()
     {
         pool = new(SoundPref);
         Audio = new(Settings);
     }
 
-    public override void Enter()
+    public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener<Sound>(ExecuteSound, Events.UIEvents.OnNavigate);
-        eventWorld.AddListener<Sound>(ExecuteSound, Events.UIEvents.OnButtonInvoke);
-        eventWorld.AddListener<Sound>(ExecuteSound, Events.UIEvents.OnPanelOpen);
-        eventWorld.AddListener<Sound>(ExecuteSound, Events.UIEvents.OnPanelClose);
+        eventWorld.AddListener<Sound>(this, ExecuteSound, Events.UIEvents.OnNavigate);
+        eventWorld.AddListener<Sound>(this, ExecuteSound, Events.UIEvents.OnButtonInvoke);
+        eventWorld.AddListener<Sound>(this, ExecuteSound, Events.UIEvents.OnPanelOpen);
+        eventWorld.AddListener<Sound>(this, ExecuteSound, Events.UIEvents.OnPanelClose);
     }
 
 

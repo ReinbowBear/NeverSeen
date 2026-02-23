@@ -9,10 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b44b4e0f6c892e04ab6eafd310a4da17, type: 3}
+  m_Script: {fileID: 11500000, guid: 81a940be38793d349a61ba26eeb41ea2, type: 3}
   m_Name: MenuMapSO
   m_EditorClassIdentifier: Assembly-CSharp::SoundMapSO
-  EventSoundEntrys:
-  - EventName: OnNavigate
-    DefaultSound: {fileID: 11400000, guid: 989a8f6a2d4d26f4a98fca287ed2ad9e, type: 2}
-    KeySounds: []
+  pitchIncrement: 0.15
+  pitchResetDelay: 1.5
+  maxPitch: 2.5
+  minPitchAfterReset: 1
+  maxRandomizedReset: 1.2
+  musicPauseVolume: -80
+  musicNormalVolume: 0
+  musicFadeOutTime: 1.5
+  musicFadeInTime: 0.5

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class ProxyRayCaster : BaseProxy
+public class ProxyRayCaster : MonoBehaviour, IInitializable, IEventListener
 {
     private Camera cam;
 
@@ -13,22 +13,18 @@ public class ProxyRayCaster : BaseProxy
     public LayerMask RayLayer;
     public float RayDistance = 30;
 
-    public override void Init()
+    private EventWorld eventWorld;
+
+    public void Init()
     {
         cam = Camera.main;
         pointerEventData = new PointerEventData(EventSystem.current);
     }
 
-    public override void Enter() // благодаря события можно установить список на что скрипт реагирует и что после этого запускает в случаи рейкаста
+    public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener(Select, Events.GamePlayInput.LeftClick);
-        eventWorld.AddListener(Deselect, Events.GamePlayInput.RightClick);
-    }
-
-    public override void Exit()
-    {
-        eventWorld.RemoveListener(Select, Events.GamePlayInput.LeftClick);
-        eventWorld.RemoveListener(Deselect, Events.GamePlayInput.RightClick);
+        eventWorld.AddListener(this, Select, Events.GamePlayInput.LeftClick);
+        eventWorld.AddListener(this, Deselect, Events.GamePlayInput.RightClick);
     }
 
 

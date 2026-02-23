@@ -6,7 +6,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler, IEventSender
     public ItemType slotType;
     public ItemUI item;
 
-    public EventWorld EventWorld;
+    public EventWorld EventWorld { get; set; }
 
     public void SetEventBus(EventWorld eventWorld)
     {

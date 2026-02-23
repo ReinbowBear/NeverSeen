@@ -1,16 +1,21 @@
+using System;
+using UnityEngine;
 
-public class ProxyInput : BaseProxy
+public class ProxyInput : MonoBehaviour, IInitializable, IDisposable
 {
     public InputMode StartedMode;
     private Input Input = new();
 
-    public override void Init()
+    private EventWorld eventWorld;
+
+    public void Init()
     {
         Input.Init(eventWorld);
         Input.SwitchTo(StartedMode);
     }
 
-    public override void Exit()
+
+    public void Dispose()
     {
         Input.Dispose();
     }

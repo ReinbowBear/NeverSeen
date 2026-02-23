@@ -17,8 +17,8 @@ public struct DefaultCell : ICell
 
     public bool CanExpand(TileData tile)
     {
-        if (tile.TileHeightType != BiomeType.Ground) return false;
-        if (tile.TileHeightType != BiomeType.Hill) return false;
+        if (tile.BiomeType != BiomeType.Ground) return false;
+        if (tile.BiomeType != BiomeType.Hill) return false;
 
         return Random.System.NextDouble() < 0.7f;
     }

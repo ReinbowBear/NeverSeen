@@ -23,7 +23,7 @@ public class ViewState : IViewMode, IState
 
     public void LeftClick(Tile tile)
     {
-        var obj = tile.tileData.IsTaken;
+        var obj = tile.TileData.IsTaken;
         if (obj == null) return;
 
         BuilderData.CurrentBuilding = obj;

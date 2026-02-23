@@ -1,82 +1,37 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class ProxyMapGenerator : BaseProxy
+public class ProxyMapGenerator : MonoBehaviour, IInitializable, IEventListener, IDisposable
 {
     public Transform MapRoot;
 
-    public TileMap MapData = new();
-    public MyRandom Random = new();
+    private TileMap mapData;
+    private MapGenContext genContext = new();
+    private MyRandom random;
 
-    public MapGenData MapGenData = new();
-    public MapDefinitions MapDefinition = new();
-    public MapGenContext GenContext = new();
+    public MapGenData mapGenData;
 
-    private TileGenerator mapTilesGen;
-    private BiomeGenerator mapBiomes;
-    private EnvironmentGenerator mapEnvironment;
+    public MapGenerator mapGenerator;
+    public MapDisplayer mapDisplayer;
 
-    public override void Init()
+    public void Init()
     {
-        mapTilesGen = new TileGenerator(GenContext, Random);
-        mapBiomes = new BiomeGenerator(GenContext, Random);
-        mapEnvironment = new EnvironmentGenerator(GenContext, Random);
-    }
-
-    public override void Enter()
-    {
-        eventWorld.AddListener(GenerateMap, Events.SceneEvents.EnterScene);
-    }
-
-    public override void Exit()
-    {
-        eventWorld.RemoveListener(GenerateMap, Events.SceneEvents.EnterScene);
-    }
-
-
-    private void GenerateMap()
-    {
-        mapTilesGen.CreateTiles(MapGenData);
-        mapTilesGen.SetNeighbors();
-
-        for (int i = 0; i < MapGenData.BiomeRules.Count; i++)
+        mapGenerator = new(mapGenData, genContext, random);
+        mapDisplayer = new(genContext)
         {
-            var tiles = GenContext.FreeTiles;
-            var biomeRule = MapGenData.BiomeRules[i];
-            var biome = MapDefinition.Biomes[i];
-
-            List<TileData> randomTiles = Random.GetRandomElements(tiles, biomeRule.Count); // раньше элементы выбирались в генерации биомов и забирались из списка свободных! не помню исправил ли
-            mapBiomes.GenerateBiome(biome, biomeRule, randomTiles);
-        }
-
-        // mapEnvironment.Generate(environmentGenData);
+            MapRoot = MapRoot
+        };
     }
-}
 
-[System.Serializable]
-public class MapGenData
-{
-    public int Radius;
-    public List<BiomeRule> BiomeRules;
-    public List<EnvironmentRule> EnvironmentRules;
-}
-
-public class MapDefinitions
-{
-    public List<BiomeData> Biomes;
-    public List<EnvironmentData> Environments;
-}
-
-
-
-public class MapGenContext
-{
-    public Dictionary<Vector3Int, TileData> TilesData;
-    public List<TileData> FreeTiles;
-
-    public MapGenContext()
+    public void SetEvents(EventWorld eventWorld)
     {
-        TilesData = new();
-        FreeTiles = new();
+        eventWorld.AddListener(this, mapGenerator.GenerateMap, Events.SceneEvents.EnterScene);
+        eventWorld.AddListener(this, mapDisplayer.DisplayMap, Events.SceneEvents.EnterScene);
+    }
+
+
+    public void Dispose()
+    {
+        mapDisplayer.Dispose();
     }
 }

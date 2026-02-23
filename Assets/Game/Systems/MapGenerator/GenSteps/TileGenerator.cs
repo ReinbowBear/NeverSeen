@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class TileGenerator
 {
-    public float hexWidth = 0.866f; // диамтр от плоской стороны к плоской, при диаметре 1m это будет 0.866
-    public float HexY;
-
     public MapGenContext PrepareData;
     public MyRandom Random;
 
@@ -37,8 +34,9 @@ public class TileGenerator
 
             for (int ii = max; ii <= min; ii++)
             {
-                int z = -i - ii;
-                Vector3Int coord = new(i, ii, z);
+                int y = -i - ii; // третья нулевая координата у нас это "Y" высота
+
+                Vector3Int coord = new(i, y, ii);
                 TileData tile = new TileData(coord);
 
                 PrepareData.TilesData.Add(coord, tile);
@@ -60,10 +58,4 @@ public class TileGenerator
             }
         }
     }
-}
-
-[System.Serializable]
-public struct TileGenData
-{
-    public int Radius;
 }

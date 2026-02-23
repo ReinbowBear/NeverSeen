@@ -5,11 +5,12 @@ namespace Events
     {
         LeftClick,
         RightClick,
-        RightClickCancel,
+        Scroll,
+
         Q,
         E,
-        Scroll,
+
+        WASD,
         Shift,
-        WASD
     }
 }

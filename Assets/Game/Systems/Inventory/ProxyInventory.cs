@@ -1,24 +1,14 @@
-
 using UnityEngine;
 
-public class ProxyInventory : BaseProxy
+public class ProxyInventory : MonoBehaviour, IEventListener
 {
-    public override void Enter()
+    public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener<ItemUI>(InsertOnSlot, InventoryEvents.ItemDrop);
+        eventWorld.AddListener<ItemUI>(this, InsertOnSlot, InventoryEvents.ItemDrop);
 
-        eventWorld.AddListener<CanvasGroup>(OnBeginDrag, InventoryEvents.ItemBeginDrag);
-        eventWorld.AddListener<RectTransform>(OnDrag, InventoryEvents.ItemDrag);
-        eventWorld.AddListener<CanvasGroup>(OnEndDrag, InventoryEvents.ItemEndDrag);
-    }
-
-    public override void Exit()
-    {
-        eventWorld.RemoveListener<ItemUI>(InsertOnSlot, InventoryEvents.ItemDrop);
-
-        eventWorld.RemoveListener<CanvasGroup>(OnBeginDrag, InventoryEvents.ItemBeginDrag);
-        eventWorld.RemoveListener<RectTransform>(OnDrag, InventoryEvents.ItemDrag);
-        eventWorld.RemoveListener<CanvasGroup>(OnEndDrag, InventoryEvents.ItemEndDrag);
+        eventWorld.AddListener<CanvasGroup>(this, OnBeginDrag, InventoryEvents.ItemBeginDrag);
+        eventWorld.AddListener<RectTransform>(this, OnDrag, InventoryEvents.ItemDrag);
+        eventWorld.AddListener<CanvasGroup>(this, OnEndDrag, InventoryEvents.ItemEndDrag);
     }
 
 

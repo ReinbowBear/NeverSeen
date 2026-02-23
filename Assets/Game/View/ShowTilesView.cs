@@ -13,7 +13,7 @@ public class ShowTilesView : MonoBehaviour
     {
         SetTileslight(false);
         var tile = mapData.GetTileFromCord(transform.position);
-        var cord = tile.tileData.CubeCoord;
+        var cord = tile.TileData.CubeCoord;
 
         tilesInRadius = mapData.GetTilesInRadius(cord, Radius);
         SetTileslight(true);

@@ -1,3 +1,4 @@
+using UnityEngine;
 
 public class EnvironmentGenerator
 {
@@ -13,22 +14,8 @@ public class EnvironmentGenerator
     }
 
 
-    public void Generate(EnvironmentRule environmentRule)
+    public void Generate(GameObject environment, EnvironmentRule environmentRule, int count)
     {
 
     }
-}
-
-[System.Serializable]
-public struct EnvironmentRule
-{
-    public int minCount;
-    public int maxCount;
-}
-
-[System.Serializable]
-public struct EnvironmentData
-{
-    public string ID;
-    public string PrefabName;
 }

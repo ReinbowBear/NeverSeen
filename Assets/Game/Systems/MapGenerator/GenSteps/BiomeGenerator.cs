@@ -18,42 +18,20 @@ public class BiomeGenerator
     }
 
 
-    public void GenerateBiome(BiomeData biomeData, BiomeRule biomeRule, List<TileData> startTiles)
+    public void GenerateBiome(BiomeSO biomeData, BiomeRule biomeRule, List<TileData> startTiles)
     {
-        foreach (var startTile in startTiles)
+        for (int i = 0; i < startTiles.Count; i++)
         {
-            var cellStrategy = biomeStrategys[biomeData.BiomeType];
+            var cellStrategy = biomeStrategys[biomeData.Type];
             var grownTiles = automaton.Grow(cellStrategy, startTiles, biomeRule.Size);
 
-            foreach (var tile in grownTiles)
+            for (int ii = 0; ii < grownTiles.Count; ii++)
             {
-                tile.TileHeightType = biomeData.BiomeType;
+                var tile = grownTiles[i];
+
+                tile.BiomeType = biomeData.Type;
                 PrepareData.FreeTiles.Remove(tile);
             }
         }
     }
-}
-
-
-[System.Serializable]
-public struct BiomeRule
-{
-    public int Count;
-    public int Size;
-}
-
-[System.Serializable]
-public struct BiomeData
-{
-    public BiomeType BiomeType;
-    public Color Color;
-}
-
-
-public enum BiomeType
-{
-    Bottom, 
-    Ground, 
-    Hill, 
-    Mount
 }

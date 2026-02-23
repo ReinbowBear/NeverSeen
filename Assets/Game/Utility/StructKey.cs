@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-public readonly struct StructKey<T1, T2> : IEquatable<StructKey<T1, T2>>
+public readonly struct StructKey<T1, T2> : IEquatable<StructKey<T1, T2>> // ключи учитывают порядок элементов!
 {
     public readonly T1 Item1;
     public readonly T2 Item2;

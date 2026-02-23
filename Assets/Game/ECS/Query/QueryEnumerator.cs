@@ -31,6 +31,7 @@ public ref struct QueryEnumerator<T1> where T1 : struct, IComponentData
             //    if (desc.ChangedMask.IsEmpty || currentChunk.WasChanged(slotIndex, desc.ChangedMask)) return true;
             //    continue;
             //}
+
             if (currentChunk != null && ++slotIndex < currentChunk.Entities.Count) return true; // тут увеличение индекса в проверке
 
             while (currentEntry != null && chunkIndex < currentEntry.Archetype.Chunks.Count)

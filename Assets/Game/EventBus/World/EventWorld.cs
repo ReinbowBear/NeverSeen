@@ -1,47 +1,45 @@
 using System;
 using UnityEngine;
 
-public class EventWorld
+public class EventWorld : IService
 {
     private ComponentCache componentCache = new();
-    private ComponentBus componentBus = new();
     private EventBus eventBus = new();
-    
-    #region DataBus
-    public void AddListener<T>(Action<T> callback, Enum eventType) where T : Component
+
+
+    #region AddListener
+    public void AddListener(MonoBehaviour mono, Action callback, Enum eventType)
     {
-        componentBus.AddListener(callback, eventType);
+        var subscribe = new Subscribe(mono, callback);
+        eventBus.AddListener(subscribe, eventType);
     }
 
-    public void RemoveListener<T>(Action<T> callback, Enum eventType) where T : Component
+    public void AddListener<T>(MonoBehaviour mono, Action<T> callback, Enum eventType)
     {
-        componentBus.RemoveListener(callback, eventType);
+        var subscribe = new Subscribe<T>(mono, callback);
+        eventBus.AddListener(subscribe, eventType);
+    }
+    #endregion
+
+
+    #region Invoke
+    public void Invoke(Enum eventType)
+    {
+        eventBus.Invoke(eventType);
     }
 
-    public void Invoke<TEvent>(GameObject obj, TEvent eventType) where TEvent : Enum
+    public void Invoke(object data, Enum eventType)
+    {
+        eventBus.Invoke(eventType, data);
+    }
+
+    public void Invoke(GameObject obj, Enum eventType)
     {
         var components = componentCache.GetComponents(obj);
         foreach (var comp in components)
         {
-            componentBus.Invoke(comp, eventType);
+            eventBus.Invoke(eventType, comp);
         }
-    }
-    #endregion
-
-    #region  EventBus
-    public void AddListener(Action callback, Enum eventType)
-    {
-        eventBus.AddListener(callback, eventType);
-    }
-
-    public void RemoveListener(Action callback, Enum eventType)
-    {
-        eventBus.RemoveListener(callback, eventType);
-    }
-
-    public void Invoke(Enum eventType)
-    {
-        eventBus.Invoke(eventType);
     }
     #endregion
 
@@ -51,13 +49,21 @@ public class EventWorld
         componentCache.AddEntity(obj);
     }
 
-    public void RemoveEntity(GameObject obj)
+    public void DestroyEntity(GameObject obj)
     {
         componentCache.RemoveEntity(obj);
+        GameObject.Destroy(obj);
     }
 
-    public void RefreshEntity(GameObject obj)
+    public void AddComponent<T>(GameObject obj) where T : MonoBehaviour
     {
+        obj.AddComponent<T>();
+        componentCache.RefreshEntity(obj);
+    }
+
+    public void RemoveComponent<T>(GameObject obj) where T : MonoBehaviour
+    {
+        GameObject.Destroy(obj.GetComponent<T>());
         componentCache.RefreshEntity(obj);
     }
     #endregion

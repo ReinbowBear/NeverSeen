@@ -1,53 +1,32 @@
 using UnityEngine;
 
-public class ProxyPanelControl : BaseProxy
+public class ProxyPanelControl : MonoBehaviour, IInitializable, IEventListener
 {
-    public Panel rootPanel;
-    private PanelControl panelControl = new();
+    public Panel Root;
+    private PanelStack panelStack;
 
-    public override void Init()
+    private EventWorld eventWorld;
+
+    public void Init()
     {
-        foreach (var buttonEvt in FindObjectsByType<ButtonEvents>(default))
-        {
-            buttonEvt.GetComponent<ButtonEvents>().SetEventBus(eventWorld);
-        }
+        panelStack.root = Root;
     }
 
-    public override void Enter()
+    public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener(ClosePanel, Events.UIInput.Esc);
-        eventWorld.AddListener<Transform>(NavigateInput, Events.UIEvents.OnNavigate);
-    }
-
-    public override void Exit()
-    {
-        eventWorld.RemoveListener(ClosePanel, Events.UIInput.Esc);
-        eventWorld.RemoveListener<Transform>(NavigateInput, Events.UIEvents.OnNavigate);
-    }
-
-
-    private void NavigateInput(Transform newTarget)
-    {
-        if(panelControl.CurrentPanel != null && !panelControl.CurrentPanel.TryGetComponent<PanelNavigate>(out var navigate)) 
-        {
-            navigate.MoveTo(newTarget.position);
-        }
-        else
-        {
-            rootPanel.GetComponent<PanelNavigate>().MoveTo(newTarget.position);
-        }
+        eventWorld.AddListener(this, ClosePanel, Events.UIInput.Esc);
     }
 
 
     public void OpenPanel(Panel panel)
     {
-        panelControl.OpenPanel(panel);
+        panelStack.OpenPanel(panel);
         eventWorld.Invoke(Events.UIEvents.OnPanelOpen);
     }
 
     public void ClosePanel()
     {
-        if(panelControl.ClosePanel(out var closed)) return;
+        if(!panelStack.ClosePanel()) return;
         eventWorld.Invoke(Events.UIEvents.OnPanelClose);
     }
 }

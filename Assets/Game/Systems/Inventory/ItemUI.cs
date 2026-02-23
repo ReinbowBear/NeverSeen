@@ -7,7 +7,7 @@ public class ItemUI : MonoBehaviour,  IBeginDragHandler, IDragHandler, IEndDragH
     public Image image;
     public ItemData ItemData;
 
-    public EventWorld EventWorld;
+    public EventWorld EventWorld { get; set; }
 
     public void Init(ItemData newItem)
     {

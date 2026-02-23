@@ -1,12 +1,11 @@
 using UnityEngine;
-
-public class ProxyTween : BaseProxy
+public class ProxyTween : MonoBehaviour, IEventListener
 {
     private Tween tween = new();
 
-    public override void Enter()
+    public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener<Spawn>(tween.Spawn, Events.UIEvents.OnPanelOpen);
-        eventWorld.AddListener<Destroy>(tween.Destroy, Events.UIEvents.OnPanelClose);
+        eventWorld.AddListener<Spawn>(this, tween.Spawn, Events.UIEvents.OnPanelOpen);
+        eventWorld.AddListener<Destroy>(this, tween.Destroy, Events.UIEvents.OnPanelClose);
     }
 }

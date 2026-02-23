@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class TileMap
+public class TileMap : ISystemData
 {
     public Dictionary<Vector3Int, Tile> Tiles = new();
 
@@ -11,13 +11,13 @@ public class TileMap
     {
         foreach (var offset in Shape.Shapes[shapeType])
         {
-            Vector3Int tilePos = center.tileData.CubeCoord + offset;
+            Vector3Int tilePos = center.TileData.CubeCoord + offset;
 
             if (Tiles.TryGetValue(tilePos, out Tile tileOnMap) == false) return false;
 
-            if (tileOnMap.tileData.IsTaken != null) return false;
+            if (tileOnMap.TileData.IsTaken != null) return false;
 
-            if (tileOnMap.tileData.TileHeightType != center.tileData.TileHeightType) return false;
+            if (tileOnMap.TileData.BiomeType != center.TileData.BiomeType) return false;
         }
         return true;
     }
@@ -53,13 +53,5 @@ public class TileMap
             return tile;
         }
         return null;
-    }
-
-    public Vector3 CubeToWorld(Vector3Int cube, float width)
-    {
-        float x = width * (cube.x + cube.z / 2f); // без f в цифрах всё округляется вниз и позиционирование тайлов ломается
-        float z = width * Mathf.Sqrt(3f) / 2f * cube.z;
-
-        return new Vector3(x, 0, z);
     }
 }

@@ -7,13 +7,13 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class Factory : IDisposable
 {
-    private Dictionary<string, AsyncOperationHandle<UnityEngine.Object>> handles = new ();
+    private Dictionary<string, AsyncOperationHandle<GameObject>> handles = new ();
 
-    public async Task<UnityEngine.Object> LoadAsync(string address)
+    public async Task<GameObject> LoadAsync(string address)
     {
         if (handles.ContainsKey(address)) return handles[address].Result;
 
-        var handle = Addressables.LoadAssetAsync<UnityEngine.Object>(address);
+        var handle = Addressables.LoadAssetAsync<GameObject>(address);
         await handle.Task;
 
         if (handle.Status != AsyncOperationStatus.Succeeded)
@@ -26,7 +26,7 @@ public class Factory : IDisposable
         return handle.Result;
     }
 
-    public UnityEngine.Object Instantiate(string address, Vector3 position = default, Quaternion rotation = default)
+    public GameObject Instantiate(string address, Vector3 position = default, Quaternion rotation = default, Transform parent = null)
     {
         if (!handles.ContainsKey(address) || handles[address].Status != AsyncOperationStatus.Succeeded)
         {
@@ -38,7 +38,7 @@ public class Factory : IDisposable
 
         if (asset is GameObject obj)
         {
-            return UnityEngine.Object.Instantiate(obj, position, rotation);
+            return GameObject.Instantiate(obj, position, rotation, parent);
         }
 
         return asset;
