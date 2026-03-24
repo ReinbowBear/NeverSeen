@@ -4,11 +4,11 @@ public class ProxyInventory : MonoBehaviour, IEventListener
 {
     public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener<ItemUI>(this, InsertOnSlot, InventoryEvents.ItemDrop);
+        eventWorld.AddListener<ItemUI>(InsertOnSlot, InventoryEvents.ItemDrop);
 
-        eventWorld.AddListener<CanvasGroup>(this, OnBeginDrag, InventoryEvents.ItemBeginDrag);
-        eventWorld.AddListener<RectTransform>(this, OnDrag, InventoryEvents.ItemDrag);
-        eventWorld.AddListener<CanvasGroup>(this, OnEndDrag, InventoryEvents.ItemEndDrag);
+        eventWorld.AddListener<CanvasGroup>(OnBeginDrag, InventoryEvents.ItemBeginDrag);
+        eventWorld.AddListener<RectTransform>(OnDrag, InventoryEvents.ItemDrag);
+        eventWorld.AddListener<CanvasGroup>(OnEndDrag, InventoryEvents.ItemEndDrag);
     }
 
 

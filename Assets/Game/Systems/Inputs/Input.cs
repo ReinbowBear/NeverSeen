@@ -3,7 +3,7 @@ using System;
 public class Input : IDisposable
 {
     public GameInput GameInput { get; private set; }
-    private StateMachine stateMachine = new();
+    private StateMachine<InputMode, IState> stateMachine = new();
 
     public void Init(EventWorld eventWorld)
     {
@@ -13,23 +13,14 @@ public class Input : IDisposable
         var gamePlayState = new GamePlayInputState(GameInput, eventWorld);
         var UIstate = new UIInputState(GameInput, eventWorld);
 
-        stateMachine.AddState(gamePlayState);
-        stateMachine.AddState(UIstate);
+        stateMachine.AddState(InputMode.GamePlay, gamePlayState);
+        stateMachine.AddState(InputMode.UI, UIstate);
     }
 
 
     public void SwitchTo(InputMode mode)
     {
-        switch (mode)
-        {
-            case InputMode.UI:
-                stateMachine.SetMode<UIInputState>();
-                break;
-
-            case InputMode.GamePlay:
-                stateMachine.SetMode<GamePlayInputState>();
-                break;
-        }
+        stateMachine.SetState(mode);
     }
 
 

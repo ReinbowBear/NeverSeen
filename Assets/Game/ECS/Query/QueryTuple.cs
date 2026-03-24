@@ -1,22 +1,6 @@
 
-public readonly ref struct QueryTuple<T1> where T1 : struct, IComponentData
-{
-    public readonly ComponentProxy<T1> Item1;
-
-    public QueryTuple(ComponentProxy<T1> Item1)
-    {
-        this.Item1 = Item1;
-    }
-
-
-    public void Deconstruct(out ComponentProxy<T1> Item1)
-    {
-        Item1 = this.Item1;
-    }
-}
-
-
-public readonly ref struct QueryTuple<T1, T2> where T1 : struct, IComponentData where T2 : struct, IComponentData
+#region T2
+public readonly ref struct QueryTuple<T1, T2>
 {
     public readonly ComponentProxy<T1> Item1;
     public readonly ComponentProxy<T2> Item2;
@@ -34,9 +18,10 @@ public readonly ref struct QueryTuple<T1, T2> where T1 : struct, IComponentData 
         Item2 = this.Item2;
     }
 }
+#endregion
 
-
-public readonly ref struct QueryTuple<T1, T2, T3> where T1 : struct, IComponentData where T2 : struct, IComponentData where T3 : struct, IComponentData
+#region T3
+public readonly ref struct QueryTuple<T1, T2, T3>
 {
     public readonly ComponentProxy<T1> Item1;
     public readonly ComponentProxy<T2> Item2;
@@ -57,9 +42,10 @@ public readonly ref struct QueryTuple<T1, T2, T3> where T1 : struct, IComponentD
         Item3 = this.Item3;
     }
 }
+#endregion
 
-
-public readonly ref struct QueryTuple<T1, T2, T3, T4> where T1 : struct, IComponentData where T2 : struct, IComponentData where T3 : struct, IComponentData where T4 : struct, IComponentData
+#region T4
+public readonly ref struct QueryTuple<T1, T2, T3, T4>
 {
     public readonly ComponentProxy<T1> Item1;
     public readonly ComponentProxy<T2> Item2;
@@ -83,3 +69,4 @@ public readonly ref struct QueryTuple<T1, T2, T3, T4> where T1 : struct, ICompon
         Item4 = this.Item4;
     }
 }
+#endregion

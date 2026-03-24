@@ -1,28 +1,41 @@
 
-public sealed class QueryDescription
+public struct QueryDescription
 {
-    public BitMask64 RequiredMask = new();
-    public BitMask64 ExcludedMask = new();
-    public BitMask64 ChangedMask = new();
+    public BitMask64 RequiredMask;
+    public BitMask64 ExcludedMask;
+    public BitMask64 ChangedMask;
 
+    private TypeRegistry typeRegistry;
 
-    public QueryDescription Require<T>() where T : struct, IComponentData
+    public QueryDescription(TypeRegistry typeRegistry)
     {
-        RequiredMask.Add(ComponentType<T>.Index);
+        RequiredMask = new();
+        ExcludedMask = new();
+        ChangedMask = new();
+
+        this.typeRegistry = typeRegistry;
+    }
+
+
+    public QueryDescription Require<T>()
+    {
+        var index = typeRegistry.GetIndex(typeof(T));
+        RequiredMask.Add(index);
         return this;
     }
 
-    public QueryDescription Exclude<T>() where T : struct, IComponentData
+    public QueryDescription Exclude<T>()
     {
-        ExcludedMask.Add(ComponentType<T>.Index);
+        var index = typeRegistry.GetIndex(typeof(T));
+        ExcludedMask.Add(index);
         return this;
     }
 
-    public QueryDescription Changed<T>() where T : struct, IComponentData
+    public QueryDescription Changed<T>()
     {
-        int id = ComponentType<T>.Index;
-        RequiredMask.Add(id);
-        ChangedMask.Add(id);
+        var index = typeRegistry.GetIndex(typeof(T));
+        RequiredMask.Add(index);
+        ChangedMask.Add(index);
         return this;
     }
 }

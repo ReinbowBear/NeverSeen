@@ -1,56 +1,131 @@
-using System.Collections.Generic;
-using System.Linq;
 
-public sealed class QueryExecutor
+#region T1
+using System;
+
+public class QueryExecutor<T1> : IQueryExecutor
 {
     private QueryDescription desc;
-    public readonly List<ArchetypeEntry> Entries = new();
+    public SparseSet<Entity> Entities = new();
 
+    public Chunk<T1> Chunk1;
 
-    public QueryExecutor(List<Archetype> ListArch, QueryDescription desc)
+    public QueryExecutor(QueryDescription desc)
     {
-        this.desc = desc;      
-
-        foreach (var arch in ListArch)
-        {
-            AddArchetype(arch);
-        }
+        this.desc = desc;
     }
 
 
-    public void AddArchetype(Archetype arch)
+    public void TryAddEntity(Entity entity)
     {
-        if (!arch.Mask.MatchesAll(desc.RequiredMask)) return;
-        if (arch.Mask.MatchesAny(desc.ExcludedMask)) return;
+        if (!entity.Mask.MatchesAll(desc.RequiredMask)) return;
+        if (entity.Mask.MatchesAny(desc.ExcludedMask)) return;
 
-        var localIndices = ResolveLocalIndices(arch);
-        Entries.Add(new ArchetypeEntry(arch, localIndices));
+        Entities.Add(entity);
+    }
+
+    public void TryRemoveEntity(Entity entity)
+    {
+        if (!entity.Mask.MatchesAll(desc.RequiredMask)) return;
+
+        Entities.Remove(entity);
+    }
+
+    public void RemoveEntity(Entity entity)
+    {
+        Entities.Remove(entity);
     }
 
 
-    private int[] ResolveLocalIndices(Archetype arch)
+    public QueryEnumerator<T1> GetEnumerator()
     {
-        var ids = desc.RequiredMask.GetSetBits().ToArray();
-        var result = new int[ids.Length];
-
-        for (int i = 0; i < ids.Length; i++)
-        {
-            result[i] = arch.componentToLocal[ids[i]];
-        }
-
-        return result;
+        return new QueryEnumerator<T1>(this);
     }
 }
+#endregion
 
-
-public sealed class ArchetypeEntry
+#region T2
+public class QueryExecutor<T1, T2> : IQueryExecutor
 {
-    public readonly Archetype Archetype;
-    public readonly int[] LocalIndices;
+    private QueryDescription desc;
+    public SparseSet<Entity> Entities = new();
 
-    public ArchetypeEntry(Archetype archetype, int[] localIndices)
+    public Chunk<T1> Chunk1;
+    public Chunk<T2> Chunk2;
+
+    public QueryExecutor(QueryDescription desc)
     {
-        Archetype = archetype;
-        LocalIndices = localIndices;
+        this.desc = desc;
+    }
+
+
+    public void TryAddEntity(Entity entity)
+    {
+        if (!entity.Mask.MatchesAll(desc.RequiredMask)) return;
+        if (entity.Mask.MatchesAny(desc.ExcludedMask)) return;
+
+        Entities.Add(entity);
+    }
+
+    public void TryRemoveEntity(Entity entity)
+    {
+        if (!entity.Mask.MatchesAll(desc.RequiredMask)) return;
+
+        Entities.Remove(entity);
+    }
+
+    public void RemoveEntity(Entity entity)
+    {
+        Entities.Remove(entity);
+    }
+
+
+    public QueryEnumerator<T1, T2> GetEnumerator()
+    {
+        return new QueryEnumerator<T1, T2>(this);
     }
 }
+#endregion
+
+#region T3
+public class QueryExecutor<T1, T2, T3> : IQueryExecutor
+{
+    private QueryDescription desc;
+    public SparseSet<Entity> Entities = new();
+
+    public Chunk<T1> Chunk1;
+    public Chunk<T2> Chunk2;
+    public Chunk<T3> Chunk3;
+
+    public QueryExecutor(QueryDescription desc)
+    {
+        this.desc = desc;
+    }
+
+
+    public void TryAddEntity(Entity entity)
+    {
+        if (!entity.Mask.MatchesAll(desc.RequiredMask)) return;
+        if (entity.Mask.MatchesAny(desc.ExcludedMask)) return;
+
+        Entities.Add(entity);
+    }
+
+    public void TryRemoveEntity(Entity entity)
+    {
+        if (!entity.Mask.MatchesAll(desc.RequiredMask)) return;
+
+        Entities.Remove(entity);
+    }
+
+    public void RemoveEntity(Entity entity)
+    {
+        Entities.Remove(entity);
+    }
+
+
+    public QueryEnumerator<T1, T2, T3> GetEnumerator()
+    {
+        return new QueryEnumerator<T1, T2, T3>(this);
+    }
+}
+#endregion

@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-public class ProxyInput : MonoBehaviour, IInitializable, IDisposable
+public class ProxyInput : MonoBehaviour, IDisposable
 {
     public InputMode StartedMode;
     private Input Input = new();
 
     private EventWorld eventWorld;
 
-    public void Init()
+    public ProxyInput()
     {
         Input.Init(eventWorld);
         Input.SwitchTo(StartedMode);

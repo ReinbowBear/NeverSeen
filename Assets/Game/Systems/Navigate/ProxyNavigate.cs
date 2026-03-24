@@ -6,7 +6,7 @@ public class ProxyNavigate : MonoBehaviour, IEventListener
 
     public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener<Transform>(this, NavigateInput, Events.UIEvents.OnNavigate);
+        eventWorld.AddListener<Transform>(NavigateInput, Events.UIEvents.OnNavigate);
     }
 
     private void NavigateInput(Transform newTarget)

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class ProxyRayCaster : MonoBehaviour, IInitializable, IEventListener
+public class ProxyRayCaster : MonoBehaviour, IEventListener
 {
     private Camera cam;
 
@@ -15,7 +15,7 @@ public class ProxyRayCaster : MonoBehaviour, IInitializable, IEventListener
 
     private EventWorld eventWorld;
 
-    public void Init()
+    public ProxyRayCaster()
     {
         cam = Camera.main;
         pointerEventData = new PointerEventData(EventSystem.current);
@@ -23,8 +23,8 @@ public class ProxyRayCaster : MonoBehaviour, IInitializable, IEventListener
 
     public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener(this, Select, Events.GamePlayInput.LeftClick);
-        eventWorld.AddListener(this, Deselect, Events.GamePlayInput.RightClick);
+        eventWorld.AddListener(Select, Events.GamePlayInput.LeftClick);
+        eventWorld.AddListener(Deselect, Events.GamePlayInput.RightClick);
     }
 
 
@@ -36,7 +36,7 @@ public class ProxyRayCaster : MonoBehaviour, IInitializable, IEventListener
         if (Physics.Raycast(ray, out var hit, RayDistance, RayLayer, QueryTriggerInteraction.Ignore))
         {
             var obj = hit.transform.gameObject;
-            eventWorld.Invoke(obj, Events.RayCaster.Select);
+            eventWorld.Invoke(obj, Events.ObjectEvents.Select);
         }
     }
 
@@ -47,7 +47,7 @@ public class ProxyRayCaster : MonoBehaviour, IInitializable, IEventListener
 
         if (Physics.Raycast(ray, out var hit, RayDistance, RayLayer, QueryTriggerInteraction.Ignore))
         {
-            eventWorld.Invoke(Events.RayCaster.Deselect);
+            eventWorld.Invoke(Events.ObjectEvents.Deselect);
         }
     }
 

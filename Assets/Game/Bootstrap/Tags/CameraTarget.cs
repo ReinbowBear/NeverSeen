@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class CameraTarget : MonoBehaviour, ISceneDependency
+[SceneDependency]
+public class CameraTarget : MonoBehaviour
 {
 
 }

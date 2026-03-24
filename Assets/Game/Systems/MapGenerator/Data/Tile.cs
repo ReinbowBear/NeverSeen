@@ -1,47 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tile : MonoBehaviour
+public class Tile
 {
-    public MeshRenderer Highlight;
-    public TileData TileData;
+    public const float HexSize = 1f; // от центра до вершины
 
-
-    public void SetBacklight(bool isActive)
-    {
-        Highlight.enabled = isActive;
-    }
-
-    public int GetDistance(Tile target) 
-    {
-        Vector3Int dist = new Vector3Int(Mathf.Abs((int)transform.position.x - (int)target.transform.position.x), Mathf.Abs((int)transform.position.z - (int)target.transform.position.z));
-
-        int lowest = Mathf.Min(dist.x, dist.z);
-        int highest = Mathf.Max(dist.x, dist.z);
-
-        int horizontalMovesRequired = highest - lowest;
-
-        return lowest * 14 + horizontalMovesRequired * 10 ;
-    }
-}
-
-
-public struct TileData
-{
     public Vector3Int CubeCoord;
-    public BiomeType BiomeType;
+    public BiomeSO Biome;
+    public Region Region;
 
-    public Stack<GameObject> Takers;
-    public List<TileData> Neighbors;
+    public float Height;
+    public float Moisture;
+    public float Temperature;
+
+    public Stack<GameObject> Takers = new();
+    public List<Tile> Neighbors = new();
 
     public GameObject IsTaken => Takers.Count > 0 ? Takers.Peek() : null;
+    public BiomeType BiomeType => Biome.Type;
 
-    public TileData(Vector3Int cord, BiomeType biomeType = BiomeType.Bottom)
+    public Tile(Vector3Int cord, BiomeSO biome = null, Region region = null)
     {
         CubeCoord = cord;
-        BiomeType = biomeType;
-
-        Takers = new();
-        Neighbors = new();
+        Biome = biome;
+        Region = region;
     }
 }

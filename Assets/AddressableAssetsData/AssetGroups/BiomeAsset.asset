@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: BiomeAsset
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: BiomeAsset
+  m_GUID: b6297acb87da60a43b0e56eb131a6af1
+  m_SerializeEntries:
+  - m_GUID: 96c26c6b89fa0694fb4d9601f536507b
+    m_Address: Ore
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BiomeAsset
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5bb7f9651bed27546a446493c92fb3c6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: c4b7094d7a700c64a83e06f0e51536ee, type: 2}
+    - {fileID: 11400000, guid: 9724acee81b2a8c4b88e1627aee32b3c, type: 2}

@@ -13,7 +13,7 @@ public class ShowTilesView : MonoBehaviour
     {
         SetTileslight(false);
         var tile = mapData.GetTileFromCord(transform.position);
-        var cord = tile.TileData.CubeCoord;
+        var cord = tile.CubeCoord;
 
         tilesInRadius = mapData.GetTilesInRadius(cord, Radius);
         SetTileslight(true);
@@ -29,7 +29,7 @@ public class ShowTilesView : MonoBehaviour
     {
         foreach (var tile in tilesInRadius)
         {
-            tile.SetBacklight(isActive);
+            //tile.SetBacklight(isActive);
         }
     }
 

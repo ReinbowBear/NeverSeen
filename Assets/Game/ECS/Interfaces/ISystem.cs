@@ -1,5 +1,5 @@
 
 public interface ISystem
 {
-    void Update(World world);
+    void UpdateSystem(World world);
 }

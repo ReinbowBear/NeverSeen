@@ -1,8 +1,7 @@
-using System.IO;
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
-using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class InputsExporter : IPreprocessBuildWithReport
@@ -19,15 +18,14 @@ public class InputsExporter : IPreprocessBuildWithReport
         }
 
         string json = inputAsset.SaveBindingOverridesAsJson();
-        string filePath = Path.Combine(MyPaths.INPUTS, "DefaultInputs.json");
 
-        Directory.CreateDirectory(MyPaths.INPUTS);
 
-        File.WriteAllText(filePath, json);
-        Debug.Log("Inputs Map exported to: " + MyPaths.INPUTS);
+        SaveLoad.Save(json, "DefaultInputs.json", ConfigType.Input);
+        Debug.Log("Inputs Map exported");
     }
-    
+
     public int callbackOrder => 0;
+
     public void OnPreprocessBuild(BuildReport report)
     {
         ExportInputs();

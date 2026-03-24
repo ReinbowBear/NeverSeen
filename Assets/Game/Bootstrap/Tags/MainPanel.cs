@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class MainPanel : MonoBehaviour, ISceneDependency
+[SceneDependency]
+public class MainPanel : MonoBehaviour
 {
 
 }

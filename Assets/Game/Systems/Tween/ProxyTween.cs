@@ -5,7 +5,7 @@ public class ProxyTween : MonoBehaviour, IEventListener
 
     public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener<Spawn>(this, tween.Spawn, Events.UIEvents.OnPanelOpen);
-        eventWorld.AddListener<Destroy>(this, tween.Destroy, Events.UIEvents.OnPanelClose);
+        eventWorld.AddListener<Spawn>(tween.Spawn, Events.UIEvents.OnPanelOpen);
+        eventWorld.AddListener<Destroy>(tween.Destroy, Events.UIEvents.OnPanelClose);
     }
 }

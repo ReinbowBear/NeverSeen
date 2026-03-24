@@ -35,6 +35,26 @@ public class BitMaskSet
         masks[mi].Remove(bi);
     }
 
+    public void Swap(int indexA, int indexB)
+    {
+        if (indexA == indexB) return;
+    
+        bool a = Has(indexA);
+        bool b = Has(indexB);
+    
+        if (a && !b)
+        {
+            Add(indexB);
+            Remove(indexA);
+        }
+        else if (!a && b)
+        {
+            Add(indexA);
+            Remove(indexB);
+        }
+    }
+
+
     public bool MatchesAll(BitMaskSet other)
     {
         int min = Math.Min(masks.Count, other.masks.Count);

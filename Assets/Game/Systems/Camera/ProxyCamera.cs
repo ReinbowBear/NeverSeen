@@ -9,11 +9,11 @@ public class ProxyCamera : MonoBehaviour, IEventListener
 
     public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener<CallbackContext>(this, dragHandler.OnDragStarted, Events.GamePlayInput.RightClick);
+        eventWorld.AddListener<CallbackContext>(dragHandler.OnDragStarted, Events.GamePlayInput.RightClick);
 
-        eventWorld.AddListener<CallbackContext>(this, rotateHandler.OnRotateLeft, Events.GamePlayInput.Q);
-        eventWorld.AddListener<CallbackContext>(this, rotateHandler.OnRotateRight, Events.GamePlayInput.E);
+        eventWorld.AddListener<CallbackContext>(rotateHandler.OnRotateLeft, Events.GamePlayInput.Q);
+        eventWorld.AddListener<CallbackContext>(rotateHandler.OnRotateRight, Events.GamePlayInput.E);
 
-        eventWorld.AddListener<CallbackContext>(this, zoomHandler.OnZoom, Events.GamePlayInput.Scroll);
+        eventWorld.AddListener<CallbackContext>(zoomHandler.OnZoom, Events.GamePlayInput.Scroll);
     }
 }

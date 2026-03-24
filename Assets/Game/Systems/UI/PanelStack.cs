@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 
-public class PanelStack : ISystemData
+[SystemData]
+public class PanelStack
 {
     public Panel root;
     private Stack<Panel> PanelsStack = new();

@@ -27,8 +27,6 @@ public struct BitMask64
         }
     }
 
-    public BitMask64 Clone() => new BitMask64 { bits = bits };
-
     public override int GetHashCode() => bits.GetHashCode();
     public override bool Equals(object obj) => obj is BitMask64 m && m.bits == bits;
 

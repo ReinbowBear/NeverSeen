@@ -1,25 +1,17 @@
 
-public readonly ref struct ComponentProxy<T> where T : struct, IComponentData
+public readonly ref struct ComponentProxy<T>
 {
-    private readonly Chunk chunk;
-    private readonly int slot;
-    private readonly int compIndex;
+    private readonly Chunk<T> chunk;
+    private readonly Entity entity;
 
-    public ComponentProxy(Chunk chunk, int slot, int compIndex)
+    public ComponentProxy(Chunk<T> chunk, ref Entity entity)
     {
         this.chunk = chunk;
-        this.slot = slot;
-        this.compIndex = compIndex;
+        this.entity = entity;
     }
 
 
-    public ref readonly T Read => ref ((T[])chunk.ComponentArrays[compIndex])[slot]; // эти свойства можно переписать на методы чанка но тогда оптимизация малость хуже
-    public ref T Write
-    {
-        get
-        {
-            chunk.ChangeMasks[compIndex].Add(slot);
-            return ref ((T[])chunk.ComponentArrays[compIndex])[slot];
-        }
-    }
+    public Entity Entity => entity;
+    public T Read => chunk.GetRO(Entity);
+    public T Write => chunk.GetRW(Entity);
 }

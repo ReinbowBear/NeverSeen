@@ -2,11 +2,11 @@ using System.Collections.Generic;
 
 public class CellularAutomaton
 {
-    public Queue<TileData> Queue = new();
-    public HashSet<TileData> Visited = new();
-    public List<TileData> result = new();
+    public Queue<Tile> Queue = new();
+    public HashSet<Tile> Visited = new();
+    public List<Tile> result = new();
 
-    public List<TileData> Grow(ICell cellCondig, List<TileData> startTiles, int count) // метод вероятно требует доработки. например что  если часть клеток сожрана другими а колово не удовлетворено ещё
+    public List<Tile> Grow(ICell cellCondig, List<Tile> startTiles, int count)
     {
         Queue.Clear();
         Visited.Clear();
@@ -42,6 +42,31 @@ public class CellularAutomaton
 
 public interface ICell
 {
-    IEnumerable<TileData> GetNeighbors(TileData cell);
-    bool CanExpand(TileData cell);
+    IEnumerable<Tile> GetNeighbors(Tile cell);
+    bool CanExpand(Tile cell);
+}
+
+
+public struct DefaultCell : ICell
+{
+    private RandomService Random;
+
+    public DefaultCell(RandomService random)
+    {
+        Random = random;
+    }
+
+
+    public IEnumerable<Tile> GetNeighbors(Tile tile)
+    {
+        return tile.Neighbors;
+    }
+
+    public bool CanExpand(Tile tile)
+    {
+        if (tile.BiomeType != BiomeType.Water) return false;
+        if (tile.BiomeType != BiomeType.Snow) return false;
+
+        return Random.NextFloat() < 0.7f;
+    }
 }

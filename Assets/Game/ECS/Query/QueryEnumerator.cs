@@ -1,186 +1,111 @@
-using System.Collections.Generic;
 
 #region T1
-public ref struct QueryEnumerator<T1> where T1 : struct, IComponentData
+public struct QueryEnumerator<T1>
 {
-    private readonly List<ArchetypeEntry> entries;
-    private int entryIndex;
-    private int chunkIndex;
-    private int slotIndex;
+    private QueryExecutor<T1> executor;
+    private Entity currentEntity;
+    private int index;
 
-    private Chunk currentChunk;
-    private ArchetypeEntry currentEntry;
-
-    public QueryEnumerator(List<ArchetypeEntry> entries)
+    public QueryEnumerator(QueryExecutor<T1> executor)
     {
-        this.entries = entries;
-        entryIndex = -1;
-        chunkIndex = 0;
-        slotIndex = 0;
-        currentChunk = null;
-        currentEntry = null;
+        this.executor = executor;
+        this.currentEntity = default;
+        this.index = -1;
     }
 
 
     public bool MoveNext()
     {
-        while (true)
-        {
-            //if (currentChunk != null && ++slotIndex < currentChunk.Entities.Count)
-            //{
-            //    if (desc.ChangedMask.IsEmpty || currentChunk.WasChanged(slotIndex, desc.ChangedMask)) return true;
-            //    continue;
-            //}
+        index++;
 
-            if (currentChunk != null && ++slotIndex < currentChunk.Entities.Count) return true; // тут увеличение индекса в проверке
+        if (index >= executor.Entities.Count) return false;
 
-            while (currentEntry != null && chunkIndex < currentEntry.Archetype.Chunks.Count)
-            {
-                currentChunk = currentEntry.Archetype.Chunks[chunkIndex++];
-                slotIndex = -1;
-                break;
-            }
-
-            if (currentChunk != null) continue;
-            if (++entryIndex >= entries.Count) return false; // и тут тоже
-
-            currentEntry = entries[entryIndex];
-            chunkIndex = 0;
-        }
+        currentEntity = executor.Entities[index];
+        return true;
     }
 
-    public QueryTuple<T1> Current
+    public ComponentProxy<T1> Current
     {
         get
         {
-            var compIndex1 = currentEntry.LocalIndices[0]; // индекс соотведствует первому компоненту запроса
-
-            return new QueryTuple<T1>
-            (
-                new ComponentProxy<T1>(currentChunk, slotIndex, compIndex1)
-            );
+            return new ComponentProxy<T1>(executor.Chunk1, ref currentEntity);
         }
     }
 }
 #endregion
 
 #region T2
-public ref struct QueryEnumerator<T1, T2> where T1 : struct, IComponentData where T2 : struct, IComponentData
+public struct QueryEnumerator<T1, T2>
 {
-    private readonly List<ArchetypeEntry> entries;
-    private int entryIndex;
-    private int chunkIndex;
-    private int slotIndex;
+    private QueryExecutor<T1, T2> executor;
+    private Entity currentEntity;
+    private int index;
 
-    private Chunk currentChunk;
-    private ArchetypeEntry currentEntry;
-
-    public QueryEnumerator(List<ArchetypeEntry> entries)
+    public QueryEnumerator(QueryExecutor<T1, T2> executor)
     {
-        this.entries = entries;
-        entryIndex = -1;
-        chunkIndex = 0;
-        slotIndex = 0;
-        currentChunk = null;
-        currentEntry = null;
+        this.executor = executor;
+        this.currentEntity = default;
+        this.index = -1;
     }
 
 
     public bool MoveNext()
     {
-        while (true)
-        {
-            if (currentChunk != null && ++slotIndex < currentChunk.Entities.Count) return true;
+        index++;
 
-            while (currentEntry != null && chunkIndex < currentEntry.Archetype.Chunks.Count)
-            {
-                currentChunk = currentEntry.Archetype.Chunks[chunkIndex++];
-                slotIndex = -1;
-                break;
-            }
+        if (index >= executor.Entities.Count) return false;
 
-            if (currentChunk != null) continue;
-            if (++entryIndex >= entries.Count) return false;
-
-            currentEntry = entries[entryIndex];
-            chunkIndex = 0;
-        }
+        currentEntity = executor.Entities[index];
+        return true;
     }
 
     public QueryTuple<T1, T2> Current
     {
         get
         {
-            var compIndex1 = currentEntry.LocalIndices[0];
-            var compIndex2 = currentEntry.LocalIndices[1];
+            var p1 = new ComponentProxy<T1>(executor.Chunk1, ref currentEntity);
+            var p2 = new ComponentProxy<T2>(executor.Chunk2, ref currentEntity);
 
-            return new QueryTuple<T1, T2>
-            (
-                new ComponentProxy<T1>(currentChunk, slotIndex, compIndex1),
-                new ComponentProxy<T2>(currentChunk, slotIndex, compIndex2)
-            );
+            return new QueryTuple<T1, T2>(p1, p2);
         }
     }
 }
 #endregion
 
 #region T3
-public ref struct QueryEnumerator<T1, T2, T3> where T1 : struct, IComponentData where T2 : struct, IComponentData where T3 : struct, IComponentData
+public struct QueryEnumerator<T1, T2, T3>
 {
-    private readonly List<ArchetypeEntry> entries;
-    private int entryIndex;
-    private int chunkIndex;
-    private int slotIndex;
+    private QueryExecutor<T1, T2, T3> executor;
+    private Entity currentEntity;
+    private int index;
 
-    private Chunk currentChunk;
-    private ArchetypeEntry currentEntry;
-
-    public QueryEnumerator(List<ArchetypeEntry> entries)
+    public QueryEnumerator(QueryExecutor<T1, T2, T3> executor)
     {
-        this.entries = entries;
-        entryIndex = -1;
-        chunkIndex = 0;
-        slotIndex = 0;
-        currentChunk = null;
-        currentEntry = null;
+        this.executor = executor;
+        this.currentEntity = default;
+        this.index = -1;
     }
 
-    
+
     public bool MoveNext()
     {
-        while (true)
-        {
-            if (currentChunk != null && ++slotIndex < currentChunk.Entities.Count) return true;
+        index++;
 
-            while (currentEntry != null && chunkIndex < currentEntry.Archetype.Chunks.Count)
-            {
-                currentChunk = currentEntry.Archetype.Chunks[chunkIndex++];
-                slotIndex = -1;
-                break;
-            }
+        if (index >= executor.Entities.Count) return false;
 
-            if (currentChunk != null) continue;
-            if (++entryIndex >= entries.Count) return false;
-
-            currentEntry = entries[entryIndex];
-            chunkIndex = 0;
-        }
+        currentEntity = executor.Entities[index];
+        return true;
     }
 
     public QueryTuple<T1, T2, T3> Current
     {
         get
         {
-            var compIndex1 = currentEntry.LocalIndices[0];
-            var compIndex2 = currentEntry.LocalIndices[1];
-            var compIndex3 = currentEntry.LocalIndices[2];
+            var p1 = new ComponentProxy<T1>(executor.Chunk1, ref currentEntity);
+            var p2 = new ComponentProxy<T2>(executor.Chunk2, ref currentEntity);
+            var p3 = new ComponentProxy<T3>(executor.Chunk3, ref currentEntity);
 
-            return new QueryTuple<T1, T2, T3>
-            (
-                new ComponentProxy<T1>(currentChunk, slotIndex, compIndex1),
-                new ComponentProxy<T2>(currentChunk, slotIndex, compIndex2),
-                new ComponentProxy<T3>(currentChunk, slotIndex, compIndex2)
-            );
+            return new QueryTuple<T1, T2, T3>(p1, p2, p3);
         }
     }
 }

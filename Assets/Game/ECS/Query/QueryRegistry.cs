@@ -1,39 +1,92 @@
 using System;
 using System.Collections.Generic;
 
-public sealed class QueryRegistry
+public class QueryRegistry
 {
-    private readonly Dictionary<QueryKey, QueryExecutor> cache = new();
-    private readonly ArchetypeRegistry archetypeRegistry;
+    private ComponentRegistry componentRegistry;
+    private Dictionary<QueryKey, IQueryExecutor> cache = new();
 
-    public QueryRegistry(ArchetypeRegistry archetypeRegistry)
+    public QueryRegistry(ComponentRegistry componentRegistry)
     {
-        this.archetypeRegistry = archetypeRegistry;
+        this.componentRegistry = componentRegistry;
     }
 
 
-    public QueryExecutor GetQuery(QueryDescription desc)
+    #region GetQueryExecutor
+    public QueryExecutor<T1> GetQueryExecutor<T1>(QueryDescription desc)
     {
         var key = new QueryKey(desc);
+        if (cache.TryGetValue(key, out var executor)) return (QueryExecutor<T1>)executor;
 
-        if (cache.TryGetValue(key, out var executor)) return executor;
+        var newExecutor = new QueryExecutor<T1>(desc)
+        {
+            Chunk1 = componentRegistry.GetStore<T1>()
+        };
 
-        executor = new QueryExecutor(archetypeRegistry.GetAllArchetypes(), desc);
-        cache.Add(key, executor);
-        return executor;
+        cache.Add(key, newExecutor);
+        return newExecutor;
     }
 
+    public QueryExecutor<T1, T2> GetQueryExecutor<T1, T2>(QueryDescription desc)
+    {
+        var key = new QueryKey(desc);
+        if (cache.TryGetValue(key, out var executor)) return (QueryExecutor<T1, T2>)executor;
 
-    public void AddArchetype(Archetype archetype)
+        var newExecutor = new QueryExecutor<T1, T2>(desc)
+        {
+            Chunk1 = componentRegistry.GetStore<T1>(),
+            Chunk2 = componentRegistry.GetStore<T2>(),
+        };
+
+        cache.Add(key, newExecutor);
+        return newExecutor;
+    }
+
+    public QueryExecutor<T1, T2, T3> GetQueryExecutor<T1, T2, T3>(QueryDescription desc)
+    {
+        var key = new QueryKey(desc);
+        if (cache.TryGetValue(key, out var executor)) return (QueryExecutor<T1, T2, T3>)executor;
+
+        var newExecutor = new QueryExecutor<T1, T2, T3>(desc)
+        {
+            Chunk1 = componentRegistry.GetStore<T1>(),
+            Chunk2 = componentRegistry.GetStore<T2>(),
+            Chunk3 = componentRegistry.GetStore<T3>()
+        };
+
+        cache.Add(key, newExecutor);
+        return newExecutor;
+    }
+    #endregion
+
+    #region AddEntity
+    public void TryAddEntity(Entity entity)
     {
         foreach (var executor in cache.Values)
         {
-            executor.AddArchetype(archetype);
+            executor.TryAddEntity(entity);
         }
     }
+
+    public void TryRemoveEntity(Entity entity)
+    {
+        foreach (var executor in cache.Values)
+        {
+            executor.TryRemoveEntity(entity);
+        }
+    }
+
+    public void RemoveEntity(Entity entity)
+    {
+        foreach (var executor in cache.Values)
+        {
+            executor.RemoveEntity(entity);
+        }
+    }
+    #endregion
 }
 
-
+#region Key
 public readonly struct QueryKey : IEquatable<QueryKey>
 {
     private readonly BitMask64 required;
@@ -42,9 +95,9 @@ public readonly struct QueryKey : IEquatable<QueryKey>
 
     public QueryKey(QueryDescription desc)
     {
-        required = desc.RequiredMask.Clone();
-        changed = desc.ChangedMask.Clone();
-        excluded = desc.ExcludedMask.Clone();
+        required = desc.RequiredMask;
+        changed = desc.ChangedMask;
+        excluded = desc.ExcludedMask;
     }
 
 
@@ -63,3 +116,11 @@ public readonly struct QueryKey : IEquatable<QueryKey>
         return hash;
     }
 }
+
+public interface IQueryExecutor
+{
+    void TryAddEntity(Entity entity);
+    void TryRemoveEntity(Entity entity);
+    void RemoveEntity(Entity entity);
+}
+#endregion

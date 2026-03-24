@@ -1,22 +1,36 @@
 using System;
 using UnityEngine;
 
-public class EventWorld : IService
+[Service]
+public class EventWorld
 {
     private ComponentCache componentCache = new();
     private EventBus eventBus = new();
+    private object[] components = new object[1];
 
 
-    #region AddListener
-    public void AddListener(MonoBehaviour mono, Action callback, Enum eventType)
+    #region Listener
+    public void AddListener(Action callback, Enum eventType)
     {
-        var subscribe = new Subscribe(mono, callback);
+        var subscribe = new Callback(callback);
         eventBus.AddListener(subscribe, eventType);
     }
 
-    public void AddListener<T>(MonoBehaviour mono, Action<T> callback, Enum eventType)
+    public void AddListener<T1>(Action<T1> callback, Enum eventType)
     {
-        var subscribe = new Subscribe<T>(mono, callback);
+        var subscribe = new Callback<T1>(callback);
+        eventBus.AddListener(subscribe, eventType);
+    }
+
+    public void AddListener<T1, T2>(Action<T1, T2> callback, Enum eventType)
+    {
+        var subscribe = new Callback<T1, T2>(callback);
+        eventBus.AddListener(subscribe, eventType);
+    }
+
+    public void AddListener<T1, T2, T3>(Action<T1, T2, T3> callback, Enum eventType)
+    {
+        var subscribe = new Callback<T1, T2, T3>(callback);
         eventBus.AddListener(subscribe, eventType);
     }
     #endregion
@@ -25,23 +39,23 @@ public class EventWorld : IService
     #region Invoke
     public void Invoke(Enum eventType)
     {
-        eventBus.Invoke(eventType);
+        components[0] = null;
+        eventBus.Invoke(eventType, components);
     }
 
     public void Invoke(object data, Enum eventType)
     {
-        eventBus.Invoke(eventType, data);
+        components[0] = data;
+        eventBus.Invoke(eventType, components);
     }
 
     public void Invoke(GameObject obj, Enum eventType)
     {
         var components = componentCache.GetComponents(obj);
-        foreach (var comp in components)
-        {
-            eventBus.Invoke(eventType, comp);
-        }
+        eventBus.Invoke(eventType, components);
     }
     #endregion
+
 
     #region ComponentCache
     public void AddEntity(GameObject obj)
@@ -67,9 +81,4 @@ public class EventWorld : IService
         componentCache.RefreshEntity(obj);
     }
     #endregion
-}
-
-public interface IEventSender
-{
-    void SetEventBus(EventWorld eventWorld);
 }

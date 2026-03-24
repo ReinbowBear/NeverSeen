@@ -1,9 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ProxyBuilder : MonoBehaviour, IInitializable, IEventListener
+public class ProxyBuilder : MonoBehaviour, IEventListener
 {
-    private StateMachine stateMachine = new();
+    private StateMachine<Type, IState> stateMachine = new();
     private BuilderData builderData = new();
 
     private Vector2 mousePos;
@@ -12,21 +13,21 @@ public class ProxyBuilder : MonoBehaviour, IInitializable, IEventListener
     private EventWorld eventWorld;
 
 
-    public void Init()
+    public ProxyBuilder()
     {
         var view = new ViewState(eventWorld, builderData);
         var edit = new EditState(eventWorld, builderData);
 
-        stateMachine.AddState(view);
-        stateMachine.AddState(edit);
+        stateMachine.AddState(view.GetType(), view);
+        stateMachine.AddState(edit.GetType(), edit);
 
         //stateMachine.SetMode(); // дефолтный стейт добавить где все элементы скрыты для красивого входа? + убирать можно интерфейс так для кат сцен условно
     }
 
     public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener<Tile>(this, LeftClick, Events.RayCaster.Select);
-        eventWorld.AddListener(this, SaveMousePos, Events.RayCaster.Deselect);
+        eventWorld.AddListener<Tile>(LeftClick, Events.ObjectEvents.Select);
+        eventWorld.AddListener(SaveMousePos, Events.ObjectEvents.Deselect);
 
         //eventWorld.AddListener(this, AfterRightClick, Events.GamePlayInput.RightClickCancel);
     }
@@ -34,7 +35,7 @@ public class ProxyBuilder : MonoBehaviour, IInitializable, IEventListener
 
     public void SetMode(IState state)
     {
-        stateMachine.SetMode(state);
+        stateMachine.SetState(state.GetType());
     }
 
 

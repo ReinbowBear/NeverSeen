@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 38b0a7a2d15c3fc46906aec44545b327
   m_currentHash:
     serializedVersion: 2
-    Hash: 05c86a182f5360d5ed424865720b4384
+    Hash: f7b5f6df37db5826fc4e6f3b242e5117
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -66,8 +66,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 335b9290a0630ae46ac5718128e55e2a, type: 2}
   - {fileID: 11400000, guid: b6ee8103452bd4049a77b168b87f74de, type: 2}
   - {fileID: 11400000, guid: a7bc218c3413e814ab2babddccb4e666, type: 2}
+  - {fileID: 11400000, guid: ecc2726c707117140bffd405355ecac5, type: 2}
   - {fileID: 11400000, guid: 0451ef4d40a9b6c4591a692032f1c229, type: 2}
   - {fileID: 11400000, guid: 578fda926c3f48a449decfa50ae8c1f3, type: 2}
+  - {fileID: 11400000, guid: 63014e6445add3c4c9dbac2c84d9c380, type: 2}
   - {fileID: 11400000, guid: d1783ca52a8a3c64bad33ffc0a0f24e2, type: 2}
   m_BuildSettings:
     m_LogResourceManagerExceptions: 1
@@ -112,6 +114,8 @@ MonoBehaviour:
     - Locale-en
     - Locale-ru
     - Preload
+    - Biome
+    - BiomeAsset
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: e6e2bc7dc4fb4184397d33c73e64bdb0, type: 2}

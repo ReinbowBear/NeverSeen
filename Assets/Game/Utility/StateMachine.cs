@@ -1,44 +1,48 @@
 using System;
 using System.Collections.Generic;
 
-public class StateMachine : IDisposable
+public class StateMachine<TKey, TState> : IDisposable where TState : IState
 {
-    private Dictionary<Type, IState> states = new();
-    public IState CurrentState { get; private set; }
+    private Dictionary<TKey, IState> states = new();
+    public TState CurrentState { get; private set; }
 
-
-    public void AddState(IState newState)
+    public IState this[TKey key]
     {
-        var type = newState.GetType();
-        states[type] = newState;
+        get => states[key];
+        set => states[key] = value;
     }
 
-    public void RemoveState(IState oldState)
+
+    public void AddState(TKey key, IState state)
     {
-        var type = oldState.GetType();
-        states.Remove(type);
+        states[key] = state;
+    }
+
+    public void RemoveState(TKey key)
+    {
+        states.Remove(key);
     }
 
 
     public void SetActive(bool isActive)
     {
+        if (CurrentState == null) return;
+
         if (isActive) CurrentState.Enter();
         else CurrentState.Exit();
     }
 
-    public void SetMode(IState newState)
+    public TState GetState(TKey key)
     {
-        CurrentState?.Exit();
-        CurrentState = states[newState.GetType()];
-        CurrentState.Enter();
+        return (TState)states[key];
     }
 
-    public void SetMode<T>() where T : class, IState
-    {
-        var type = typeof(T);
 
+
+    public void SetState(TKey key)
+    {
         CurrentState?.Exit();
-        CurrentState = states[type];
+        CurrentState = (TState)states[key];
         CurrentState.Enter();
     }
 

@@ -1,0 +1,59 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Biomes
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: Biomes
+  m_GUID: 7bf670efce70f8340a799493ce2af04d
+  m_SerializeEntries:
+  - m_GUID: 4433810aef03e5242b30284f74ce76e0
+    m_Address: Water
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Biome
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 51c377aa2194efe488ca524dd8688e82
+    m_Address: Forest
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Biome
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8092d2d1ba3e81243ac19330285d9530
+    m_Address: Mountain
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Biome
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c38f58dcf13e672438c6ea6c2261e819
+    m_Address: Snow
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Biome
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7b1bbaa1f46349439646725ab41148c
+    m_Address: Grass
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Biome
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e922f687560e0b34db32929052f62610
+    m_Address: DeepWater
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Biome
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 5bb7f9651bed27546a446493c92fb3c6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1f284f7b06e3918408b49923c895dc94, type: 2}
+    - {fileID: 11400000, guid: 659a303681402bd4bbff1f47840d6931, type: 2}

@@ -1,14 +1,10 @@
 using System;
 using System.Collections;
-using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputRebind : MonoBehaviour
+public class InputRebind2 : MonoBehaviour
 {
-    private string filePath = Path.Combine(MyPaths.INPUTS, "SaveInputs.json");
-    private string filePathDefault = Path.Combine(MyPaths.INPUTS, "DefaultInputs.json");
-
     private Input input;
 
     public event Action<string> OnRebindComplete;
@@ -68,23 +64,17 @@ public class InputRebind : MonoBehaviour
     }
 
 
-    public void SaveBindings()
+    public void SaveBindings(string fileName)
     {
-        string json = input.GameInput.asset.SaveBindingOverridesAsJson();
-
-        Directory.CreateDirectory(MyPaths.INPUTS);
-        File.WriteAllText(filePath, json);
+        var json = input.GameInput.asset.SaveBindingOverridesAsJson();
+        SaveLoad.Save(json, fileName, ConfigType.Input);
     }
 
-    public void ResetToDefaultBindings()
+    public void ResetToDefaultBindings(string fileName)
     {
-        if (File.Exists(filePathDefault) == false)
-        {
-            Debug.LogError("Файл с дефолтными биндами не найден по пути: " + filePathDefault);
-            return;
-        }
+        var json = SaveLoad.Load<string>(fileName, ConfigType.Input);
+        if (string.IsNullOrEmpty(json)) return;
 
-        string json = File.ReadAllText(filePathDefault);
         input.GameInput.asset.LoadBindingOverridesFromJson(json);
     }
 }

@@ -42,8 +42,8 @@ public class DialogueGraph : GraphView
 
     private void AddStyle()
     {
-        var graphStyle = (StyleSheet)EditorGUIUtility.Load($"{MyPaths.EDITOR}/GraphStyle.uss");
-        var nodeStyle = (StyleSheet)EditorGUIUtility.Load($"{MyPaths.EDITOR}/NodeStyle.uss");
+        var graphStyle = (StyleSheet)EditorGUIUtility.Load($"Assets/Editor/Resources/GraphStyle.uss");
+        var nodeStyle = (StyleSheet)EditorGUIUtility.Load("Assets/Editor/Resources/NodeStyle.uss");
         styleSheets.Add(graphStyle);
         styleSheets.Add(nodeStyle);
     }

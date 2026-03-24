@@ -2,10 +2,7 @@ using UnityEngine;
 
 public class TileGenerator
 {
-    public MapGenContext PrepareData;
-    public MyRandom Random;
-
-    public Vector3Int[] cubeCords = new Vector3Int[]
+    public Vector3Int[] CubeCords = new Vector3Int[]
     {
         new Vector3Int( 1, -1,  0),
         new Vector3Int( 1,  0, -1),
@@ -16,43 +13,34 @@ public class TileGenerator
         new Vector3Int( 0, -1,  1)
     };
 
-    public TileGenerator(MapGenContext prepareData, MyRandom random)
+
+    public void CreateTilesData(TileMap tileMap, int radius)
     {
-        PrepareData = prepareData;
-        Random = random;
-    }
-
-
-    public void CreateTiles(MapGenData genData)
-    {
-        var mapRadius = genData.Radius;
-
-        for (int i = -mapRadius; i <= mapRadius; i++)
+        for (int i = -radius; i <= radius; i++)
         {
-            int max = Mathf.Max(-mapRadius, -i - mapRadius);
-            int min = Mathf.Min(mapRadius, -i + mapRadius);
+            int max = Mathf.Max(-radius, -i - radius);
+            int min = Mathf.Min(radius, -i + radius);
 
             for (int ii = max; ii <= min; ii++)
             {
                 int y = -i - ii; // третья нулевая координата у нас это "Y" высота
 
                 Vector3Int coord = new(i, y, ii);
-                TileData tile = new TileData(coord);
+                Tile tile = new Tile(coord);
 
-                PrepareData.TilesData.Add(coord, tile);
-                PrepareData.FreeTiles.Add(tile);
+                tileMap.Tiles.Add(coord, tile);
             }
         }
     }
 
-    public void SetNeighbors()
+    public void SetNeighbors(TileMap tileMap)
     {
-        foreach (var tile in PrepareData.TilesData.Values)
+        foreach (var tile in tileMap.Tiles.Values)
         {
-            foreach (var dir in cubeCords)
+            foreach (var dir in CubeCords)
             {
                 var neighborCoord = tile.CubeCoord + dir;
-                if (!PrepareData.TilesData.TryGetValue(neighborCoord, out var neighbor)) continue;
+                if (!tileMap.Tiles.TryGetValue(neighborCoord, out var neighbor)) continue;
 
                 tile.Neighbors.Add(neighbor);
             }

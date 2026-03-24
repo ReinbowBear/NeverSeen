@@ -1,26 +1,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[SystemData]
 [System.Serializable]
-public class TileMap : ISystemData
+public class TileMap
 {
     public Dictionary<Vector3Int, Tile> Tiles = new();
 
 
-    public bool IsCanPlace(Tile center, ShapeType shapeType)
+    public bool IsCanPlace(Tile tile, ShapeType shapeType)
     {
         foreach (var offset in Shape.Shapes[shapeType])
         {
-            Vector3Int tilePos = center.TileData.CubeCoord + offset;
+            Vector3Int tilePos = tile.CubeCoord + offset;
 
             if (Tiles.TryGetValue(tilePos, out Tile tileOnMap) == false) return false;
 
-            if (tileOnMap.TileData.IsTaken != null) return false;
+            if (tileOnMap.IsTaken != null) return false;
 
-            if (tileOnMap.TileData.BiomeType != center.TileData.BiomeType) return false;
+            if (tileOnMap.BiomeType != tile.BiomeType) return false;
         }
         return true;
     }
+
 
     public List<Tile> GetTilesInRadius(Vector3Int center, int radius)
     {
@@ -45,6 +47,7 @@ public class TileMap : ISystemData
         return result;
     }
 
+
     public Tile GetTileFromCord(Vector3 pos)
     {
         if (Physics.Raycast(pos + Vector3.up * 10, Vector3.down, out RaycastHit hit, 20, LayerMask.GetMask("Tile")))
@@ -53,5 +56,26 @@ public class TileMap : ISystemData
             return tile;
         }
         return null;
+    }
+
+    public Vector3 CubeToWorld(Vector3Int cube, float hexSize) // pointy-top
+    {
+        float x = hexSize * Mathf.Sqrt(3f) * (cube.x + cube.z * 0.5f);
+        float z = hexSize * 1.5f * cube.z;
+
+        return new Vector3(x, 0f, z);
+    }
+
+
+    public int GetHexDistance(Transform transform) 
+    {
+        Vector3Int dist = new Vector3Int(Mathf.Abs((int)transform.position.x - (int)transform.position.x), Mathf.Abs((int)transform.position.z - (int)transform.position.z));
+
+        int lowest = Mathf.Min(dist.x, dist.z);
+        int highest = Mathf.Max(dist.x, dist.z);
+
+        int horizontalMovesRequired = highest - lowest;
+
+        return lowest * 14 + horizontalMovesRequired * 10 ;
     }
 }

@@ -1,6 +1,7 @@
 using UnityEngine;
 
-public class GameMap : MonoBehaviour, ISceneDependency
+[SceneDependency]
+public class GameMap : MonoBehaviour
 {
 
 }

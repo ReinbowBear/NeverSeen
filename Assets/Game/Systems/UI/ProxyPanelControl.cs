@@ -1,20 +1,20 @@
 using UnityEngine;
 
-public class ProxyPanelControl : MonoBehaviour, IInitializable, IEventListener
+public class ProxyPanelControl : MonoBehaviour, IEventListener
 {
     public Panel Root;
     private PanelStack panelStack;
 
     private EventWorld eventWorld;
 
-    public void Init()
+    public ProxyPanelControl()
     {
         panelStack.root = Root;
     }
 
     public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener(this, ClosePanel, Events.UIInput.Esc);
+        eventWorld.AddListener(ClosePanel, Events.UIInput.Esc);
     }
 
 

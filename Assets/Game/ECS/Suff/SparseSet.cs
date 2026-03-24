@@ -8,8 +8,7 @@ public sealed class SparseSet<TKey> where TKey : IEquatable<TKey>
     private int count;
 
     public int Count => count;
-    //public StructEnumerator<TKey> GetEnumerator() => new StructEnumerator<TKey>(dense, count);
-    public TKey this[int index] => dense[index];
+    public ref TKey this[int index] => ref dense[index];
 
 
     public SparseSet(int initialCapacity = 16)

@@ -5,33 +5,36 @@ using UnityEngine;
 public class ProxyDialogueGraph
 {
     public DialogueGraph Graph;
-    public DialogueGraphManipulators Manipulators;
-    public string fileName => Graph.FileName.value;
+    private DialogueGraphManipulators Manipulators;
+    private string fileName => Graph.FileName.value;
+
+    private GraphSave graphSave;
 
     public ProxyDialogueGraph()
     {
         Graph = new();
         Manipulators = new(Graph);
+
+        graphSave = new();
     }
 
 
     public void Save()
     {
         if (string.IsNullOrEmpty(fileName)) { Debug.Log("Invalid file Name"); return; }
-
-        var graphSave = new DialogueGraphSave(Graph, fileName);
-        graphSave.Save();
+        graphSave.Save(Graph);
     }
 
     public void Load()
     {
-        string filePath = EditorUtility.OpenFilePanel("Dialogue Graph", MyPaths.GRAPHS, "asset");
+        var path = SaveLoad.GetPath(ConfigType.Graph);
+
+        string filePath = EditorUtility.OpenFilePanel("Dialogue Graph", path, "asset");
         if (string.IsNullOrEmpty(filePath)) return;
 
         Graph.ClearGraph();
 
-        var graphSave = new DialogueGraphSave(Graph, Path.GetFileNameWithoutExtension(filePath));
-        graphSave.Load();
+        graphSave.Load(Graph, Path.GetFileNameWithoutExtension(filePath));
     }
 
 

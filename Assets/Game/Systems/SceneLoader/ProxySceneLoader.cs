@@ -10,7 +10,7 @@ public class ProxySceneLoader : MonoBehaviour, IEventListener
 
     public void SetEvents(EventWorld eventWorld)
     {
-        eventWorld.AddListener(this, FadeOut, Events.SceneEvents.EnterScene);
+        eventWorld.AddListener(FadeOut, Events.SceneEvents.EnterScene);
     }
 
 

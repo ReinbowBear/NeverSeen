@@ -28,9 +28,9 @@ public abstract class EnergyCarrier : MonoBehaviour
         connections.Clear();
         var myTile = mapData.GetTileFromCord(transform.position);
 
-        foreach (var tile in mapData.GetTilesInRadius(myTile.TileData.CubeCoord, Radius))
+        foreach (var tile in mapData.GetTilesInRadius(myTile.CubeCoord, Radius))
         {
-            tile.TileData.IsTaken.gameObject.TryGetComponent<EnergyCarrier>(out var component);
+            tile.IsTaken.gameObject.TryGetComponent<EnergyCarrier>(out var component);
 
             if (component != null)
             {

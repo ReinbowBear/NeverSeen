@@ -3,35 +3,51 @@ using UnityEngine;
 
 public class BiomeGenerator
 {
-    public Dictionary<BiomeType, ICell> biomeStrategys = new();
-    public MapGenContext PrepareData;
-    public MyRandom Random;
+    public IList<BiomeSO> biomes;
+    public Dictionary<BiomeSO, INoise> biomesNoise = new();
 
-    private CellularAutomaton automaton = new();
-
-    public BiomeGenerator(MapGenContext prepareData, MyRandom random)
+    public void SetGenBiomes(IList<BiomeSO> biomes)
     {
-        PrepareData = prepareData;
-        Random = random;
-
-        biomeStrategys.Add(BiomeType.Ground, new DefaultCell());
+        this.biomes = biomes;
     }
 
 
-    public void GenerateBiome(BiomeSO biomeData, BiomeRule biomeRule, List<TileData> startTiles)
+    public void GenerateBiomes(TileMap tileMap, int seed, INoise continentNoise)
     {
-        for (int i = 0; i < startTiles.Count; i++)
+        foreach (var biome in biomes)
         {
-            var cellStrategy = biomeStrategys[biomeData.Type];
-            var grownTiles = automaton.Grow(cellStrategy, startTiles, biomeRule.Size);
+            var noise = biome.NoisePipeline.GetResult(seed, continentNoise);
+            biomesNoise[biome] = noise;
+        }
 
-            for (int ii = 0; ii < grownTiles.Count; ii++)
+
+        foreach (var tile in tileMap.Tiles.Values)
+        {
+            tile.Biome = ResolveBiome(tile);
+
+            var worldPos = tileMap.CubeToWorld(tile.CubeCoord, Tile.HexSize);
+            var noise = biomesNoise[tile.Biome];
+
+            tile.Height = noise.GetHeight(worldPos.x, worldPos.y);
+        }
+    }
+
+    private BiomeSO ResolveBiome(Tile tile)
+    {
+        BiomeSO best = null;
+        float bestScore = 0;
+
+        foreach (var biome in biomes)
+        {
+            float score = biome.Condition.GetScore(tile);
+
+            if (score > bestScore)
             {
-                var tile = grownTiles[i];
-
-                tile.BiomeType = biomeData.Type;
-                PrepareData.FreeTiles.Remove(tile);
+                bestScore = score;
+                best = biome;
             }
         }
+
+        return best;
     }
 }

@@ -3,10 +3,12 @@ using System;
 public struct Entity : IEquatable<Entity>
 {
     public readonly int Id;
+    public BitMask64 Mask;
 
     public Entity(int id)
     {
         Id = id;
+        Mask = new();
     }
 
     public override int GetHashCode() => Id;
