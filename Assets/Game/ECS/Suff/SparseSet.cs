@@ -1,24 +1,31 @@
 using System;
 using System.Collections.Generic;
 
-public sealed class SparseSet<TKey> where TKey : IEquatable<TKey>
+public class SparseSet<T> where T : IEquatable<T>
 {
-    private readonly Dictionary<TKey, int> sparse;
-    private TKey[] dense;
+    private readonly Dictionary<T, int> sparse;
+    private T[] dense;
     private int count;
 
     public int Count => count;
-    public ref TKey this[int index] => ref dense[index];
+    public ref T this[int index] => ref dense[index];
 
+    public IEnumerator<T> GetEnumerator()
+    {
+        for (int i = 0; i < count; i++)
+        {
+            yield return dense[i];
+        }
+    }
 
     public SparseSet(int initialCapacity = 16)
     {
-        sparse = new Dictionary<TKey, int>(initialCapacity);
-        dense = new TKey[Math.Max(initialCapacity, 16)];
+        sparse = new Dictionary<T, int>(initialCapacity);
+        dense = new T[Math.Max(initialCapacity, 16)];
     }
 
 
-    public void Add(TKey key)
+    public void Add(T key)
     {
         if (sparse.ContainsKey(key)) return;
 
@@ -32,7 +39,7 @@ public sealed class SparseSet<TKey> where TKey : IEquatable<TKey>
         count++;
     }
 
-    public void Remove(TKey key)
+    public void Remove(T key)
     {
         if (!sparse.TryGetValue(key, out int index)) return;
 
@@ -49,12 +56,12 @@ public sealed class SparseSet<TKey> where TKey : IEquatable<TKey>
     }
 
 
-    public bool Contains(TKey key)
+    public bool Contains(T key)
     {
         return sparse.ContainsKey(key);
     }
 
-    public int IndexOf(TKey key)
+    public int IndexOf(T key)
     {
         return sparse.TryGetValue(key, out int index) ? index : -1;
     }

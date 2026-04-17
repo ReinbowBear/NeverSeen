@@ -1,20 +1,32 @@
-using System;
+using UnityEngine;
 
-public class Input : IDisposable
+public class Input : ISystem
 {
     public GameInput GameInput { get; private set; }
     private StateMachine<InputMode, IState> stateMachine = new();
+    private IUpdate CurrentState => (IUpdate)stateMachine.CurrentState;
 
-    public void Init(EventWorld eventWorld)
+    public Input(UIInput uiInput, GamePlayInput gamePlayInput)
     {
         GameInput = new GameInput();
         GameInput.Enable();
-        
-        var gamePlayState = new GamePlayInputState(GameInput, eventWorld);
-        var UIstate = new UIInputState(GameInput, eventWorld);
 
-        stateMachine.AddState(InputMode.GamePlay, gamePlayState);
-        stateMachine.AddState(InputMode.UI, UIstate);
+        stateMachine.AddState(InputMode.UI, new UIInputState(GameInput.UI, uiInput));
+        stateMachine.AddState(InputMode.GamePlay, new GamePlayInputState(GameInput.GamePlay, gamePlayInput));
+
+        SwitchTo(InputMode.UI); // по идеи должны устанавливать инпут чреез какое нибудь событие с аргументом внутри...
+        Debug.Log("костыльный выбор инпутов");
+    }
+
+    public void SetSubs(SystemSubs subs)
+    {
+        //subs.AddListener<World>(UpdateSystem);
+    }
+
+
+    public void UpdateSystem(World world)
+    {
+        CurrentState.Update(world);
     }
 
 
@@ -23,12 +35,9 @@ public class Input : IDisposable
         stateMachine.SetState(mode);
     }
 
-
-    public void Dispose()
+    public void SetActive(bool isActive)
     {
-        stateMachine.Dispose();
-        GameInput.Disable(); // не уверен есть ли смысл дисейблить перед дисповсом
-        GameInput.Dispose();
+        stateMachine.SetActive(isActive);
     }
 }
 
@@ -36,4 +45,9 @@ public enum InputMode
 {
     UI,
     GamePlay,
+}
+
+public interface IUpdate
+{
+    void Update(World world);
 }

@@ -1,87 +1,113 @@
 using System;
-using System.Collections.Generic;
 
 public class Chunk<T> : IComponentStore
 {
-    private SparseSet<Entity> entities;
+    private Entity[] entities;
     private T[] components;
-    private int[] versions;
+    private int[] sparse; // entity -> index
 
-    public int Count => entities.Count;
+    private int count;
+    public int Count => count;
 
-    public Chunk(int initialCapacity = 16)
+    private readonly int CompIndex;
+
+    public Chunk(int compIndex, int initialCapacity = 16)
     {
-        entities = new SparseSet<Entity>(initialCapacity);
-        components = new T[Math.Max(initialCapacity, 16)];
-        versions = new int[Math.Max(initialCapacity, 16)];
+        CompIndex = compIndex;
+
+        entities = new Entity[initialCapacity];
+        components = new T[initialCapacity];
+        sparse = new int[initialCapacity];
+
+        Array.Fill(sparse, -1);
     }
 
 
-    public void Add(Entity entity, object component)
+    public void AddWithCast(Entity entity, object component)
     {
         Add(entity, (T)component);
     }
 
     public void Add(Entity entity, T component)
     {
-        if (entities.Contains(entity))
+        int id = entity.Id;
+
+        CheckSparseCapacity(id);
+
+        if (sparse[id] != -1)
         {
-            int idx = entities.IndexOf(entity);
-            components[idx] = component;
-            versions[idx]++;
+            components[sparse[id]] = component;
             return;
         }
 
-        if (entities.Count >= components.Length)
-        {
-            Array.Resize(ref components, components.Length * 2);
-            Array.Resize(ref versions, versions.Length * 2);
-        }
+        TryResizeCapacity();
 
-        entities.Add(entity);
+        int idx = count;
 
-        int idxNew = entities.Count - 1;
-        components[idxNew] = component;
-        versions[idxNew] = 1;
+        entities[idx] = entity;
+        components[idx] = component;
+
+        sparse[id] = idx;
+
+        count++;
+
+        entity.Mask.Add(CompIndex);
     }
 
     public void Remove(Entity entity)
     {
-        int idx = entities.IndexOf(entity);
+        int id = entity.Id;
+        int idx = sparse[id];
+
         if (idx == -1) return;
 
-        int last = entities.Count - 1;
-        entities.Remove(entity);
+        int last = count - 1;
 
-        if (idx != last)
+        entities[idx] = entities[last];
+        components[idx] = components[last];
+
+        sparse[entities[idx].Id] = idx;
+        sparse[id] = -1;
+        count--;
+
+        entity.Mask.Remove(CompIndex);
+    }
+
+
+    public bool Contains(Entity entity)
+    {
+        int id = entity.Id;
+        return id < sparse.Length && sparse[id] != -1;
+    }
+
+    public T GetComponent(Entity entity)
+    {
+        return components[sparse[entity.Id]];
+    }
+
+
+    private void CheckSparseCapacity(int id)
+    {
+        if (id < sparse.Length) return;
+    
+        int newSize = sparse.Length;
+
+        while (newSize <= id)
         {
-            components[idx] = components[last];
-            versions[idx] = versions[last];
+            newSize *= 2;
         }
+    
+        Array.Resize(ref sparse, newSize);
+        Array.Fill(sparse, -1, sparse.Length, newSize - sparse.Length);
     }
-
-    public T GetRO(Entity entity)
+    
+    private void TryResizeCapacity()
     {
-        int idx = entities.IndexOf(entity);
-        if (idx == -1) throw new KeyNotFoundException($"Entity {entity.Id} not found");
-
-        return components[idx];
-    }
-
-    public T GetRW(Entity entity)
-    {
-        int idx = entities.IndexOf(entity);
-        if (idx == -1) throw new KeyNotFoundException($"Entity {entity.Id} not found");
-
-        versions[idx]++;
-        return components[idx];
-    }
-
-    public int GetVersion(Entity entity)
-    {
-        int idx = entities.IndexOf(entity);
-        if (idx == -1) throw new KeyNotFoundException($"Entity {entity.Id} not found");
-
-        return versions[idx];
+        if (count < entities.Length) return;
+    
+        int newSize = entities.Length * 2;
+    
+        Array.Resize(ref entities, newSize);
+        Array.Resize(ref components, newSize);
     }
 }

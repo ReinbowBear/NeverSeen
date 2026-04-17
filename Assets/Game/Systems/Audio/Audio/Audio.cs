@@ -1,18 +1,63 @@
-using UnityEngine;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using DG.Tweening;
+using UnityEngine;
+using UnityEngine.Audio;
 
-public class Audio
+public class Audio : ISystem
 {
-    private AudioSettingsSO settings;
+    private AudioMixer Mixer;
+    private AudioSettings Settings = new();
+
+    private Dictionary<SoundType, AudioSource> sources = new();
     private Dictionary<SoundSO, PitchStackData> pitchStacks = new();
 
-    public Audio(AudioSettingsSO settings)
+    public async Task AsyncInit(Factory factory)
     {
-        this.settings = settings;
+        Mixer = await factory.LoadAsync<AudioMixer>("AudioMixer");
+    }
+
+    public void SetSubs(SystemSubs subs)
+    {
+        //subs.AddListener();
+    }
+
+    public void UpdateSystem(World world)
+    {
+        //foreach (var (entity, evt) in world.Query<OnNavigate>())
+        //foreach (var (entity, evt) in world.Query<OnButtonInvoke>())
+        //foreach (var (entity, evt) in world.Query<OnPanelOpen>())
+        //foreach (var (entity, evt) in world.Query<OnPanelClose>())
     }
 
 
-    public AudioPlayResult GetAudioPlayResult(SoundSO sound, float currentTime)
+    private void ExecuteSound(SoundSO sound)
+    {
+        var source = GetAudioSources(sound.soundType);
+
+        source.clip = sound.Clip;
+        source.pitch = GetPitch(sound, Time.time);
+        source.Play();
+
+        if (sound.IsLoud)
+        {
+            Tween.MutingVolume(Mixer, "MusicVolume", 0.4f, 1f).SetLink(source.gameObject);
+        }
+    }
+
+
+    private AudioSource GetAudioSources(SoundType soundType)
+    {
+        if(sources.TryGetValue(soundType, out var source)) return source;
+        
+        var cameraObject = Camera.main.gameObject;
+        var newSource = cameraObject.AddComponent<AudioSource>();
+
+        sources.Add(soundType, newSource);
+        return newSource;
+    }
+
+    private float GetPitch(SoundSO sound, float currentTime)
     {
         float pitch = 1f;
 
@@ -24,48 +69,17 @@ public class Audio
         {
             pitch = UnityEngine.Random.Range(0.9f, 1.1f);
         }
-
-        return new AudioPlayResult
-        {
-            Pitch = pitch,
-            IsLoud = sound.IsLoud,
-            Clip = sound.Sound,
-        };
+        return pitch;
     }
 
     private float GetStackedPitch(SoundSO sound, float time) // не работает корректно, звук мгновенно возращается на нулевой питч а НУЖНО // несколько источников, overlap, fade по громкости, циклическая октава
     {
-        if (!pitchStacks.TryGetValue(sound, out var stack))
-        {
-            stack = new PitchStackData();
-            pitchStacks[sound] = stack;
-        }
-
-        if (time - stack.LastPlayTime > settings.pitchResetDelay) stack.Pitch = 1f;
-        stack.LastPlayTime = time;
-
-        float pitch = stack.Pitch;
-        stack.Pitch += settings.pitchIncrement;
-
-        if (stack.Pitch > settings.maxPitch)
-        {
-            stack.Pitch = UnityEngine.Random.Range(settings.minPitchAfterReset, settings.maxRandomizedReset);
-        }
-
-        return pitch;
+        return 1;
     }
 }
 
-public struct AudioPlayResult
+public struct PitchStackData
 {
-    public AudioClip Clip;
     public float Pitch;
-    public bool IsLoud;
-}
-
-
-public class PitchStackData
-{
-    public float Pitch = 1f;
     public float LastPlayTime;
 }

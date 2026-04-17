@@ -6,11 +6,11 @@ public class ItemSlot : MonoBehaviour, IDropHandler, IEventSender
     public ItemType slotType;
     public ItemUI item;
 
-    public EventWorld EventWorld { get; set; }
+    public World World;
 
-    public void SetEventBus(EventWorld eventWorld)
+    public void SetEventBus(World world)
     {
-        EventWorld = eventWorld;
+        World = world;
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -20,7 +20,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler, IEventSender
         if (slotType == ItemType.None || slotType == newItem.ItemData.ItemType)
         {
             item = newItem;
-            EventWorld.Invoke(newItem.gameObject, InventoryEvents.ItemDrop);
+            //EventWorld.Invoke(newItem.gameObject, InventoryEvents.ItemDrop);
         }
     }
 }

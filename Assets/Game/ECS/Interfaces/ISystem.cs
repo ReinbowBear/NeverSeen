@@ -1,5 +1,5 @@
 
 public interface ISystem
 {
-    void UpdateSystem(World world);
+    void SetSubs(SystemSubs subs);
 }

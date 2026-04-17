@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-[Service]
 public class RandomService
 {
     private System.Random random;
@@ -25,7 +24,6 @@ public class RandomService
     {
         return random.Next(min, max);
     }
-
 
     public float NextFloat() // возращает от 0 до 0.999999
     {

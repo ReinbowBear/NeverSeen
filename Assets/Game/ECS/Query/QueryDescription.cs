@@ -1,9 +1,9 @@
+using System;
 
-public struct QueryDescription
+public struct QueryDescription : IEquatable<QueryDescription>
 {
     public BitMask64 RequiredMask;
     public BitMask64 ExcludedMask;
-    public BitMask64 ChangedMask;
 
     private TypeRegistry typeRegistry;
 
@@ -11,7 +11,6 @@ public struct QueryDescription
     {
         RequiredMask = new();
         ExcludedMask = new();
-        ChangedMask = new();
 
         this.typeRegistry = typeRegistry;
     }
@@ -31,11 +30,17 @@ public struct QueryDescription
         return this;
     }
 
-    public QueryDescription Changed<T>()
+
+    public bool Equals(QueryDescription other)
     {
-        var index = typeRegistry.GetIndex(typeof(T));
-        RequiredMask.Add(index);
-        ChangedMask.Add(index);
-        return this;
+        return RequiredMask.Equals(other.RequiredMask) 
+            && ExcludedMask.Equals(other.ExcludedMask);
+    }
+
+    public override bool Equals(object obj) => obj is QueryDescription other && Equals(other);
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(RequiredMask, ExcludedMask);
     }
 }

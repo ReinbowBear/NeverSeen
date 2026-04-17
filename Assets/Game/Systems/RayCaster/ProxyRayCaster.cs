@@ -13,18 +13,18 @@ public class ProxyRayCaster : MonoBehaviour, IEventListener
     public LayerMask RayLayer;
     public float RayDistance = 30;
 
-    private EventWorld eventWorld;
+    private World world;
 
-    public ProxyRayCaster()
+    void Awake()
     {
         cam = Camera.main;
         pointerEventData = new PointerEventData(EventSystem.current);
     }
 
-    public void SetEvents(EventWorld eventWorld)
+    public void SetEvents(World world)
     {
-        eventWorld.AddListener(Select, Events.GamePlayInput.LeftClick);
-        eventWorld.AddListener(Deselect, Events.GamePlayInput.RightClick);
+        //eventWorld.AddListener(Select, Events.GamePlayInput.LeftClick);
+        //eventWorld.AddListener(Deselect, Events.GamePlayInput.RightClick);
     }
 
 
@@ -36,7 +36,7 @@ public class ProxyRayCaster : MonoBehaviour, IEventListener
         if (Physics.Raycast(ray, out var hit, RayDistance, RayLayer, QueryTriggerInteraction.Ignore))
         {
             var obj = hit.transform.gameObject;
-            eventWorld.Invoke(obj, Events.ObjectEvents.Select);
+            //eventWorld.Invoke(obj, Events.ObjectEvents.Select);
         }
     }
 
@@ -47,7 +47,7 @@ public class ProxyRayCaster : MonoBehaviour, IEventListener
 
         if (Physics.Raycast(ray, out var hit, RayDistance, RayLayer, QueryTriggerInteraction.Ignore))
         {
-            eventWorld.Invoke(Events.ObjectEvents.Deselect);
+            //eventWorld.Invoke(Events.ObjectEvents.Deselect);
         }
     }
 

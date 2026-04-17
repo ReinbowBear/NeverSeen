@@ -1,37 +1,19 @@
-using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public static class GameEntry
+public static class Bootstrap
 {
-    private static SystemActivator activator;
-    private static GameRunner gameRunner;
+    private static Game game = new();
 
-
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    private static void HelloWorld()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
+    private static void OnScene()
     {
-        activator = new();
-        gameRunner = new();
+        var sceneName = SceneManager.GetActiveScene().name;
+        game.Transition(sceneName);
 
-        activator.CacheTypes();
-        activator.SortTypes();
-
-        MapSystems();
         CreateUpdate();
     }
 
-
-    private static void MapSystems()
-    {
-        foreach (var stateObj in Enum.GetValues(typeof(UpdateState)))
-        {
-            var state = (UpdateState)stateObj;
-            var enumerable = activator.GetSystems(state);
-            var context = new SceneContext(enumerable);
-    
-            gameRunner.AddContext(state, context);
-        }
-    }
 
     private static void CreateUpdate()
     {
@@ -41,7 +23,7 @@ public static class GameEntry
         };
 
         var runner = obj.AddComponent<UpdateRunner>();
-        runner.Init(gameRunner);
+        runner.Init(game);
 
         GameObject.DontDestroyOnLoad(obj);
     }
@@ -59,16 +41,16 @@ public static class GameEntry
 
 public class UpdateRunner : MonoBehaviour
 {
-    private GameRunner gameRunner;
+    private Game game;
 
-    public void Init(GameRunner gameRunner)
+    public void Init(Game game)
     {
-        this.gameRunner = gameRunner;
+        this.game = game;
     }
 
 
     void Update()
     {
-        gameRunner.UpdateWorld();
+        game.Update();
     }
 }

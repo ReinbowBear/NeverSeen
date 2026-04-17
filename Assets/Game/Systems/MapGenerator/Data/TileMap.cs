@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[SystemData]
 [System.Serializable]
 public class TileMap
 {

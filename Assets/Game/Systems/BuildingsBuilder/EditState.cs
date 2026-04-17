@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class EditState : IViewMode, IState
 {
-    public EventWorld EventWorld;
+    public World World;
     public BuilderData BuilderData;
 
-    public EditState(EventWorld eventWorld, BuilderData builderData)
+    public EditState(World world, BuilderData builderData)
     {
-        EventWorld = eventWorld;
+        World = world;
         BuilderData = builderData;
     }
 
     public void Enter()
     {
-        EventWorld.Invoke(BuilderEvents.EditModeEnter);
+        //EventWorld.Invoke(BuilderEvents.EditModeEnter);
     }
 
     public void Exit()
@@ -27,7 +27,7 @@ public class EditState : IViewMode, IState
         var obj = BuilderData.CurrentBuilding;
         if (obj == null) return;
 
-        EventWorld.Invoke(obj, BuilderEvents.Spawn);
+        //EventWorld.Invoke(obj, BuilderEvents.Spawn);
     }
 
     public void RightClick()
@@ -36,6 +36,6 @@ public class EditState : IViewMode, IState
         if (obj == null) return;
 
         BuilderData.CurrentBuilding = null;
-        EventWorld.Invoke(obj, BuilderEvents.Destroy);
+        //EventWorld.Invoke(obj, BuilderEvents.Destroy);
     }
 }

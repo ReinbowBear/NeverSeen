@@ -10,13 +10,13 @@ public class ProxyBuilder : MonoBehaviour, IEventListener
     private Vector2 mousePos;
     public float MouseMagnitude = 100f;
 
-    private EventWorld eventWorld;
+    private World world;
 
 
     public ProxyBuilder()
     {
-        var view = new ViewState(eventWorld, builderData);
-        var edit = new EditState(eventWorld, builderData);
+        var view = new ViewState(world, builderData);
+        var edit = new EditState(world, builderData);
 
         stateMachine.AddState(view.GetType(), view);
         stateMachine.AddState(edit.GetType(), edit);
@@ -24,10 +24,10 @@ public class ProxyBuilder : MonoBehaviour, IEventListener
         //stateMachine.SetMode(); // дефолтный стейт добавить где все элементы скрыты для красивого входа? + убирать можно интерфейс так для кат сцен условно
     }
 
-    public void SetEvents(EventWorld eventWorld)
+    public void SetEvents(World world)
     {
-        eventWorld.AddListener<Tile>(LeftClick, Events.ObjectEvents.Select);
-        eventWorld.AddListener(SaveMousePos, Events.ObjectEvents.Deselect);
+        //eventWorld.AddListener<Tile>(LeftClick, Events.ObjectEvents.Select);
+        //eventWorld.AddListener(SaveMousePos, Events.ObjectEvents.Deselect);
 
         //eventWorld.AddListener(this, AfterRightClick, Events.GamePlayInput.RightClickCancel);
     }

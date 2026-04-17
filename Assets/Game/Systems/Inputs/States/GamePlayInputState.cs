@@ -1,85 +1,52 @@
-using UnityEngine.InputSystem;
+using UnityEngine;
 
-public class GamePlayInputState : IState
+public class GamePlayInputState : IUpdate, IState
 {
-    private GameInput GameInput;
-    private EventWorld eventWorld;
+    private GameInput.GamePlayActions actions;
+    private GamePlayInput inputComp;
 
-    public GamePlayInputState(GameInput GameInput, EventWorld eventWorld)
+    public GamePlayInputState(GameInput.GamePlayActions actions, GamePlayInput inputComp)
     {
-        this.GameInput = GameInput;
-        this.eventWorld = eventWorld;
+        this.actions = actions;
+        this.inputComp = inputComp;
+    }
+
+
+    public void Update(World world)
+    {
+        inputComp.MouseLeft = actions.MouseLeft.WasPressedThisFrame();
+        inputComp.MouseRight = actions.MouseRight.WasPressedThisFrame();
+        inputComp.Scroll = actions.Scroll.ReadValue<Vector2>();
+
+        inputComp.Q = actions.Q.WasPressedThisFrame();
+        inputComp.E = actions.E.WasPressedThisFrame();
+
+        inputComp.WASD = actions.WASD.ReadValue<Vector2>();
+        inputComp.Shift = actions.Shift.IsPressed();
     }
 
 
     public void Enter()
     {
-        GameInput.GamePlay.MouseLeft.started += MouseLeft;
-        GameInput.GamePlay.MouseRight.started += MouseRight;
-        GameInput.GamePlay.Scroll.started += Scroll;
-
-        GameInput.GamePlay.Q.started += Q;
-        GameInput.GamePlay.E.started += E;
-        
-        GameInput.GamePlay.WASD.started += WASD;
-        GameInput.GamePlay.Shift.started += Shift;
+        actions.Enable();
     }
 
     public void Exit()
     {
-        GameInput.GamePlay.MouseLeft.started -= MouseLeft;
-        GameInput.GamePlay.MouseRight.started -= MouseRight;
-        GameInput.GamePlay.Scroll.started -= Scroll;
-
-        GameInput.GamePlay.Q.started -= Q;
-        GameInput.GamePlay.E.started -= E;
-
-        GameInput.GamePlay.WASD.started -= WASD;
-        GameInput.GamePlay.Shift.started -= Shift;
+        actions.Disable();
     }
+}
 
 
-    private void MouseLeft(InputAction.CallbackContext context)
-    {
-        eventWorld.Invoke(Events.GamePlayInput.LeftClick);
-        eventWorld.Invoke(context, Events.GamePlayInput.LeftClick);
-    }
+public class GamePlayInput
+{
+    public bool MouseLeft;
+    public bool MouseRight;
+    public Vector2 Scroll;
+    
+    public bool Q;
+    public bool E;
 
-    private void MouseRight(InputAction.CallbackContext context)
-    {
-        eventWorld.Invoke(Events.GamePlayInput.RightClick);
-        eventWorld.Invoke(context, Events.GamePlayInput.RightClick);
-    }
-
-    private void Scroll(InputAction.CallbackContext context)
-    {
-        eventWorld.Invoke(Events.GamePlayInput.Scroll);
-        eventWorld.Invoke(context, Events.GamePlayInput.Scroll);
-    }
-
-
-    private void Q(InputAction.CallbackContext context)
-    {
-        eventWorld.Invoke(Events.GamePlayInput.Q);
-        eventWorld.Invoke(context, Events.GamePlayInput.Q);
-    }
-
-    private void E(InputAction.CallbackContext context)
-    {
-        eventWorld.Invoke(Events.GamePlayInput.E);
-        eventWorld.Invoke(context, Events.GamePlayInput.E);
-    }
-
-
-    private void WASD(InputAction.CallbackContext context)
-    {
-        eventWorld.Invoke(Events.GamePlayInput.WASD);
-        eventWorld.Invoke(context, Events.GamePlayInput.WASD);
-    }
-
-    private void Shift(InputAction.CallbackContext context)
-    {
-        eventWorld.Invoke(Events.GamePlayInput.Shift);
-        eventWorld.Invoke(context, Events.GamePlayInput.Shift);
-    }
+    public Vector2 WASD;
+    public bool Shift;
 }

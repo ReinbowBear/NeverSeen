@@ -1,5 +1,5 @@
 
 public interface IEventListener
 {
-    void SetEvents(EventWorld eventWorld);
+    void SetEvents(World world);
 }

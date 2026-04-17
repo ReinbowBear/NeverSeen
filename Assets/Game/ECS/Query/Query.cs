@@ -1,9 +1,9 @@
 
 #region T1
-public readonly struct Query<T1>
+public struct Query<T1>
 {
-    private readonly QueryRegistry queryRegistry;
-    private readonly QueryDescription desc;
+    private QueryRegistry queryRegistry;
+    private QueryDescription desc;
 
     public Query(QueryRegistry queryRegistry, QueryDescription desc)
     {
@@ -14,19 +14,15 @@ public readonly struct Query<T1>
 
     public Query<T1> Require<T>()
     {
-        desc.Require<T>();
+        var newDesc = desc.Require<T>();
+        desc = newDesc;
         return this;
     }
 
     public Query<T1> Exclude<T>()
     {
-        desc.Exclude<T>();
-        return this;
-    }
-
-    public Query<T1> Changed<T>()
-    {
-        desc.Changed<T>();
+        var newDesc = desc.Exclude<T>();
+        desc = newDesc;
         return this;
     }
 
@@ -40,10 +36,10 @@ public readonly struct Query<T1>
 #endregion
 
 #region T2
-public readonly struct Query<T1, T2>
+public struct Query<T1, T2>
 {
-    private readonly QueryRegistry queryRegistry;
-    private readonly QueryDescription desc;
+    private QueryRegistry queryRegistry;
+    private QueryDescription desc;
 
     public Query(QueryRegistry queryRegistry, QueryDescription desc)
     {
@@ -54,19 +50,15 @@ public readonly struct Query<T1, T2>
 
     public Query<T1, T2> Require<T>()
     {
-        desc.Require<T>();
+        var newDesc = desc.Require<T>();
+        desc = newDesc;
         return this;
     }
 
     public Query<T1, T2> Exclude<T>()
     {
-        desc.Exclude<T>();
-        return this;
-    }
-
-    public Query<T1, T2> Changed<T>()
-    {
-        desc.Changed<T>();
+        var newDesc = desc.Exclude<T>();
+        desc = newDesc;
         return this;
     }
 
@@ -80,10 +72,10 @@ public readonly struct Query<T1, T2>
 #endregion
 
 #region T3
-public readonly struct Query<T1, T2, T3>
+public struct Query<T1, T2, T3>
 {
-    private readonly QueryRegistry queryRegistry;
-    private readonly QueryDescription desc;
+    private QueryRegistry queryRegistry;
+    private QueryDescription desc;
 
     public Query(QueryRegistry queryRegistry, QueryDescription desc)
     {
@@ -94,19 +86,15 @@ public readonly struct Query<T1, T2, T3>
 
     public Query<T1, T2, T3> Require<T>()
     {
-        desc.Require<T>();
+        var newDesc = desc.Require<T>();
+        desc = newDesc;
         return this;
     }
 
     public Query<T1, T2, T3> Exclude<T>()
     {
-        desc.Exclude<T>();
-        return this;
-    }
-
-    public Query<T1, T2, T3> Changed<T>()
-    {
-        desc.Changed<T>();
+        var newDesc = desc.Exclude<T>();
+        desc = newDesc;
         return this;
     }
 
@@ -115,6 +103,42 @@ public readonly struct Query<T1, T2, T3>
     {
         var executor = queryRegistry.GetQueryExecutor<T1, T2, T3>(desc);
         return new QueryEnumerator<T1, T2, T3>(executor);
+    }
+}
+#endregion
+
+#region T4
+public struct Query<T1, T2, T3, T4>
+{
+    private QueryRegistry queryRegistry;
+    private QueryDescription desc;
+
+    public Query(QueryRegistry queryRegistry, QueryDescription desc)
+    {
+        this.queryRegistry = queryRegistry;
+        this.desc = desc;
+    }
+
+
+    public Query<T1, T2, T3, T4> Require<T>()
+    {
+        var newDesc = desc.Require<T>();
+        desc = newDesc;
+        return this;
+    }
+
+    public Query<T1, T2, T3, T4> Exclude<T>()
+    {
+        var newDesc = desc.Exclude<T>();
+        desc = newDesc;
+        return this;
+    }
+
+
+    public QueryEnumerator<T1, T2, T3, T4> GetEnumerator()
+    {
+        var executor = queryRegistry.GetQueryExecutor<T1, T2, T3, T4>(desc);
+        return new QueryEnumerator<T1, T2, T3, T4>(executor);
     }
 }
 #endregion

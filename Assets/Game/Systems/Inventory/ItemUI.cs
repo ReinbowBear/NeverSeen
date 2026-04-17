@@ -7,7 +7,7 @@ public class ItemUI : MonoBehaviour,  IBeginDragHandler, IDragHandler, IEndDragH
     public Image image;
     public ItemData ItemData;
 
-    public EventWorld EventWorld { get; set; }
+    public World World;
 
     public void Init(ItemData newItem)
     {
@@ -15,24 +15,24 @@ public class ItemUI : MonoBehaviour,  IBeginDragHandler, IDragHandler, IEndDragH
         image.sprite = ItemData.Sprite;
     }
 
-    public void SetEventBus(EventWorld eventWorld)
+    public void SetEventBus(World world)
     {
-        EventWorld = eventWorld;
+        World = world;
     }
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        EventWorld.Invoke(gameObject, InventoryEvents.ItemBeginDrag);
+        //EventWorld.Invoke(gameObject, InventoryEvents.ItemBeginDrag);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        EventWorld.Invoke(gameObject, InventoryEvents.ItemDrag);
+        //EventWorld.Invoke(gameObject, InventoryEvents.ItemDrag);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        EventWorld.Invoke(gameObject, InventoryEvents.ItemEndDrag);
+        //EventWorld.Invoke(gameObject, InventoryEvents.ItemEndDrag);
     }
 }

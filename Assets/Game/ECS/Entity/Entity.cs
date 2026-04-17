@@ -1,8 +1,8 @@
 using System;
 
-public struct Entity : IEquatable<Entity>
+public class Entity : IEquatable<Entity>
 {
-    public readonly int Id;
+    public int Id;
     public BitMask64 Mask;
 
     public Entity(int id)

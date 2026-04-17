@@ -1,9 +1,30 @@
+using System;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class Tween // return DG.Tweening.Tween
+public class Tween : ISystem
 {
+    public void SetSubs(SystemSubs subs)
+    {
+        //UpdateSystem;
+    }
+    
+    public void UpdateSystem(World world)
+    {
+        //foreach (var (entity, spawn) in world.Query<Spawn>().Require<OnPanelOpen>())
+        //{
+        //    Spawn(spawn);
+        //}
+//
+        //foreach (var (entity, destroy) in world.Query<Destroy>().Require<OnPanelClose>())
+        //{
+        //    Destroy(destroy);
+        //}
+    }
+
+
     #region GameObject
     public void Impact(Impact impact)
     {
@@ -125,4 +146,27 @@ public class Tween // return DG.Tweening.Tween
         .SetEase(Ease.InOutSine));
     }
     #endregion
+}
+
+
+
+public class TweenConfigs
+{
+    private Dictionary<Type, TweenConfig> tweenConfigs = new();
+
+    public TweenConfigs()
+    {
+        
+    }
+
+
+    public TweenConfig GetTween()
+    {
+        return new TweenConfig();
+    }
+}
+
+public struct TweenConfig
+{
+    
 }

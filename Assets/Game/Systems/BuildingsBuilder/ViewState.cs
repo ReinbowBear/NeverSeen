@@ -1,18 +1,18 @@
 
 public class ViewState : IViewMode, IState
 {
-    public EventWorld EventWorld;
+    public World World;
     public BuilderData BuilderData;
 
-    public ViewState(EventWorld eventWorld, BuilderData builderData)
+    public ViewState(World world, BuilderData builderData)
     {
-        EventWorld = eventWorld;
+        World = world;
         BuilderData = builderData;
     }
 
     public void Enter()
     {
-        EventWorld.Invoke(BuilderEvents.ViewModeEnter);
+        //EventWorld.Invoke(BuilderEvents.ViewModeEnter);
     }
 
     public void Exit()
@@ -27,7 +27,7 @@ public class ViewState : IViewMode, IState
         if (obj == null) return;
 
         BuilderData.CurrentBuilding = obj;
-        EventWorld.Invoke(obj, BuilderEvents.Select);
+        //EventWorld.Invoke(obj, BuilderEvents.Select);
     }
 
     public void RightClick()
@@ -36,6 +36,6 @@ public class ViewState : IViewMode, IState
         if (obj == null) return;
         
         obj = null;
-        EventWorld.Invoke(BuilderEvents.Deselect);
+        //EventWorld.Invoke(BuilderEvents.Deselect);
     }
 }

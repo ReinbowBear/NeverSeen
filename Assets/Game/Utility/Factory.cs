@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-[Service]
 public class Factory : IDisposable
 {
     private Dictionary<string, AsyncOperationHandle> handles = new();

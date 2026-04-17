@@ -4,7 +4,7 @@ using UnityEngine;
 public class SoundSO : ScriptableObject
 {
     public SoundType soundType;
-    public AudioClip Sound;
+    public AudioClip Clip;
 
     [Header("Effects")]
     public bool IsPitch;

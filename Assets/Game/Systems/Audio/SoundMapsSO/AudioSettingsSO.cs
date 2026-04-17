@@ -1,7 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AudioSettingsSO", menuName = "Scriptable Objects/AudioSettingsSO")]
-public class AudioSettingsSO : ScriptableObject
+public class AudioSettings
 {
     [Header("Pitch Settings")]
     public float pitchIncrement = 0.15f;

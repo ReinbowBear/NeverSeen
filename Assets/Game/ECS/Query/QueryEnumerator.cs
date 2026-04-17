@@ -3,32 +3,29 @@
 public struct QueryEnumerator<T1>
 {
     private QueryExecutor<T1> executor;
-    private Entity currentEntity;
+    public Entity CurrentEntity => executor.Entities[index];
     private int index;
 
     public QueryEnumerator(QueryExecutor<T1> executor)
     {
         this.executor = executor;
-        this.currentEntity = default;
-        this.index = -1;
+        index = -1;
     }
 
 
     public bool MoveNext()
     {
         index++;
-
-        if (index >= executor.Entities.Count) return false;
-
-        currentEntity = executor.Entities[index];
-        return true;
+        return index < executor.Entities.Count;
     }
 
-    public ComponentProxy<T1> Current
+    public T1 Current
     {
         get
         {
-            return new ComponentProxy<T1>(executor.Chunk1, ref currentEntity);
+            var entity = executor.Entities[index];
+            var c1 = executor.Chunk1.GetComponent(entity);
+            return c1;
         }
     }
 }
@@ -38,74 +35,101 @@ public struct QueryEnumerator<T1>
 public struct QueryEnumerator<T1, T2>
 {
     private QueryExecutor<T1, T2> executor;
-    private Entity currentEntity;
+    public Entity CurrentEntity => executor.Entities[index];
     private int index;
 
     public QueryEnumerator(QueryExecutor<T1, T2> executor)
     {
         this.executor = executor;
-        this.currentEntity = default;
-        this.index = -1;
+        index = -1;
     }
 
 
     public bool MoveNext()
     {
         index++;
-
-        if (index >= executor.Entities.Count) return false;
-
-        currentEntity = executor.Entities[index];
-        return true;
+        return index < executor.Entities.Count;
     }
+
 
     public QueryTuple<T1, T2> Current
     {
         get
         {
-            var p1 = new ComponentProxy<T1>(executor.Chunk1, ref currentEntity);
-            var p2 = new ComponentProxy<T2>(executor.Chunk2, ref currentEntity);
+            var entity = executor.Entities[index];            
+            var c1 = executor.Chunk1.GetComponent(entity);
+            var c2 = executor.Chunk2.GetComponent(entity);
 
-            return new QueryTuple<T1, T2>(p1, p2);
+            return new QueryTuple<T1, T2>(c1, c2);
         }
     }
 }
 #endregion
 
 #region T3
-public struct QueryEnumerator<T1, T2, T3>
+public struct QueryEnumerator<T1, T2, Т3>
 {
-    private QueryExecutor<T1, T2, T3> executor;
-    private Entity currentEntity;
+    private QueryExecutor<T1, T2, Т3> executor;
+    public Entity CurrentEntity => executor.Entities[index];
     private int index;
 
-    public QueryEnumerator(QueryExecutor<T1, T2, T3> executor)
+    public QueryEnumerator(QueryExecutor<T1, T2, Т3> executor)
     {
         this.executor = executor;
-        this.currentEntity = default;
-        this.index = -1;
+        index = -1;
     }
-
 
     public bool MoveNext()
     {
         index++;
-
-        if (index >= executor.Entities.Count) return false;
-
-        currentEntity = executor.Entities[index];
-        return true;
+        return index < executor.Entities.Count;
     }
 
-    public QueryTuple<T1, T2, T3> Current
+    public QueryTuple<T1, T2, Т3> Current
     {
         get
         {
-            var p1 = new ComponentProxy<T1>(executor.Chunk1, ref currentEntity);
-            var p2 = new ComponentProxy<T2>(executor.Chunk2, ref currentEntity);
-            var p3 = new ComponentProxy<T3>(executor.Chunk3, ref currentEntity);
+            var entity = executor.Entities[index];
+            var c1 = executor.Chunk1.GetComponent(entity);
+            var c2 = executor.Chunk2.GetComponent(entity);
+            var c3 = executor.Chunk3.GetComponent(entity);
 
-            return new QueryTuple<T1, T2, T3>(p1, p2, p3);
+            return new QueryTuple<T1, T2, Т3>(c1, c2, c3);
+        }
+    }
+}
+#endregion
+
+#region T4
+public struct QueryEnumerator<T1, T2, Т3, T4>
+{
+    private QueryExecutor<T1, T2, Т3, T4> executor;
+    public Entity CurrentEntity => executor.Entities[index];
+    private int index;
+
+    public QueryEnumerator(QueryExecutor<T1, T2, Т3, T4> executor)
+    {
+        this.executor = executor;
+        index = -1;
+    }
+
+    public bool MoveNext()
+    {
+        index++;
+        return index < executor.Entities.Count;
+    }
+
+    public QueryTuple<T1, T2, Т3, T4> Current
+    {
+        get
+        {
+            var entity = executor.Entities[index];
+            var c1 = executor.Chunk1.GetComponent(entity);
+            var c2 = executor.Chunk2.GetComponent(entity);
+            var c3 = executor.Chunk3.GetComponent(entity);
+            var c4 = executor.Chunk4.GetComponent(entity);
+
+            return new QueryTuple<T1, T2, Т3, T4>(c1, c2, c3, c4);
         }
     }
 }

@@ -1,30 +1,35 @@
-using UnityEngine.InputSystem;
 
-public class UIInputState : IState
+public class UIInputState : IUpdate, IState
 {
-    private GameInput GameInput;
-    private EventWorld eventWorld;
+    private GameInput.UIActions actions;
+    private UIInput inputComp;
 
-    public UIInputState(GameInput GameInput, EventWorld eventWorld)
+    public UIInputState(GameInput.UIActions actions, UIInput inputComp)
     {
-        this.GameInput = GameInput;
-        this.eventWorld = eventWorld;
+        this.actions = actions;
+        this.inputComp = inputComp;
+    }
+
+
+    public void Update(World world)
+    {
+        inputComp.Esc = actions.Esc.IsPressed();
     }
 
 
     public void Enter()
     {
-        GameInput.UI.Esc.started += Esc;
+        actions.Enable();
     }
 
     public void Exit()
     {
-        GameInput.UI.Esc.started -= Esc;
+        actions.Disable();
     }
+}
 
 
-    private void Esc(InputAction.CallbackContext context)
-    {
-        eventWorld.Invoke(Events.UIInput.Esc);
-    }
+public class UIInput
+{
+    public bool Esc;
 }

@@ -10,9 +10,9 @@ public class ProxyMapDisplayer : MonoBehaviour, IEventListener
     public float HexY = 0.2f;
 
 
-    public void SetEvents(EventWorld eventWorld)
+    public void SetEvents(World world)
     {
-        eventWorld.AddListener<TileMap>(DrawMap, Events.ObjectEvents.Spawn);
+        //eventWorld.AddListener<TileMap>(DrawMap, Events.ObjectEvents.Spawn);
     }
 
     public void DrawMap(TileMap map)

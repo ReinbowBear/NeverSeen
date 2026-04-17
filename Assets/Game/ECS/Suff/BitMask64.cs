@@ -27,8 +27,8 @@ public struct BitMask64
         }
     }
 
-    public override int GetHashCode() => bits.GetHashCode();
-    public override bool Equals(object obj) => obj is BitMask64 m && m.bits == bits;
+    public readonly override int GetHashCode() => bits.GetHashCode();
+    public readonly override bool Equals(object obj) => obj is BitMask64 m && m.bits == bits;
 
 
     private int TrailingZeroCount(ulong x)

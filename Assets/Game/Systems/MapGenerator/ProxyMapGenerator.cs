@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProxyMapGenerator : MonoBehaviour, IEventListener
 {
-    private EventWorld eventWorld;
+    private World world;
 
     private TileMap tileMap;
     private Factory factory;
@@ -17,9 +17,9 @@ public class ProxyMapGenerator : MonoBehaviour, IEventListener
         mapGenerator = new(tileMap, factory, random);
     }
 
-    public void SetEvents(EventWorld eventWorld)
+    public void SetEvents(World world)
     {
-        eventWorld.AddListener(GenerateMap, Events.SceneEvents.EnterScene);
+        //eventWorld.AddListener(GenerateMap, Events.SceneEvents.EnterScene);
     }
 
 
@@ -38,6 +38,6 @@ public class ProxyMapGenerator : MonoBehaviour, IEventListener
         {
             Debug.LogError(exception);
         }
-        eventWorld.Invoke(tileMap, Events.ObjectEvents.Spawn);
+        //eventWorld.Invoke(tileMap, Events.ObjectEvents.Spawn);
     }
 }

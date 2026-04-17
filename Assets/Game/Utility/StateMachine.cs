@@ -1,15 +1,29 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
-public class StateMachine<TKey, TState> : IDisposable where TState : IState
+public class StateMachine<TKey, TState> : IDisposable, IEnumerable<TState> where TState : IState
 {
     private Dictionary<TKey, IState> states = new();
     public TState CurrentState { get; private set; }
 
-    public IState this[TKey key]
+    public TState this[TKey key]
     {
-        get => states[key];
+        get => (TState)states[key];
         set => states[key] = value;
+    }
+
+    public IEnumerator<TState> GetEnumerator()
+    {
+        foreach (var state in states.Values)
+        {
+            yield return (TState)state;
+        }
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
     }
 
 
