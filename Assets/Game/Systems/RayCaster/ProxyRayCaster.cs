@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class ProxyRayCaster : MonoBehaviour, IEventListener
+public class ProxyRayCaster : MonoBehaviour
 {
     private Camera cam;
 

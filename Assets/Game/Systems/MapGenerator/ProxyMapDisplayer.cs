@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ProxyMapDisplayer : MonoBehaviour, IEventListener
+public class ProxyMapDisplayer : MonoBehaviour
 {
     private GameMap MapRoot;
     private Factory factory;

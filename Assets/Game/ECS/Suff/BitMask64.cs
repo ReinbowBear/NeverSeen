@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
 
-public struct BitMask64
+public struct BitMask64 : IEquatable<BitMask64>
 {
     private ulong bits;
 
@@ -38,4 +39,6 @@ public struct BitMask64
         while ((x & 1) == 0) { x >>= 1; n++; }
         return n;
     }
+
+    public bool Equals(BitMask64 other) => bits == other.bits;
 }

@@ -4,29 +4,40 @@ public class Input : ISystem
 {
     public GameInput GameInput { get; private set; }
     private StateMachine<InputMode, IState> stateMachine = new();
-    private IUpdate CurrentState => (IUpdate)stateMachine.CurrentState;
+    private ISystem CurrentState => (ISystem)stateMachine.CurrentState;
 
-    public Input(UIInput uiInput, GamePlayInput gamePlayInput)
+    public Input()
     {
         GameInput = new GameInput();
         GameInput.Enable();
 
-        stateMachine.AddState(InputMode.UI, new UIInputState(GameInput.UI, uiInput));
-        stateMachine.AddState(InputMode.GamePlay, new GamePlayInputState(GameInput.GamePlay, gamePlayInput));
+        stateMachine.AddState(InputMode.None, new EmptySystem());
+        stateMachine.AddState(InputMode.UI, new UIInputState(GameInput.UI));
+        stateMachine.AddState(InputMode.GamePlay, new GamePlayInputState(GameInput.GamePlay));
 
-        SwitchTo(InputMode.UI); // по идеи должны устанавливать инпут чреез какое нибудь событие с аргументом внутри...
-        Debug.Log("костыльный выбор инпутов");
-    }
-
-    public void SetSubs(SystemSubs subs)
-    {
-        //subs.AddListener<World>(UpdateSystem);
+        stateMachine.SetState(InputMode.None); // сначала происходит вызов систем а уже потом появляется в ворлд событие на смену инпута
     }
 
 
-    public void UpdateSystem(World world)
+    public void Execute(World world, EntityCommands commands)
     {
-        CurrentState.Update(world);
+        UpdateInputs(world, commands);
+        CheckSwitchInputs(world);
+    }
+
+
+    private void UpdateInputs(World world, EntityCommands commands)
+    {
+        CurrentState.Execute(world, commands);
+    }
+
+    private void CheckSwitchInputs(World world)
+    {
+        foreach (var (switchInput, entity) in world.Query<SwitchInputInent>())
+        {
+            Debug.Log(switchInput.SwitchTo);
+            SwitchTo(switchInput.SwitchTo);
+        }
     }
 
 
@@ -41,13 +52,38 @@ public class Input : ISystem
     }
 }
 
+public struct SwitchInputInent
+{
+    public InputMode SwitchTo;
+
+    public SwitchInputInent(InputMode mode)
+    {
+        SwitchTo = mode;
+    }
+}
+
 public enum InputMode
 {
+    None,
+
     UI,
     GamePlay,
 }
 
-public interface IUpdate
+public struct EmptySystem : ISystem, IState
 {
-    void Update(World world);
+    public void Enter()
+    {
+
+    }
+
+    public void Execute(World world, EntityCommands commands)
+    {
+
+    }
+
+    public void Exit()
+    {
+
+    }
 }

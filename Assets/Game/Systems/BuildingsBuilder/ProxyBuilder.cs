@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ProxyBuilder : MonoBehaviour, IEventListener
+public class ProxyBuilder : MonoBehaviour
 {
     private StateMachine<Type, IState> stateMachine = new();
     private BuilderData builderData = new();

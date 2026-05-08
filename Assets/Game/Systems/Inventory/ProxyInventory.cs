@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ProxyInventory : MonoBehaviour, IEventListener
+public class ProxyInventory : MonoBehaviour
 {
     public void SetEvents(World world)
     {

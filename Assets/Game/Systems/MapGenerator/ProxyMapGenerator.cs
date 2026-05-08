@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class ProxyMapGenerator : MonoBehaviour, IEventListener
+public class ProxyMapGenerator : MonoBehaviour
 {
     private World world;
 

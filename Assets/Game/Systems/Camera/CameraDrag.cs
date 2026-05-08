@@ -12,33 +12,24 @@ public class CameraDrag : ISystem
     private float dragSensitivity = 15f;
     private float dragVelocity = 5f;
 
-    private GamePlayInput gamePlayInput;
-
-    public CameraDrag(GamePlayInput gamePlayInput)
+    public CameraDrag()
     {
         camera = Camera.main;
-        this.gamePlayInput = gamePlayInput;
-    }
-
-    public void SetSubs(SystemSubs subs)
-    {
-        subs.AddListener(UpdateCam);
     }
 
 
-    public void UpdateCam()
+    public void Execute(World world, EntityCommands commands)
     {
-        if (!gamePlayInput.MouseRight) // MouseRightDown
+        foreach (var (click, entity) in world.Query<IntentLeftClick>())
         {
             lastPosition = UnityEngine.Input.mousePosition;
             currentDragVelocity = Vector3.zero;
+    
+            DragCamera();
+            return;
         }
 
-        if(gamePlayInput.MouseRight)
-        {
-            DragCamera();
-        }
-        else if(currentDragVelocity.magnitude > 0.01f)
+        if(currentDragVelocity.magnitude > 0.01f)
         {
             CameraInertion();
         }

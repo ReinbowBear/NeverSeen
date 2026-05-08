@@ -17,15 +17,23 @@ public class CommandBuffer
     }
 
 
-    public void ExecuteCommands()
+    public void ExecuteCommands(World world)
     {
-        foreach (var command in commandsBefore) command.Execute();
+        foreach (var command in commandsBefore)
+        {
+            command.Execute(world);
+        }
+
         commandsBefore.Clear();
     }
 
-    public void ExecuteAfterFrame()
+    public void ExecuteAfterFrame(World world)
     {
-        foreach (var command in commandsAfter) command.Execute();
+        foreach (var command in commandsAfter)
+        {
+            command.Execute(world);
+        }
+
         commandsAfter.Clear();
     }
 
@@ -39,5 +47,5 @@ public class CommandBuffer
 
 public interface ICommand
 {
-    void Execute();    
+    void Execute(World world);
 }

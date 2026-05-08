@@ -13,33 +13,29 @@ public class CameraZoom : ISystem
     private Vector3 camTargetPos => camTarget.transform.position;
     private float targetZoom;
 
-    private GamePlayInput gamePlayInput;
 
-    public CameraZoom(GamePlayInput gamePlayInput, CameraTarget camTarget)
+    public CameraZoom(CameraTarget camTarget)
     {
         cam = Camera.main;
         targetZoom = Vector3.Distance(camTarget.transform.position, cam.transform.position);
 
-        this.gamePlayInput = gamePlayInput;
         this.camTarget = camTarget;
     }
 
-    public void SetSubs(SystemSubs subs)
+
+    public void Execute(World world, EntityCommands commands)
     {
-        subs.AddListener(UpdateZoom);
-    }
-
-
-    public void UpdateZoom()
-    {
-        if(gamePlayInput.Scroll.sqrMagnitude > 0.01f)
+        foreach (var (scroll, entity) in world.Query<IntentScroll>())
         {
-            targetZoom = Mathf.Clamp(targetZoom - gamePlayInput.Scroll.y * zoomSensitivity, minZoom, maxZoom);
-        }
+            if(scroll.Value.sqrMagnitude > 0.01f)
+            {
+                targetZoom = Mathf.Clamp(targetZoom - scroll.Value.y * zoomSensitivity, minZoom, maxZoom);
+            }
 
-        if (Mathf.Abs(Vector3.Distance(cam.transform.position, camTargetPos) - targetZoom) > 0.01f)
-        {
-            ZoomCamera();
+            if (Mathf.Abs(Vector3.Distance(cam.transform.position, camTargetPos) - targetZoom) > 0.01f)
+            {
+                ZoomCamera();
+            }
         }
     }
 

@@ -6,12 +6,12 @@ using UnityEngine.Audio;
 
 public class Tween : ISystem
 {
-    public void SetSubs(SystemSubs subs)
+    public void Execute(World subs)
     {
         //UpdateSystem;
     }
     
-    public void UpdateSystem(World world)
+    public void Execute(World world, EntityCommands commands)
     {
         //foreach (var (entity, spawn) in world.Query<Spawn>().Require<OnPanelOpen>())
         //{

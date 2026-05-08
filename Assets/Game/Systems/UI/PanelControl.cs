@@ -1,34 +1,26 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PanelControl : ISystem
 {
-    private UIInput input;
-
     private Stack<Panel> PanelsStack = new();
     public Panel CurrentPanel => PanelsStack.Count > 0 ? PanelsStack.Peek() : null;
 
-    public PanelControl(UIInput input)
+    public void Execute(World world, EntityCommands commands)
     {
-        this.input = input;
-    }
+        if (!world.Has<IntentEsc>()) return;
 
-    public void SetSubs(SystemSubs subs)
-    {
-        subs.AddWithCommands<Panel>(OnEsc).OnEvent<OnNavigate>();
-    }
+        foreach (var (esc, entity) in world.Query<CurrentPanel>().Exclude<RootPanel>())
+        {
+            if (!ClosePanel()) return;
 
-
-    public void OnEsc(EntityCommands commands, Panel panel)
-    {
-        if (!input.Esc) return;
-
-        ClosePanel();
-        commands.AddOneFrame<OnPanelClose>();
+            commands.RemoveComponent<CurrentPanel>(entity);
+            commands.AddOneFrame(new OnPanelClose());
+        }
     }
 
 
-
-    public void OpenPanel(Panel panel)
+    private void OpenPanel(Panel panel)
     {
         PanelsStack.Push(panel);
         
@@ -36,13 +28,15 @@ public class PanelControl : ISystem
         panel.canvasGroup.blocksRaycasts = true;
     }
 
-    public void ClosePanel()
+    private bool ClosePanel()
     {
-        if (CurrentPanel == null) return;
+        if (CurrentPanel == null) return false;
 
         var panel = PanelsStack.Pop();
 
         panel.canvasGroup.interactable = false;
         panel.canvasGroup.blocksRaycasts = false;
+
+        return true;
     }
 }

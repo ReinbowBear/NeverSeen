@@ -1,19 +1,50 @@
+using UnityEngine;
 
-public class UIInputState : IUpdate, IState
+public class UIInputState : ISystem, IState
 {
     private GameInput.UIActions actions;
-    private UIInput inputComp;
 
-    public UIInputState(GameInput.UIActions actions, UIInput inputComp)
+    public UIInputState(GameInput.UIActions actions)
     {
         this.actions = actions;
-        this.inputComp = inputComp;
     }
 
 
-    public void Update(World world)
+    public void Execute(World world, EntityCommands commands)
     {
-        inputComp.Esc = actions.Esc.IsPressed();
+        HandleNavigate(commands);
+        HandleSumbit(commands);
+        HandleEsc(commands);
+    }
+
+
+    private void HandleNavigate(EntityCommands commands)
+    {
+        if (actions.Navigate.WasPerformedThisFrame())
+        {
+            var direction = actions.Navigate.ReadValue<Vector2>();
+
+            var intent = new IntentNavigate(direction);
+            commands.AddOneFrame(intent);
+        }
+    }
+
+    private void HandleSumbit(EntityCommands commands)
+    {
+        if (actions.Submit.IsPressed())
+        {
+            var intent = new IntentSumbit();
+            commands.AddOneFrame(intent);
+        }
+    }
+
+    private void HandleEsc(EntityCommands commands)
+    {
+        if (actions.Esc.IsPressed())
+        {
+            var intent = new IntentEsc();
+            commands.AddOneFrame(intent);
+        }
     }
 
 
@@ -26,10 +57,4 @@ public class UIInputState : IUpdate, IState
     {
         actions.Disable();
     }
-}
-
-
-public class UIInput
-{
-    public bool Esc;
 }

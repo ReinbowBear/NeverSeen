@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class EntityRegistry
 {
@@ -23,7 +24,11 @@ public class EntityRegistry
 
     public void RemoveEntity(Entity entity)
     {
-        if (!entities.Contains(entity)) return;
+        if (!entities.Contains(entity))
+        {
+            Debug.Log("аа.. такое бывает всё таки? Entity не найден в Registry");
+            return;
+        }
 
         entities.Remove(entity);
         freeIds.Push(entity.Id);

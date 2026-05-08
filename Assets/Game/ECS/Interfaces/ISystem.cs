@@ -1,5 +1,5 @@
 
 public interface ISystem
 {
-    void SetSubs(SystemSubs subs);
+    void Execute(World world, EntityCommands commands);
 }

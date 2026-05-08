@@ -2,107 +2,100 @@
 #region T1
 public struct Query<T1>
 {
-    private QueryRegistry queryRegistry;
-    private QueryDescription desc;
+    public TypeRegistry TypeRegistry;
+    public MaskRegistry MaskRegistry;
+    public QueryMask Masc;
 
-    public Query(QueryRegistry queryRegistry, QueryDescription desc)
-    {
-        this.queryRegistry = queryRegistry;
-        this.desc = desc;
-    }
+    public ComponentStore<T1> Store1;
 
 
     public Query<T1> Require<T>()
     {
-        var newDesc = desc.Require<T>();
-        desc = newDesc;
+        var index = TypeRegistry.GetIndex(typeof(T));
+        Masc.RequiredMask.Add(index);
         return this;
     }
 
     public Query<T1> Exclude<T>()
     {
-        var newDesc = desc.Exclude<T>();
-        desc = newDesc;
+        var index = TypeRegistry.GetIndex(typeof(T));
+        Masc.ExcludedMask.Add(index);
         return this;
     }
 
 
     public QueryEnumerator<T1> GetEnumerator()
     {
-        var executor = queryRegistry.GetQueryExecutor<T1>(desc);
-        return new QueryEnumerator<T1>(executor);
+        return new QueryEnumerator<T1>(this);
     }
 }
 #endregion
 
+
 #region T2
 public struct Query<T1, T2>
 {
-    private QueryRegistry queryRegistry;
-    private QueryDescription desc;
+    public TypeRegistry TypeRegistry;
+    public MaskRegistry MaskRegistry;
+    public QueryMask Masc;
 
-    public Query(QueryRegistry queryRegistry, QueryDescription desc)
-    {
-        this.queryRegistry = queryRegistry;
-        this.desc = desc;
-    }
+    public ComponentStore<T1> Store1;
+    public ComponentStore<T2> Store2;
 
 
     public Query<T1, T2> Require<T>()
     {
-        var newDesc = desc.Require<T>();
-        desc = newDesc;
+        var index = TypeRegistry.GetIndex(typeof(T));
+        Masc.RequiredMask.Add(index);
         return this;
     }
 
     public Query<T1, T2> Exclude<T>()
     {
-        var newDesc = desc.Exclude<T>();
-        desc = newDesc;
+        var index = TypeRegistry.GetIndex(typeof(T));
+        Masc.ExcludedMask.Add(index);
         return this;
     }
 
 
     public QueryEnumerator<T1, T2> GetEnumerator()
     {
-        var executor = queryRegistry.GetQueryExecutor<T1, T2>(desc);
-        return new QueryEnumerator<T1, T2>(executor);
+        return new QueryEnumerator<T1, T2>(this);
     }
 }
 #endregion
 
+
 #region T3
 public struct Query<T1, T2, T3>
 {
-    private QueryRegistry queryRegistry;
-    private QueryDescription desc;
+    public TypeRegistry TypeRegistry;
+    public MaskRegistry MaskRegistry;
+    public QueryMask Masc;
 
-    public Query(QueryRegistry queryRegistry, QueryDescription desc)
-    {
-        this.queryRegistry = queryRegistry;
-        this.desc = desc;
-    }
+    public ComponentStore<T1> Store1;
+    public ComponentStore<T2> Store2;
+    public ComponentStore<T3> Store3;
 
 
     public Query<T1, T2, T3> Require<T>()
     {
-        var newDesc = desc.Require<T>();
-        desc = newDesc;
+        var index = TypeRegistry.GetIndex(typeof(T));
+        Masc.RequiredMask.Add(index);
         return this;
     }
 
     public Query<T1, T2, T3> Exclude<T>()
     {
-        var newDesc = desc.Exclude<T>();
-        desc = newDesc;
+        var index = TypeRegistry.GetIndex(typeof(T));
+        Masc.ExcludedMask.Add(index);
         return this;
     }
 
 
     public QueryEnumerator<T1, T2, T3> GetEnumerator()
     {
-        var executor = queryRegistry.GetQueryExecutor<T1, T2, T3>(desc);
-        return new QueryEnumerator<T1, T2, T3>(executor);
+        return new QueryEnumerator<T1, T2, T3>(this);
     }
 }
 #endregion
@@ -110,35 +103,34 @@ public struct Query<T1, T2, T3>
 #region T4
 public struct Query<T1, T2, T3, T4>
 {
-    private QueryRegistry queryRegistry;
-    private QueryDescription desc;
+    public TypeRegistry TypeRegistry;
+    public MaskRegistry MaskRegistry;
+    public QueryMask Masc;
 
-    public Query(QueryRegistry queryRegistry, QueryDescription desc)
-    {
-        this.queryRegistry = queryRegistry;
-        this.desc = desc;
-    }
+    public ComponentStore<T1> Store1;
+    public ComponentStore<T2> Store2;
+    public ComponentStore<T3> Store3;
+    public ComponentStore<T4> Store4;
 
 
     public Query<T1, T2, T3, T4> Require<T>()
     {
-        var newDesc = desc.Require<T>();
-        desc = newDesc;
+        var index = TypeRegistry.GetIndex(typeof(T));
+        Masc.RequiredMask.Add(index);
         return this;
     }
 
     public Query<T1, T2, T3, T4> Exclude<T>()
     {
-        var newDesc = desc.Exclude<T>();
-        desc = newDesc;
+        var index = TypeRegistry.GetIndex(typeof(T));
+        Masc.ExcludedMask.Add(index);
         return this;
     }
 
 
     public QueryEnumerator<T1, T2, T3, T4> GetEnumerator()
     {
-        var executor = queryRegistry.GetQueryExecutor<T1, T2, T3, T4>(desc);
-        return new QueryEnumerator<T1, T2, T3, T4>(executor);
+        return new QueryEnumerator<T1, T2, T3, T4>(this);
     }
 }
 #endregion

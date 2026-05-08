@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class TransitionTimer : ISystem
 {
-    public void SetSubs(SystemSubs subs)
+    public void Execute(World world, EntityCommands commands)
     {
-        subs.AddWithCommands<TransitionInProgress>(CheckTime);
+        //world.AddWithCommands<TransitionInProgress>(CheckTime);
     }
 
 
@@ -12,10 +12,10 @@ public class TransitionTimer : ISystem
     {
         transition.Time += Time.deltaTime;
 
-        if (transition.Time > transition.Duration)
-        {
-            commands.AddComponent(new TransitionReady(transition.To));
-            commands.RemoveComponent<TransitionInProgress>();
-        }
+        //if (transition.Time > transition.Duration)
+        //{
+        //    commands.AddComponent(new TransitionReady(transition.To));
+        //    commands.RemoveComponent<TransitionInProgress>();
+        //}
     }
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ItemSlot : MonoBehaviour, IDropHandler, IEventSender
+public class ItemSlot : MonoBehaviour, IDropHandler
 {
     public ItemType slotType;
     public ItemUI item;

@@ -1,31 +1,65 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public struct EntityCommands
+public class EntityCommands
 {
     private World world;
-    private Entity entity;
+    private CommandBuffer buffer;
+    private List<Type> events = new();
+    public List<Type> Events => events;
 
-    public EntityCommands(World world, Entity entity)
+    public EntityCommands(World world, CommandBuffer buffer)
     {
         this.world = world;
-        this.entity = entity;
+        this.buffer = buffer;
     }
 
 
-    public Entity CreateEntity(GameObject obj)
+    public void CreateEntity(GameObject obj)
     {
-        return world.CreateEntity(obj);
+        var comand = new CreateEntityCommand(obj);
+        buffer.OnStartFrame(comand);
     }
 
     public void DestroyEntity(Entity entity)
     {
-        world.DestroyEntity(entity);
+        var comand = new DestroyEntityCommand(entity);
+        buffer.OnStartFrame(comand);
     }
 
-    public void InvokeOneFrame<T>() where T : struct => world.AddOneFrame<T>();
-    public void AddOneFrame<T>() where T : struct => world.AddOneFrame<T>(entity);
+
+    public void AddOneFrame<T>(T comp) where T : struct
+    {
+        var entity = world.CreateEntity();
+        buffer.OnStartFrame(new AddComponentCommand<T>(entity, comp));
+        buffer.OnEndFrame(new RemoveComponentCommand<T>(entity));
+        events.Add(typeof(T));
+    }
+
+    public void AddOneFrame<T>(Entity entity, T comp) where T : struct
+    {
+        buffer.OnStartFrame(new AddComponentCommand<T>(entity, comp));
+        buffer.OnEndFrame(new RemoveComponentCommand<T>(entity));
+        events.Add(typeof(T));
+    }
 
 
-    public void AddComponent<T>(T component) => world.AddComponent(entity, component);
-    public void RemoveComponent<T>() => world.RemoveComponent<T>(entity);
+    public void AddComponent<T>(Entity entity, T component)
+    {
+        var comand = new AddComponentCommand<T>(entity, component);
+        buffer.OnStartFrame(comand);
+    }
+
+    public void RemoveComponent<T>(Entity entity)
+    {
+        var comand = new RemoveComponentCommand<T>(entity);
+        buffer.OnStartFrame(comand);
+    }
+
+
+    public void Clear()
+    {
+        events.Clear();
+    }
 }

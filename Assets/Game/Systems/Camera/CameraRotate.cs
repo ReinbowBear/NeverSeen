@@ -9,31 +9,21 @@ public class CameraRotate : ISystem
     public float rotateSensitivity = 140f;
     public float rotateVelocity = 7.5f;
 
-    private GamePlayInput gamePlayInput;
-
-    public CameraRotate(GamePlayInput gamePlayInput)
+    public CameraRotate()
     {
         camera = Camera.main;
-        this.gamePlayInput = gamePlayInput;
     }
 
-    public void SetSubs(SystemSubs subs)
+    public void Execute(World world, EntityCommands commands)
     {
-        subs.AddListener(UpdateRotation);
-    }
-
-
-    public void UpdateRotation()
-    {
-        var result = Mathf.Abs(currentVelocity);
-
-        if(gamePlayInput.Q || result > 0.01f)
+        foreach (var (rotate, entity) in world.Query<IntentCameraRotate>())
         {
-            RotateCamera(-1);
-        }
-        else if (gamePlayInput.E || result > 0.01f)
-        {
-            RotateCamera(1);
+            var result = Mathf.Abs(currentVelocity);
+
+            if(result > 0.01f)
+            {
+                RotateCamera(rotate.Direction);
+            }
         }
     }
 

@@ -1,28 +1,79 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class GamePlayInputState : IUpdate, IState
+public class GamePlayInputState : ISystem, IState
 {
     private GameInput.GamePlayActions actions;
-    private GamePlayInput inputComp;
 
-    public GamePlayInputState(GameInput.GamePlayActions actions, GamePlayInput inputComp)
+    public GamePlayInputState(GameInput.GamePlayActions actions)
     {
         this.actions = actions;
-        this.inputComp = inputComp;
     }
 
 
-    public void Update(World world)
+    public void Execute(World world, EntityCommands commands)
     {
-        inputComp.MouseLeft = actions.MouseLeft.WasPressedThisFrame();
-        inputComp.MouseRight = actions.MouseRight.WasPressedThisFrame();
-        inputComp.Scroll = actions.Scroll.ReadValue<Vector2>();
+        HandleMouse(commands);
 
-        inputComp.Q = actions.Q.WasPressedThisFrame();
-        inputComp.E = actions.E.WasPressedThisFrame();
+        HandleCameraMove(commands);
+        HandleRotation(commands);
+        HandleZoom(commands);
+    }
 
-        inputComp.WASD = actions.WASD.ReadValue<Vector2>();
-        inputComp.Shift = actions.Shift.IsPressed();
+
+
+    private void HandleMouse(EntityCommands commands)
+    {
+        var mousePos = Mouse.current.position.ReadValue();
+
+        if (actions.MouseLeft.WasPressedThisFrame())
+        {
+            var intent = new IntentLeftClick(mousePos);
+            commands.AddOneFrame(intent);
+        }
+
+        if (actions.MouseRight.WasPressedThisFrame())
+        {
+            var intent = new IntentRightClick(mousePos);
+            commands.AddOneFrame(intent);
+        }
+    }
+
+
+    private void HandleCameraMove(EntityCommands commands)
+    {
+        var move = actions.WASD.ReadValue<Vector2>();
+
+        if (move.sqrMagnitude > 0.001f)
+        {
+            var intent = new IntentMove(move, actions.Shift.IsPressed());
+            commands.AddOneFrame(intent);
+        }
+    }
+
+    private void HandleRotation(EntityCommands commands)
+    {
+        int rotate = 0;
+
+        if (actions.Q.IsPressed()) rotate -= 1;
+        if (actions.E.IsPressed()) rotate += 1;
+
+        if (Mathf.Abs(rotate) > 0.01f)
+        {
+            var intent = new IntentCameraRotate(rotate);
+            commands.AddOneFrame(intent);
+        }
+    }
+
+    private void HandleZoom(EntityCommands commands)
+    {
+        var scroll = actions.Scroll.ReadValue<Vector2>();
+
+        if (Mathf.Abs(scroll.y) > 0.01f)
+        {
+            var intent = new IntentScroll(scroll);
+            commands.AddOneFrame(intent);
+        }
     }
 
 
@@ -35,18 +86,4 @@ public class GamePlayInputState : IUpdate, IState
     {
         actions.Disable();
     }
-}
-
-
-public class GamePlayInput
-{
-    public bool MouseLeft;
-    public bool MouseRight;
-    public Vector2 Scroll;
-    
-    public bool Q;
-    public bool E;
-
-    public Vector2 WASD;
-    public bool Shift;
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemUI : MonoBehaviour,  IBeginDragHandler, IDragHandler, IEndDragHandler,  IEventSender
+public class ItemUI : MonoBehaviour,  IBeginDragHandler, IDragHandler, IEndDragHandler
 {    
     public Image image;
     public ItemData ItemData;

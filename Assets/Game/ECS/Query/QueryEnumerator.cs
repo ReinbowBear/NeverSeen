@@ -1,136 +1,269 @@
+using UnityEngine;
 
 #region T1
-public struct QueryEnumerator<T1>
+public ref struct QueryEnumerator<T1>
 {
-    private QueryExecutor<T1> executor;
-    public Entity CurrentEntity => executor.Entities[index];
+    private Entity[] entities;
+    private int count;
     private int index;
 
-    public QueryEnumerator(QueryExecutor<T1> executor)
+    private Query<T1> query;
+    public QueryTuple<T1> Current { get; private set; }
+
+    public QueryEnumerator(Query<T1> query)
     {
-        this.executor = executor;
+        this.query = query;
+
+        entities = query.Store1.Entities;
+        count = query.Store1.Count;
+
         index = -1;
+        Current = default;
     }
-
-
+    
     public bool MoveNext()
     {
-        index++;
-        return index < executor.Entities.Count;
-    }
+        var store = query.Store1;
+        ref var required = ref query.Masc.RequiredMask;
+        ref var excluded = ref query.Masc.ExcludedMask;
 
-    public T1 Current
-    {
-        get
+        while (++index < count)
         {
-            var entity = executor.Entities[index];
-            var c1 = executor.Chunk1.GetComponent(entity);
-            return c1;
+            var entity = entities[index];
+            ref var mask = ref query.MaskRegistry.GetMask(entity.Id);
+    
+            if (!mask.MatchesAll(required)) continue;
+            if (mask.MatchesAny(excluded)) continue;
+
+            int id = entity.Id;
+            int idx = store.Sparse[id];
+
+            if (idx == -1) continue;
+
+            Current = new QueryTuple<T1>
+            (
+                store.Components[idx],
+                entity
+            );
+            return true;
         }
+
+        return false;
     }
 }
 #endregion
+
 
 #region T2
-public struct QueryEnumerator<T1, T2>
+public ref struct QueryEnumerator<T1, T2>
 {
-    private QueryExecutor<T1, T2> executor;
-    public Entity CurrentEntity => executor.Entities[index];
+    private Entity[] entities;
+    private int count;
     private int index;
 
-    public QueryEnumerator(QueryExecutor<T1, T2> executor)
+    private Query<T1, T2> query;
+    public QueryTuple<T1, T2> Current { get; private set; }
+
+    public QueryEnumerator(Query<T1, T2> query)
     {
-        this.executor = executor;
+        this.query = query;
+
+        int c1 = query.Store1.Count;
+        int c2 = query.Store2.Count;
+
+        entities = query.Store1.Entities;
+        int min = c1;
+
+        if (c2 < min) { min = c2; entities = query.Store2.Entities; }
+
+        count = min;
         index = -1;
+        Current = default;
     }
 
 
     public bool MoveNext()
     {
-        index++;
-        return index < executor.Entities.Count;
-    }
+        var s1 = query.Store1;
+        var s2 = query.Store2;
 
+        ref var required = ref query.Masc.RequiredMask;
+        ref var excluded = ref query.Masc.ExcludedMask;
 
-    public QueryTuple<T1, T2> Current
-    {
-        get
+        while (++index < count)
         {
-            var entity = executor.Entities[index];            
-            var c1 = executor.Chunk1.GetComponent(entity);
-            var c2 = executor.Chunk2.GetComponent(entity);
+            var entity = entities[index];
+            ref var mask = ref query.MaskRegistry.GetMask(entity.Id);
+    
+            if (!mask.MatchesAll(required)) continue;
+            if (mask.MatchesAny(excluded)) continue;
 
-            return new QueryTuple<T1, T2>(c1, c2);
+            int id = entity.Id;
+
+            int i1 = s1.Sparse[id];
+            int i2 = s2.Sparse[id];
+
+            if (i1 == -1 || i2 == -1) continue;
+
+            Current = new QueryTuple<T1, T2>
+            (
+                s1.Components[i1],
+                s2.Components[i2],
+                entity
+            );
+
+            return true;
         }
+
+        return false;
     }
 }
 #endregion
+
 
 #region T3
-public struct QueryEnumerator<T1, T2, Т3>
+public ref struct QueryEnumerator<T1, T2, T3>
 {
-    private QueryExecutor<T1, T2, Т3> executor;
-    public Entity CurrentEntity => executor.Entities[index];
+    private Entity[] entities;
+    private int count;
     private int index;
 
-    public QueryEnumerator(QueryExecutor<T1, T2, Т3> executor)
+    private Query<T1, T2, T3> query;
+    public QueryTuple<T1, T2, T3> Current { get; private set; }
+
+    public QueryEnumerator(Query<T1, T2, T3> query)
     {
-        this.executor = executor;
+        this.query = query;
+
+        int c1 = query.Store1.Count;
+        int c2 = query.Store2.Count;
+        int c3 = query.Store3.Count;
+
+        entities = query.Store1.Entities;
+        int min = c1;
+
+        if (c2 < min) { min = c2; entities = query.Store2.Entities; }
+        if (c3 < min) { min = c3; entities = query.Store3.Entities; }
+
+        count = min;
         index = -1;
+        Current = default;
     }
 
     public bool MoveNext()
     {
-        index++;
-        return index < executor.Entities.Count;
-    }
+        var s1 = query.Store1;
+        var s2 = query.Store2;
+        var s3 = query.Store3;
 
-    public QueryTuple<T1, T2, Т3> Current
-    {
-        get
+        ref var required = ref query.Masc.RequiredMask;
+        ref var excluded = ref query.Masc.ExcludedMask;
+
+        while (++index < count)
         {
-            var entity = executor.Entities[index];
-            var c1 = executor.Chunk1.GetComponent(entity);
-            var c2 = executor.Chunk2.GetComponent(entity);
-            var c3 = executor.Chunk3.GetComponent(entity);
+            var entity = entities[index];
+            ref var mask = ref query.MaskRegistry.GetMask(entity.Id);
+    
+            if (!mask.MatchesAll(required)) continue;
+            if (mask.MatchesAny(excluded)) continue;
 
-            return new QueryTuple<T1, T2, Т3>(c1, c2, c3);
+            int id = entity.Id;
+
+            int i1 = s1.Sparse[id];
+            int i2 = s2.Sparse[id];
+            int i3 = s3.Sparse[id];
+
+            if (i1 == -1 || i2 == -1 || i3 == -1) continue;
+
+            Current = new QueryTuple<T1, T2, T3>
+            (
+                s1.Components[i1],
+                s2.Components[i2],
+                s3.Components[i3],
+                entity
+            );
+
+            return true;
         }
+
+        return false;
     }
 }
 #endregion
 
+
 #region T4
-public struct QueryEnumerator<T1, T2, Т3, T4>
+public ref struct QueryEnumerator<T1, T2, T3, T4>
 {
-    private QueryExecutor<T1, T2, Т3, T4> executor;
-    public Entity CurrentEntity => executor.Entities[index];
+    private Entity[] entities;
+    private int count;
     private int index;
 
-    public QueryEnumerator(QueryExecutor<T1, T2, Т3, T4> executor)
+    private Query<T1, T2, T3, T4> query;
+    public QueryTuple<T1, T2, T3, T4> Current { get; private set; }
+
+    public QueryEnumerator(Query<T1, T2, T3, T4> query)
     {
-        this.executor = executor;
+        this.query = query;
+
+        int c1 = query.Store1.Count;
+        int c2 = query.Store2.Count;
+        int c3 = query.Store3.Count;
+        int c4 = query.Store4.Count;
+
+        entities = query.Store1.Entities;
+        int min = c1;
+
+        if (c2 < min) { min = c2; entities = query.Store2.Entities; }
+        if (c3 < min) { min = c3; entities = query.Store3.Entities; }
+        if (c4 < min) { min = c4; entities = query.Store4.Entities; }
+
+        count = min;
         index = -1;
+        Current = default;
     }
+
 
     public bool MoveNext()
     {
-        index++;
-        return index < executor.Entities.Count;
-    }
+        var s1 = query.Store1;
+        var s2 = query.Store2;
+        var s3 = query.Store3;
+        var s4 = query.Store4;
 
-    public QueryTuple<T1, T2, Т3, T4> Current
-    {
-        get
+        ref var required = ref query.Masc.RequiredMask;
+        ref var excluded = ref query.Masc.ExcludedMask;
+
+        while (++index < count)
         {
-            var entity = executor.Entities[index];
-            var c1 = executor.Chunk1.GetComponent(entity);
-            var c2 = executor.Chunk2.GetComponent(entity);
-            var c3 = executor.Chunk3.GetComponent(entity);
-            var c4 = executor.Chunk4.GetComponent(entity);
+            var entity = entities[index];
+            ref var mask = ref query.MaskRegistry.GetMask(entity.Id);
+    
+            if (!mask.MatchesAll(required)) continue;
+            if (mask.MatchesAny(excluded)) continue;
 
-            return new QueryTuple<T1, T2, Т3, T4>(c1, c2, c3, c4);
+            int id = entity.Id;
+
+            int i1 = s1.Sparse[id];
+            int i2 = s2.Sparse[id];
+            int i3 = s3.Sparse[id];
+            int i4 = s4.Sparse[id];
+
+            if (i1 == -1 || i2 == -1 || i3 == -1 || i4 == -1) continue;
+
+            Current = new QueryTuple<T1, T2, T3, T4>
+            (
+                s1.Components[i1],
+                s2.Components[i2],
+                s3.Components[i3],
+                s4.Components[i4],
+                entity
+            );
+
+            return true;
         }
+
+        return false;
     }
 }
 #endregion

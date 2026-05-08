@@ -32,8 +32,8 @@ public class MapGenerator
         tilesGen.CreateTilesData(tileMap, Settings.MapRadius);
         tilesGen.SetNeighbors(tileMap);
 
-        var biomes = await factory.LoadByLabelAsync<BiomeSO>("Biome");
-        var assets = await factory.LoadByLabelAsync<BiomeAssetSO>("BiomeAsset");
+        var biomes = await factory.LoadLabelAsync<BiomeSO>("Biome");
+        var assets = await factory.LoadLabelAsync<BiomeAssetSO>("BiomeAsset");
 
         var worldNoise = new WorldNoise(Settings);
         worldNoise.SetData(tileMap);

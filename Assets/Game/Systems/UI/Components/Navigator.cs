@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Navigator : MonoBehaviour
@@ -6,7 +7,7 @@ public class Navigator : MonoBehaviour
     public float NavigateTime = 0.1f;
 
     [Space]
-    [HideInInspector] public Vector3 StartPos;
-    [HideInInspector] public Vector3 EndPos;
-    [HideInInspector] public float Elapsed;
+    [NonSerialized] public Vector3 StartPos;
+    [NonSerialized] public Vector3 EndPos;
+    [NonSerialized] public float Elapsed;
 }
